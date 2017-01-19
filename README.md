@@ -1,1 +1,1 @@
-"# -teamname" 
+"# \$teamname" 
