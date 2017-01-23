@@ -17,10 +17,10 @@ public class hnefatafl{
 		
 		/*Initialize JFrame. This will hold 3 JPanels*/
 		frame = new JFrame("Hnefatafl");
-		
+		/* Add Menu bar at top of JFrame*/
+		setUpMenu(frame);
 		/*Add Board to lefthand side of JFrame*/
 		frame.add(board, BorderLayout.LINE_START);
-		
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
@@ -29,4 +29,9 @@ public class hnefatafl{
 		gameBoard hBoard = new gameBoard(boardSize, primaryColor, secondaryColor, letteringColor);
 		board = hBoard.getBoard();
 	}
+        public static void setUpMenu(JFrame frame){
+            menuBar menubar = new menuBar(frame);
+
+        }
+        
 }
