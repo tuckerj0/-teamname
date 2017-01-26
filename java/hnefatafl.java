@@ -7,8 +7,8 @@ public class hnefatafl{
 	private static JFrame frame;
 	private static JPanel board;
 	private static int boardSize = 11;
-	private static int[] primaryColor = {255,228,225};
-	private static int[] secondaryColor = {143,188,143};
+	private static int[] primaryColor = {244,164,96};
+	private static int[] secondaryColor = {139,69,19};
 	private static int[] letteringColor = {0,0,0};
 	private static int[] specialColor = {88,0,0};
 
