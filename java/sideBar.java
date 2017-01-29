@@ -8,6 +8,8 @@ public class sideBar {
     public boolean gameSaved;   // anytime a move is made in the game, set this this boolean to false
     private static final int buttonWidth = 100;
     private static final int buttonHeight = 40;
+    private static final int startEndGap = 60;
+    private static final int midGap = 70;
     private Color primaryColor;
     private Color secondaryColor;
     private Color letteringColor;
@@ -24,58 +26,45 @@ public class sideBar {
         primaryColor = new Color(pc[0], pc[1], pc[2]);
         secondaryColor = new Color(sc[0], sc[1], sc[2]);
         letteringColor = new Color(lc[0], lc[1], lc[2]);
-        int startEndGap = 60;
-        int midGap = 70;
+        createPanel();
+        createButtons();
+    }
 
+    private void createPanel() {
         side = new JPanel();
         side.setLayout(new BoxLayout(side, BoxLayout.Y_AXIS));
         side.setBackground(secondaryColor);
         side.add(Box.createRigidArea(new Dimension(0, startEndGap)));
+    }
 
+    private void createButtons() {
         newGame = new JButton("New Game");
-        newGame.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
-        newGame.setBackground(primaryColor);
-        newGame.setForeground(letteringColor);
-        side.add(newGame);
-        side.add(Box.createRigidArea(new Dimension(0, midGap)));
+        styleButton(newGame, midGap);
 
         saveGame = new JButton("Save Game");
-        saveGame.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
-        saveGame.setBackground(primaryColor);
-        saveGame.setForeground(letteringColor);
+        styleButton(saveGame, midGap);
         saveGame.addActionListener(new SaveListener());
-        side.add(saveGame);
-        side.add(Box.createRigidArea(new Dimension(0, midGap)));
 
         loadGame = new JButton("Load Game");
-        loadGame.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
-        loadGame.setBackground(primaryColor);
-        loadGame.setForeground(letteringColor);
-        side.add(loadGame);
-        side.add(Box.createRigidArea(new Dimension(0, midGap)));
+        styleButton(loadGame, midGap);
 
         help = new JButton("Help");
-        help.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
-        help.setBackground(primaryColor);
-        help.setForeground(letteringColor);
-        side.add(help);
-        side.add(Box.createRigidArea(new Dimension(0, midGap)));
+        styleButton(help, midGap);
 
         concede = new JButton("Forfeit");
-        concede.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
-        concede.setBackground(primaryColor);
-        concede.setForeground(letteringColor);
-        side.add(concede);
-        side.add(Box.createRigidArea(new Dimension(0, midGap)));
+        styleButton(concede, midGap);
 
         exit = new JButton("Exit");
-        exit.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
-        exit.setBackground(primaryColor);
-        exit.setForeground(letteringColor);
+        styleButton(exit, startEndGap);
         exit.addActionListener(new ExitListener());
-        side.add(exit);
-        side.add(Box.createRigidArea(new Dimension(0, startEndGap)));
+    }
 
+    private void styleButton(JButton btn, int gap) {
+        btn.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
+        btn.setBackground(primaryColor);
+        btn.setForeground(letteringColor);
+        side.add(btn);
+        side.add(Box.createRigidArea(new Dimension(0, gap)));
     }
 
     private class SaveListener implements ActionListener {
