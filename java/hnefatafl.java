@@ -32,7 +32,7 @@ public class hnefatafl{
 	public static void setUpGameBoard(){
 		gameBoard hBoard = new gameBoard(boardSize, primaryColor, secondaryColor, letteringColor, specialColor);
 		board = hBoard.getBoard();
-		sideBar sBar = new sideBar();
+		sideBar sBar = new sideBar(primaryColor, secondaryColor, letteringColor);
 		side = sBar.getSideBar();
 	}
 
