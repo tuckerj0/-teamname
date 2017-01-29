@@ -6,6 +6,7 @@ public class hnefatafl{
 
 	private static JFrame frame;
 	private static JPanel board;
+	private static JPanel side;
 	private static int boardSize = 11;
 	private static int[] primaryColor = {244,164,96};
 	private static int[] secondaryColor = {139,69,19};
@@ -22,6 +23,7 @@ public class hnefatafl{
 		setUpMenu(frame);
 		/*Add Board to lefthand side of JFrame*/
 		frame.add(board, BorderLayout.LINE_START);
+		frame.add(side, BorderLayout.EAST);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
@@ -30,6 +32,8 @@ public class hnefatafl{
 	public static void setUpGameBoard(){
 		gameBoard hBoard = new gameBoard(boardSize, primaryColor, secondaryColor, letteringColor, specialColor);
 		board = hBoard.getBoard();
+		sideBar sBar = new sideBar(primaryColor, secondaryColor, letteringColor);
+		side = sBar.getSideBar();
 	}
 
     public static void setUpMenu(JFrame frame){
