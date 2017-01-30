@@ -2,110 +2,63 @@ import javax.swing.*;
 import javax.awt.*;
 import java.awt.event.*;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+public class blackWhiteStart {
+    JFrame _blackWhiteFrame = new JFrame("Pick a color to start the attack"); // creates frame/window
+    JPanel _blackWhitePanel = new JPanel(); // one single flow panel
+    JButton _blackButton = new JButton("Black");
+    JButton _whiteButton = new JButton("White");
 
-public class TicTacToe {
-    JFrame _frame = new JFrame("Tic-Tac-Toe"); // creates frame/window
-    /*JFrame, and not a Frame. Frames are AWT (Abstract Window Toolkit) classes;
-        JFrames are Swing classes. Swing is a GUI framework built on top of AWT (which is much nicer, trust me).
-        You will find that most classes that start with J have an equivalent J-less class in AWT.
-    */
+    public enum Color {
+        BLACK, WHITE
+    }
 
-    JPanel _ttt = new JPanel();
-    JPanel _newPanel = new JPanel();
-    JButton[] _buttons = new JButton[9];  // Make each space in the tic-tac-toe grid into a button
-    JButton _newButton = new JButton("New Game");
+    Color startColor;
 
-    boolean _xTurn = true;
-
-    public TicTacToe() {
-    	_frame.setSize(400, 400); // width, height
-    	_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // what happens when the user closes the window
+    public blackWhiteStart() {
+        _blackWhiteFrame.setSize(400, 400); // width, height
+        _blackWhiteFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // what happens when the user closes the window
         // see Window Constants in https://docs.oracle.com/javase/8/docs/api/javax/swing/JFrame.html for more options
 
-        // setting the panel layouts - 2 in the frame
-    	_ttt.setLayout(new GridLayout(3, 3));
-    	_newPanel.setLayout(new FlowLayout());  // this only needs one button, so layout doesn't matter
+        _blackWhitePanel.setLayout(new FlowLayout());  // this only needs one button, so layout doesn't matter
         // The FlowLayout will just position the elements one after another, like letters in a line of text.
 
-    	// This will place the tic-tac-toe panel at the top of
-    	// the frame and the newPanel panel at the bottom
-    	_frame.add(_ttt, BorderLayout.NORTH);
-    	_frame.add(_newPanel, BorderLayout.SOUTH);
+        // May not be necessary
+        // _blackWhiteframe.add(_blackWhitePanel, BorderLayout.NORTH);
 
-    	// creates buttons for the grid, as well as their LISTENERS
-    	for (int j=0; j<9; j++) {
-    	    // Make a new button in the array location with text "_"
-    	    _buttons[j] = new JButton("_");
-    	    // Associate a new ButtonListener to the button (see below)
-    	    ActionListener buttonListener = new ButtonListener();
-    	    _buttons[j].addActionListener(buttonListener);
-    	    // Set the font on the button
-    	    _buttons[j].setFont(new Font("Courier", Font.PLAIN, 48));
-    	    // Add this button to the _ttt panel
-    	    _ttt.add(_buttons[j]);
-    	}
-
-        // Associate a NewGameListener with the new button and add it
-    	// to the newPanel
-
-    	_newButton.addActionListener(new NewGameListener());
-    	_newPanel.add(_newButton);
+        // adding the black button
+        ActionListener blackListener = new BlackListener();
+        _blackButton.addActionListener(blackListener);
+        _blackButton.setFont(new Font("Courier", Font.PLAIN, 48));
+        _blackWhitePanel.add(_blackButton);
+        // adding the white button
+        ActionListener whiteListener = new WhiteListener();
+        _whiteButton.addActionListener(whiteListener;
+        _whiteButton.setFont(new Font("Courier", Font.PLAIN, 48));
+        _blackWhitePanel.add(_whiteButton);
 
         // Refresh window - otherwise we will not be able to see it
-        // THIS IS A COMMON SOURCE OF BUGS!
         // This should be the last line of the constructor
-    	_frame.setVisible(true);
+        _blackWhiteFrame.setVisible(true);
     }
 
     public static void main(String[] args) {
-	   new TicTacToe();
+        new blackWhiteStart();
     }
 
-    class ButtonListener implements ActionListener {
-
-    	// Every time we click the button, it will perform
-    	// the following action.
-
-    	public void actionPerformed(ActionEvent e) {
-            // Figure out where the click came from.  source will
-    	    // contain a reference to the clicked button.
-    	    // Note e.getSource() will return an object, but we know
-    	    // that it will be a JButton so we cast it.
-    	    JButton source = (JButton) e.getSource();
-    	    String currentText = source.getText();
-    	    if (currentText.equals("_")) {
-    		// Button has not yet been selected, change it
-    		// to X or O and then it is the other player's turn
-    		if (_xTurn) {
-    		    source.setText("X");
-    		} else {
-    		    source.setText("O");
-    		}
-    		// flip-flop the boolean
-    		_xTurn = !_xTurn;
-    	    } else {
-    		// Can't click here, already selected!
-    		// Do nothing
-    	    }
-    	}
-
+    // This listener will be called when the black button is clicked
+    class BlackListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            startColor = BLACK;
+            // TODO: Add code to start game
+        }
     }
 
-    // This listener will be called when the new game button is clicked
-   class NewGameListener implements ActionListener {
+    // This listener will be called when the white button is clicked
+    class WhiteListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            startColor = WHITE;
+            // TODO: Add code to start game
+        }
 
-       public void actionPerformed(ActionEvent e) {
-           // Change all of the buttons to "_", unselected
-           // Restart user to be "X" player
-           for (JButton btn : _buttons) {
-           _xTurn = true;
-           btn.setText("_");
-           }
-
-       }
-
-   }
+    }
 }
