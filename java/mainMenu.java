@@ -18,9 +18,7 @@ public class mainMenu {
 
     	_mainMenuPanel.setLayout(new FlowLayout());  // this only needs one button, so layout doesn't matter
         // The FlowLayout will just position the elements one after another, like letters in a line of text.
-
-    	// // May not need this
-    	// _mainMenuFrame.add(_mainMenuPanel, BorderLayout.NORTH);
+    	_mainMenuFrame.add(_mainMenuPanel);
 
         _loadGameButton.addActionListener(new loadGameListener());
         _howToPlayButton.addActionListener(new howToPlayListener());

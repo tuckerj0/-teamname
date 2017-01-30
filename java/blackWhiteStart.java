@@ -18,8 +18,7 @@ public class blackWhiteStart {
         _blackWhitePanel.setLayout(new FlowLayout());  // this only needs one button, so layout doesn't matter
         // The FlowLayout will just position the elements one after another, like letters in a line of text.
 
-        // May not be necessary
-        // _blackWhiteframe.add(_blackWhitePanel, BorderLayout.NORTH);
+        _blackWhiteFrame.add(_blackWhitePanel);
 
         // adding the black button
         ActionListener blackListener = new BlackListener();
