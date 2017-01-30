@@ -1,5 +1,5 @@
 import javax.swing.*;
-import javax.awt.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class blackWhiteStart {
@@ -8,11 +8,7 @@ public class blackWhiteStart {
     JButton _blackButton = new JButton("Black");
     JButton _whiteButton = new JButton("White");
 
-    public enum Color {
-        BLACK, WHITE
-    }
-
-    Color startColor;
+    boolean blackStart;
 
     public blackWhiteStart() {
         _blackWhiteFrame.setSize(400, 400); // width, height
@@ -32,7 +28,7 @@ public class blackWhiteStart {
         _blackWhitePanel.add(_blackButton);
         // adding the white button
         ActionListener whiteListener = new WhiteListener();
-        _whiteButton.addActionListener(whiteListener;
+        _whiteButton.addActionListener(whiteListener);
         _whiteButton.setFont(new Font("Courier", Font.PLAIN, 48));
         _blackWhitePanel.add(_whiteButton);
 
@@ -48,7 +44,7 @@ public class blackWhiteStart {
     // This listener will be called when the black button is clicked
     class BlackListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            startColor = BLACK;
+            blackStart = true;
             // TODO: Add code to start game
         }
     }
@@ -56,7 +52,7 @@ public class blackWhiteStart {
     // This listener will be called when the white button is clicked
     class WhiteListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            startColor = WHITE;
+            blackStart = false;
             // TODO: Add code to start game
         }
 

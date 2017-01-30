@@ -1,5 +1,5 @@
 import javax.swing.*;
-import javax.awt.*;
+import java.awt.*;
 import java.awt.event.*;
 
 // load a saved game, access the rules, and change the settings
@@ -20,7 +20,7 @@ public class mainMenu {
         // The FlowLayout will just position the elements one after another, like letters in a line of text.
 
     	// // May not need this
-    	// _frame.add(_mainMenuPanel, BorderLayout.NORTH);
+    	// _mainMenuFrame.add(_mainMenuPanel, BorderLayout.NORTH);
 
         _loadGameButton.addActionListener(new loadGameListener());
         _howToPlayButton.addActionListener(new howToPlayListener());
@@ -34,11 +34,11 @@ public class mainMenu {
 
         // Refresh window - otherwise we will not be able to see it
         // This should be the last line of the constructor
-    	_frame.setVisible(true);
+    	_mainMenuFrame.setVisible(true);
     }
 
     public static void main(String[] args) {
-        new TicTacToe();
+        new mainMenu();
     }
 
     class loadGameListener implements ActionListener {
