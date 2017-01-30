@@ -38,8 +38,8 @@ public class hnefatafl {
 		board = hBoard.getBoard();
 		sideBar sBar = new sideBar(primaryColor, secondaryColor, letteringColor);
 		side = sBar.getSideBar();
-        menuBar menu = new menuBar();
-        menuBar = menu.getMenuBar();
+        	menuBar menu = new menuBar();
+        	menuBar = menu.getMenuBar();
 	}
 
 	public static void displayGameBoard() {
