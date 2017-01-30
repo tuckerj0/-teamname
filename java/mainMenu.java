@@ -54,7 +54,7 @@ public class mainMenu {
 
     class howToPlayListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            // TODO:  Add functionality
+            new gameRules();
         }
     }
 
