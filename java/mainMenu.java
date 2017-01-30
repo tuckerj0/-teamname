@@ -26,10 +26,10 @@ public class mainMenu {
         _loadGameButton.addActionListener(new loadGameListener());
         _howToPlayButton.addActionListener(new howToPlayListener());
         _settingsButton.addActionListener(new settingsListener());
-        _playerVsButton.setFont(new Font("Courier", Font.PLAIN, 30));
-    	_loadGameButton.setFont(new Font("Courier", Font.PLAIN, 30));
-        _howToPlayButton.setFont(new Font("Courier", Font.PLAIN, 30));
-        _settingsButton.setFont(new Font("Courier", Font.PLAIN, 30));
+        _playerVsButton.setFont(new Font("Courier", Font.PLAIN, 40));
+    	_loadGameButton.setFont(new Font("Courier", Font.PLAIN, 40));
+        _howToPlayButton.setFont(new Font("Courier", Font.PLAIN, 40));
+        _settingsButton.setFont(new Font("Courier", Font.PLAIN, 40));
         _mainMenuPanel.add(_playerVsButton);
         _mainMenuPanel.add(_loadGameButton);
         _mainMenuPanel.add(_howToPlayButton);
