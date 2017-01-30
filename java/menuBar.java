@@ -46,7 +46,7 @@ public class menuBar {
                     "1.   Two players may participate. One player plays the king's side, with a king and his defenders, and the other player plays the attackers. There are twelve defenders and twenty-four attackers.\n"
                     + "\n"
                     + "\n"
-                    + "2.   The game is played on a board with 11×11 squares and with initial set-up as shown:\n"
+                    + "2.   The game is played on a board with 11x11 squares and with initial set-up as shown:\n"
                     + // " Initial set-up. \n" +
                     "\n"
                     + "3.   The central square, called the throne, and the four squares in the corners are restricted and may only be occupied by the king. It is allowed for the king to re-enter the throne, and all pieces may pass through the throne when it is empty.\n"
