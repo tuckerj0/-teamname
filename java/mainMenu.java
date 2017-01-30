@@ -63,6 +63,7 @@ public class mainMenu {
             // TODO:  Add functionality
         }
     }
+
     public int getChoice() {
         return choice;
     }

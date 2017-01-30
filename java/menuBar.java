@@ -11,7 +11,6 @@ public class menuBar {
     JMenu menu;
 
     public menuBar() {
-
         setUpMenuBar();
     }
 

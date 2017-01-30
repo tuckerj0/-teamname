@@ -3,7 +3,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 import java.util.concurrent.TimeUnit;
 
-public class hnefatafl{
+public class hnefatafl {
 	private static int choice;
 	private static JFrame frame;
 	private static JPanel board;
@@ -15,7 +15,7 @@ public class hnefatafl{
 	private static int[] letteringColor = {0,0,0};
 	private static int[] specialColor = {88,0,0};
 
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		mainMenu start = new mainMenu();
 		while (choice == 0) {
 			try {
@@ -33,13 +33,13 @@ public class hnefatafl{
 		}
 	}
 
-	public static void setUpGameBoard(){
+	public static void setUpGameBoard() {
 		gameBoard hBoard = new gameBoard(boardSize, primaryColor, secondaryColor, letteringColor, specialColor);
 		board = hBoard.getBoard();
 		sideBar sBar = new sideBar(primaryColor, secondaryColor, letteringColor);
 		side = sBar.getSideBar();
-                menuBar menu = new menuBar();
-                menuBar = menu.getMenuBar();
+        menuBar menu = new menuBar();
+        menuBar = menu.getMenuBar();
 	}
 
 	public static void displayGameBoard() {
