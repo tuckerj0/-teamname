@@ -50,6 +50,7 @@ public class sideBar {
 
         help = new JButton("Help");
         styleButton(help, midGap);
+        help.addActionListener(new HelpListener());
 
         concede = new JButton("Forfeit");
         styleButton(concede, midGap);
@@ -72,6 +73,12 @@ public class sideBar {
            // TODO: save the game and ask where to save it and what to name the file if first save
            gameSaved = true;
        }
+    }
+
+    private class HelpListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            new gameRules();
+        }
     }
 
      private class ExitListener implements ActionListener {

@@ -5,11 +5,13 @@ import java.awt.event.*;
 // load a saved game, access the rules, and change the settings
 
 public class mainMenu {
-    JFrame _mainMenuFrame = new JFrame("Main Menu"); // creates frame/window
-    JPanel _mainMenuPanel = new JPanel();
-    JButton _loadGameButton = new JButton("Load Saved Game");
-    JButton _howToPlayButton =  new JButton("How to Play");
-    JButton _settingsButton = new JButton("Settings");
+    private JFrame _mainMenuFrame = new JFrame("Hnefatafl"); // creates frame/window
+    private JPanel _mainMenuPanel = new JPanel();
+    private JButton _playerVsButton;
+    private JButton _loadGameButton = new JButton("Load Saved Game");
+    private JButton _howToPlayButton =  new JButton("How to Play");
+    private JButton _settingsButton = new JButton("Settings");
+    int choice;
 
     public mainMenu() {
     	_mainMenuFrame.setSize(400, 400); // width, height
@@ -19,13 +21,16 @@ public class mainMenu {
     	_mainMenuPanel.setLayout(new FlowLayout());  // this only needs one button, so layout doesn't matter
         // The FlowLayout will just position the elements one after another, like letters in a line of text.
     	_mainMenuFrame.add(_mainMenuPanel);
-
+        _playerVsButton = new JButton("Player v. Player");
+        _playerVsButton.addActionListener(new newGameListener());
         _loadGameButton.addActionListener(new loadGameListener());
         _howToPlayButton.addActionListener(new howToPlayListener());
         _settingsButton.addActionListener(new settingsListener());
-    	_loadGameButton.setFont(new Font("Courier", Font.PLAIN, 48));
-        _howToPlayButton.setFont(new Font("Courier", Font.PLAIN, 48));
-        _settingsButton.setFont(new Font("Courier", Font.PLAIN, 48));
+        _playerVsButton.setFont(new Font("Courier", Font.PLAIN, 40));
+    	_loadGameButton.setFont(new Font("Courier", Font.PLAIN, 40));
+        _howToPlayButton.setFont(new Font("Courier", Font.PLAIN, 40));
+        _settingsButton.setFont(new Font("Courier", Font.PLAIN, 40));
+        _mainMenuPanel.add(_playerVsButton);
         _mainMenuPanel.add(_loadGameButton);
         _mainMenuPanel.add(_howToPlayButton);
         _mainMenuPanel.add(_settingsButton);
@@ -35,8 +40,10 @@ public class mainMenu {
     	_mainMenuFrame.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        new mainMenu();
+    private class newGameListener implements  ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            choice = 1;
+        }
     }
 
     class loadGameListener implements ActionListener {
@@ -47,7 +54,7 @@ public class mainMenu {
 
     class howToPlayListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            // TODO:  Add functionality
+            new gameRules();
         }
     }
 
@@ -55,5 +62,9 @@ public class mainMenu {
         public void actionPerformed(ActionEvent e) {
             // TODO:  Add functionality
         }
+    }
+
+    public int getChoice() {
+        return choice;
     }
 }

@@ -3,7 +3,7 @@ import javax.swing.*;
 import java.awt.image.BufferedImage;
 import javax.swing.border.*;
 
-public class gameBoard{
+public class gameBoard {
 
 	int gridSize;
 	Color primaryColor;
@@ -13,7 +13,7 @@ public class gameBoard{
 	private JButton[][] boardSquares;
 	private JPanel board;
 
-	public gameBoard(int size, int[] pc, int[] sc, int[] lc, int[] spc){
+	public gameBoard(int size, int[] pc, int[] sc, int[] lc, int[] spc) {
 		gridSize = size;
 		primaryColor = new Color(pc[0], pc[1], pc[2]);
 		secondaryColor = new Color(sc[0], sc[1], sc[2]);
@@ -22,7 +22,7 @@ public class gameBoard{
 		initializeGUI();
 	}
 
-	public boolean initializeGUI(){
+	public boolean initializeGUI() {
 		board = new JPanel(new GridLayout(gridSize, gridSize));
 		board.setBorder(new LineBorder(Color.BLACK));
 		boardSquares = new JButton[gridSize][gridSize];
@@ -41,7 +41,7 @@ public class gameBoard{
 				if ((i==0 && j==0)|| (i==gridSize-1 && j==gridSize-1)|| (i==0 && j==gridSize-1)
 				|| (i==gridSize-1 && j==0) || (i==(gridSize/2) && j==(gridSize/2))){
 					b.setBackground(specialColor);
-				}else if ((j % 2 == 1 && i % 2 == 1)|| (j % 2 == 0 && i % 2 == 0)) {
+				} else if ((j % 2 == 1 && i % 2 == 1)|| (j % 2 == 0 && i % 2 == 0)) {
                     b.setBackground(primaryColor);
                 } else {
                     b.setBackground(secondaryColor);
@@ -61,21 +61,21 @@ public class gameBoard{
 	}
 
 	//If there is a piece in this location it adds it to the button
-	private void addPiece(String pieceName, JButton button){
-		if(pieceName.equals("black")){
+	private void addPiece(String pieceName, JButton button) {
+		if (pieceName.equals("black")) {
 			ImageIcon icon = new ImageIcon(getClass().getResource("images/blackpiece.png"));
 			button.setIcon(icon);
-		}else if(pieceName.equals("white")){
+		} else if (pieceName.equals("white")) {
 			ImageIcon icon = new ImageIcon(getClass().getResource("images/whitepiece.png"));
 			button.setIcon(icon);
-		}else if(pieceName.equals("king")){
+		} else if (pieceName.equals("king")) {
 			ImageIcon icon = new ImageIcon(getClass().getResource("images/king.png"));
 			button.setIcon(icon);
 		}
 	}
 
 	//Sets the location of each starting piece
-	private String[][] setStartingPieces(){
+	private String[][] setStartingPieces() {
 		String[][] s = new String [gridSize][gridSize];
 		//Initialize to empty String
 		for (int i = 0; i < s.length; i++) {
@@ -84,7 +84,7 @@ public class gameBoard{
 			}
 		}
 
-		if(gridSize==11){
+		if (gridSize==11) {
 			s[0][3] = s[0][4] = s[0][5] = s[0][6] = s[0][7] = s[1][5] = "black";
 			s[3][0] = s[4][0] = s[5][0] = s[6][0] = s[7][0] = s[5][1] = "black";
 			s[10][3] = s[10][4] = s[10][5] = s[10][6] = s[10][7] = s[9][5] = "black";
