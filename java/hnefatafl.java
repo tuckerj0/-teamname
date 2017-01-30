@@ -7,6 +7,7 @@ public class hnefatafl{
 	private static JFrame frame;
 	private static JPanel board;
 	private static JPanel side;
+        private static JMenuBar menuBar;
 	private static int boardSize = 11;
 	private static int[] primaryColor = {244,164,96};
 	private static int[] secondaryColor = {139,69,19};
@@ -19,11 +20,11 @@ public class hnefatafl{
 
 		/*Initialize JFrame. This will hold 3 JPanels*/
 		frame = new JFrame("Hnefatafl");
-		/* Add Menu bar at top of JFrame*/
-		setUpMenu(frame);
 		/*Add Board to lefthand side of JFrame*/
 		frame.add(board, BorderLayout.LINE_START);
 		frame.add(side, BorderLayout.EAST);
+		/* Add Menu bar at top of JFrame*/
+                frame.setJMenuBar(menuBar);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
@@ -34,10 +35,7 @@ public class hnefatafl{
 		board = hBoard.getBoard();
 		sideBar sBar = new sideBar(primaryColor, secondaryColor, letteringColor);
 		side = sBar.getSideBar();
+                menuBar menu = new menuBar();
+                menuBar = menu.getMenuBar();
 	}
-
-    public static void setUpMenu(JFrame frame){
-        menuBar menubar = new menuBar(frame);
-    }
-
 }
