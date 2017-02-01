@@ -1,3 +1,5 @@
+package copenhagen;
+
 import java.awt.*;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
@@ -63,13 +65,13 @@ public class gameBoard {
 	//If there is a piece in this location it adds it to the button
 	private void addPiece(String pieceName, JButton button) {
 		if (pieceName.equals("black")) {
-			ImageIcon icon = new ImageIcon(getClass().getResource("images/blackpiece.png"));
+			ImageIcon icon = new ImageIcon(getClass().getResource("copenhagen/images/blackpiece.png"));
 			button.setIcon(icon);
 		} else if (pieceName.equals("white")) {
-			ImageIcon icon = new ImageIcon(getClass().getResource("images/whitepiece.png"));
+			ImageIcon icon = new ImageIcon(getClass().getResource("copenhagen/images/whitepiece.png"));
 			button.setIcon(icon);
 		} else if (pieceName.equals("king")) {
-			ImageIcon icon = new ImageIcon(getClass().getResource("images/king.png"));
+			ImageIcon icon = new ImageIcon(getClass().getResource("copenhagen/images/king.png"));
 			button.setIcon(icon);
 		}
 	}

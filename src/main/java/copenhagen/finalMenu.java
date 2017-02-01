@@ -1,3 +1,5 @@
+package copenhagen;
+
 import java.awt.*;
 import javax.swing.*;
 
