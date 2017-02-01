@@ -60,7 +60,7 @@ public class MainMenu {
 
     class howToPlayListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            new gameRules();
+            new GameRules();
         }
     }
 

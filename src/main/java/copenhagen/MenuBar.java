@@ -41,7 +41,7 @@ public class MenuBar {
     class HelpListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
-            new gameRules();
+            new GameRules();
         }
     }
 

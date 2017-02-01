@@ -79,7 +79,7 @@ public class SideBar {
 
     private class HelpListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            new gameRules();
+            new GameRules();
         }
     }
 

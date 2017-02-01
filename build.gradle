@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'application'
 
-mainClassName = "copenhagen.hnefatafl"
+mainClassName = "copenhagen.Hnefatafl"
 
 repositories {
     mavenCentral()
