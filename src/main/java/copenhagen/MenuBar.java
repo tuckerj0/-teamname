@@ -1,16 +1,18 @@
+package copenhagen;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import javax.swing.*;
 
-public class menuBar {
+public class MenuBar {
 
     JPopupMenu popup;
     JMenuItem menuItem;
     JMenuBar menuBar;
     JMenu menu;
 
-    public menuBar() {
+    public MenuBar() {
         setUpMenuBar();
     }
 
@@ -39,7 +41,7 @@ public class menuBar {
     class HelpListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
-            new gameRules();
+            new GameRules();
         }
     }
 

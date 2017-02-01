@@ -1,9 +1,13 @@
+package copenhagen;
+
 import java.awt.*;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import javax.swing.border.*;
+import javax.imageio.ImageIO;
+import java.io.IOException;
 
-public class gameBoard {
+public class GameBoard {
 
 	int gridSize;
 	Color primaryColor;
@@ -13,7 +17,7 @@ public class gameBoard {
 	private JButton[][] boardSquares;
 	private JPanel board;
 
-	public gameBoard(int size, int[] pc, int[] sc, int[] lc, int[] spc) {
+    public GameBoard(int size, int[] pc, int[] sc, int[] lc, int[] spc) {
 		gridSize = size;
 		primaryColor = new Color(pc[0], pc[1], pc[2]);
 		secondaryColor = new Color(sc[0], sc[1], sc[2]);
@@ -56,22 +60,34 @@ public class gameBoard {
         }
 		return true;
 	}
+
 	public JPanel getBoard(){
 		return board;
 	}
 
 	//If there is a piece in this location it adds it to the button
 	private void addPiece(String pieceName, JButton button) {
-		if (pieceName.equals("black")) {
-			ImageIcon icon = new ImageIcon(getClass().getResource("images/blackpiece.png"));
-			button.setIcon(icon);
-		} else if (pieceName.equals("white")) {
-			ImageIcon icon = new ImageIcon(getClass().getResource("images/whitepiece.png"));
-			button.setIcon(icon);
-		} else if (pieceName.equals("king")) {
-			ImageIcon icon = new ImageIcon(getClass().getResource("images/king.png"));
-			button.setIcon(icon);
-		}
+	    try {
+	        Image img;
+	        ImageIcon icon;
+            if (pieceName.equals("black")) {
+                img = ImageIO.read(getClass().getResource("images/blackpiece.png"));
+                icon = new ImageIcon(img);
+                button.setIcon(icon);
+            } else if (pieceName.equals("white")) {
+                img = ImageIO.read(getClass().getResource("images/whitepiece.png"));
+                icon = new ImageIcon(img);
+                button.setIcon(icon);
+            } else if (pieceName.equals("king")) {
+                img = ImageIO.read(getClass().getResource("images/king.png"));
+                icon = new ImageIcon(img);
+                button.setIcon(icon);
+            }
+        }
+        catch (IOException e) {
+	        System.out.println("Unable to load image of piece. Please try running the program again");
+	        System.exit(1);
+        }
 	}
 
 	//Sets the location of each starting piece

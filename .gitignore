@@ -1,5 +1,7 @@
 .gradle
 *.class
+*.xml
+*.iml
 build/
 
 # Ignore Gradle GUI config

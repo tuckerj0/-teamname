@@ -1,9 +1,11 @@
+package copenhagen;
+
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.util.concurrent.TimeUnit;
 
-public class hnefatafl {
+public class Hnefatafl {
 	private static int choice;
 	private static JFrame frame;
 	private static JPanel board;
@@ -16,7 +18,7 @@ public class hnefatafl {
 	private static int[] specialColor = {88,0,0};
 
 	public static void main(String[] args) {
-		mainMenu start = new mainMenu();
+		MainMenu start = new MainMenu();
 		while (choice == 0) {
 			try {
 				choice = start.getChoice();
@@ -34,11 +36,11 @@ public class hnefatafl {
 	}
 
 	public static void setUpGameBoard() {
-		gameBoard hBoard = new gameBoard(boardSize, primaryColor, secondaryColor, letteringColor, specialColor);
+		GameBoard hBoard = new GameBoard(boardSize, primaryColor, secondaryColor, letteringColor, specialColor);
 		board = hBoard.getBoard();
-		sideBar sBar = new sideBar(primaryColor, secondaryColor, letteringColor);
+		SideBar sBar = new SideBar(primaryColor, secondaryColor, letteringColor);
 		side = sBar.getSideBar();
-        	menuBar menu = new menuBar();
+        	MenuBar menu = new MenuBar();
         	menuBar = menu.getMenuBar();
 	}
 
