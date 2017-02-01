@@ -5,14 +5,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import javax.swing.*;
 
-public class menuBar {
+public class MenuBar {
 
     JPopupMenu popup;
     JMenuItem menuItem;
     JMenuBar menuBar;
     JMenu menu;
 
-    public menuBar() {
+    public MenuBar() {
         setUpMenuBar();
     }
 

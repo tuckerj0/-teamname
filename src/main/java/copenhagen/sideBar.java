@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
 
-public class sideBar {
+public class SideBar {
     public boolean gameSaved;   // anytime a move is made in the game, set this this boolean to false
     private static final int buttonWidth = 100;
     private static final int buttonHeight = 40;
@@ -24,7 +24,7 @@ public class sideBar {
     private JButton exit;
     private JFrame exitWindow;
 
-    public sideBar(int[] pc, int[] sc, int[] lc) {
+    public SideBar(int[] pc, int[] sc, int[] lc) {
         primaryColor = new Color(pc[0], pc[1], pc[2]);
         secondaryColor = new Color(sc[0], sc[1], sc[2]);
         letteringColor = new Color(lc[0], lc[1], lc[2]);

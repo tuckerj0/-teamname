@@ -3,10 +3,10 @@ package copenhagen;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-public class gameRules {
+public class GameRules {
     private JFrame frame;
 
-    public gameRules() {
+    public GameRules() {
         frame = new JFrame();
         JOptionPane.showMessageDialog(frame,
         "1.   Two players may participate. One player plays the king's side, with a king and his defenders, and the other player plays the attackers. There are twelve defenders and twenty-four attackers.\n"

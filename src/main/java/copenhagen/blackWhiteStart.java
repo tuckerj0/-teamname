@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class blackWhiteStart {
+public class BlackWhiteStart {
     JFrame _blackWhiteFrame = new JFrame("Pick a color to start the attack"); // creates frame/window
     JPanel _blackWhitePanel = new JPanel(); // one single flow panel
     JButton _blackButton = new JButton("Black");
@@ -12,7 +12,7 @@ public class blackWhiteStart {
 
     boolean blackStart;
 
-    public blackWhiteStart() {
+    public BlackWhiteStart() {
         _blackWhiteFrame.setSize(400, 400); // width, height
         _blackWhiteFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // what happens when the user closes the window
         // see Window Constants in https://docs.oracle.com/javase/8/docs/api/javax/swing/JFrame.html for more options
@@ -38,10 +38,6 @@ public class blackWhiteStart {
         _blackWhiteFrame.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        new blackWhiteStart();
-    }
-
     // This listener will be called when the black button is clicked
     class BlackListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
@@ -56,6 +52,5 @@ public class blackWhiteStart {
             blackStart = false;
             // TODO: Add code to start game
         }
-
     }
 }

@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.image.BufferedImage;
 import javax.swing.border.*;
 
-public class gameBoard {
+public class GameBoard {
 
 	int gridSize;
 	Color primaryColor;
@@ -15,7 +15,7 @@ public class gameBoard {
 	private JButton[][] boardSquares;
 	private JPanel board;
 
-	public gameBoard(int size, int[] pc, int[] sc, int[] lc, int[] spc) {
+	public GameBoard(int size, int[] pc, int[] sc, int[] lc, int[] spc) {
 		gridSize = size;
 		primaryColor = new Color(pc[0], pc[1], pc[2]);
 		secondaryColor = new Color(sc[0], sc[1], sc[2]);
@@ -58,6 +58,7 @@ public class gameBoard {
         }
 		return true;
 	}
+
 	public JPanel getBoard(){
 		return board;
 	}
@@ -65,14 +66,14 @@ public class gameBoard {
 	//If there is a piece in this location it adds it to the button
 	private void addPiece(String pieceName, JButton button) {
 		if (pieceName.equals("black")) {
-			ImageIcon icon = new ImageIcon(getClass().getResource("copenhagen/images/blackpiece.png"));
-			button.setIcon(icon);
+			//ImageIcon icon = new ImageIcon(getClass().getResource("/src/main/java/copenhagen/images/blackpiece.png"));
+			//button.setIcon(icon);
 		} else if (pieceName.equals("white")) {
-			ImageIcon icon = new ImageIcon(getClass().getResource("copenhagen/images/whitepiece.png"));
-			button.setIcon(icon);
+			//ImageIcon icon = new ImageIcon(getClass().getResource("./images/whitepiece.png"));
+			//button.setIcon(icon);
 		} else if (pieceName.equals("king")) {
-			ImageIcon icon = new ImageIcon(getClass().getResource("copenhagen/images/king.png"));
-			button.setIcon(icon);
+			//ImageIcon icon = new ImageIcon(getClass().getResource("./images/king.png"));
+			//button.setIcon(icon);
 		}
 	}
 

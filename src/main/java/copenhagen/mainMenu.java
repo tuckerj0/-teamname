@@ -6,7 +6,7 @@ import java.awt.event.*;
 
 // load a saved game, access the rules, and change the settings
 
-public class mainMenu {
+public class MainMenu {
     private JFrame _mainMenuFrame = new JFrame("Hnefatafl"); // creates frame/window
     private JPanel _mainMenuPanel = new JPanel();
     private JButton _playerVsButton = new JButton("START GAME!");
@@ -17,7 +17,7 @@ public class mainMenu {
 
     int choice;
 
-    public mainMenu() {
+    public MainMenu() {
     	_mainMenuFrame.setSize(400, 400); // width, height
     	_mainMenuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // what happens when the user closes the window
         // see Window Constants in https://docs.oracle.com/javase/8/docs/api/javax/swing/JFrame.html for more options

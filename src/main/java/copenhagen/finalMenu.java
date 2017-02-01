@@ -3,7 +3,7 @@ package copenhagen;
 import java.awt.*;
 import javax.swing.*;
 
-public class finalMenu {
+public class FinalMenu {
 
     private JFrame menuFrame;
     private JPanel menu;
@@ -12,9 +12,8 @@ public class finalMenu {
     private JButton quitGameBtn;
     private JLabel text;
 
-    public finalMenu() {
-        createMenu();        
-
+    public FinalMenu() {
+        createMenu();
     }
 
     private void createMenu() {
@@ -41,5 +40,4 @@ public class finalMenu {
         menuFrame.setVisible(true);
         menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-
 }
