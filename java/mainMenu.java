@@ -7,10 +7,12 @@ import java.awt.event.*;
 public class mainMenu {
     private JFrame _mainMenuFrame = new JFrame("Hnefatafl"); // creates frame/window
     private JPanel _mainMenuPanel = new JPanel();
-    private JButton _playerVsButton;
-    private JButton _loadGameButton = new JButton("Load Saved Game");
+    private JButton _playerVsButton = new JButton("START GAME!");
+    private JButton _loadGameButton = new JButton("Load Saved Game (Not yet working)");
     private JButton _howToPlayButton =  new JButton("How to Play");
-    private JButton _settingsButton = new JButton("Settings");
+    private JButton _settingsButton = new JButton("Settings (Not yet working)");
+    private JButton _startButton = new JButton("START GAME!");
+
     int choice;
 
     public mainMenu() {
@@ -20,8 +22,10 @@ public class mainMenu {
 
     	_mainMenuPanel.setLayout(new FlowLayout());  // this only needs one button, so layout doesn't matter
         // The FlowLayout will just position the elements one after another, like letters in a line of text.
+
     	_mainMenuFrame.add(_mainMenuPanel);
-        _playerVsButton = new JButton("Player v. Player");
+
+        // adding the buttons that were created earlier
         _playerVsButton.addActionListener(new newGameListener());
         _loadGameButton.addActionListener(new loadGameListener());
         _howToPlayButton.addActionListener(new howToPlayListener());
