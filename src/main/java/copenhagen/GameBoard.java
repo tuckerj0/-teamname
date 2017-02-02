@@ -26,8 +26,13 @@ public class GameBoard {
 		specialColor = new Color(spc[0], spc[1], spc[2]);
 		initializeGUI();
 	}
-
-	//Setup the pieces on the gui for the start of the game
+	/**
+	*Initializes graphical user interface representation of board.
+	*Calls addpiece and setStartingPieces methods.
+	*
+	*@param void
+	*@return true if successful
+	*/
 	public boolean initializeGUI() {
 		board = new JPanel(new GridLayout(gridSize, gridSize));
 		board.setBorder(new LineBorder(Color.BLACK));
@@ -45,7 +50,7 @@ public class GameBoard {
 				addPiece(pieceLocations[i][j],b);
 
 				if ((i==0 && j==0)|| (i==gridSize-1 && j==gridSize-1)|| (i==0 && j==gridSize-1)
-				|| (i==gridSize-1 && j==0) || (i==(gridSize/2) && j==(gridSize/2))){
+					|| (i==gridSize-1 && j==0) || (i==(gridSize/2) && j==(gridSize/2))){
 					b.setBackground(specialColor);
 				} else if ((j % 2 == 1 && i % 2 == 1)|| (j % 2 == 0 && i % 2 == 0)) {
                     b.setBackground(primaryColor);
@@ -97,11 +102,31 @@ public class GameBoard {
 	        System.exit(1);
         }
 	}
-
+	/**
+	*Returns the board location of every piece using a 2D array.
+	*Char value repesents piece type. '0' for no piece, 'w' for white piece,
+	*'b' for black piece, and 'k' for king piece. Location in the array is the location
+	*on the board. First dimension represents row, second dimension represents column.
+	*
+	*@param void
+	*@return 2D array repesenting board pieces and their location
+	*/
+	private char[][] getPieceLocations(){
+		return pieceLocations;
+	}
+	/**
+	*Returns the grid size.
+	*
+	*@param void
+	*@return int representing grid size
+	*/
+	private int getGridSize(){
+		return gridSize;
+	}
 	//Sets the location of each starting piece
 	private char[][] setStartingPieces() {
 		char[][] s = new char [gridSize][gridSize];
-		//Initialize to empty String
+		//Initialize to null char
 		for (int i = 0; i < s.length; i++) {
             for (int j = 0; j < s[i].length; j++) {
 				s[i][j] = '0';
@@ -119,6 +144,6 @@ public class GameBoard {
 
 			s[5][5] = 'k';
 		}
-		return s;
+	return s;
 	}
 }
