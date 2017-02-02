@@ -16,7 +16,7 @@ public class GameBoard {
 	Color specialColor; //color of the center and corners
 	private JButton[][] boardSquares;
 	private JPanel board;
-	char[][] pieceLocations;
+	private char[][] pieceLocations;
 
     public GameBoard(int size, int[] pc, int[] sc, int[] lc, int[] spc) {
 		gridSize = size;
@@ -68,8 +68,14 @@ public class GameBoard {
 		return true;
 	}
 
+	//returns the gameboard
 	public JPanel getBoard(){
 		return board;
+	}
+
+	//returns array with locations of pieces on board
+	public char[][] getLayout(){
+		return pieceLocations;
 	}
 
 	//If there is a piece in this location it adds it to the button
@@ -138,6 +144,6 @@ public class GameBoard {
 
 			s[5][5] = 'k';
 		}
-		return s;
+	return s;
 	}
 }
