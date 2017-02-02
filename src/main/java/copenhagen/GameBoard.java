@@ -73,10 +73,6 @@ public class GameBoard {
 		return board;
 	}
 
-	//returns array with locations of pieces on board
-	public char[][] getLayout(){
-		return pieceLocations;
-	}
 
 	//If there is a piece in this location it adds it to the button
 	private void addPiece(char pieceName, JButton button) {
@@ -111,7 +107,7 @@ public class GameBoard {
 	*@param void
 	*@return 2D array repesenting board pieces and their location
 	*/
-	private char[][] getPieceLocations(){
+	public char[][] getPieceLocations(){
 		return pieceLocations;
 	}
 	/**
@@ -120,7 +116,7 @@ public class GameBoard {
 	*@param void
 	*@return int representing grid size
 	*/
-	private int getGridSize(){
+	public int getGridSize(){
 		return gridSize;
 	}
 	//Sets the location of each starting piece
@@ -144,6 +140,6 @@ public class GameBoard {
 
 			s[5][5] = 'k';
 		}
-	return s;
+		return s;
 	}
 }

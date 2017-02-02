@@ -8,6 +8,7 @@ import java.io.*;
 import java.io.IOException;
 import java.io.FileReader;
 import java.io.BufferedReader;
+import java.io.File;
 
 public class Hnefatafl {
 	private static int choice;
@@ -19,6 +20,7 @@ public class Hnefatafl {
 	private static int boardSize = 11;
 	private static int turnCount = 0;
 	private static char turn = 'b';
+	private static GameBoard hBoard;
 	private static int[] primaryColor = {244,164,96};
 	private static int[] secondaryColor = {139,69,19};
 	private static int[] letteringColor = {0,0,0};
@@ -44,9 +46,9 @@ public class Hnefatafl {
 	}
 
 	public static void setUpGameBoard() {
-		GameBoard hBoard = new GameBoard(boardSize, primaryColor, secondaryColor, letteringColor, specialColor);
+		hBoard = new GameBoard(boardSize, primaryColor, secondaryColor, letteringColor, specialColor);
 		board = hBoard.getBoard();
-		pieceLayout = hBoard.getLayout();
+		pieceLayout = hBoard.getPieceLocations();
 		SideBar sBar = new SideBar(primaryColor, secondaryColor, letteringColor);
 		side = sBar.getSideBar();
         MenuBar menu = new MenuBar();
@@ -74,15 +76,35 @@ public class Hnefatafl {
 	/**
 	*Saves present game to save file.
 	*
-	*@param String ame of file
+	*@param void
 	*@return true if successful
 	*/
-	public static boolean saveGame(String fileName){
+	public static boolean saveGame(){
 		PrintWriter writer = null;
+		File game = new File("this.hfn");
 		try{
-			writer = new PrintWriter(""+fileName+".hnf", "UTF-8");
-			writer.println("hnefatafl one");
-			writer.println("hnefatafl two");
+			
+			JFrame parentFrame = new JFrame();
+ 
+			JFileChooser fileChooser = new JFileChooser();
+			fileChooser.setDialogTitle("Save file");   
+ 
+			int userSelection = fileChooser.showSaveDialog(parentFrame);
+ 
+			if (userSelection == JFileChooser.APPROVE_OPTION) {
+				game = fileChooser.getSelectedFile();
+				System.out.println("Save as file: " + game.getAbsolutePath());
+				writer = new PrintWriter(game, "UTF-8");
+				writer.println(turnCount);
+				writer.println(turn);
+				char[][] layout = hBoard.getPieceLocations();
+				int size = hBoard.getGridSize();
+				for(int i = 0; i < size; i++){
+					for(int j = 0; j < size; j++){
+						writer.print(layout[i][j]);
+					}
+				}
+			} 
 		} catch (IOException e) {
 		   return false;
 		}
@@ -102,13 +124,19 @@ public class Hnefatafl {
 	*returns int representing status code. 0 is success, 1 is failure,
 	*2 is failure due to incorrect extension.
 	*
-	*@param Strign name of file
+	*@param String name of file
 	*@return int representing status code.
 	*/
-	public static int loadGame(String fileName){
+	public static int loadGame(){
 		BufferedReader br = null;
 		FileReader fr = null;
+		File fileName = null;
 		try {
+			JFileChooser fileChooser = new JFileChooser();
+			int returnValue = fileChooser.showOpenDialog(null);
+			if (returnValue == JFileChooser.APPROVE_OPTION) {
+				fileName = fileChooser.getSelectedFile();
+			}
 			fr = new FileReader(fileName);
 			br = new BufferedReader(fr);
 			String currentLine;
