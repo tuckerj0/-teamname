@@ -11,11 +11,12 @@ public class Hnefatafl {
 	private static JPanel board;
 	private static JPanel side;
 	private static JMenuBar menuBar;
+	private static char[][] pieceLayout;
 	private static int boardSize = 11;
 	private static int[] primaryColor = {244,164,96};
 	private static int[] secondaryColor = {139,69,19};
 	private static int[] letteringColor = {0,0,0};
-	private static int[] specialColor = {88,0,0};
+	private static int[] specialColor = {0,0,88};
 
 	public static void main(String[] args) {
 		MainMenu start = new MainMenu();
@@ -38,10 +39,11 @@ public class Hnefatafl {
 	public static void setUpGameBoard() {
 		GameBoard hBoard = new GameBoard(boardSize, primaryColor, secondaryColor, letteringColor, specialColor);
 		board = hBoard.getBoard();
+		pieceLayout = hBoard.getLayout();
 		SideBar sBar = new SideBar(primaryColor, secondaryColor, letteringColor);
 		side = sBar.getSideBar();
-        	MenuBar menu = new MenuBar();
-        	menuBar = menu.getMenuBar();
+        MenuBar menu = new MenuBar();
+        menuBar = menu.getMenuBar();
 	}
 
 	public static void displayGameBoard() {
