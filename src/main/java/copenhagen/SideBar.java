@@ -49,6 +49,7 @@ public class SideBar {
 
         loadGame = new JButton("Load Game");
         styleButton(loadGame, midGap);
+		loadGame.addActionListener(new loadListener());
 
         help = new JButton("Help");
         styleButton(help, midGap);
@@ -72,15 +73,16 @@ public class SideBar {
 
     private class SaveListener implements ActionListener {
        public void actionPerformed(ActionEvent e) {
-           // TODO: save the game and ask where to save it and what to name the file if first save
-           gameSaved = true;
-       }
+			// TODO: save the game and ask where to save it and what to name the file if first save
+			Hnefatafl.saveGame();
+		}
     }
 	
 	private class loadListener implements ActionListener {
        public void actionPerformed(ActionEvent e) {
            // TODO: load the game and ask where to load it from
-           gameSaved = true;
+		   Hnefatafl.loadGame();
+           
        }
     }
 
@@ -109,4 +111,6 @@ public class SideBar {
     public JPanel getSideBar() {
         return side;
     }
+	
+  
 }
