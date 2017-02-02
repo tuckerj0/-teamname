@@ -76,6 +76,13 @@ public class SideBar {
            gameSaved = true;
        }
     }
+	
+	private class loadListener implements ActionListener {
+       public void actionPerformed(ActionEvent e) {
+           // TODO: load the game and ask where to load it from
+           gameSaved = true;
+       }
+    }
 
     private class HelpListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
