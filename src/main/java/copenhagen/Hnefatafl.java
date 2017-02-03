@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.File;
+import javax.swing.filechooser.*;
 
 public class Hnefatafl {
 	private static int choice;
@@ -81,12 +82,14 @@ public class Hnefatafl {
 	*/
 	public static boolean saveGame(){
 		PrintWriter writer = null;
-		File game = new File("this.hfn");
+		File game = null;
 		try{
 			
 			JFrame parentFrame = new JFrame();
  
 			JFileChooser fileChooser = new JFileChooser();
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("hnef","hnef");
+			fileChooser.setFileFilter(filter);
 			fileChooser.setDialogTitle("Save file");   
  
 			int userSelection = fileChooser.showSaveDialog(parentFrame);
@@ -120,7 +123,8 @@ public class Hnefatafl {
 		return true;
 	}
 	/**
-	*Loads game from file. Must have .hfn extension.
+	*Loads game from file. Must have .hnef extension.Validates game file
+	*is legal.
 	*returns int representing status code. 0 is success, 1 is failure,
 	*2 is failure due to incorrect extension.
 	*
@@ -131,18 +135,42 @@ public class Hnefatafl {
 		BufferedReader br = null;
 		FileReader fr = null;
 		File fileName = null;
+		int savedTurnCount;
+		char savedCurrentTurn;
+		String savedLayout;
 		try {
 			JFileChooser fileChooser = new JFileChooser();
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("hnef","hnef");
+			fileChooser.setFileFilter(filter);
 			int returnValue = fileChooser.showOpenDialog(null);
 			if (returnValue == JFileChooser.APPROVE_OPTION) {
 				fileName = fileChooser.getSelectedFile();
+			}
+			String extension = ""; 									// checking file extension. Must be .hnef
+			String name = fileName.toString();
+			int i = name.lastIndexOf('.');
+			if (i > 0) {
+				extension = name.substring(i + 1);
+			}
+			if(!extension.equals("hnef")){						// checking file extension. Must be .hnef
+				return 2;
 			}
 			fr = new FileReader(fileName);
 			br = new BufferedReader(fr);
 			String currentLine;
 			br = new BufferedReader(new FileReader(fileName));
+			i = 0;
 			while ((currentLine = br.readLine()) != null) {
-				System.out.println(currentLine);
+				if(i == 0){
+					savedTurnCount = Integer.parseInt(currentLine);
+				}
+				else if(i == 1){
+					savedCurrentTurn = currentLine.charAt(0);
+				}
+				else if(i == 2){
+					savedLayout = currentLine;
+				}
+				i++;
 			}
 		} catch (IOException e) {
 			return 1;
@@ -156,6 +184,7 @@ public class Hnefatafl {
 				return 1;
 			}
 		}
-		return 1;
+		return 0;
 	}
+	
 }
