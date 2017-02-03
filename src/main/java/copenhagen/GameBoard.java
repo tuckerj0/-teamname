@@ -87,11 +87,23 @@ public class GameBoard {
         }
 		return true;
 	}
-	
+	/**
+	*Sets button at location col/row to highlight color
+	*
+	*@param int representing column
+	*@param int representing row
+	*@return void
+	*/
 	public void highlightButton(int col, int row){
 		boardSquares[col][row].setBackground(highlight);
 	}
-	
+	/**
+	*Sets button at location col/row to normal color
+	*
+	*@param int representing column
+	*@param int representing row
+	*@return void
+	*/
 	public void unhighlightButton(int col, int row){
 		if((col % 2 == 1 && row % 2 == 1) || (col % 2 == 0 && row % 2 == 0)){
 			boardSquares[col][row].setBackground(primaryColor);
