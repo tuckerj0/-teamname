@@ -114,6 +114,7 @@ public class Hnefatafl {
 			System.out.println("Image Didn't Load");
 			System.exit(1);
 		}
+		hBoard.unhighlightButton(1,1);
 	}
 
 	public static void selectNew(JButton clickedOn,int c, int r){
@@ -144,6 +145,7 @@ public class Hnefatafl {
 			System.out.println("Image Didn't Load");
 			System.exit(1);
 		}
+		hBoard.highlightButton(1,1);
 	}
 
 	/**
