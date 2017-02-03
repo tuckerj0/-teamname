@@ -68,9 +68,9 @@ public class Hnefatafl {
 		frame.add(side, BorderLayout.EAST);
 		/* Add Menu bar at top of JFrame*/
 		frame.setJMenuBar(menuBar);
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.pack();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
 	}
 	/**
 	*
