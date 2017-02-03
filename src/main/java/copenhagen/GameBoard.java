@@ -11,6 +11,7 @@ import java.awt.event.*;
 public class GameBoard {
 
 	int gridSize;
+	Color highlight = new Color(255,0,0);
 	Color primaryColor;
 	Color secondaryColor;
 	Color letteringColor;
@@ -62,6 +63,8 @@ public class GameBoard {
                 JButton b = new JButton();
                 b.setMargin(buttonMargin);
                 b.setPreferredSize(new Dimension(64, 64));
+				b.setMaximumSize(new Dimension(64, 64));
+				b.setMinimumSize(new Dimension(64, 64));
 				b.addActionListener(new squareClickedListener());
 
 				addPiece(pieceLocations[i][j],b);
@@ -69,7 +72,7 @@ public class GameBoard {
 				if ((i==0 && j==0)|| (i==gridSize-1 && j==gridSize-1)|| (i==0 && j==gridSize-1)
 					|| (i==gridSize-1 && j==0) || (i==(gridSize/2) && j==(gridSize/2))){
 					b.setBackground(specialColor);
-				} else if ((j % 2 == 1 && i % 2 == 1)|| (j % 2 == 0 && i % 2 == 0)) {
+				} else if ((j % 2 == 1 && i % 2 == 1) || (j % 2 == 0 && i % 2 == 0)) {
                     b.setBackground(primaryColor);
                 } else {
                     b.setBackground(secondaryColor);
@@ -84,7 +87,19 @@ public class GameBoard {
         }
 		return true;
 	}
-
+	
+	public void highlightButton(int col, int row){
+		boardSquares[col][row].setBackground(highlight);
+	}
+	
+	public void unhighlightButton(int col, int row){
+		if((col % 2 == 1 && row % 2 == 1) || (col % 2 == 0 && row % 2 == 0)){
+			boardSquares[col][row].setBackground(primaryColor);
+		}
+		else{
+			boardSquares[col][row].setBackground(secondaryColor);
+		}
+	}
 
 	//returns the gameboard
 	public JPanel getBoard(){
@@ -155,7 +170,7 @@ public class GameBoard {
 
 			s[3][5] = s[4][4] = s[4][5] = s[4][6] = s[5][3] = s[5][4] = 'w';
 			s[5][6] = s[5][7] = s[6][4] = s[6][5] = s[6][6] = s[7][5] = 'w';
-
+			s[0][0] = s[0][10] = s[10][0] = s[10][10] = s[5][5] = 'c';
 			s[5][5] = 'k';
 		}
 		return s;
