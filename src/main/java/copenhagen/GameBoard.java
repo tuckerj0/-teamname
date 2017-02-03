@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.border.*;
 import javax.imageio.ImageIO;
 import java.io.IOException;
+import java.awt.event.*;
 
 public class GameBoard {
 
@@ -26,6 +27,21 @@ public class GameBoard {
 		specialColor = new Color(spc[0], spc[1], spc[2]);
 		initializeGUI();
 	}
+
+	//Listens for square on gameboard to be clicked then sends row and colum to squareClicked()
+	class squareClickedListener implements  ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			Object source = e.getSource();
+			for (int i = 0; i < boardSquares.length; i++) {
+			 	for (int j = 0; j < boardSquares.length; j++) {
+			    	if (source == boardSquares[i][j]) {
+						Hnefatafl.squareClicked(i,j,boardSquares[i][j]);
+			     	}
+			   }
+			}
+		}
+	}
+
 	/**
 	*Initializes graphical user interface representation of board.
 	*Calls addpiece and setStartingPieces methods.
@@ -46,6 +62,7 @@ public class GameBoard {
                 JButton b = new JButton();
                 b.setMargin(buttonMargin);
                 b.setPreferredSize(new Dimension(64, 64));
+				b.addActionListener(new squareClickedListener());
 
 				addPiece(pieceLocations[i][j],b);
 
@@ -67,6 +84,7 @@ public class GameBoard {
         }
 		return true;
 	}
+
 
 	//returns the gameboard
 	public JPanel getBoard(){

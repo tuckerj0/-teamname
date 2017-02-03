@@ -10,6 +10,8 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.File;
 import javax.swing.filechooser.*;
+import java.awt.event.*;
+import javax.imageio.ImageIO;
 
 public class Hnefatafl {
 	private static int choice;
@@ -26,6 +28,8 @@ public class Hnefatafl {
 	private static int[] secondaryColor = {139,69,19};
 	private static int[] letteringColor = {0,0,0};
 	private static int[] specialColor = {0,0,88};
+	private static int[] selectedLoc = {-1,-1};
+	private static JButton selected;
 
 	public static void main(String[] args) {
 		MainMenu start = new MainMenu();
@@ -72,8 +76,76 @@ public class Hnefatafl {
 	*
 	*/
 	public static void playGame(){
-	
 	}
+
+	/**called whenever a square is clicked on the board
+	*@param c column of square clicked
+	*@param r row of square clicked
+	**/
+	public static void squareClicked(int c, int r, JButton clickedOn){
+		unselectLast();
+		if(c != selectedLoc[0] || r != selectedLoc[1]){
+			selectNew(clickedOn,c,r);
+		}
+	}
+
+	public static void unselectLast(){
+		if(selectedLoc[0] == -1){
+			return;
+		}
+		char piece = pieceLayout[selectedLoc[0]][selectedLoc[1]];
+		try {
+			Image img;
+			ImageIcon icon;
+			if(piece == 'b'){
+				img = ImageIO.read(Hnefatafl.class.getResource("images/blackpiece.png"));
+				icon = new ImageIcon(img);
+				selected.setIcon(icon);
+			}else if(piece == 'w'){
+				img = ImageIO.read(Hnefatafl.class.getResource("images/whitePiece.png"));
+				icon = new ImageIcon(img);
+				selected.setIcon(icon);
+			}else if(piece == 'k'){
+				img = ImageIO.read(Hnefatafl.class.getResource("images/king.png"));
+				icon = new ImageIcon(img);
+				selected.setIcon(icon);
+			}
+		} catch (IOException e) {
+			System.out.println("Image Didn't Load");
+			System.exit(1);
+		}
+	}
+
+	public static void selectNew(JButton clickedOn,int c, int r){
+		char piece = pieceLayout[c][r];
+		try {
+			selectedLoc[0] = c;
+			selectedLoc[1] = r;
+			selected = clickedOn;
+			Image img;
+			ImageIcon icon;
+			if(piece == 'b'){
+				img = ImageIO.read(Hnefatafl.class.getResource("images/blackpieceSelected.png"));
+				icon = new ImageIcon(img);
+				clickedOn.setIcon(icon);
+			}else if(piece == 'w'){
+				img = ImageIO.read(Hnefatafl.class.getResource("images/whitepieceSelected.png"));
+				icon = new ImageIcon(img);
+				clickedOn.setIcon(icon);
+			}else if(piece == 'k'){
+				img = ImageIO.read(Hnefatafl.class.getResource("images/kingSelected.png"));
+				icon = new ImageIcon(img);
+				clickedOn.setIcon(icon);
+			}else{
+				selectedLoc[0] = -1;
+				selectedLoc[1] = -1;
+			}
+		} catch (IOException e) {
+			System.out.println("Image Didn't Load");
+			System.exit(1);
+		}
+	}
+
 	/**
 	*Saves present game to save file.
 	*
@@ -84,16 +156,15 @@ public class Hnefatafl {
 		PrintWriter writer = null;
 		File game = null;
 		try{
-			
+
 			JFrame parentFrame = new JFrame();
- 
+
 			JFileChooser fileChooser = new JFileChooser();
 			FileNameExtensionFilter filter = new FileNameExtensionFilter("hnef","hnef");
 			fileChooser.setFileFilter(filter);
-			fileChooser.setDialogTitle("Save file");   
- 
+			fileChooser.setDialogTitle("Save file");
 			int userSelection = fileChooser.showSaveDialog(parentFrame);
- 
+
 			if (userSelection == JFileChooser.APPROVE_OPTION) {
 				game = fileChooser.getSelectedFile();
 				System.out.println("Save as file: " + game.getAbsolutePath());
@@ -107,7 +178,7 @@ public class Hnefatafl {
 						writer.print(layout[i][j]);
 					}
 				}
-			} 
+			}
 		} catch (IOException e) {
 		   return false;
 		}
@@ -186,5 +257,5 @@ public class Hnefatafl {
 		}
 		return 0;
 	}
-	
+
 }
