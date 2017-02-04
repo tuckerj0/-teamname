@@ -13,7 +13,6 @@ public class MainMenu {
     private JButton _loadGameButton = new JButton("Load Saved Game (Not yet working)");
     private JButton _howToPlayButton =  new JButton("How to Play");
     private JButton _settingsButton = new JButton("Settings (Not yet working)");
-    private JButton _startButton = new JButton("START GAME!");
 
     int choice;
 
@@ -49,6 +48,7 @@ public class MainMenu {
     private class newGameListener implements  ActionListener {
         public void actionPerformed(ActionEvent e) {
             choice = 1;
+            _mainMenuFrame.dispose();
         }
     }
 

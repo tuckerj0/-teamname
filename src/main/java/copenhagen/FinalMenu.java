@@ -37,6 +37,7 @@ public class FinalMenu {
 
 
     public void showMenu() {
+        menuFrame.pack();
         menuFrame.setVisible(true);
         menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
