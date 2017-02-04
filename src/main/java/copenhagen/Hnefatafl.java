@@ -30,6 +30,7 @@ public class Hnefatafl {
 	private static int[] specialColor = {0,0,88};
 	private static int[] selectedLoc = {-1,-1};
 	private static JButton selected;
+	private static boolean pieceIsSelected = false;
 
 	public static void main(String[] args) {
 		MainMenu start = new MainMenu();
@@ -84,28 +85,60 @@ public class Hnefatafl {
 	**/
 	public static void squareClicked(int c, int r, JButton clickedOn){
 		unselectLast();
-		if(c != selectedLoc[0] || r != selectedLoc[1]){
-			selectNew(clickedOn,c,r);
+		char chosenSquaresPiece = pieceLayout[c][r];
+		System.out.println((chosenSquaresPiece == '0') + "|" + pieceIsSelected);
+		if(chosenSquaresPiece == '0' && pieceIsSelected){
+			movePiece(c,r);
+		}
+		selectNew(clickedOn,c,r);
+	}
+
+	/**Try to move the selected piece (selectedLoc)
+	*To the square that was clicked on
+	*@param c column theyre trying to move to
+	*@param r row theyre trying to move to
+	**/
+	public static void movePiece(int c, int r){
+		boolean[][] validMoves = getValidMoves(selectedLoc[0],selectedLoc[1]);
+		if(validMoves[c][r] == true){
+			movePieceOnBoard(selectedLoc[0],selectedLoc[1],c,r);
+		}else{
+			JOptionPane.showMessageDialog(null, "Invalid Move");
 		}
 	}
 
+	//move piece from startRow/Col to destRow/Col
+	public static movePieceOnBoard(int startRow,int startCol,int destRow, int destCol){
+		//TODO complete this method
+	}
+
+	/**
+	*finds where a piece is allowed to move based on the rules of the game
+	*@return a boolean array mathing the gambaord with true values on all of the spaces a piece from row and column can move
+	**/
+	public static bool getValidMoves(int row, int col){
+		boolean[][] validSpaces = new boolean[boardSize][boardSize];
+		//TODO find valid spaces and set to true
+		return validSpaces;
+	}
+
 	public static void unselectLast(){
-		if(selectedLoc[0] == -1){
+		if(!pieceIsSelected){
 			return;
 		}
-		char piece = pieceLayout[selectedLoc[0]][selectedLoc[1]];
+		char pieceType = pieceLayout[selectedLoc[0]][selectedLoc[1]];
 		try {
 			Image img;
 			ImageIcon icon;
-			if(piece == 'b'){
+			if(pieceType == 'b'){
 				img = ImageIO.read(Hnefatafl.class.getResource("images/blackpiece.png"));
 				icon = new ImageIcon(img);
 				selected.setIcon(icon);
-			}else if(piece == 'w'){
+			}else if(pieceType == 'w'){
 				img = ImageIO.read(Hnefatafl.class.getResource("images/whitePiece.png"));
 				icon = new ImageIcon(img);
 				selected.setIcon(icon);
-			}else if(piece == 'k'){
+			}else if(pieceType == 'k'){
 				img = ImageIO.read(Hnefatafl.class.getResource("images/king.png"));
 				icon = new ImageIcon(img);
 				selected.setIcon(icon);
@@ -125,6 +158,7 @@ public class Hnefatafl {
 			selected = clickedOn;
 			Image img;
 			ImageIcon icon;
+			pieceIsSelected = true;
 			if(piece == 'b'){
 				img = ImageIO.read(Hnefatafl.class.getResource("images/blackpieceSelected.png"));
 				icon = new ImageIcon(img);
@@ -138,8 +172,7 @@ public class Hnefatafl {
 				icon = new ImageIcon(img);
 				clickedOn.setIcon(icon);
 			}else{
-				selectedLoc[0] = -1;
-				selectedLoc[1] = -1;
+				pieceIsSelected = false;
 			}
 		} catch (IOException e) {
 			System.out.println("Image Didn't Load");
