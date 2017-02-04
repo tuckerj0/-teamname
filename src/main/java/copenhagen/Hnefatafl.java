@@ -12,6 +12,7 @@ import java.io.File;
 import javax.swing.filechooser.*;
 import java.awt.event.*;
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
 
 public class Hnefatafl {
 	private static int choice;
@@ -30,6 +31,7 @@ public class Hnefatafl {
 	private static int[] specialColor = {0,0,88};
 	private static int[] selectedLoc = {-1,-1};
 	private static JButton selected;
+	private static boolean pieceIsSelected = false;
 
 	public static void main(String[] args) {
 		MainMenu start = new MainMenu();
@@ -84,28 +86,123 @@ public class Hnefatafl {
 	**/
 	public static void squareClicked(int c, int r, JButton clickedOn){
 		unselectLast();
-		if(c != selectedLoc[0] || r != selectedLoc[1]){
-			selectNew(clickedOn,c,r);
+		char chosenSquaresPiece = pieceLayout[c][r];
+		if((chosenSquaresPiece == '0' || chosenSquaresPiece == 'c') && pieceIsSelected){
+			movePiece(c,r);
+		}
+		selectNew(clickedOn,c,r);
+	}
+
+	/**Try to move the selected piece (selectedLoc)
+	*To the square that was clicked on
+	*@param c column theyre trying to move to
+	*@param r row theyre trying to move to
+	**/
+	public static void movePiece(int c, int r){
+		boolean[][] validMoves = getValidMoves(selectedLoc[0],selectedLoc[1]);
+		if(validMoves[c][r] == true){
+			movePieceOnBoard(selectedLoc[0],selectedLoc[1],c,r);
+		}else{
+			JOptionPane.showMessageDialog(null, "Invalid Move");
 		}
 	}
 
-	public static void unselectLast(){
-		if(selectedLoc[0] == -1){
-			return;
+	//move piece from startRow/Col to destRow/Col
+	public static void movePieceOnBoard(int startCol,int startRow,int destCol, int destRow){
+		//update gameboard array
+		char pieceType = pieceLayout[startCol][startRow];
+		if ((startCol==0 && startRow==0) ||
+			(startCol==boardSize-1 && startRow==boardSize-1) ||
+			(startCol==0 && startRow==boardSize-1) ||
+			(startCol==boardSize-1 && startRow==0)){
+			pieceLayout[startCol][startRow] = 'c';
+		}else{
+			pieceLayout[startCol][startRow] = '0';
 		}
-		char piece = pieceLayout[selectedLoc[0]][selectedLoc[1]];
+		pieceLayout[destCol][destRow] = pieceType;
+
+		//update gameboard gui
+		JButton sButton = hBoard.getButtonByLocation(startCol,startRow);
+		sButton.setIcon(null);
+
+		JButton dButton = hBoard.getButtonByLocation(destCol,destRow);
 		try {
 			Image img;
 			ImageIcon icon;
-			if(piece == 'b'){
+			if(pieceType == 'b'){
+				img = ImageIO.read(Hnefatafl.class.getResource("images/blackpiece.png"));
+				icon = new ImageIcon(img);
+				dButton.setIcon(icon);
+			}else if(pieceType == 'w'){
+				img = ImageIO.read(Hnefatafl.class.getResource("images/whitePiece.png"));
+				icon = new ImageIcon(img);
+				dButton.setIcon(icon);
+			}else if(pieceType == 'k'){
+				img = ImageIO.read(Hnefatafl.class.getResource("images/king.png"));
+				icon = new ImageIcon(img);
+				dButton.setIcon(icon);
+			}
+		} catch (IOException e) {
+			System.out.println("Image Didn't Load");
+			System.exit(1);
+		}
+	}
+
+	/**
+	*finds where a piece is allowed to move based on the rules of the game
+	*@return a boolean array mathing the gambaord with true values on all of the spaces a piece from row and column can move
+	**/
+	public static boolean[][] getValidMoves(int col, int row){
+		boolean[][] validSpaces = new boolean[boardSize][boardSize];
+		for(int i=col+1; i<boardSize; i++){//check move right
+			if((pieceLayout[i][row] == '0') || (pieceLayout[i][row] == 'c')){
+				validSpaces[i][row] = true;
+			}else{
+				break;
+			}
+		}
+		for(int i=col-1; i>=0; i--){//check move left
+			if((pieceLayout[i][row] == '0') || (pieceLayout[i][row] == 'c')){
+				validSpaces[i][row] = true;
+			}else{
+				break;
+			}
+		}
+		for(int i=row+1; i<boardSize; i++){//check move down
+			if((pieceLayout[col][i] == '0') || (pieceLayout[col][i] == 'c')){
+				validSpaces[col][i] = true;
+			}else{
+				break;
+			}
+		}
+		for(int i=row-1; i>=0; i--){//check move up
+			if((pieceLayout[col][i] == '0') || (pieceLayout[col][i] == 'c')){
+				validSpaces[col][i] = true;
+			}else{
+				break;
+			}
+		}
+		return validSpaces;
+	}
+
+	//unselects the previous piece when a new piece is selected
+	public static void unselectLast(){
+		if(!pieceIsSelected){
+			return;
+		}
+		char pieceType = pieceLayout[selectedLoc[0]][selectedLoc[1]];
+		try {
+			Image img;
+			ImageIcon icon;
+			if(pieceType == 'b'){
 				img = ImageIO.read(Hnefatafl.class.getResource("images/blackpiece.png"));
 				icon = new ImageIcon(img);
 				selected.setIcon(icon);
-			}else if(piece == 'w'){
+			}else if(pieceType == 'w'){
 				img = ImageIO.read(Hnefatafl.class.getResource("images/whitePiece.png"));
 				icon = new ImageIcon(img);
 				selected.setIcon(icon);
-			}else if(piece == 'k'){
+			}else if(pieceType == 'k'){
 				img = ImageIO.read(Hnefatafl.class.getResource("images/king.png"));
 				icon = new ImageIcon(img);
 				selected.setIcon(icon);
@@ -117,6 +214,7 @@ public class Hnefatafl {
 		hBoard.unhighlightButton(1,1);
 	}
 
+	//Sets a new piece to the selected piece
 	public static void selectNew(JButton clickedOn,int c, int r){
 		char piece = pieceLayout[c][r];
 		try {
@@ -125,6 +223,7 @@ public class Hnefatafl {
 			selected = clickedOn;
 			Image img;
 			ImageIcon icon;
+			pieceIsSelected = true;
 			if(piece == 'b'){
 				img = ImageIO.read(Hnefatafl.class.getResource("images/blackpieceSelected.png"));
 				icon = new ImageIcon(img);
@@ -138,8 +237,7 @@ public class Hnefatafl {
 				icon = new ImageIcon(img);
 				clickedOn.setIcon(icon);
 			}else{
-				selectedLoc[0] = -1;
-				selectedLoc[1] = -1;
+				pieceIsSelected = false;
 			}
 		} catch (IOException e) {
 			System.out.println("Image Didn't Load");
