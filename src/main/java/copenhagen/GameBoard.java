@@ -43,6 +43,10 @@ public class GameBoard {
 		}
 	}
 
+	public JButton getButtonByLocation(int col, int row){
+		return boardSquares[col][row];
+	}
+
 	/**
 	*Initializes graphical user interface representation of board.
 	*Calls addpiece and setStartingPieces methods.

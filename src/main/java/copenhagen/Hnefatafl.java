@@ -12,6 +12,7 @@ import java.io.File;
 import javax.swing.filechooser.*;
 import java.awt.event.*;
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
 
 public class Hnefatafl {
 	private static int choice;
@@ -86,8 +87,7 @@ public class Hnefatafl {
 	public static void squareClicked(int c, int r, JButton clickedOn){
 		unselectLast();
 		char chosenSquaresPiece = pieceLayout[c][r];
-		System.out.println((chosenSquaresPiece == '0') + "|" + pieceIsSelected);
-		if(chosenSquaresPiece == '0' && pieceIsSelected){
+		if((chosenSquaresPiece == '0' || chosenSquaresPiece == 'c') && pieceIsSelected){
 			movePiece(c,r);
 		}
 		selectNew(clickedOn,c,r);
@@ -108,20 +108,84 @@ public class Hnefatafl {
 	}
 
 	//move piece from startRow/Col to destRow/Col
-	public static movePieceOnBoard(int startRow,int startCol,int destRow, int destCol){
-		//TODO complete this method
+	public static void movePieceOnBoard(int startCol,int startRow,int destCol, int destRow){
+		//update gameboard array
+		char pieceType = pieceLayout[startCol][startRow];
+		if ((startCol==0 && startRow==0) ||
+			(startCol==boardSize-1 && startRow==boardSize-1) ||
+			(startCol==0 && startRow==boardSize-1) ||
+			(startCol==boardSize-1 && startRow==0)){
+			pieceLayout[startCol][startRow] = 'c';
+		}else{
+			pieceLayout[startCol][startRow] = '0';
+		}
+		pieceLayout[destCol][destRow] = pieceType;
+
+		//update gameboard gui
+		JButton sButton = hBoard.getButtonByLocation(startCol,startRow);
+		sButton.setIcon(null);
+
+		JButton dButton = hBoard.getButtonByLocation(destCol,destRow);
+		try {
+			Image img;
+			ImageIcon icon;
+			if(pieceType == 'b'){
+				img = ImageIO.read(Hnefatafl.class.getResource("images/blackpiece.png"));
+				icon = new ImageIcon(img);
+				dButton.setIcon(icon);
+			}else if(pieceType == 'w'){
+				img = ImageIO.read(Hnefatafl.class.getResource("images/whitePiece.png"));
+				icon = new ImageIcon(img);
+				dButton.setIcon(icon);
+			}else if(pieceType == 'k'){
+				img = ImageIO.read(Hnefatafl.class.getResource("images/king.png"));
+				icon = new ImageIcon(img);
+				dButton.setIcon(icon);
+			}
+		} catch (IOException e) {
+			System.out.println("Image Didn't Load");
+			System.exit(1);
+		}
 	}
 
 	/**
 	*finds where a piece is allowed to move based on the rules of the game
 	*@return a boolean array mathing the gambaord with true values on all of the spaces a piece from row and column can move
 	**/
-	public static bool getValidMoves(int row, int col){
+	public static boolean[][] getValidMoves(int col, int row){
 		boolean[][] validSpaces = new boolean[boardSize][boardSize];
-		//TODO find valid spaces and set to true
+		for(int i=col+1; i<boardSize; i++){//check move right
+			if((pieceLayout[i][row] == '0') || (pieceLayout[i][row] == 'c')){
+				validSpaces[i][row] = true;
+			}else{
+				break;
+			}
+		}
+		for(int i=col-1; i>=0; i--){//check move left
+			if((pieceLayout[i][row] == '0') || (pieceLayout[i][row] == 'c')){
+				validSpaces[i][row] = true;
+			}else{
+				break;
+			}
+		}
+		for(int i=row+1; i<boardSize; i++){//check move down
+			if((pieceLayout[col][i] == '0') || (pieceLayout[col][i] == 'c')){
+				validSpaces[col][i] = true;
+			}else{
+				break;
+			}
+		}
+		for(int i=row-1; i>=0; i--){//check move up
+			if((pieceLayout[col][i] == '0') || (pieceLayout[col][i] == 'c')){
+				validSpaces[col][i] = true;
+			}else{
+				break;
+			}
+		}
 		return validSpaces;
 	}
 
+	//unselects the previous piece when a new piece is selected
 	public static void unselectLast(){
 		if(!pieceIsSelected){
 			return;
@@ -150,6 +214,7 @@ public class Hnefatafl {
 		hBoard.unhighlightButton(1,1);
 	}
 
+	//Sets a new piece to the selected piece
 	public static void selectNew(JButton clickedOn,int c, int r){
 		char piece = pieceLayout[c][r];
 		try {
