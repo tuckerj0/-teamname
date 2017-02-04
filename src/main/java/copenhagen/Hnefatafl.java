@@ -19,6 +19,7 @@ public class Hnefatafl {
 	private static JFrame frame;
 	private static JPanel board;
 	private static JPanel side;
+	private static JPanel bottom;
 	private static JMenuBar menuBar;
 	private static char[][] pieceLayout;
 	private static int boardSize = 11;
@@ -58,6 +59,8 @@ public class Hnefatafl {
 		pieceLayout = hBoard.getPieceLocations();
 		SideBar sBar = new SideBar(primaryColor, secondaryColor, letteringColor);
 		side = sBar.getSideBar();
+		BottomBar bBar = new BottomBar(primaryColor, secondaryColor, letteringColor);
+		bottom = bBar.getBottomBar();
         MenuBar menu = new MenuBar();
         menuBar = menu.getMenuBar();
 	}
@@ -68,6 +71,7 @@ public class Hnefatafl {
 		/*Add Board to lefthand side of JFrame*/
 		frame.add(board, BorderLayout.LINE_START);
 		frame.add(side, BorderLayout.EAST);
+		frame.add(bottom, BorderLayout.SOUTH);
 		/* Add Menu bar at top of JFrame*/
 		frame.setJMenuBar(menuBar);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -79,6 +83,15 @@ public class Hnefatafl {
 	*/
 	public static void playGame(){
 	}
+
+	public static void endTurn() {
+	    if (turn == 'b') {
+	        turn = 'w';
+        }
+        else if (turn == 'w') {
+	        turn = 'b';
+        }
+    }
 
 	/**called whenever a square is clicked on the board
 	*@param c column of square clicked
@@ -102,6 +115,8 @@ public class Hnefatafl {
 		boolean[][] validMoves = getValidMoves(selectedLoc[0],selectedLoc[1]);
 		if(validMoves[c][r] == true){
 			movePieceOnBoard(selectedLoc[0],selectedLoc[1],c,r);
+            BottomBar.endTurn(turn);
+            endTurn();
 		}else{
 			JOptionPane.showMessageDialog(null, "Invalid Move");
 		}
@@ -224,15 +239,15 @@ public class Hnefatafl {
 			Image img;
 			ImageIcon icon;
 			pieceIsSelected = true;
-			if(piece == 'b'){
+			if(piece == 'b' && turn == 'b'){
 				img = ImageIO.read(Hnefatafl.class.getResource("images/blackpieceSelected.png"));
 				icon = new ImageIcon(img);
 				clickedOn.setIcon(icon);
-			}else if(piece == 'w'){
+			}else if(piece == 'w' && turn == 'w'){
 				img = ImageIO.read(Hnefatafl.class.getResource("images/whitepieceSelected.png"));
 				icon = new ImageIcon(img);
 				clickedOn.setIcon(icon);
-			}else if(piece == 'k'){
+			}else if(piece == 'k' && turn == 'w'){
 				img = ImageIO.read(Hnefatafl.class.getResource("images/kingSelected.png"));
 				icon = new ImageIcon(img);
 				clickedOn.setIcon(icon);
