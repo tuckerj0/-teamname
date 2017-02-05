@@ -87,6 +87,16 @@ public class Hnefatafl {
 	public static void squareClicked(int c, int r, JButton clickedOn){
 		unselectLast();
 		char chosenSquaresPiece = pieceLayout[c][r];
+		if(chosenSquaresPiece == 'w' || chosenSquaresPiece == 'b' || chosenSquaresPiece == 'k'){
+			boolean[][] highlight = getValidMoves(c,r);
+			for(int i = 0; i < highlight.length; i++){
+				for(int j = 0; j < highlight[0].length; j++){
+					if(highlight[i][j] == true){
+						hBoard.highlightButton(i,j);
+					}
+				}
+			}
+		}
 		if((chosenSquaresPiece == '0' || chosenSquaresPiece == 'c') && pieceIsSelected){
 			movePiece(c,r);
 		}
@@ -190,6 +200,14 @@ public class Hnefatafl {
 		if(!pieceIsSelected){
 			return;
 		}
+		boolean[][] unhighlight = getValidMoves(selectedLoc[0],selectedLoc[1]);
+		for(int i = 0; i < unhighlight.length; i++){
+			for(int j = 0; j < unhighlight[0].length; j++){
+				if(unhighlight[i][j] == true){
+					hBoard.unhighlightButton(i,j);
+				}
+			}
+		}
 		char pieceType = pieceLayout[selectedLoc[0]][selectedLoc[1]];
 		try {
 			Image img;
@@ -211,7 +229,6 @@ public class Hnefatafl {
 			System.out.println("Image Didn't Load");
 			System.exit(1);
 		}
-		hBoard.unhighlightButton(1,1);
 	}
 
 	//Sets a new piece to the selected piece
@@ -243,7 +260,6 @@ public class Hnefatafl {
 			System.out.println("Image Didn't Load");
 			System.exit(1);
 		}
-		hBoard.highlightButton(1,1);
 	}
 
 	/**
