@@ -59,7 +59,7 @@ public class Hnefatafl {
 		pieceLayout = hBoard.getPieceLocations();
 		SideBar sBar = new SideBar(primaryColor, secondaryColor, letteringColor);
 		side = sBar.getSideBar();
-		BottomBar bBar = new BottomBar(primaryColor, secondaryColor, letteringColor);
+		BottomBar bBar = new BottomBar(primaryColor, letteringColor, turn, turnCount);
 		bottom = bBar.getBottomBar();
         MenuBar menu = new MenuBar();
         menuBar = menu.getMenuBar();
@@ -115,7 +115,8 @@ public class Hnefatafl {
 		boolean[][] validMoves = getValidMoves(selectedLoc[0],selectedLoc[1]);
 		if(validMoves[c][r] == true){
 			movePieceOnBoard(selectedLoc[0],selectedLoc[1],c,r);
-            BottomBar.endTurn(turn);
+			turnCount++;
+            BottomBar.endTurn(turn, turnCount);
             endTurn();
 		}else{
 			JOptionPane.showMessageDialog(null, "Invalid Move");
