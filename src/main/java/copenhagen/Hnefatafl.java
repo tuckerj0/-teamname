@@ -115,9 +115,9 @@ public class Hnefatafl {
 		boolean[][] validMoves = getValidMoves(selectedLoc[0],selectedLoc[1]);
 		if(validMoves[c][r] == true){
 			movePieceOnBoard(selectedLoc[0],selectedLoc[1],c,r);
-			turnCount++;
-            BottomBar.endTurn(turn, turnCount);
             endTurn();
+            turnCount++;
+            BottomBar.endTurn(turn, turnCount);
 		}else{
 			JOptionPane.showMessageDialog(null, "Invalid Move");
 		}
