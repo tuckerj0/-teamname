@@ -2,7 +2,6 @@ package copenhagen;
 
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.border.*;
 import java.util.concurrent.TimeUnit;
 import java.io.*;
 import java.io.IOException;
@@ -10,7 +9,6 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.File;
 import javax.swing.filechooser.*;
-import java.awt.event.*;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 
@@ -100,7 +98,7 @@ public class Hnefatafl {
 	public static void squareClicked(int c, int r, JButton clickedOn){
 		unselectLast();
 		char chosenSquaresPiece = pieceLayout[c][r];
-		if(chosenSquaresPiece == 'w' || chosenSquaresPiece == 'b' || chosenSquaresPiece == 'k'){
+		if((chosenSquaresPiece == 'w' && turn == 'w') || (chosenSquaresPiece == 'b' && turn == 'b') || (chosenSquaresPiece == 'k' && turn == 'w')){
 			boolean[][] highlight = getValidMoves(c,r);
 			for(int i = 0; i < highlight.length; i++){
 				for(int j = 0; j < highlight[0].length; j++){
