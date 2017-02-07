@@ -2,7 +2,6 @@ package copenhagen;
 
 import java.awt.*;
 import javax.swing.*;
-import java.awt.image.BufferedImage;
 import javax.swing.border.*;
 import javax.imageio.ImageIO;
 import java.io.IOException;
