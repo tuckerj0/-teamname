@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * This is the class that gives the program extra functionality that allows the user to decide if the attackers or
+ * defenders go first in a new game.
+ */
 public class BlackWhiteStart {
     JFrame _blackWhiteFrame = new JFrame("Pick a color to start the attack"); // creates frame/window
     JPanel _blackWhitePanel = new JPanel(); // one single flow panel
@@ -12,6 +16,9 @@ public class BlackWhiteStart {
 
     boolean blackStart;
 
+    /**
+     * This function will create the JFrame that will ask the user which side they want to go first.
+     */
     public BlackWhiteStart() {
         _blackWhiteFrame.setSize(400, 400); // width, height
         _blackWhiteFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // what happens when the user closes the window
@@ -39,7 +46,9 @@ public class BlackWhiteStart {
         _blackWhiteFrame.setVisible(true);
     }
 
-    // This listener will be called when the black button is clicked
+    /**
+     * This is a button listener for when the _blackButton button is clicked and will set the blackStart boolean to true.
+     */
     class BlackListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             blackStart = true;
@@ -47,7 +56,9 @@ public class BlackWhiteStart {
         }
     }
 
-    // This listener will be called when the white button is clicked
+    /**
+     * This is a button listener for when the _whiteButton button is clicked and will set the blackStart boolean to false.
+     */
     class WhiteListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             blackStart = false;

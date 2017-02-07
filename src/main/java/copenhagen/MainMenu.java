@@ -4,8 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-// load a saved game, access the rules, and change the settings
-
+/**
+ * This is the first thing that gets run when the program starts and allows the user to start a new game, load a saved,
+ * access the rules of the game, or change the settings.
+ */
 public class MainMenu {
     private JFrame _mainMenuFrame = new JFrame("Hnefatafl"); // creates frame/window
     private JPanel _mainMenuPanel = new JPanel();
@@ -16,6 +18,9 @@ public class MainMenu {
 
     int choice;
 
+    /**
+     * This is called once the program starts and creates the main menu allowing the user to choose what they want to do.
+     */
     public MainMenu() {
     	_mainMenuFrame.setSize(400, 400); // width, height
     	_mainMenuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // what happens when the user closes the window
@@ -45,6 +50,10 @@ public class MainMenu {
     	_mainMenuFrame.setVisible(true);
     }
 
+    /**
+     * This is a button listener for when the _playerVsButton is clicked and will close the main menu and start a new
+     * game.
+     */
     private class newGameListener implements  ActionListener {
         public void actionPerformed(ActionEvent e) {
             choice = 1;
@@ -52,24 +61,41 @@ public class MainMenu {
         }
     }
 
+    /**
+     * This is a button listener for when the _loadGameButton is clicked and will prompt the user to load his or her
+     * save file.
+     */
     class loadGameListener implements ActionListener {
     	public void actionPerformed(ActionEvent e) {
             // TODO:  Add functionality
     	}
     }
 
+    /**
+     * This is a button listener for when the _howToPlayButton is clicked and will display the rules of the game to the
+     * user.
+     */
     class howToPlayListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             new GameRules();
         }
     }
 
+    /**
+     * This is a button listener for _settingsButton is clicked and will display the settings that can be changed.
+     */
     class settingsListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             // TODO:  Add functionality
         }
     }
 
+    /**
+     * This function is called constantly from a while loop in Hnefatafl.java to check if the user has clicked to play a
+     * new game.
+     * @return The return value is an int representing the user's choice. Once the user has chosen to play, this value
+     * changes to 1.
+     */
     public int getChoice() {
         return choice;
     }

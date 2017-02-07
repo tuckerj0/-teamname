@@ -3,6 +3,9 @@ package copenhagen;
 import java.awt.*;
 import javax.swing.*;
 
+/**
+ * This class is used for displaying the options a user has after a game of hnefatafl has finished.
+ */
 public class FinalMenu {
 
     private JFrame menuFrame;
@@ -12,10 +15,16 @@ public class FinalMenu {
     private JButton quitGameBtn;
     private JLabel text;
 
+    /**
+     * This function calls a function to create the final menu.
+     */
     public FinalMenu() {
         createMenu();
     }
 
+    /**
+     * This function creates the final menu after a game has finished.
+     */
     private void createMenu() {
         menuFrame = new JFrame();
         menu = new JPanel();
@@ -35,7 +44,9 @@ public class FinalMenu {
         buttonPanel.add(quitGameBtn);
     }
 
-
+    /**
+     * This function will display the created final menu to the user.
+     */
     public void showMenu() {
         menuFrame.pack();
         menuFrame.setVisible(true);

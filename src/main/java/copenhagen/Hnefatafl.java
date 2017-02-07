@@ -1,3 +1,17 @@
+/**
+ * This program is a Java version of the ancient Norse game, hnefatafl ("table of the fist", in Old Norse). The game is
+ * played by Copenhagen rules (11 x 11 square board), and the king must reach a corner to win.
+ *
+ * @author $team
+ * Jennifer Fang, JFang1
+ * Peter McCloskey, pcm17
+ * Jason Tucker, tuckerj0
+ * Guiseppe Zielinski, gcz3
+ *
+ * CS 1530 - Software Engineering
+ * Spring Semester 2017
+ */
+
 package copenhagen;
 
 import java.awt.*;
@@ -12,6 +26,9 @@ import javax.swing.filechooser.*;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 
+/**
+ * This is the main file that runs the program.
+ */
 public class Hnefatafl {
 	private static int choice;
 	private static JFrame frame;
@@ -32,6 +49,10 @@ public class Hnefatafl {
 	private static JButton selected;
 	private static boolean pieceIsSelected = false;
 
+    /**
+     * This is the main method which starts the program.
+     * @param args Unused.
+     */
 	public static void main(String[] args) {
 		MainMenu start = new MainMenu();
 		while (choice == 0) {
@@ -51,8 +72,11 @@ public class Hnefatafl {
 		}
 	}
 
+    /**
+     * This function sets up and retrieves the different pieces (3 JPanels) that comprise the game board.
+     */
 	public static void setUpGameBoard() {
-		hBoard = new GameBoard(boardSize, primaryColor, secondaryColor, letteringColor, specialColor);
+		hBoard = new GameBoard(boardSize, primaryColor, secondaryColor, specialColor);
 		board = hBoard.getBoard();
 		pieceLayout = hBoard.getPieceLocations();
 		SideBar sBar = new SideBar(primaryColor, secondaryColor, letteringColor);
@@ -63,6 +87,10 @@ public class Hnefatafl {
         menuBar = menu.getMenuBar();
 	}
 
+    /**
+     * This function adds the different pieces (3 JPanels) to the main JFrame of the program and displays the game to
+     * the user.
+     */
 	public static void displayGameBoard() {
 		/*Initialize JFrame. This will hold 3 JPanels*/
 		frame = new JFrame("Hnefatafl");
@@ -76,12 +104,18 @@ public class Hnefatafl {
         frame.pack();
         frame.setVisible(true);
 	}
-	/**
-	*
-	*/
+
+    /**
+     * This function officially starts up the game.
+     */
 	public static void playGame(){
 	}
 
+    /**
+     * This function changes whose turn it is at the end of each move.
+     * b = black = attackers
+     * w = white = king and his defenders
+     */
 	public static void endTurn() {
 	    if (turn == 'b') {
 	        turn = 'w';
@@ -91,10 +125,12 @@ public class Hnefatafl {
         }
     }
 
-	/**called whenever a square is clicked on the board
-	*@param c column of square clicked
-	*@param r row of square clicked
-	**/
+    /**
+     * This function is called whenever a square is clicked on the game board.
+     * @param c This is the column of the square clicked.
+     * @param r This is the row of the square clicked.
+     * @param clickedOn This is the specific piece (JButton) that was clicked on.
+     */
 	public static void squareClicked(int c, int r, JButton clickedOn){
 		unselectLast();
 		char chosenSquaresPiece = pieceLayout[c][r];
@@ -114,11 +150,11 @@ public class Hnefatafl {
 		selectNew(clickedOn,c,r);
 	}
 
-	/**Try to move the selected piece (selectedLoc)
-	*To the square that was clicked on
-	*@param c column theyre trying to move to
-	*@param r row theyre trying to move to
-	**/
+    /**
+     * This function is called to try and move the selected piece (selectedLoc) if it is a valid move.
+     * @param c This parameter is the column they are trying to move to.
+     * @param r This parameter is the row they are trying to move to.
+     */
 	public static void movePiece(int c, int r){
 		boolean[][] validMoves = getValidMoves(selectedLoc[0],selectedLoc[1]);
 		if(validMoves[c][r] == true){
@@ -131,7 +167,14 @@ public class Hnefatafl {
 		}
 	}
 
-	//move piece from startRow/Col to destRow/Col
+    /**
+     * This is the function that does the actual work from moving a game piece from its original starting row and column
+     * to its new row and column.
+     * @param startCol This parameter is the starting column of the game piece.
+     * @param startRow This parameter is the starting row of the game piece.
+     * @param destCol This parameter is the destination column of the game piece.
+     * @param destRow This parameter is the destination column of the game piece.
+     */
 	public static void movePieceOnBoard(int startCol,int startRow,int destCol, int destRow){
 		//update gameboard array
 		char pieceType = pieceLayout[startCol][startRow];
@@ -172,10 +215,13 @@ public class Hnefatafl {
 		}
 	}
 
-	/**
-	*finds where a piece is allowed to move based on the rules of the game
-	*@return a boolean array mathing the gambaord with true values on all of the spaces a piece from row and column can move
-	**/
+    /**
+     * This function finds where a piece is allowed to move based on the rules of the game.
+     * @param col This parameter is the current column that the game piece is located at.
+     * @param row This parameter is the current row that the game piece is located at.
+     * @return This function returns a boolean array matching the gameboard with true values on all of the spaces a
+     * piece can move to.
+     */
 	public static boolean[][] getValidMoves(int col, int row){
 		boolean[][] validSpaces = new boolean[boardSize][boardSize];
 		for(int i=col+1; i<boardSize; i++){//check move right
@@ -209,7 +255,9 @@ public class Hnefatafl {
 		return validSpaces;
 	}
 
-	//unselects the previous piece when a new piece is selected
+    /**
+     * This function unselects the previous piece when a new piece is selected.
+     */
 	public static void unselectLast(){
 		if(!pieceIsSelected){
 			return;
@@ -245,7 +293,12 @@ public class Hnefatafl {
 		}
 	}
 
-	//Sets a new piece to the selected piece
+    /**
+     * This function sets a new game piece to the selected game piece.
+     * @param clickedOn This parameter is the game piece (JButton) that is clicked on.
+     * @param c This parameter is the column of the game piece that is clicked on.
+     * @param r This parameter is the row of the game piece that is clicked on.
+     */
 	public static void selectNew(JButton clickedOn,int c, int r){
 		char piece = pieceLayout[c][r];
 		try {
@@ -276,12 +329,10 @@ public class Hnefatafl {
 		}
 	}
 
-	/**
-	*Saves present game to save file.
-	*
-	*@param void
-	*@return true if successful
-	*/
+    /**
+     * This function saves the present game state to a save file.
+     * @return This function will return true if successful or false in the case of an IOException.
+     */
 	public static boolean saveGame(){
 		PrintWriter writer = null;
 		File game = null;
@@ -323,15 +374,15 @@ public class Hnefatafl {
 		}
 		return true;
 	}
-	/**
-	*Loads game from file. Must have .hnef extension.Validates game file
-	*is legal.
-	*returns int representing status code. 0 is success, 1 is failure,
-	*2 is failure due to incorrect extension.
-	*
-	*@param String name of file
-	*@return int representing status code.
-	*/
+
+    /**
+     * This function loads a game state from a file and validates it.
+     * It must have a .hnef extension to be accepted.
+     * @return The return value represents the status code.
+     * 0 is success.
+     * 1 is failure.
+     * 2 is failure due to incorrect extension.
+     */
 	public static int loadGame(){
 		BufferedReader br = null;
 		FileReader fr = null;
@@ -387,5 +438,4 @@ public class Hnefatafl {
 		}
 		return 0;
 	}
-
 }

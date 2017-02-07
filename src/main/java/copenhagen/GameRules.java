@@ -3,9 +3,15 @@ package copenhagen;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+/**
+ * This class is used when displaying the game rules for the game.
+ */
 public class GameRules {
     private JFrame frame;
 
+    /**
+     * This will create a new JFrame with the hnefatafl game rules.
+     */
     public GameRules() {
         frame = new JFrame();
         JOptionPane.showMessageDialog(frame,
