@@ -193,26 +193,7 @@ public class Hnefatafl {
 		sButton.setIcon(null);
 
 		JButton dButton = hBoard.getButtonByLocation(destCol,destRow);
-		try {
-			Image img;
-			ImageIcon icon;
-			if(pieceType == 'b'){
-				img = ImageIO.read(Hnefatafl.class.getResource("images/blackpiece.png"));
-				icon = new ImageIcon(img);
-				dButton.setIcon(icon);
-			}else if(pieceType == 'w'){
-				img = ImageIO.read(Hnefatafl.class.getResource("images/whitePiece.png"));
-				icon = new ImageIcon(img);
-				dButton.setIcon(icon);
-			}else if(pieceType == 'k'){
-				img = ImageIO.read(Hnefatafl.class.getResource("images/king.png"));
-				icon = new ImageIcon(img);
-				dButton.setIcon(icon);
-			}
-		} catch (IOException e) {
-			System.out.println("Image Didn't Load");
-			System.exit(1);
-		}
+		setButtonImage(pieceType,dButton);
 	}
 
     /**
@@ -271,21 +252,30 @@ public class Hnefatafl {
 			}
 		}
 		char pieceType = pieceLayout[selectedLoc[0]][selectedLoc[1]];
+		setButtonImage(pieceType,selected);
+	}
+
+	/**
+     * This function sets the icon of a particular button.
+     * @param pieceType The value of the piece from the characters specified in gameboard.java
+     * @param button The button to add this image to
+     */
+	public static void setButtonImage(char pieceType, JButton button){
 		try {
 			Image img;
 			ImageIcon icon;
 			if(pieceType == 'b'){
 				img = ImageIO.read(Hnefatafl.class.getResource("images/blackpiece.png"));
 				icon = new ImageIcon(img);
-				selected.setIcon(icon);
+				button.setIcon(icon);
 			}else if(pieceType == 'w'){
 				img = ImageIO.read(Hnefatafl.class.getResource("images/whitePiece.png"));
 				icon = new ImageIcon(img);
-				selected.setIcon(icon);
+				button.setIcon(icon);
 			}else if(pieceType == 'k'){
 				img = ImageIO.read(Hnefatafl.class.getResource("images/king.png"));
 				icon = new ImageIcon(img);
-				selected.setIcon(icon);
+				button.setIcon(icon);
 			}
 		} catch (IOException e) {
 			System.out.println("Image Didn't Load");
