@@ -2,34 +2,51 @@ package copenhagen;
 
 import java.awt.*;
 import javax.swing.*;
-import java.awt.image.BufferedImage;
 import javax.swing.border.*;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.awt.event.*;
 
+/**
+ * This class contains all the logic and UI for the game board. The game board is represented by a two dimensional
+ * character array. The location in the array is the location on the board. The first dimension represents the row and
+ * the second dimension represents the column.
+ * The char value represents the piece type:
+ * '0' for empty
+ * 'w' for a white piece
+ * 'b' for a black piece
+ * 'k' for the king piece
+ */
 public class GameBoard {
 
 	int gridSize;
 	Color highlight = new Color(255,0,0);
 	Color primaryColor;
 	Color secondaryColor;
-	Color letteringColor;
 	Color specialColor; //color of the center and corners
 	private JButton[][] boardSquares;
 	private JPanel board;
 	private char[][] pieceLocations;
 
-    public GameBoard(int size, int[] pc, int[] sc, int[] lc, int[] spc) {
+    /**
+     * This is called when creating the game board JPanel.
+     * @param size This parameter represents the size of the game board.
+     * @param pc This parameter represents the primary color of the game board.
+     * @param sc This parameter represents the secondary color of the game board.
+     * @param spc This parameter represents the color of the special center and corner squares on the game board.
+     */
+    public GameBoard(int size, int[] pc, int[] sc, int[] spc) {
 		gridSize = size;
 		primaryColor = new Color(pc[0], pc[1], pc[2]);
 		secondaryColor = new Color(sc[0], sc[1], sc[2]);
-		letteringColor = new Color(lc[0], lc[1], lc[2]);
 		specialColor = new Color(spc[0], spc[1], spc[2]);
 		initializeGUI();
 	}
 
-	//Listens for square on gameboard to be clicked then sends row and colum to squareClicked()
+    /**
+     * This is a button listener for each square (JButton) on the game board that when clicked will then send the row
+     * and column of that square to the Hnefatafl.squareClicked() function.
+     */
 	class squareClickedListener implements  ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			Object source = e.getSource();
@@ -43,17 +60,21 @@ public class GameBoard {
 		}
 	}
 
+    /**
+     * This function gets the JButton at a given location in the two dimensional array.
+     * @param col This parameter represents the column of the JButton.
+     * @param row This parameter represents the row of the JButton.
+     * @return This function will return the JButton found at the given location.
+     */
 	public JButton getButtonByLocation(int col, int row){
 		return boardSquares[col][row];
 	}
 
-	/**
-	*Initializes graphical user interface representation of board.
-	*Calls addpiece and setStartingPieces methods.
-	*
-	*@param void
-	*@return true if successful
-	*/
+    /**
+     * This function initializes the graphical user interface representation of the game board when a game is started.
+     * It calls the addPiece and setStartingPieces methods.
+     * @return This function will return true if it is successful
+     */
 	public boolean initializeGUI() {
 		board = new JPanel(new GridLayout(gridSize, gridSize));
 		board.setBorder(new LineBorder(Color.BLACK));
@@ -91,23 +112,23 @@ public class GameBoard {
         }
 		return true;
 	}
-	/**
-	*Sets button at location col/row to highlight color
-	*
-	*@param int representing column
-	*@param int representing row
-	*@return void
-	*/
+
+    /**
+     * This function will "highlight" the square where a game piece is located at by changing the color at the game
+     * piece's location. This effectively shows the valid moves a piece can make.
+     * @param col This parameter represents the column of the square.
+     * @param row This parameter represents the row of the square.
+     */
 	public void highlightButton(int col, int row){
 		boardSquares[col][row].setBackground(highlight);
 	}
-	/**
-	*Sets button at location col/row to normal color
-	*
-	*@param int representing column
-	*@param int representing row
-	*@return void
-	*/
+
+    /**
+     * This function will "unhighlight" the square where a game piece is located at by changing the color at the game
+     * piece's location.
+     * @param col This parameter represents the column of the square.
+     * @param row This parameter represents the row of the square.
+     */
 	public void unhighlightButton(int col, int row){
 		if((col % 2 == 1 && row % 2 == 1) || (col % 2 == 0 && row % 2 == 0)){
 			boardSquares[col][row].setBackground(primaryColor);
@@ -117,13 +138,19 @@ public class GameBoard {
 		}
 	}
 
-	//returns the gameboard
+    /**
+     * This function is called to return the JPanel representing the game board.
+     * @return This returns the created JPanel representing the game board when the program is ran.
+     */
 	public JPanel getBoard(){
 		return board;
 	}
 
-
-	//If there is a piece in this location it adds it to the button
+    /**
+     * This function will give a game piece (the JButton) the appropriate image.
+     * @param pieceName This parameter represents what type of game piece it is.
+     * @param button This parameter represents the JButton that will represent the game piece.
+     */
 	private void addPiece(char pieceName, JButton button) {
 	    try {
 	        Image img;
@@ -147,28 +174,29 @@ public class GameBoard {
 	        System.exit(1);
         }
 	}
-	/**
-	*Returns the board location of every piece using a 2D array.
-	*Char value repesents piece type. '0' for no piece, 'w' for white piece,
-	*'b' for black piece, and 'k' for king piece. Location in the array is the location
-	*on the board. First dimension represents row, second dimension represents column.
-	*
-	*@param void
-	*@return 2D array repesenting board pieces and their location
-	*/
+
+    /**
+     * This function gets the game board containing the location of every game piece.
+     * @return This returns a two dimensional character array representing the game pieces and their location on the
+     * game board.
+     */
 	public char[][] getPieceLocations(){
 		return pieceLocations;
 	}
-	/**
-	*Returns the grid size.
-	*
-	*@param void
-	*@return int representing grid size
-	*/
+
+    /**
+     * This function gets the grid size of the game board.
+     * @return This will return an integer representing the grid size.
+     */
 	public int getGridSize(){
 		return gridSize;
 	}
-	//Sets the location of each starting piece
+
+    /**
+     * This function sets the starting location of each game piece on the board.
+     * @return This returns a two dimensional character array that represents the game board with game pieces at their
+     * starting positions.
+     */
 	private char[][] setStartingPieces() {
 		char[][] s = new char [gridSize][gridSize];
 		//Initialize to null char

@@ -3,11 +3,17 @@ package copenhagen;
 import java.awt.*;
 import javax.swing.*;
 
+/**
+ * This class is used when displaying the game rules for the game.
+ */
 public class GameRules {
 
     private JTextArea text;
     private JScrollPane scrollPane;
 
+    /**
+     * This will create a new JFrame with the hnefatafl game rules.
+     */
     public GameRules() {
         setText();
         scrollPane = new JScrollPane(text);
