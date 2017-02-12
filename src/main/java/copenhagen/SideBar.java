@@ -58,7 +58,8 @@ public class SideBar {
     private void createButtons() {
         newGame = new JButton("New Game");
         styleButton(newGame, midGap);
-
+		newGame.addActionListener(new newListener());
+		
         saveGame = new JButton("Save Game");
         styleButton(saveGame, midGap);
         saveGame.addActionListener(new SaveListener());
@@ -98,6 +99,22 @@ public class SideBar {
     private class SaveListener implements ActionListener {
        public void actionPerformed(ActionEvent e) {
 			Hnefatafl.saveGame();
+		}
+    }
+	/**
+	*This is a button listener for when the new game button is clicked. It will prompt the user to confirm.
+	*If the user confirms, it will class a new game function to reset the board and begin a new game.
+	*/
+	private class newListener implements ActionListener {
+       public void actionPerformed(ActionEvent e) {
+		   Object[] options = {"Confirm", "Cancel"};
+           int n = JOptionPane.showOptionDialog(exitWindow, "Are you sure you want to begin a new game? All progress wil be lost.", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+           if (n == 0) {
+			   Hnefatafl.newGame();
+           }
+           if (n == 1) {
+               return;
+           }
 		}
     }
 

@@ -85,6 +85,8 @@ public class Hnefatafl {
 		bottom = bBar.getBottomBar();
         MenuBar menu = new MenuBar();
         menuBar = menu.getMenuBar();
+		turnCount = 0;
+		turn = 'b';
 	}
 
     /**
@@ -427,5 +429,14 @@ public class Hnefatafl {
 			}
 		}
 		return 0;
+	}
+	/**
+	*This function begins a new game.
+	*@param void
+	*@return void
+	*/
+	public static void newGame(){
+		setUpGameBoard();
+		displayGameBoard();
 	}
 }
