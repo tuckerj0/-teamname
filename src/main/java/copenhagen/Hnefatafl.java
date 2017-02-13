@@ -185,6 +185,11 @@ public class Hnefatafl {
 		}
 	}
 
+    /**
+     * This function removes all the pieces that were captured on the board by the move just completed.
+     * @param col This parameter is the column associated with a piece that is about to be removed.
+     * @param row This parameter is the row associated with a piece that is about to be removed.
+     */
 	private static void removeCapturedPieces(LinkedList<Integer> col, LinkedList<Integer> row) {
 	    for (int i = 0; i < col.size(); i++) {
 	        int c = col.get(i);
@@ -195,6 +200,12 @@ public class Hnefatafl {
         }
     }
 
+    /**
+     * This function finds all the pieces that will be captured on the board by the move just completed.
+     * @param piece This parameter is the piece that getting moved.
+     * @param col This parameter is which column the piece will be at after it is moved.
+     * @param row This parameter is which row the piece will be at after it is moved.
+     */
     public static void findCapturedPieces(char piece, int col, int row) {
 	    char capturablePiece;
 	    char kingPiece;
