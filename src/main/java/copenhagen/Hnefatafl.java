@@ -16,6 +16,7 @@ package copenhagen;
 
 import java.awt.*;
 import javax.swing.*;
+import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
 import java.io.*;
 import java.io.IOException;
@@ -184,6 +185,63 @@ public class Hnefatafl {
 		}
 	}
 
+	private static void removeCapturedPieces(LinkedList<Integer> col, LinkedList<Integer> row) {
+	    for (int i = 0; i < col.size(); i++) {
+	        int c = col.get(i);
+	        int r = row.get(i);
+            pieceLayout[c][r] = '0';
+            JButton sButton = hBoard.getButtonByLocation(c,r);
+            sButton.setIcon(null);
+        }
+    }
+
+    public static void findCapturedPieces(char piece, int col, int row) {
+	    char capturablePiece;
+	    char kingPiece;
+	    LinkedList<Integer> capturedPieceCol = new LinkedList<>();
+        LinkedList<Integer> capturedPieceRow = new LinkedList<>();
+	    if (piece == 'b') {
+	        capturablePiece = 'w';
+	        kingPiece = 'b';
+        }
+        else if (piece == 'w'){
+            capturablePiece = 'b';
+            kingPiece = 'k';
+        }
+        else {
+            capturablePiece = 'b';
+            kingPiece = 'w';
+        }
+        if (col-2 >= 0) {
+            if (pieceLayout[col - 1][row] == capturablePiece && (pieceLayout[col - 2][row] == piece || pieceLayout[col - 2][row] == kingPiece || pieceLayout[col - 2][row] == 'c')) {
+                capturedPieceCol.add(col - 1);
+                capturedPieceRow.add(row);
+            }
+        }
+        if (col+2 <= 10) {
+            if (pieceLayout[col + 1][row] == capturablePiece && (pieceLayout[col + 2][row] == piece || pieceLayout[col + 2][row] == kingPiece || pieceLayout[col + 2][row] == 'c')) {
+                capturedPieceCol.add(col + 1);
+                capturedPieceRow.add(row);
+            }
+        }
+        if (row-2 >= 0) {
+            if (pieceLayout[col][row - 1] == capturablePiece && (pieceLayout[col][row - 2] == piece || pieceLayout[col][row - 2] == kingPiece || pieceLayout[col][row - 2] == 'c')) {
+                capturedPieceCol.add(col);
+                capturedPieceRow.add(row - 1);
+            }
+        }
+        if (row+2 <= 10) {
+            if (pieceLayout[col][row + 1] == capturablePiece && (pieceLayout[col][row + 2] == piece || pieceLayout[col][row + 2] == kingPiece || pieceLayout[col][row + 2] == 'c')) {
+                capturedPieceCol.add(col);
+                capturedPieceRow.add(row + 1);
+            }
+        }
+        if (!capturedPieceCol.isEmpty()) {
+            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+	    }
+    }
+
+
     /**
      * This is the function that does the actual work from moving a game piece from its original starting row and column
      * to its new row and column.
@@ -204,6 +262,7 @@ public class Hnefatafl {
 			pieceLayout[startCol][startRow] = '0';
 		}
 		pieceLayout[destCol][destRow] = pieceType;
+		findCapturedPieces(pieceType, destCol, destRow);
 
 		//update gameboard gui
 		JButton sButton = hBoard.getButtonByLocation(startCol,startRow);
@@ -215,6 +274,7 @@ public class Hnefatafl {
 
     /**
      * This function finds where a piece is allowed to move based on the rules of the game.
+     * @param piece This parameter is the current game piece that is being looked at.
      * @param col This parameter is the current column that the game piece is located at.
      * @param row This parameter is the current row that the game piece is located at.
      * @return This function returns a boolean array matching the gameboard with true values on all of the spaces a
