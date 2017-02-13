@@ -128,6 +128,19 @@ public class Hnefatafl {
     }
 
     /**
+     * This function checks whether a piece is allowed to be currently moved.
+     * @param piece This is piece that is trying to be moved.
+     * @return This function will return true if the piece can be moved, else false if it can not be moved.
+     */
+    private static boolean pieceCanMove(char piece) {
+        if ((piece == 'w' && turn == 'w') || (piece == 'b' && turn == 'b') || (piece == 'k' && turn == 'w')) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * This function is called whenever a square is clicked on the game board.
      * @param c This is the column of the square clicked.
      * @param r This is the row of the square clicked.
@@ -136,8 +149,9 @@ public class Hnefatafl {
 	public static void squareClicked(int c, int r, JButton clickedOn){
 		unselectLast();
 		char chosenSquaresPiece = pieceLayout[c][r];
-		if((chosenSquaresPiece == 'w' && turn == 'w') || (chosenSquaresPiece == 'b' && turn == 'b') || (chosenSquaresPiece == 'k' && turn == 'w')){
-			boolean[][] highlight = getValidMoves(c,r);
+
+		if (pieceCanMove(chosenSquaresPiece)) {
+			boolean[][] highlight = getValidMoves(chosenSquaresPiece, c, r);
 			for(int i = 0; i < highlight.length; i++){
 				for(int j = 0; j < highlight[0].length; j++){
 					if(highlight[i][j] == true){
@@ -158,7 +172,8 @@ public class Hnefatafl {
      * @param r This parameter is the row they are trying to move to.
      */
 	public static void movePiece(int c, int r){
-		boolean[][] validMoves = getValidMoves(selectedLoc[0],selectedLoc[1]);
+        char pieceType = pieceLayout[selectedLoc[0]][selectedLoc[1]];
+        boolean[][] validMoves = getValidMoves(pieceType, selectedLoc[0],selectedLoc[1]);
 		if(validMoves[c][r] == true){
 			movePieceOnBoard(selectedLoc[0],selectedLoc[1],c,r);
             endTurn();
@@ -183,7 +198,7 @@ public class Hnefatafl {
 		if ((startCol==0 && startRow==0) ||
 			(startCol==boardSize-1 && startRow==boardSize-1) ||
 			(startCol==0 && startRow==boardSize-1) ||
-			(startCol==boardSize-1 && startRow==0)){
+			(startCol==boardSize-1 && startRow==0) || (startCol==5 && startRow==5)) {
 			pieceLayout[startCol][startRow] = 'c';
 		}else{
 			pieceLayout[startCol][startRow] = '0';
@@ -205,31 +220,31 @@ public class Hnefatafl {
      * @return This function returns a boolean array matching the gameboard with true values on all of the spaces a
      * piece can move to.
      */
-	public static boolean[][] getValidMoves(int col, int row){
+	public static boolean[][] getValidMoves(char piece, int col, int row){
 		boolean[][] validSpaces = new boolean[boardSize][boardSize];
 		for(int i=col+1; i<boardSize; i++){//check move right
-			if((pieceLayout[i][row] == '0') || (pieceLayout[i][row] == 'c')){
+            if((pieceLayout[i][row] == '0') || (piece == 'k' && pieceLayout[i][row] == 'c')){
 				validSpaces[i][row] = true;
 			}else{
 				break;
 			}
 		}
 		for(int i=col-1; i>=0; i--){//check move left
-			if((pieceLayout[i][row] == '0') || (pieceLayout[i][row] == 'c')){
+            if((pieceLayout[i][row] == '0') || (piece == 'k' && pieceLayout[i][row] == 'c')){
 				validSpaces[i][row] = true;
 			}else{
 				break;
 			}
 		}
 		for(int i=row+1; i<boardSize; i++){//check move down
-			if((pieceLayout[col][i] == '0') || (pieceLayout[col][i] == 'c')){
+            if((pieceLayout[col][i] == '0') || (piece == 'k' && pieceLayout[col][i] == 'c')){
 				validSpaces[col][i] = true;
 			}else{
 				break;
 			}
 		}
 		for(int i=row-1; i>=0; i--){//check move up
-			if((pieceLayout[col][i] == '0') || (pieceLayout[col][i] == 'c')){
+            if((pieceLayout[col][i] == '0') || (piece == 'k' && pieceLayout[col][i] == 'c')){
 				validSpaces[col][i] = true;
 			}else{
 				break;
@@ -245,7 +260,8 @@ public class Hnefatafl {
 		if(!pieceIsSelected){
 			return;
 		}
-		boolean[][] unhighlight = getValidMoves(selectedLoc[0],selectedLoc[1]);
+        char pieceType = pieceLayout[selectedLoc[0]][selectedLoc[1]];
+        boolean[][] unhighlight = getValidMoves(pieceType, selectedLoc[0],selectedLoc[1]);
 		for(int i = 0; i < unhighlight.length; i++){
 			for(int j = 0; j < unhighlight[0].length; j++){
 				if(unhighlight[i][j] == true){
@@ -253,7 +269,6 @@ public class Hnefatafl {
 				}
 			}
 		}
-		char pieceType = pieceLayout[selectedLoc[0]][selectedLoc[1]];
 		setButtonImage(pieceType,selected);
 	}
 

@@ -13,6 +13,7 @@ import java.awt.event.*;
  * the second dimension represents the column.
  * The char value represents the piece type:
  * '0' for empty
+ * 'c' for the throne and the corner squares (the five restricted squares)
  * 'w' for a white piece
  * 'b' for a black piece
  * 'k' for the king piece
@@ -130,10 +131,13 @@ public class GameBoard {
      * @param row This parameter represents the row of the square.
      */
 	public void unhighlightButton(int col, int row){
-		if((col % 2 == 1 && row % 2 == 1) || (col % 2 == 0 && row % 2 == 0)){
+		if (pieceLocations[col][row] == 'c') {
+		    boardSquares[col][row].setBackground(specialColor);
+        }
+	    else if((col % 2 == 1 && row % 2 == 1) || (col % 2 == 0 && row % 2 == 0)){
 			boardSquares[col][row].setBackground(primaryColor);
 		}
-		else{
+		else {
 			boardSquares[col][row].setBackground(secondaryColor);
 		}
 	}
