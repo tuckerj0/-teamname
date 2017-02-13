@@ -195,8 +195,8 @@ public class Hnefatafl {
 	        int c = col.get(i);
 	        int r = row.get(i);
             pieceLayout[c][r] = '0';
-            JButton sButton = hBoard.getButtonByLocation(c,r);
-            sButton.setIcon(null);
+            JButton gamePiece = hBoard.getButtonByLocation(c,r);
+            gamePiece.setIcon(null);
         }
     }
 
