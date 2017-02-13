@@ -200,6 +200,17 @@ public class Hnefatafl {
         }
     }
 
+    /**
+     * This function is called to determine if there is a shieldwall during a move by a piece.
+     * TODO: Refactor this code!
+     * @param piece This is the piece that has been moved.
+     * @param col This is the column of where the piece will be going.
+     * @param row This is the row of where the piece will be going.
+     * @param capturePiece This is the kind of piece that is allowed to be captured.
+     * @param helperPiece This is the kind of piece that helps in a capture:
+     *                     i.e. another black piece if piece == 'b'
+     *                          the king piece if piece == 'w'
+     */
     private static void findShieldwall(char piece, int col, int row, char capturePiece, char helperPiece) {
         LinkedList<Integer> capturedPieceCol = new LinkedList<>();
         LinkedList<Integer> capturedPieceRow = new LinkedList<>();
