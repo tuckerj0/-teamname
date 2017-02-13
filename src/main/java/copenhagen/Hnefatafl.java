@@ -200,6 +200,176 @@ public class Hnefatafl {
         }
     }
 
+    private static void findShieldwall(char piece, int col, int row, char capturePiece, char helperPiece) {
+        LinkedList<Integer> capturedPieceCol = new LinkedList<>();
+        LinkedList<Integer> capturedPieceRow = new LinkedList<>();
+        int counter = 0;
+
+
+
+        if (col == 0) {
+            if (row <= 7) {
+                for (int i = row+1; i < 11; i++) {
+                    if (pieceLayout[col][i] == '0') {
+                        break;
+                    }
+                    else if (pieceLayout[col][i] == capturePiece && (pieceLayout[col+1][i] == piece || pieceLayout[col+1][i] == helperPiece)) {
+                        capturedPieceCol.add(col);
+                        capturedPieceRow.add(i);
+                        counter++;
+                    }
+                    else if (pieceLayout[col][i] == piece || pieceLayout[col][i] == helperPiece || pieceLayout[col][i] == 'c') {
+                        if (counter >= 2) {
+                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                        }
+                        break;
+                    }
+                }
+            }
+            if (row >= 3) {
+                for (int i = row-1; i >= 0; i--) {
+                    if (pieceLayout[col][i] == '0') {
+                        break;
+                    }
+                    else if (pieceLayout[col][i] == capturePiece && (pieceLayout[col+1][i] == piece || pieceLayout[col+1][i] == helperPiece)) {
+                        capturedPieceCol.add(col);
+                        capturedPieceRow.add(i);
+                        counter++;
+                    }
+                    else if (pieceLayout[col][i] == piece || pieceLayout[col][i] == helperPiece || pieceLayout[col][i] == 'c') {
+                        if (counter >= 2) {
+                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+
+
+        if (col == boardSize-1) {
+            if (row <= 7) {
+                for (int i = row+1; i < 11; i++) {
+                    if (pieceLayout[col][i] == '0') {
+                        break;
+                    }
+                    else if (pieceLayout[col][i] == capturePiece && (pieceLayout[col-1][i] == piece || pieceLayout[col-1][i] == helperPiece)) {
+                        capturedPieceCol.add(col);
+                        capturedPieceRow.add(i);
+                        counter++;
+                    }
+                    else if (pieceLayout[col][i] == piece || pieceLayout[col][i] == helperPiece || pieceLayout[col][i] == 'c') {
+                        if (counter >= 2) {
+                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                        }
+                        break;
+                    }
+                }
+            }
+            if (row >= 3) {
+                for (int i = row-1; i >= 0; i--) {
+                    if (pieceLayout[col][i] == '0') {
+                        break;
+                    }
+                    else if (pieceLayout[col][i] == capturePiece && (pieceLayout[col-1][i] == piece || pieceLayout[col-1][i] == helperPiece)) {
+                        capturedPieceCol.add(col);
+                        capturedPieceRow.add(i);
+                        counter++;
+                    }
+                    else if (pieceLayout[col][i] == piece || pieceLayout[col][i] == helperPiece || pieceLayout[col][i] == 'c') {
+                        if (counter >= 2) {
+                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+
+
+        if (row == 0) {
+            if (col <= 7) {
+                for (int i = col+1; i < 11; i++) {
+                    if (pieceLayout[i][row] == '0') {
+                        break;
+                    }
+                    else if (pieceLayout[i][row] == capturePiece && (pieceLayout[i][row+1] == piece || pieceLayout[i][row+1] == helperPiece)) {
+                        capturedPieceCol.add(i);
+                        capturedPieceRow.add(row);
+                        counter++;
+                    }
+                    else if (pieceLayout[i][row] == piece || pieceLayout[i][row] == helperPiece || pieceLayout[i][row] == 'c') {
+                        if (counter >= 2) {
+                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                        }
+                        break;
+                    }
+                }
+            }
+            if (col >= 3) {
+                for (int i = col-1; i >= 0; i--) {
+                    if (pieceLayout[i][row] == '0') {
+                        break;
+                    }
+                    else if (pieceLayout[i][row] == capturePiece && (pieceLayout[i][row+1] == piece || pieceLayout[i][row+1] == helperPiece)) {
+                        capturedPieceCol.add(i);
+                        capturedPieceRow.add(row);
+                        counter++;
+                    }
+                    else if (pieceLayout[i][row] == piece || pieceLayout[i][row] == helperPiece || pieceLayout[i][row] == 'c') {
+                        if (counter >= 2) {
+                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+
+
+        if (row == boardSize-1) {
+            if (col <= 7) {
+                for (int i = col+1; i < 11; i++) {
+                    if (pieceLayout[i][row] == '0') {
+                        break;
+                    }
+                    else if (pieceLayout[i][row] == capturePiece && (pieceLayout[i][row-1] == piece || pieceLayout[i][row-1] == helperPiece)) {
+                        capturedPieceCol.add(i);
+                        capturedPieceRow.add(row);
+                        counter++;
+                    }
+                    else if (pieceLayout[i][row] == piece || pieceLayout[i][row] == helperPiece || pieceLayout[i][row] == 'c') {
+                        if (counter >= 2) {
+                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                        }
+                        break;
+                    }
+                }
+            }
+            if (col >= 3) {
+                for (int i = col-1; i >= 0; i--) {
+                    if (pieceLayout[i][row] == '0') {
+                        break;
+                    }
+                    else if (pieceLayout[i][row] == capturePiece && (pieceLayout[i][row-1] == piece || pieceLayout[i][row-1] == helperPiece)) {
+                        capturedPieceCol.add(i);
+                        capturedPieceRow.add(row);
+                        counter++;
+                    }
+                    else if (pieceLayout[i][row] == piece || pieceLayout[i][row] == helperPiece || pieceLayout[i][row] == 'c') {
+                        if (counter >= 2) {
+                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * This function finds all the pieces that will be captured on the board by the move just completed.
      * @param piece This parameter is the piece that getting moved.
@@ -229,7 +399,7 @@ public class Hnefatafl {
                 capturedPieceRow.add(row);
             }
         }
-        if (col+2 <= 10) {
+        if (col+2 <= boardSize-1) {
             if (pieceLayout[col + 1][row] == capturablePiece && (pieceLayout[col + 2][row] == piece || pieceLayout[col + 2][row] == kingPiece || pieceLayout[col + 2][row] == 'c')) {
                 capturedPieceCol.add(col + 1);
                 capturedPieceRow.add(row);
@@ -241,7 +411,7 @@ public class Hnefatafl {
                 capturedPieceRow.add(row - 1);
             }
         }
-        if (row+2 <= 10) {
+        if (row+2 <= boardSize-1) {
             if (pieceLayout[col][row + 1] == capturablePiece && (pieceLayout[col][row + 2] == piece || pieceLayout[col][row + 2] == kingPiece || pieceLayout[col][row + 2] == 'c')) {
                 capturedPieceCol.add(col);
                 capturedPieceRow.add(row + 1);
@@ -250,6 +420,11 @@ public class Hnefatafl {
         if (!capturedPieceCol.isEmpty()) {
             removeCapturedPieces(capturedPieceCol, capturedPieceRow);
 	    }
+	    else {
+            if (col == 0 || col == 10 || row == 0 || row == 10) {
+                findShieldwall(piece, col, row, capturablePiece, kingPiece);
+            }
+        }
     }
 
 
