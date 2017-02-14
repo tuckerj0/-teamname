@@ -43,6 +43,7 @@ public class BlackWhiteStart {
         // Refresh window - otherwise we will not be able to see it
         // This should be the last line of the constructor
         _blackWhiteFrame.pack();
+        _blackWhiteFrame.setLocationRelativeTo(null);
         _blackWhiteFrame.setVisible(true);
     }
 
