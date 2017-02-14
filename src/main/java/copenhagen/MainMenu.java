@@ -45,8 +45,7 @@ public class MainMenu {
         _mainMenuPanel.add(_howToPlayButton);
         _mainMenuPanel.add(_settingsButton);
 
-        // Refresh window - otherwise we will not be able to see it
-        // This should be the last line of the constructor
+        _mainMenuFrame.setLocationRelativeTo(null);
     	_mainMenuFrame.setVisible(true);
     }
 

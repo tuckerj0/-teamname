@@ -31,13 +31,13 @@ public class FinalMenu {
         buttonPanel = new JPanel();
         menuFrame.setSize(400, 200);
         menuFrame.add(menu);
-        
+
         text = new JLabel("Game Over");
         text.setFont(new Font("Courier", Font.PLAIN, 40));
         menu.setLayout(new FlowLayout());
-        menu.add(text, BorderLayout.CENTER);  
+        menu.add(text, BorderLayout.CENTER);
         menu.add(buttonPanel, BorderLayout.CENTER);
-        
+
         newGameBtn = new JButton("New Game");
         quitGameBtn = new JButton("Quit Game");
         buttonPanel.add(newGameBtn);
@@ -49,6 +49,7 @@ public class FinalMenu {
      */
     public void showMenu() {
         menuFrame.pack();
+        menuFrame.setLocationRelativeTo(null);
         menuFrame.setVisible(true);
         menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
