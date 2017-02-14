@@ -708,7 +708,18 @@ public class Hnefatafl {
 	*@return void
 	*/
 	public static void newGame(){
-		setUpGameBoard();
-		displayGameBoard();
+		turnCount = 0;
+		turn = 'b';
+		frame.remove(bottom);
+		BottomBar bBar = new BottomBar(primaryColor, letteringColor, turn, turnCount);
+		bottom = bBar.getBottomBar();
+		frame.remove(board);
+		hBoard = new GameBoard(boardSize, primaryColor, secondaryColor, specialColor);
+		board = hBoard.getBoard();
+		pieceLayout = hBoard.getPieceLocations();
+		frame.add(board, BorderLayout.LINE_START);
+		frame.add(bottom, BorderLayout.SOUTH);
+		frame.pack();
+		
 	}
 }
