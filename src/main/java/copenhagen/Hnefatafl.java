@@ -37,7 +37,7 @@ public class Hnefatafl {
 	private static JPanel side;
 	private static JPanel bottom;
 	private static JMenuBar menuBar;
-	private static char[][] pieceLayout;
+	public static char[][] pieceLayout;
 	private static int boardSize = 11;
 	private static int turnCount = 0;
 	private static char turn = 'b';
