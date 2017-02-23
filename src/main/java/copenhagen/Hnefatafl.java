@@ -599,110 +599,22 @@ public class Hnefatafl {
      * @return This function will return true if successful or false in the case of an IOException.
      */
 	public static boolean saveGame(){
-		PrintWriter writer = null;
-		File game = null;
-		try{
-
-			JFrame parentFrame = new JFrame();
-
-			JFileChooser fileChooser = new JFileChooser();
-			FileNameExtensionFilter filter = new FileNameExtensionFilter("hnef","hnef");
-			fileChooser.setFileFilter(filter);
-			fileChooser.setDialogTitle("Save file");
-			int userSelection = fileChooser.showSaveDialog(parentFrame);
-
-			if (userSelection == JFileChooser.APPROVE_OPTION) {
-				game = fileChooser.getSelectedFile();
-				System.out.println("Save as file: " + game.getAbsolutePath());
-				writer = new PrintWriter(game, "UTF-8");
-				writer.println(turnCount);
-				writer.println(turn);
-				char[][] layout = hBoard.getPieceLocations();
-				int size = hBoard.getGridSize();
-				for(int i = 0; i < size; i++){
-					for(int j = 0; j < size; j++){
-						writer.print(layout[i][j]);
-					}
-				}
-			}
-		} catch (IOException e) {
-		   return false;
-		}
-		finally{
-			try{
-				if(writer != null){
-					writer.close();
-				}
-			}catch (Exception ex) {
-				return false;
-			}
-		}
-		return true;
+		return SaveAndLoad.save(boardSize, pieceLayout, turn,turnCount);
 	}
 
     /**
      * This function loads a game state from a file and validates it.
      * It must have a .hnef extension to be accepted.
-     * @return The return value represents the status code.
-     * 0 is success.
-     * 1 is failure.
-     * 2 is failure due to incorrect extension.
+     * @return The return value is a boolean representing success or failure
      */
-	public static int loadGame(){
-		BufferedReader br = null;
-		FileReader fr = null;
-		File fileName = null;
-		int savedTurnCount;
-		char savedCurrentTurn;
-		String savedLayout;
-		try {
-			JFileChooser fileChooser = new JFileChooser();
-			FileNameExtensionFilter filter = new FileNameExtensionFilter("hnef","hnef");
-			fileChooser.setFileFilter(filter);
-			int returnValue = fileChooser.showOpenDialog(null);
-			if (returnValue == JFileChooser.APPROVE_OPTION) {
-				fileName = fileChooser.getSelectedFile();
-			}
-			String extension = ""; 									// checking file extension. Must be .hnef
-			String name = fileName.toString();
-			int i = name.lastIndexOf('.');
-			if (i > 0) {
-				extension = name.substring(i + 1);
-			}
-			if(!extension.equals("hnef")){						// checking file extension. Must be .hnef
-				return 2;
-			}
-			fr = new FileReader(fileName);
-			br = new BufferedReader(fr);
-			String currentLine;
-			br = new BufferedReader(new FileReader(fileName));
-			i = 0;
-			while ((currentLine = br.readLine()) != null) {
-				if(i == 0){
-					savedTurnCount = Integer.parseInt(currentLine);
-				}
-				else if(i == 1){
-					savedCurrentTurn = currentLine.charAt(0);
-				}
-				else if(i == 2){
-					savedLayout = currentLine;
-				}
-				i++;
-			}
-		} catch (IOException e) {
-			return 1;
-		} finally {
-			try {
-				if (br != null)
-					br.close();
-				if (fr != null)
-					fr.close();
-			} catch (IOException ex) {
-				return 1;
-			}
+	public static boolean loadGame(){
+		File loadFile = SaveAndLoad.load();
+		if(loadFile == null){
+			return false;
 		}
-		return 0;
+		return true;
 	}
+	
 	/**
 	*This function begins a new game.
 	*@param void
