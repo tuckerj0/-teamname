@@ -185,7 +185,7 @@ public class SaveAndLoad {
 		}
 		
 		//check corner tiles
-		if(c != 5){
+		if(c != 5 && c != 4){
 			return false;
 		}
 		//check king
