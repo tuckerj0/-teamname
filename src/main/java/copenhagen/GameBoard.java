@@ -89,6 +89,9 @@ public class GameBoard {
                 JButton b = new JButton();
                 b.setMargin(buttonMargin);
                 b.setPreferredSize(new Dimension(64, 64));
+				b.setOpaque(true);
+				b.setBorder(BorderFactory.createLineBorder(Color.gray));
+				b.setBorderPainted(true);
 				b.setMaximumSize(new Dimension(64, 64));
 				b.setMinimumSize(new Dimension(64, 64));
 				b.addActionListener(new squareClickedListener());
@@ -122,6 +125,10 @@ public class GameBoard {
      */
 	public void highlightButton(int col, int row){
 		boardSquares[col][row].setBackground(highlight);
+		boardSquares[col][row].setBorder(BorderFactory.createLineBorder(Color.gray));
+		boardSquares[col][row].setBorderPainted(true);
+
+		
 	}
 
     /**
@@ -133,12 +140,18 @@ public class GameBoard {
 	public void unhighlightButton(int col, int row){
 		if (pieceLocations[col][row] == 'c') {
 		    boardSquares[col][row].setBackground(specialColor);
+		    boardSquares[col][row].setBorderPainted(false);
+
         }
 	    else if((col % 2 == 1 && row % 2 == 1) || (col % 2 == 0 && row % 2 == 0)){
 			boardSquares[col][row].setBackground(primaryColor);
+			boardSquares[col][row].setBorderPainted(false);
+
 		}
 		else {
 			boardSquares[col][row].setBackground(secondaryColor);
+			boardSquares[col][row].setBorderPainted(false);
+
 		}
 	}
 

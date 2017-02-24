@@ -40,7 +40,7 @@ public class Hnefatafl {
 	public static char[][] pieceLayout;
 	private static int boardSize = 11;
 	private static int turnCount = 0;
-	private static char turn = 'b';
+	public static char turn = 'b';
 	private static GameBoard hBoard;
 	private static int[] primaryColor = {244,164,96};
 	private static int[] secondaryColor = {139,69,19};
