@@ -140,17 +140,14 @@ public class GameBoard {
 	public void unhighlightButton(int col, int row){
 		if (pieceLocations[col][row] == 'c') {
 		    boardSquares[col][row].setBackground(specialColor);
-		    boardSquares[col][row].setBorderPainted(false);
 
         }
 	    else if((col % 2 == 1 && row % 2 == 1) || (col % 2 == 0 && row % 2 == 0)){
 			boardSquares[col][row].setBackground(primaryColor);
-			boardSquares[col][row].setBorderPainted(false);
 
 		}
 		else {
 			boardSquares[col][row].setBackground(secondaryColor);
-			boardSquares[col][row].setBorderPainted(false);
 
 		}
 	}
