@@ -223,4 +223,24 @@ public class GameBoard {
 		}
 		return s;
 	}
+
+	/**
+     * This function unselects the previous piece when a new piece is selected.
+     */
+	public static void unselectLast(boolean pieceIsSelected, char[][] pieceLayout, int[] selectedLoc, GameBoard hBoard, JButton selected){
+		if(!pieceIsSelected){
+			return;
+		}
+        char pieceType = pieceLayout[selectedLoc[0]][selectedLoc[1]];
+        boolean[][] unhighlight = Hnefatafl.getValidMoves(pieceType, selectedLoc[0],selectedLoc[1]);
+		for(int i = 0; i < unhighlight.length; i++){
+			for(int j = 0; j < unhighlight[0].length; j++){
+				if(unhighlight[i][j] == true){
+					hBoard.unhighlightButton(i,j);
+				}
+			}
+		}
+		Hnefatafl.setButtonImage(pieceType,selected);
+	}
+
 }

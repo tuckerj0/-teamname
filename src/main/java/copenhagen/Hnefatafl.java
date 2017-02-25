@@ -149,7 +149,7 @@ public class Hnefatafl {
      * @param clickedOn This is the specific piece (JButton) that was clicked on.
      */
 	public static void squareClicked(int c, int r, JButton clickedOn){
-		unselectLast();
+		GameBoard.unselectLast(pieceIsSelected, pieceLayout, selectedLoc,hBoard,selected);
 		char chosenSquaresPiece = pieceLayout[c][r];
 
 		if (pieceCanMove(chosenSquaresPiece)) {
@@ -511,25 +511,6 @@ public class Hnefatafl {
 		return validSpaces;
 	}
 
-    /**
-     * This function unselects the previous piece when a new piece is selected.
-     */
-	public static void unselectLast(){
-		if(!pieceIsSelected){
-			return;
-		}
-        char pieceType = pieceLayout[selectedLoc[0]][selectedLoc[1]];
-        boolean[][] unhighlight = getValidMoves(pieceType, selectedLoc[0],selectedLoc[1]);
-		for(int i = 0; i < unhighlight.length; i++){
-			for(int j = 0; j < unhighlight[0].length; j++){
-				if(unhighlight[i][j] == true){
-					hBoard.unhighlightButton(i,j);
-				}
-			}
-		}
-		setButtonImage(pieceType,selected);
-	}
-
 	/**
      * This function sets the icon of a particular button.
      * @param pieceType The value of the piece from the characters specified in gameboard.java
@@ -614,7 +595,7 @@ public class Hnefatafl {
 		}
 		return true;
 	}
-	
+
 	/**
 	*This function begins a new game.
 	*@param void
@@ -633,6 +614,6 @@ public class Hnefatafl {
 		frame.add(board, BorderLayout.LINE_START);
 		frame.add(bottom, BorderLayout.SOUTH);
 		frame.pack();
-		
+
 	}
 }
