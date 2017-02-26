@@ -129,30 +129,17 @@ public class Hnefatafl {
         }
     }
 
-    /**
-     * This function checks whether a piece is allowed to be currently moved.
-     * @param piece This is piece that is trying to be moved.
-     * @return This function will return true if the piece can be moved, else false if it can not be moved.
-     */
-    private static boolean pieceCanMove(char piece) {
-        if ((piece == 'w' && turn == 'w') || (piece == 'b' && turn == 'b') || (piece == 'k' && turn == 'w')) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
+    /**un
      * This function is called whenever a square is clicked on the game board.
      * @param c This is the column of the square clicked.
      * @param r This is the row of the square clicked.
      * @param clickedOn This is the specific piece (JButton) that was clicked on.
      */
 	public static void squareClicked(int c, int r, JButton clickedOn){
-		unselectLast();
+		GameBoard.unselectLast(pieceIsSelected, selectedLoc, selected);
 		char chosenSquaresPiece = pieceLayout[c][r];
 
-		if (pieceCanMove(chosenSquaresPiece)) {
+		if (GameLogic.pieceCanMove(chosenSquaresPiece,turn)) {
 			boolean[][] highlight = getValidMoves(chosenSquaresPiece, c, r);
 			for(int i = 0; i < highlight.length; i++){
 				for(int j = 0; j < highlight[0].length; j++){
@@ -187,21 +174,6 @@ public class Hnefatafl {
 	}
 
     /**
-     * This function removes all the pieces that were captured on the board by the move just completed.
-     * @param col This parameter is the column associated with a piece that is about to be removed.
-     * @param row This parameter is the row associated with a piece that is about to be removed.
-     */
-	private static void removeCapturedPieces(LinkedList<Integer> col, LinkedList<Integer> row) {
-	    for (int i = 0; i < col.size(); i++) {
-	        int c = col.get(i);
-	        int r = row.get(i);
-            pieceLayout[c][r] = '0';
-            JButton gamePiece = hBoard.getButtonByLocation(c,r);
-            gamePiece.setIcon(null);
-        }
-    }
-
-    /**
      * This function is called to determine if there is a shieldwall during a move by a piece.
      * TODO: Refactor this code!
      * @param piece This is the piece that has been moved.
@@ -217,8 +189,6 @@ public class Hnefatafl {
         LinkedList<Integer> capturedPieceRow = new LinkedList<>();
         int counter = 0;
 
-
-
         if (col == 0) {
             if (row <= 7) {
                 for (int i = row+1; i < 11; i++) {
@@ -232,7 +202,7 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[col][i] == piece || pieceLayout[col][i] == helperPiece || pieceLayout[col][i] == 'c') {
                         if (counter >= 2) {
-                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
@@ -250,15 +220,13 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[col][i] == piece || pieceLayout[col][i] == helperPiece || pieceLayout[col][i] == 'c') {
                         if (counter >= 2) {
-                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
                 }
             }
         }
-
-
 
         if (col == boardSize-1) {
             if (row <= 7) {
@@ -273,7 +241,7 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[col][i] == piece || pieceLayout[col][i] == helperPiece || pieceLayout[col][i] == 'c') {
                         if (counter >= 2) {
-                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
@@ -291,15 +259,13 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[col][i] == piece || pieceLayout[col][i] == helperPiece || pieceLayout[col][i] == 'c') {
                         if (counter >= 2) {
-                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
                 }
             }
         }
-
-
 
         if (row == 0) {
             if (col <= 7) {
@@ -314,7 +280,7 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[i][row] == piece || pieceLayout[i][row] == helperPiece || pieceLayout[i][row] == 'c') {
                         if (counter >= 2) {
-                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
@@ -332,15 +298,13 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[i][row] == piece || pieceLayout[i][row] == helperPiece || pieceLayout[i][row] == 'c') {
                         if (counter >= 2) {
-                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
                 }
             }
         }
-
-
 
         if (row == boardSize-1) {
             if (col <= 7) {
@@ -355,7 +319,7 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[i][row] == piece || pieceLayout[i][row] == helperPiece || pieceLayout[i][row] == 'c') {
                         if (counter >= 2) {
-                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
@@ -373,7 +337,7 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[i][row] == piece || pieceLayout[i][row] == helperPiece || pieceLayout[i][row] == 'c') {
                         if (counter >= 2) {
-                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
@@ -430,7 +394,7 @@ public class Hnefatafl {
             }
         }
         if (!capturedPieceCol.isEmpty()) {
-            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
 	    }
 	    else {
             if (col == 0 || col == 10 || row == 0 || row == 10) {
@@ -509,25 +473,6 @@ public class Hnefatafl {
 			}
 		}
 		return validSpaces;
-	}
-
-    /**
-     * This function unselects the previous piece when a new piece is selected.
-     */
-	public static void unselectLast(){
-		if(!pieceIsSelected){
-			return;
-		}
-        char pieceType = pieceLayout[selectedLoc[0]][selectedLoc[1]];
-        boolean[][] unhighlight = getValidMoves(pieceType, selectedLoc[0],selectedLoc[1]);
-		for(int i = 0; i < unhighlight.length; i++){
-			for(int j = 0; j < unhighlight[0].length; j++){
-				if(unhighlight[i][j] == true){
-					hBoard.unhighlightButton(i,j);
-				}
-			}
-		}
-		setButtonImage(pieceType,selected);
 	}
 
 	/**
@@ -614,7 +559,7 @@ public class Hnefatafl {
 		}
 		return true;
 	}
-	
+
 	/**
 	*This function begins a new game.
 	*@param void
@@ -633,6 +578,19 @@ public class Hnefatafl {
 		frame.add(board, BorderLayout.LINE_START);
 		frame.add(bottom, BorderLayout.SOUTH);
 		frame.pack();
-		
+	}
+
+	/*
+	*Returns the jPanel that is displayed to the user of the current gameboard
+	*/
+	public static GameBoard getHBoard(){
+		return hBoard;
+	}
+
+	/*
+	*Returns a character array of all the pieces currently on the gameboard
+	*/
+	public static char[][] getPieceLayout(){
+		return pieceLayout;
 	}
 }
