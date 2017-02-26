@@ -136,7 +136,7 @@ public class Hnefatafl {
      * @param clickedOn This is the specific piece (JButton) that was clicked on.
      */
 	public static void squareClicked(int c, int r, JButton clickedOn){
-		GameBoard.unselectLast(pieceIsSelected, pieceLayout, selectedLoc,hBoard,selected);
+		GameBoard.unselectLast(pieceIsSelected, selectedLoc, selected);
 		char chosenSquaresPiece = pieceLayout[c][r];
 
 		if (GameLogic.pieceCanMove(chosenSquaresPiece,turn)) {

@@ -227,7 +227,9 @@ public class GameBoard {
 	/**
      * This function unselects the previous piece when a new piece is selected.
      */
-	public static void unselectLast(boolean pieceIsSelected, char[][] pieceLayout, int[] selectedLoc, GameBoard hBoard, JButton selected){
+	public static void unselectLast(boolean pieceIsSelected, int[] selectedLoc, JButton selected){
+		GameBoard hBoard = Hnefatafl.getHBoard();
+        char[][] pieceLayout = Hnefatafl.getPieceLayout();
 		if(!pieceIsSelected){
 			return;
 		}
