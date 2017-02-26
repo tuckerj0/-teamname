@@ -226,6 +226,9 @@ public class GameBoard {
 
 	/**
      * This function unselects the previous piece when a new piece is selected.
+	 * @param pieceIsSelected is true if the user has currently selected a gamePiece
+	 * @param selectedLoc this holds the row and column location of the selected piece
+	 * @param selected is the JButton of the currently selected piece
      */
 	public static void unselectLast(boolean pieceIsSelected, int[] selectedLoc, JButton selected){
 		GameBoard hBoard = Hnefatafl.getHBoard();
@@ -245,6 +248,11 @@ public class GameBoard {
 		Hnefatafl.setButtonImage(pieceType,selected);
 	}
 
+	/**
+     * This function will remove the gamePiece from a given square
+     * @param c This parameter represents the column of the square.
+     * @param r This parameter represents the row of the square.
+     */
 	public static void removeCapturedPiecesUI(int c, int r){
 		GameBoard hBoard = Hnefatafl.getHBoard();
 		JButton gamePiece = hBoard.getButtonByLocation(c,r);

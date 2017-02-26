@@ -580,10 +580,16 @@ public class Hnefatafl {
 		frame.pack();
 	}
 
+	/*
+	*Returns the jPanel that is displayed to the user of the current gameboard
+	*/
 	public static GameBoard getHBoard(){
 		return hBoard;
 	}
 
+	/*
+	*Returns a character array of all the pieces currently on the gameboard
+	*/
 	public static char[][] getPieceLayout(){
 		return pieceLayout;
 	}
