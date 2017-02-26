@@ -174,20 +174,6 @@ public class Hnefatafl {
 	}
 
     /**
-     * This function removes all the pieces that were captured on the board by the move just completed.
-     * @param col This parameter is the column associated with a piece that is about to be removed.
-     * @param row This parameter is the row associated with a piece that is about to be removed.
-     */
-	private static void removeCapturedPieces(LinkedList<Integer> col, LinkedList<Integer> row) {
-	    for (int i = 0; i < col.size(); i++) {
-	        int c = col.get(i);
-	        int r = row.get(i);
-            pieceLayout[c][r] = '0';
-			GameBoard.removeCapturedPiecesUI(c,r,hBoard);
-		}
-    }
-
-    /**
      * This function is called to determine if there is a shieldwall during a move by a piece.
      * TODO: Refactor this code!
      * @param piece This is the piece that has been moved.
@@ -203,8 +189,6 @@ public class Hnefatafl {
         LinkedList<Integer> capturedPieceRow = new LinkedList<>();
         int counter = 0;
 
-
-
         if (col == 0) {
             if (row <= 7) {
                 for (int i = row+1; i < 11; i++) {
@@ -218,7 +202,7 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[col][i] == piece || pieceLayout[col][i] == helperPiece || pieceLayout[col][i] == 'c') {
                         if (counter >= 2) {
-                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
@@ -236,15 +220,13 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[col][i] == piece || pieceLayout[col][i] == helperPiece || pieceLayout[col][i] == 'c') {
                         if (counter >= 2) {
-                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
                 }
             }
         }
-
-
 
         if (col == boardSize-1) {
             if (row <= 7) {
@@ -259,7 +241,7 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[col][i] == piece || pieceLayout[col][i] == helperPiece || pieceLayout[col][i] == 'c') {
                         if (counter >= 2) {
-                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
@@ -277,15 +259,13 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[col][i] == piece || pieceLayout[col][i] == helperPiece || pieceLayout[col][i] == 'c') {
                         if (counter >= 2) {
-                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
                 }
             }
         }
-
-
 
         if (row == 0) {
             if (col <= 7) {
@@ -300,7 +280,7 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[i][row] == piece || pieceLayout[i][row] == helperPiece || pieceLayout[i][row] == 'c') {
                         if (counter >= 2) {
-                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
@@ -318,15 +298,13 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[i][row] == piece || pieceLayout[i][row] == helperPiece || pieceLayout[i][row] == 'c') {
                         if (counter >= 2) {
-                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
                 }
             }
         }
-
-
 
         if (row == boardSize-1) {
             if (col <= 7) {
@@ -341,7 +319,7 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[i][row] == piece || pieceLayout[i][row] == helperPiece || pieceLayout[i][row] == 'c') {
                         if (counter >= 2) {
-                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
@@ -359,7 +337,7 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[i][row] == piece || pieceLayout[i][row] == helperPiece || pieceLayout[i][row] == 'c') {
                         if (counter >= 2) {
-                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
@@ -416,7 +394,7 @@ public class Hnefatafl {
             }
         }
         if (!capturedPieceCol.isEmpty()) {
-            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
 	    }
 	    else {
             if (col == 0 || col == 10 || row == 0 || row == 10) {
@@ -600,6 +578,13 @@ public class Hnefatafl {
 		frame.add(board, BorderLayout.LINE_START);
 		frame.add(bottom, BorderLayout.SOUTH);
 		frame.pack();
+	}
 
+	public static GameBoard getHBoard(){
+		return hBoard;
+	}
+
+	public static char[][] getPieceLayout(){
+		return pieceLayout;
 	}
 }
