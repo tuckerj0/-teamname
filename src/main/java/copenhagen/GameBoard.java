@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.awt.event.*;
 
 /**
- * This class contains all the logic and UI for the game board. The game board is represented by a two dimensional
+ * This class contains all UI for the game board. The game board is represented by a two dimensional
  * character array. The location in the array is the location on the board. The first dimension represents the row and
  * the second dimension represents the column.
  * The char value represents the piece type:
@@ -77,7 +77,7 @@ public class GameBoard {
      * It calls the addPiece and setStartingPieces methods.
      * @return This function will return true if it is successful
      */
-	public boolean initializeGUI(char[][] pieceLocations) {
+	public boolean initializeGUI(char[][] gameBoardArray) {
 		board = new JPanel(new GridLayout(gridSize, gridSize));
 		board.setBorder(new LineBorder(Color.BLACK));
 		boardSquares = new JButton[gridSize][gridSize];
@@ -95,7 +95,7 @@ public class GameBoard {
 				b.setMinimumSize(new Dimension(64, 64));
 				b.addActionListener(new squareClickedListener());
 
-				addPiece(pieceLocations[i][j],b);
+				addPiece(gameBoardArray[i][j],b);
 
 				if ((i==0 && j==0)|| (i==gridSize-1 && j==gridSize-1)|| (i==0 && j==gridSize-1)
 					|| (i==gridSize-1 && j==0) || (i==(gridSize/2) && j==(gridSize/2))){
@@ -126,8 +126,6 @@ public class GameBoard {
 		boardSquares[col][row].setBackground(highlight);
 		boardSquares[col][row].setBorder(BorderFactory.createLineBorder(Color.gray));
 		boardSquares[col][row].setBorderPainted(true);
-
-		
 	}
 
     /**

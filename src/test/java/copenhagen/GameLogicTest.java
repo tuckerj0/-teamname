@@ -50,4 +50,15 @@ public class GameLogicTest {
         char[][] actual = GameLogic.setStartingPieces(size);
         assertEquals(expected[0][0], actual[0][0]);
     }
+
+    // This test checks to make sure the game board array is sent back properly when called.
+    @Test
+    public void testGetGameBoardArray() {
+        char[][] expected = new char [1][1];
+        expected[0][0] = '0';
+        GameLogic gl = new GameLogic();
+        gl.gameBoardArray = expected;
+        char[][] actual = GameLogic.getGameBoardArray();
+        assertEquals(expected[0][0], actual[0][0]);
+    }
 }

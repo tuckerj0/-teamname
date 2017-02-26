@@ -79,7 +79,7 @@ public class Hnefatafl {
 	public static void setUpGameBoard() {
 		hBoard = new GameBoard(boardSize, primaryColor, secondaryColor, specialColor);
 		board = hBoard.getBoard();
-		pieceLayout = hBoard.getPieceLocations();
+		pieceLayout = GameLogic.getGameBoardArray();
 		SideBar sBar = new SideBar(primaryColor, secondaryColor, letteringColor);
 		side = sBar.getSideBar();
 		BottomBar bBar = new BottomBar(primaryColor, letteringColor, turn, turnCount);
@@ -629,7 +629,7 @@ public class Hnefatafl {
 		frame.remove(board);
 		hBoard = new GameBoard(boardSize, primaryColor, secondaryColor, specialColor);
 		board = hBoard.getBoard();
-		pieceLayout = hBoard.getPieceLocations();
+		pieceLayout = GameLogic.getGameBoardArray();
 		frame.add(board, BorderLayout.LINE_START);
 		frame.add(bottom, BorderLayout.SOUTH);
 		frame.pack();

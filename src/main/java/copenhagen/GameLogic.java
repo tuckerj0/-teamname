@@ -1,11 +1,24 @@
 package copenhagen;
 
 //Class does all of the logic involved in the Hnefatafl gameplay
+/**
+ * This class contains all the logic for the game board. The game board is represented by a two dimensional
+ * character array. The location in the array is the location on the board. The first dimension represents the row and
+ * the second dimension represents the column.
+ * The char value represents the piece type:
+ * '0' for empty
+ * 'c' for the throne and the corner squares (the five restricted squares)
+ * 'w' for a white piece
+ * 'b' for a black piece
+ * 'k' for the king piece
+ */
 public class GameLogic{
     private static int GRID_SIZE = 11;
+    public static char[][] gameBoardArray;
 
     /**
      * This function sets the starting location of each game piece on the board.
+     * @param size This parameter is the size of the game board.
      * @return This returns a two dimensional character array that represents the game board with game pieces at their
      * starting positions.
      */
@@ -30,6 +43,16 @@ public class GameLogic{
             s[0][0] = s[0][10] = s[10][0] = s[10][10] = s[5][5] = 'c';
             s[5][5] = 'k';
         }
+        gameBoardArray = s;
         return s;
+    }
+
+    /**
+     * This function gets the game board containing the location of every game piece.
+     * @return This returns a two dimensional character array representing the game pieces and their location on the
+     * game board.
+     */
+    public static char[][] getGameBoardArray() {
+        return gameBoardArray;
     }
 }
