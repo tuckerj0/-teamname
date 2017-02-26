@@ -5,6 +5,36 @@ import copenhagen.GameLogic;
 
 public class GameLogicTest {
 
+    // This test checks if a piece can move if the piece and turn are white.
+    @Test
+    public void testPieceCanMoveIfPieceAndTurnAreWhite() {
+        assertEquals(true, GameLogic.pieceCanMove('w', 'w'));
+    }
+
+    // This test checks if a piece can move if the piece and turn are black.
+    @Test
+    public void testPieceCanMoveIfPieceAndTurnAreBlack() {
+        assertEquals(true, GameLogic.pieceCanMove('b', 'b'));
+    }
+
+    // This test checks if a piece can move if the piece is the king and turn is white.
+    @Test
+    public void testPieceCanMoveIfPieceIsKingAndTurnIsWhite() {
+        assertEquals(true, GameLogic.pieceCanMove('k', 'w'));
+    }
+
+    // This test checks if a piece can move if the piece is white and turn is black.
+    @Test
+    public void testPieceCanMoveIfPieceIsWhiteAndTurnIsBlack() {
+        assertEquals(false, GameLogic.pieceCanMove('w', 'b'));
+    }
+
+    // This test checks if a piece can move if the piece is black and turn is white.
+    @Test
+    public void testPieceCanMoveIfPieceIsBlackAndTurnIsWhite() {
+        assertEquals(false, GameLogic.pieceCanMove('b', 'w'));
+    }
+
     // This test is to ensure that the game board array is created correctly with all the right pieces in the correct
     // spot.
     @Test

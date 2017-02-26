@@ -36,7 +36,6 @@ public class GameLogic{
      * @param row This parameter is the row associated with a piece that is about to be removed.
      */
 	public static void removeCapturedPieces(LinkedList<Integer> col, LinkedList<Integer> row) {
-        GameBoard hBoard = Hnefatafl.getHBoard();
         char[][] pieceLayout = Hnefatafl.getPieceLayout();
 	    for (int i = 0; i < col.size(); i++) {
 	        int c = col.get(i);
