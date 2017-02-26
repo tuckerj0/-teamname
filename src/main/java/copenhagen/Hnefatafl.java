@@ -18,12 +18,8 @@ import java.awt.*;
 import javax.swing.*;
 import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
-import java.io.*;
 import java.io.IOException;
-import java.io.FileReader;
-import java.io.BufferedReader;
 import java.io.File;
-import javax.swing.filechooser.*;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 
@@ -79,7 +75,7 @@ public class Hnefatafl {
 	public static void setUpGameBoard() {
 		hBoard = new GameBoard(boardSize, primaryColor, secondaryColor, specialColor);
 		board = hBoard.getBoard();
-		pieceLayout = hBoard.getPieceLocations();
+		pieceLayout = GameLogic.getGameBoardArray();
 		SideBar sBar = new SideBar(primaryColor, secondaryColor, letteringColor);
 		side = sBar.getSideBar();
 		BottomBar bBar = new BottomBar(primaryColor, letteringColor, turn, turnCount);
@@ -138,7 +134,7 @@ public class Hnefatafl {
      */
 	public static void squareClicked(int c, int r, JButton clickedOn){
 		GameBoard.unselectLast(pieceIsSelected, selectedLoc, selected);
-		char chosenSquaresPiece = pieceLayout[c][r];
+		char chosenSquaresPiece = GameLogic.getPiece(c, r);
 
 		if (GameLogic.pieceCanMove(chosenSquaresPiece,turn)) {
 			boolean[][] highlight = getValidMoves(chosenSquaresPiece, c, r);
@@ -415,17 +411,21 @@ public class Hnefatafl {
      */
 	public static void movePieceOnBoard(int startCol,int startRow,int destCol, int destRow){
 		//update gameboard array
-		char pieceType = pieceLayout[startCol][startRow];
+		char pieceType = GameLogic.getPiece(startCol, startRow);
 		if ((startCol==0 && startRow==0) ||
 			(startCol==boardSize-1 && startRow==boardSize-1) ||
 			(startCol==0 && startRow==boardSize-1) ||
 			(startCol==boardSize-1 && startRow==0) || (startCol==5 && startRow==5)) {
 			pieceLayout[startCol][startRow] = 'c';
+			GameLogic.updateGameBoard(startCol, startRow, 'c');
+
 		}else{
 			pieceLayout[startCol][startRow] = '0';
-		}
+            GameLogic.updateGameBoard(startCol, startRow, '0');
+        }
 		pieceLayout[destCol][destRow] = pieceType;
-		findCapturedPieces(pieceType, destCol, destRow);
+        GameLogic.updateGameBoard(destCol, destRow, pieceType);
+        findCapturedPieces(pieceType, destCol, destRow);
 
 		//update gameboard gui
 		JButton sButton = hBoard.getButtonByLocation(startCol,startRow);
@@ -511,8 +511,9 @@ public class Hnefatafl {
      * @param r This parameter is the row of the game piece that is clicked on.
      */
 	public static void selectNew(JButton clickedOn,int c, int r){
-		char piece = pieceLayout[c][r];
-		try {
+		char piece = GameLogic.getPiece(c, r);
+
+        try {
 			selectedLoc.setColumn(c);
 			selectedLoc.setRow(r);
 			selected = clickedOn;
@@ -561,11 +562,9 @@ public class Hnefatafl {
 		return true;
 	}
 
-	/**
-	*This function begins a new game.
-	*@param void
-	*@return void
-	*/
+    /**
+     * This function begins a new game.
+     */
 	public static void newGame(){
 		turnCount = 0;
 		turn = 'b';
@@ -575,23 +574,17 @@ public class Hnefatafl {
 		frame.remove(board);
 		hBoard = new GameBoard(boardSize, primaryColor, secondaryColor, specialColor);
 		board = hBoard.getBoard();
-		pieceLayout = hBoard.getPieceLocations();
+		pieceLayout = GameLogic.getGameBoardArray();
 		frame.add(board, BorderLayout.LINE_START);
 		frame.add(bottom, BorderLayout.SOUTH);
 		frame.pack();
 	}
 
-	/*
-	*Returns the jPanel that is displayed to the user of the current gameboard
-	*/
+    /**
+     * This functions gets the HBoard.
+     * @return This function will return the jPanel that is displayed to the user of the current gameboard.
+     */
 	public static GameBoard getHBoard(){
 		return hBoard;
-	}
-
-	/*
-	*Returns a character array of all the pieces currently on the gameboard
-	*/
-	public static char[][] getPieceLayout(){
-		return pieceLayout;
 	}
 }
