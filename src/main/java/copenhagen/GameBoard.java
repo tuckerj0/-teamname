@@ -202,7 +202,7 @@ public class GameBoard {
      */
 	public static void unselectLast(boolean pieceIsSelected, int[] selectedLoc, JButton selected){
 		GameBoard hBoard = Hnefatafl.getHBoard();
-        char[][] pieceLayout = Hnefatafl.getPieceLayout();
+        char[][] pieceLayout = GameLogic.getGameBoardArray();
 		if(!pieceIsSelected){
 			return;
 		}

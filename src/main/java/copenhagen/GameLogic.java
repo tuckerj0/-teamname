@@ -31,16 +31,35 @@ public class GameLogic{
     }
 
     /**
+     * This function updates the game board.
+     * @param col This parameter is the column that will be updated.
+     * @param row This parameter is the row that will be updated.
+     * @param piece This parameter is the piece that will be placed in the given column and row of the game board.
+     */
+    public static void updateGameBoard(int col, int row, char piece) {
+        gameBoardArray[col][row] = piece;
+    }
+
+    /**
+     * This function gets what type piece is at a given location.
+     * @param col This parameter is the column in the game board.
+     * @param row This parameter is the row in the game board.
+     * @return This will return the character that represents the piece.
+     */
+    public static char getPiece(int col, int row) {
+        return gameBoardArray[col][row];
+    }
+
+    /**
      * This function removes all the pieces that were captured on the board by the move just completed.
      * @param col This parameter is the column associated with a piece that is about to be removed.
      * @param row This parameter is the row associated with a piece that is about to be removed.
      */
 	public static void removeCapturedPieces(LinkedList<Integer> col, LinkedList<Integer> row) {
-        char[][] pieceLayout = Hnefatafl.getPieceLayout();
 	    for (int i = 0; i < col.size(); i++) {
 	        int c = col.get(i);
 	        int r = row.get(i);
-            pieceLayout[c][r] = '0';
+            gameBoardArray[c][r] = '0';
 			GameBoard.removeCapturedPiecesUI(c,r);
 		}
     }

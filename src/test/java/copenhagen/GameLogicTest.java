@@ -35,6 +35,21 @@ public class GameLogicTest {
         assertEquals(false, GameLogic.pieceCanMove('b', 'w'));
     }
 
+    // This test checks to make sure that correct piece is returned.
+    @Test
+    public void testGetPiece() {
+        int col = 4;
+        int row = 8;
+        char expected = 'k';
+        char[][] gameBoard = new char [11][11];
+        gameBoard[col][row] = 'k';
+        gameBoard[col-1][row] = gameBoard[col+1][row] = gameBoard[col][row-1] = gameBoard[col][row+1] = 'b';
+        GameLogic gl = new GameLogic();
+        gl.gameBoardArray = gameBoard;
+        char actual = gl.getPiece(col, row);
+        assertEquals(expected, actual);
+    }
+
     // This test is to ensure that the game board array is created correctly with all the right pieces in the correct
     // spot.
     @Test
@@ -88,7 +103,7 @@ public class GameLogicTest {
         expected[0][0] = '0';
         GameLogic gl = new GameLogic();
         gl.gameBoardArray = expected;
-        char[][] actual = GameLogic.getGameBoardArray();
+        char[][] actual = gl.getGameBoardArray();
         assertEquals(expected[0][0], actual[0][0]);
     }
 }

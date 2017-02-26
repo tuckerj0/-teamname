@@ -133,7 +133,7 @@ public class Hnefatafl {
      */
 	public static void squareClicked(int c, int r, JButton clickedOn){
 		GameBoard.unselectLast(pieceIsSelected, selectedLoc, selected);
-		char chosenSquaresPiece = pieceLayout[c][r];
+		char chosenSquaresPiece = GameLogic.getPiece(c, r);
 
 		if (GameLogic.pieceCanMove(chosenSquaresPiece,turn)) {
 			boolean[][] highlight = getValidMoves(chosenSquaresPiece, c, r);
@@ -157,7 +157,7 @@ public class Hnefatafl {
      * @param r This parameter is the row they are trying to move to.
      */
 	public static void movePiece(int c, int r){
-        char pieceType = pieceLayout[selectedLoc[0]][selectedLoc[1]];
+        char pieceType = GameLogic.getPiece(selectedLoc[0], selectedLoc[1]);
         boolean[][] validMoves = getValidMoves(pieceType, selectedLoc[0],selectedLoc[1]);
 		if(validMoves[c][r] == true){
 			movePieceOnBoard(selectedLoc[0],selectedLoc[1],c,r);
@@ -410,17 +410,21 @@ public class Hnefatafl {
      */
 	public static void movePieceOnBoard(int startCol,int startRow,int destCol, int destRow){
 		//update gameboard array
-		char pieceType = pieceLayout[startCol][startRow];
+		char pieceType = GameLogic.getPiece(startCol, startRow);
 		if ((startCol==0 && startRow==0) ||
 			(startCol==boardSize-1 && startRow==boardSize-1) ||
 			(startCol==0 && startRow==boardSize-1) ||
 			(startCol==boardSize-1 && startRow==0) || (startCol==5 && startRow==5)) {
 			pieceLayout[startCol][startRow] = 'c';
+			GameLogic.updateGameBoard(startCol, startRow, 'c');
+
 		}else{
 			pieceLayout[startCol][startRow] = '0';
-		}
+            GameLogic.updateGameBoard(startCol, startRow, '0');
+        }
 		pieceLayout[destCol][destRow] = pieceType;
-		findCapturedPieces(pieceType, destCol, destRow);
+        GameLogic.updateGameBoard(destCol, destRow, pieceType);
+        findCapturedPieces(pieceType, destCol, destRow);
 
 		//update gameboard gui
 		JButton sButton = hBoard.getButtonByLocation(startCol,startRow);
@@ -506,8 +510,9 @@ public class Hnefatafl {
      * @param r This parameter is the row of the game piece that is clicked on.
      */
 	public static void selectNew(JButton clickedOn,int c, int r){
-		char piece = pieceLayout[c][r];
-		try {
+		char piece = GameLogic.getPiece(c, r);
+
+        try {
 			selectedLoc[0] = c;
 			selectedLoc[1] = r;
 			selected = clickedOn;
@@ -581,12 +586,5 @@ public class Hnefatafl {
 	*/
 	public static GameBoard getHBoard(){
 		return hBoard;
-	}
-
-	/*
-	*Returns a character array of all the pieces currently on the gameboard
-	*/
-	public static char[][] getPieceLayout(){
-		return pieceLayout;
 	}
 }
