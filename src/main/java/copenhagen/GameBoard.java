@@ -200,14 +200,14 @@ public class GameBoard {
 	 * @param selectedLoc this holds the row and column location of the selected piece
 	 * @param selected is the JButton of the currently selected piece
      */
-	public static void unselectLast(boolean pieceIsSelected, int[] selectedLoc, JButton selected){
+	public static void unselectLast(boolean pieceIsSelected, BoardLocation selectedLoc, JButton selected){
 		GameBoard hBoard = Hnefatafl.getHBoard();
         char[][] pieceLayout = GameLogic.getGameBoardArray();
 		if(!pieceIsSelected){
 			return;
 		}
-        char pieceType = pieceLayout[selectedLoc[0]][selectedLoc[1]];
-        boolean[][] unhighlight = Hnefatafl.getValidMoves(pieceType, selectedLoc[0],selectedLoc[1]);
+        char pieceType = pieceLayout[selectedLoc.getColumn()][selectedLoc.getRow()];
+        boolean[][] unhighlight = Hnefatafl.getValidMoves(pieceType, selectedLoc.getColumn(),selectedLoc.getRow());
 		for(int i = 0; i < unhighlight.length; i++){
 			for(int j = 0; j < unhighlight[0].length; j++){
 				if(unhighlight[i][j] == true){

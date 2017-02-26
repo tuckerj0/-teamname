@@ -42,7 +42,7 @@ public class Hnefatafl {
 	private static int[] secondaryColor = {139,69,19};
 	private static int[] letteringColor = {0,0,0};
 	private static int[] specialColor = {0,0,88};
-	private static int[] selectedLoc = {-1,-1};
+	private static BoardLocation selectedLoc;
 	private static JButton selected;
 	private static boolean pieceIsSelected = false;
 
@@ -84,6 +84,7 @@ public class Hnefatafl {
         menuBar = menu.getMenuBar();
 		turnCount = 0;
 		turn = 'b';
+		selectedLoc = new BoardLocation();
 	}
 
     /**
@@ -157,10 +158,10 @@ public class Hnefatafl {
      * @param r This parameter is the row they are trying to move to.
      */
 	public static void movePiece(int c, int r){
-        char pieceType = GameLogic.getPiece(selectedLoc[0], selectedLoc[1]);
-        boolean[][] validMoves = getValidMoves(pieceType, selectedLoc[0],selectedLoc[1]);
+        char pieceType = pieceLayout[selectedLoc.getColumn()][selectedLoc.getRow()];
+        boolean[][] validMoves = getValidMoves(pieceType, selectedLoc.getColumn(),selectedLoc.getRow());
 		if(validMoves[c][r] == true){
-			movePieceOnBoard(selectedLoc[0],selectedLoc[1],c,r);
+			movePieceOnBoard(selectedLoc.getColumn(),selectedLoc.getRow(),c,r);
             endTurn();
             turnCount++;
             BottomBar.endTurn(turn, turnCount);
@@ -513,8 +514,8 @@ public class Hnefatafl {
 		char piece = GameLogic.getPiece(c, r);
 
         try {
-			selectedLoc[0] = c;
-			selectedLoc[1] = r;
+			selectedLoc.setColumn(c);
+			selectedLoc.setRow(r);
 			selected = clickedOn;
 			Image img;
 			ImageIcon icon;
