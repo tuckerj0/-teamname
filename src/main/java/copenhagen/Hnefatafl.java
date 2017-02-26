@@ -562,11 +562,9 @@ public class Hnefatafl {
 		return true;
 	}
 
-	/**
-	*This function begins a new game.
-	*@param void
-	*@return void
-	*/
+    /**
+     * This function begins a new game.
+     */
 	public static void newGame(){
 		turnCount = 0;
 		turn = 'b';
@@ -582,9 +580,10 @@ public class Hnefatafl {
 		frame.pack();
 	}
 
-	/*
-	*Returns the jPanel that is displayed to the user of the current gameboard
-	*/
+    /**
+     * This functions gets the HBoard.
+     * @return This function will return the jPanel that is displayed to the user of the current gameboard.
+     */
 	public static GameBoard getHBoard(){
 		return hBoard;
 	}
