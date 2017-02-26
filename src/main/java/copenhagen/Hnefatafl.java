@@ -110,12 +110,6 @@ public class Hnefatafl {
 	}
 
     /**
-     * This function officially starts up the game.
-     */
-	public static void playGame(){
-	}
-
-    /**
      * This function changes whose turn it is at the end of each move.
      * b = black = attackers
      * w = white = king and his defenders
