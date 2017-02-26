@@ -202,4 +202,71 @@ public class GameBoard {
 	public int getGridSize(){
 		return gridSize;
 	}
+<<<<<<< HEAD
+=======
+
+    /**
+     * This function sets the starting location of each game piece on the board.
+     * @return This returns a two dimensional character array that represents the game board with game pieces at their
+     * starting positions.
+     */
+	private char[][] setStartingPieces() {
+		char[][] s = new char [gridSize][gridSize];
+		//Initialize to null char
+		for (int i = 0; i < s.length; i++) {
+            for (int j = 0; j < s[i].length; j++) {
+				s[i][j] = '0';
+			}
+		}
+
+		if (gridSize==11) {
+			s[0][3] = s[0][4] = s[0][5] = s[0][6] = s[0][7] = s[1][5] = 'b';
+			s[3][0] = s[4][0] = s[5][0] = s[6][0] = s[7][0] = s[5][1] = 'b';
+			s[10][3] = s[10][4] = s[10][5] = s[10][6] = s[10][7] = s[9][5] = 'b';
+			s[3][10] = s[4][10] = s[5][10] = s[6][10] = s[7][10] = s[5][9] = 'b';
+
+			s[3][5] = s[4][4] = s[4][5] = s[4][6] = s[5][3] = s[5][4] = 'w';
+			s[5][6] = s[5][7] = s[6][4] = s[6][5] = s[6][6] = s[7][5] = 'w';
+			s[0][0] = s[0][10] = s[10][0] = s[10][10] = s[5][5] = 'c';
+			s[5][5] = 'k';
+		}
+		return s;
+	}
+
+	/**
+     * This function unselects the previous piece when a new piece is selected.
+	 * @param pieceIsSelected is true if the user has currently selected a gamePiece
+	 * @param selectedLoc this holds the row and column location of the selected piece
+	 * @param selected is the JButton of the currently selected piece
+     */
+	public static void unselectLast(boolean pieceIsSelected, int[] selectedLoc, JButton selected){
+		GameBoard hBoard = Hnefatafl.getHBoard();
+        char[][] pieceLayout = Hnefatafl.getPieceLayout();
+		if(!pieceIsSelected){
+			return;
+		}
+        char pieceType = pieceLayout[selectedLoc[0]][selectedLoc[1]];
+        boolean[][] unhighlight = Hnefatafl.getValidMoves(pieceType, selectedLoc[0],selectedLoc[1]);
+		for(int i = 0; i < unhighlight.length; i++){
+			for(int j = 0; j < unhighlight[0].length; j++){
+				if(unhighlight[i][j] == true){
+					hBoard.unhighlightButton(i,j);
+				}
+			}
+		}
+		Hnefatafl.setButtonImage(pieceType,selected);
+	}
+
+	/**
+     * This function will remove the gamePiece from a given square
+     * @param c This parameter represents the column of the square.
+     * @param r This parameter represents the row of the square.
+     */
+	public static void removeCapturedPiecesUI(int c, int r){
+		GameBoard hBoard = Hnefatafl.getHBoard();
+		JButton gamePiece = hBoard.getButtonByLocation(c,r);
+		gamePiece.setIcon(null);
+	}
+
+>>>>>>> refs/remotes/origin/master
 }
