@@ -129,20 +129,7 @@ public class Hnefatafl {
         }
     }
 
-    /**
-     * This function checks whether a piece is allowed to be currently moved.
-     * @param piece This is piece that is trying to be moved.
-     * @return This function will return true if the piece can be moved, else false if it can not be moved.
-     */
-    private static boolean pieceCanMove(char piece) {
-        if ((piece == 'w' && turn == 'w') || (piece == 'b' && turn == 'b') || (piece == 'k' && turn == 'w')) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
+    /**un
      * This function is called whenever a square is clicked on the game board.
      * @param c This is the column of the square clicked.
      * @param r This is the row of the square clicked.
@@ -152,7 +139,7 @@ public class Hnefatafl {
 		GameBoard.unselectLast(pieceIsSelected, pieceLayout, selectedLoc,hBoard,selected);
 		char chosenSquaresPiece = pieceLayout[c][r];
 
-		if (pieceCanMove(chosenSquaresPiece)) {
+		if (GameLogic.pieceCanMove(chosenSquaresPiece,turn)) {
 			boolean[][] highlight = getValidMoves(chosenSquaresPiece, c, r);
 			for(int i = 0; i < highlight.length; i++){
 				for(int j = 0; j < highlight[0].length; j++){
@@ -196,9 +183,8 @@ public class Hnefatafl {
 	        int c = col.get(i);
 	        int r = row.get(i);
             pieceLayout[c][r] = '0';
-            JButton gamePiece = hBoard.getButtonByLocation(c,r);
-            gamePiece.setIcon(null);
-        }
+			GameBoard.removeCapturedPiecesUI(c,r,hBoard);
+		}
     }
 
     /**

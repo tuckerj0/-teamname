@@ -243,4 +243,9 @@ public class GameBoard {
 		Hnefatafl.setButtonImage(pieceType,selected);
 	}
 
+	public static void removeCapturedPiecesUI(int c, int r, GameBoard hBoard){
+		JButton gamePiece = hBoard.getButtonByLocation(c,r);
+		gamePiece.setIcon(null);
+	}
+
 }
