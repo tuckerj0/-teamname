@@ -2,7 +2,6 @@ package copenhagen;
 
 import java.util.LinkedList;
 
-//Class does all of the logic involved in the Hnefatafl gameplay
 /**
  * This class contains all the logic for the game board. The game board is represented by a two dimensional
  * character array. The location in the array is the location on the board. The first dimension represents the row and
@@ -15,10 +14,9 @@ import java.util.LinkedList;
  * 'k' for the king piece
  */
 public class GameLogic{
-<<<<<<< HEAD
     private static int GRID_SIZE = 11;
     public static char[][] gameBoardArray;
-=======
+
     /**
      * This function checks whether a piece is allowed to be currently moved.
      * @param piece This is piece that is trying to be moved.
@@ -47,7 +45,6 @@ public class GameLogic{
 			GameBoard.removeCapturedPiecesUI(c,r);
 		}
     }
->>>>>>> refs/remotes/origin/master
 
     /**
      * This function sets the starting location of each game piece on the board.

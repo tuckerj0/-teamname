@@ -18,12 +18,8 @@ import java.awt.*;
 import javax.swing.*;
 import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
-import java.io.*;
 import java.io.IOException;
-import java.io.FileReader;
-import java.io.BufferedReader;
 import java.io.File;
-import javax.swing.filechooser.*;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 
