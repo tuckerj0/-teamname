@@ -4,6 +4,8 @@ import java.util.LinkedList;
 
 //Class does all of the logic involved in the Hnefatafl gameplay
 public class GameLogic{
+
+    //TODO Add test
     /**
      * This function checks whether a piece is allowed to be currently moved.
      * @param piece This is piece that is trying to be moved.
@@ -17,6 +19,7 @@ public class GameLogic{
         }
     }
 
+    //TODO Add test
     /**
      * This function removes all the pieces that were captured on the board by the move just completed.
      * @param col This parameter is the column associated with a piece that is about to be removed.
