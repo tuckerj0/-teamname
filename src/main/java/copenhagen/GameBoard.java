@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.awt.event.*;
 
 /**
- * This class contains all the logic and UI for the game board. The game board is represented by a two dimensional
+ * This class contains all UI for the game board. The game board is represented by a two dimensional
  * character array. The location in the array is the location on the board. The first dimension represents the row and
  * the second dimension represents the column.
  * The char value represents the piece type:
@@ -41,7 +41,8 @@ public class GameBoard {
 		primaryColor = new Color(pc[0], pc[1], pc[2]);
 		secondaryColor = new Color(sc[0], sc[1], sc[2]);
 		specialColor = new Color(spc[0], spc[1], spc[2]);
-		initializeGUI();
+		pieceLocations = GameLogic.setStartingPieces(gridSize);
+		initializeGUI(pieceLocations);
 	}
 
     /**
@@ -76,12 +77,10 @@ public class GameBoard {
      * It calls the addPiece and setStartingPieces methods.
      * @return This function will return true if it is successful
      */
-	public boolean initializeGUI() {
+	public boolean initializeGUI(char[][] gameBoardArray) {
 		board = new JPanel(new GridLayout(gridSize, gridSize));
 		board.setBorder(new LineBorder(Color.BLACK));
 		boardSquares = new JButton[gridSize][gridSize];
-
-		pieceLocations = setStartingPieces();
 
 		Insets buttonMargin = new Insets(0,0,0,0);
         for (int i = 0; i < boardSquares.length; i++) {
@@ -96,7 +95,7 @@ public class GameBoard {
 				b.setMinimumSize(new Dimension(64, 64));
 				b.addActionListener(new squareClickedListener());
 
-				addPiece(pieceLocations[i][j],b);
+				addPiece(gameBoardArray[i][j],b);
 
 				if ((i==0 && j==0)|| (i==gridSize-1 && j==gridSize-1)|| (i==0 && j==gridSize-1)
 					|| (i==gridSize-1 && j==0) || (i==(gridSize/2) && j==(gridSize/2))){
@@ -127,8 +126,6 @@ public class GameBoard {
 		boardSquares[col][row].setBackground(highlight);
 		boardSquares[col][row].setBorder(BorderFactory.createLineBorder(Color.gray));
 		boardSquares[col][row].setBorderPainted(true);
-
-		
 	}
 
     /**
@@ -190,48 +187,11 @@ public class GameBoard {
 	}
 
     /**
-     * This function gets the game board containing the location of every game piece.
-     * @return This returns a two dimensional character array representing the game pieces and their location on the
-     * game board.
-     */
-	public char[][] getPieceLocations(){
-		return pieceLocations;
-	}
-
-    /**
      * This function gets the grid size of the game board.
      * @return This will return an integer representing the grid size.
      */
 	public int getGridSize(){
 		return gridSize;
-	}
-
-    /**
-     * This function sets the starting location of each game piece on the board.
-     * @return This returns a two dimensional character array that represents the game board with game pieces at their
-     * starting positions.
-     */
-	private char[][] setStartingPieces() {
-		char[][] s = new char [gridSize][gridSize];
-		//Initialize to null char
-		for (int i = 0; i < s.length; i++) {
-            for (int j = 0; j < s[i].length; j++) {
-				s[i][j] = '0';
-			}
-		}
-
-		if (gridSize==11) {
-			s[0][3] = s[0][4] = s[0][5] = s[0][6] = s[0][7] = s[1][5] = 'b';
-			s[3][0] = s[4][0] = s[5][0] = s[6][0] = s[7][0] = s[5][1] = 'b';
-			s[10][3] = s[10][4] = s[10][5] = s[10][6] = s[10][7] = s[9][5] = 'b';
-			s[3][10] = s[4][10] = s[5][10] = s[6][10] = s[7][10] = s[5][9] = 'b';
-
-			s[3][5] = s[4][4] = s[4][5] = s[4][6] = s[5][3] = s[5][4] = 'w';
-			s[5][6] = s[5][7] = s[6][4] = s[6][5] = s[6][6] = s[7][5] = 'w';
-			s[0][0] = s[0][10] = s[10][0] = s[10][10] = s[5][5] = 'c';
-			s[5][5] = 'k';
-		}
-		return s;
 	}
 
 	/**
@@ -240,14 +200,14 @@ public class GameBoard {
 	 * @param selectedLoc this holds the row and column location of the selected piece
 	 * @param selected is the JButton of the currently selected piece
      */
-	public static void unselectLast(boolean pieceIsSelected, int[] selectedLoc, JButton selected){
+	public static void unselectLast(boolean pieceIsSelected, BoardLocation selectedLoc, JButton selected){
 		GameBoard hBoard = Hnefatafl.getHBoard();
-        char[][] pieceLayout = Hnefatafl.getPieceLayout();
+        char[][] pieceLayout = GameLogic.getGameBoardArray();
 		if(!pieceIsSelected){
 			return;
 		}
-        char pieceType = pieceLayout[selectedLoc[0]][selectedLoc[1]];
-        boolean[][] unhighlight = Hnefatafl.getValidMoves(pieceType, selectedLoc[0],selectedLoc[1]);
+        char pieceType = pieceLayout[selectedLoc.getColumn()][selectedLoc.getRow()];
+        boolean[][] unhighlight = Hnefatafl.getValidMoves(pieceType, selectedLoc.getColumn(),selectedLoc.getRow());
 		for(int i = 0; i < unhighlight.length; i++){
 			for(int j = 0; j < unhighlight[0].length; j++){
 				if(unhighlight[i][j] == true){
@@ -268,5 +228,4 @@ public class GameBoard {
 		JButton gamePiece = hBoard.getButtonByLocation(c,r);
 		gamePiece.setIcon(null);
 	}
-
 }
