@@ -14,14 +14,10 @@ import java.util.LinkedList;
  * 'k' for the king piece
  */
 public class GameLogic{
-<<<<<<< HEAD
 
     //TODO Add test
-=======
     private static int GRID_SIZE = 11;
     public static char[][] gameBoardArray;
-
->>>>>>> master
     /**
      * This function checks whether a piece is allowed to be currently moved.
      * @param piece This is piece that is trying to be moved.
@@ -61,12 +57,8 @@ public class GameLogic{
      * @param col This parameter is the column associated with a piece that is about to be removed.
      * @param row This parameter is the row associated with a piece that is about to be removed.
      */
-<<<<<<< HEAD
 	public static char[][] removeCapturedPieces(LinkedList<Integer> col, LinkedList<Integer> row, char[][] pieceLayout) {
         GameBoard hBoard = Hnefatafl.getHBoard();
-=======
-	public static void removeCapturedPieces(LinkedList<Integer> col, LinkedList<Integer> row) {
->>>>>>> master
 	    for (int i = 0; i < col.size(); i++) {
 	        int c = col.get(i);
 	        int r = row.get(i);
