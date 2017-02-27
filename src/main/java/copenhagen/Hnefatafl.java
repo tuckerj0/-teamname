@@ -18,12 +18,8 @@ import java.awt.*;
 import javax.swing.*;
 import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
-import java.io.*;
 import java.io.IOException;
-import java.io.FileReader;
-import java.io.BufferedReader;
 import java.io.File;
-import javax.swing.filechooser.*;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 
@@ -40,13 +36,13 @@ public class Hnefatafl {
 	public static char[][] pieceLayout;
 	private static int boardSize = 11;
 	private static int turnCount = 0;
-	private static char turn = 'b';
+	public static char turn = 'b';
 	private static GameBoard hBoard;
 	private static int[] primaryColor = {244,164,96};
 	private static int[] secondaryColor = {139,69,19};
 	private static int[] letteringColor = {0,0,0};
 	private static int[] specialColor = {0,0,88};
-	private static int[] selectedLoc = {-1,-1};
+	private static BoardLocation selectedLoc;
 	private static JButton selected;
 	private static boolean pieceIsSelected = false;
 
@@ -79,7 +75,7 @@ public class Hnefatafl {
 	public static void setUpGameBoard() {
 		hBoard = new GameBoard(boardSize, primaryColor, secondaryColor, specialColor);
 		board = hBoard.getBoard();
-		pieceLayout = hBoard.getPieceLocations();
+		pieceLayout = GameLogic.getGameBoardArray();
 		SideBar sBar = new SideBar(primaryColor, secondaryColor, letteringColor);
 		side = sBar.getSideBar();
 		BottomBar bBar = new BottomBar(primaryColor, letteringColor, turn, turnCount);
@@ -88,6 +84,7 @@ public class Hnefatafl {
         menuBar = menu.getMenuBar();
 		turnCount = 0;
 		turn = 'b';
+		selectedLoc = new BoardLocation();
 	}
 
     /**
@@ -129,30 +126,17 @@ public class Hnefatafl {
         }
     }
 
-    /**
-     * This function checks whether a piece is allowed to be currently moved.
-     * @param piece This is piece that is trying to be moved.
-     * @return This function will return true if the piece can be moved, else false if it can not be moved.
-     */
-    private static boolean pieceCanMove(char piece) {
-        if ((piece == 'w' && turn == 'w') || (piece == 'b' && turn == 'b') || (piece == 'k' && turn == 'w')) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
+    /**un
      * This function is called whenever a square is clicked on the game board.
      * @param c This is the column of the square clicked.
      * @param r This is the row of the square clicked.
      * @param clickedOn This is the specific piece (JButton) that was clicked on.
      */
 	public static void squareClicked(int c, int r, JButton clickedOn){
-		unselectLast();
-		char chosenSquaresPiece = pieceLayout[c][r];
+		GameBoard.unselectLast(pieceIsSelected, selectedLoc, selected);
+		char chosenSquaresPiece = GameLogic.getPiece(c, r);
 
-		if (pieceCanMove(chosenSquaresPiece)) {
+		if (GameLogic.pieceCanMove(chosenSquaresPiece,turn)) {
 			boolean[][] highlight = getValidMoves(chosenSquaresPiece, c, r);
 			for(int i = 0; i < highlight.length; i++){
 				for(int j = 0; j < highlight[0].length; j++){
@@ -174,10 +158,10 @@ public class Hnefatafl {
      * @param r This parameter is the row they are trying to move to.
      */
 	public static void movePiece(int c, int r){
-        char pieceType = pieceLayout[selectedLoc[0]][selectedLoc[1]];
-        boolean[][] validMoves = getValidMoves(pieceType, selectedLoc[0],selectedLoc[1]);
+        char pieceType = pieceLayout[selectedLoc.getColumn()][selectedLoc.getRow()];
+        boolean[][] validMoves = getValidMoves(pieceType, selectedLoc.getColumn(),selectedLoc.getRow());
 		if(validMoves[c][r] == true){
-			movePieceOnBoard(selectedLoc[0],selectedLoc[1],c,r);
+			movePieceOnBoard(selectedLoc.getColumn(),selectedLoc.getRow(),c,r);
             endTurn();
             turnCount++;
             BottomBar.endTurn(turn, turnCount);
@@ -185,21 +169,6 @@ public class Hnefatafl {
 			JOptionPane.showMessageDialog(null, "Invalid Move");
 		}
 	}
-
-    /**
-     * This function removes all the pieces that were captured on the board by the move just completed.
-     * @param col This parameter is the column associated with a piece that is about to be removed.
-     * @param row This parameter is the row associated with a piece that is about to be removed.
-     */
-	private static void removeCapturedPieces(LinkedList<Integer> col, LinkedList<Integer> row) {
-	    for (int i = 0; i < col.size(); i++) {
-	        int c = col.get(i);
-	        int r = row.get(i);
-            pieceLayout[c][r] = '0';
-            JButton gamePiece = hBoard.getButtonByLocation(c,r);
-            gamePiece.setIcon(null);
-        }
-    }
 
     /**
      * This function is called to determine if there is a shieldwall during a move by a piece.
@@ -217,8 +186,6 @@ public class Hnefatafl {
         LinkedList<Integer> capturedPieceRow = new LinkedList<>();
         int counter = 0;
 
-
-
         if (col == 0) {
             if (row <= 7) {
                 for (int i = row+1; i < 11; i++) {
@@ -232,7 +199,7 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[col][i] == piece || pieceLayout[col][i] == helperPiece || pieceLayout[col][i] == 'c') {
                         if (counter >= 2) {
-                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
@@ -250,15 +217,13 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[col][i] == piece || pieceLayout[col][i] == helperPiece || pieceLayout[col][i] == 'c') {
                         if (counter >= 2) {
-                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
                 }
             }
         }
-
-
 
         if (col == boardSize-1) {
             if (row <= 7) {
@@ -273,7 +238,7 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[col][i] == piece || pieceLayout[col][i] == helperPiece || pieceLayout[col][i] == 'c') {
                         if (counter >= 2) {
-                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
@@ -291,15 +256,13 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[col][i] == piece || pieceLayout[col][i] == helperPiece || pieceLayout[col][i] == 'c') {
                         if (counter >= 2) {
-                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
                 }
             }
         }
-
-
 
         if (row == 0) {
             if (col <= 7) {
@@ -314,7 +277,7 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[i][row] == piece || pieceLayout[i][row] == helperPiece || pieceLayout[i][row] == 'c') {
                         if (counter >= 2) {
-                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
@@ -332,15 +295,13 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[i][row] == piece || pieceLayout[i][row] == helperPiece || pieceLayout[i][row] == 'c') {
                         if (counter >= 2) {
-                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
                 }
             }
         }
-
-
 
         if (row == boardSize-1) {
             if (col <= 7) {
@@ -355,7 +316,7 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[i][row] == piece || pieceLayout[i][row] == helperPiece || pieceLayout[i][row] == 'c') {
                         if (counter >= 2) {
-                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
@@ -373,7 +334,7 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[i][row] == piece || pieceLayout[i][row] == helperPiece || pieceLayout[i][row] == 'c') {
                         if (counter >= 2) {
-                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
@@ -430,7 +391,7 @@ public class Hnefatafl {
             }
         }
         if (!capturedPieceCol.isEmpty()) {
-            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
 	    }
 	    else {
             if (col == 0 || col == 10 || row == 0 || row == 10) {
@@ -450,17 +411,21 @@ public class Hnefatafl {
      */
 	public static void movePieceOnBoard(int startCol,int startRow,int destCol, int destRow){
 		//update gameboard array
-		char pieceType = pieceLayout[startCol][startRow];
+		char pieceType = GameLogic.getPiece(startCol, startRow);
 		if ((startCol==0 && startRow==0) ||
 			(startCol==boardSize-1 && startRow==boardSize-1) ||
 			(startCol==0 && startRow==boardSize-1) ||
 			(startCol==boardSize-1 && startRow==0) || (startCol==5 && startRow==5)) {
 			pieceLayout[startCol][startRow] = 'c';
+			GameLogic.updateGameBoard(startCol, startRow, 'c');
+
 		}else{
 			pieceLayout[startCol][startRow] = '0';
-		}
+            GameLogic.updateGameBoard(startCol, startRow, '0');
+        }
 		pieceLayout[destCol][destRow] = pieceType;
-		findCapturedPieces(pieceType, destCol, destRow);
+        GameLogic.updateGameBoard(destCol, destRow, pieceType);
+        findCapturedPieces(pieceType, destCol, destRow);
 
 		//update gameboard gui
 		JButton sButton = hBoard.getButtonByLocation(startCol,startRow);
@@ -511,25 +476,6 @@ public class Hnefatafl {
 		return validSpaces;
 	}
 
-    /**
-     * This function unselects the previous piece when a new piece is selected.
-     */
-	public static void unselectLast(){
-		if(!pieceIsSelected){
-			return;
-		}
-        char pieceType = pieceLayout[selectedLoc[0]][selectedLoc[1]];
-        boolean[][] unhighlight = getValidMoves(pieceType, selectedLoc[0],selectedLoc[1]);
-		for(int i = 0; i < unhighlight.length; i++){
-			for(int j = 0; j < unhighlight[0].length; j++){
-				if(unhighlight[i][j] == true){
-					hBoard.unhighlightButton(i,j);
-				}
-			}
-		}
-		setButtonImage(pieceType,selected);
-	}
-
 	/**
      * This function sets the icon of a particular button.
      * @param pieceType The value of the piece from the characters specified in gameboard.java
@@ -565,10 +511,11 @@ public class Hnefatafl {
      * @param r This parameter is the row of the game piece that is clicked on.
      */
 	public static void selectNew(JButton clickedOn,int c, int r){
-		char piece = pieceLayout[c][r];
-		try {
-			selectedLoc[0] = c;
-			selectedLoc[1] = r;
+		char piece = GameLogic.getPiece(c, r);
+
+        try {
+			selectedLoc.setColumn(c);
+			selectedLoc.setRow(r);
 			selected = clickedOn;
 			Image img;
 			ImageIcon icon;
@@ -599,115 +546,25 @@ public class Hnefatafl {
      * @return This function will return true if successful or false in the case of an IOException.
      */
 	public static boolean saveGame(){
-		PrintWriter writer = null;
-		File game = null;
-		try{
-
-			JFrame parentFrame = new JFrame();
-
-			JFileChooser fileChooser = new JFileChooser();
-			FileNameExtensionFilter filter = new FileNameExtensionFilter("hnef","hnef");
-			fileChooser.setFileFilter(filter);
-			fileChooser.setDialogTitle("Save file");
-			int userSelection = fileChooser.showSaveDialog(parentFrame);
-
-			if (userSelection == JFileChooser.APPROVE_OPTION) {
-				game = fileChooser.getSelectedFile();
-				System.out.println("Save as file: " + game.getAbsolutePath());
-				writer = new PrintWriter(game, "UTF-8");
-				writer.println(turnCount);
-				writer.println(turn);
-				char[][] layout = hBoard.getPieceLocations();
-				int size = hBoard.getGridSize();
-				for(int i = 0; i < size; i++){
-					for(int j = 0; j < size; j++){
-						writer.print(layout[i][j]);
-					}
-				}
-			}
-		} catch (IOException e) {
-		   return false;
-		}
-		finally{
-			try{
-				if(writer != null){
-					writer.close();
-				}
-			}catch (Exception ex) {
-				return false;
-			}
-		}
-		return true;
+		return SaveAndLoad.save(boardSize, pieceLayout, turn,turnCount);
 	}
 
     /**
      * This function loads a game state from a file and validates it.
      * It must have a .hnef extension to be accepted.
-     * @return The return value represents the status code.
-     * 0 is success.
-     * 1 is failure.
-     * 2 is failure due to incorrect extension.
+     * @return The return value is a boolean representing success or failure
      */
-	public static int loadGame(){
-		BufferedReader br = null;
-		FileReader fr = null;
-		File fileName = null;
-		int savedTurnCount;
-		char savedCurrentTurn;
-		String savedLayout;
-		try {
-			JFileChooser fileChooser = new JFileChooser();
-			FileNameExtensionFilter filter = new FileNameExtensionFilter("hnef","hnef");
-			fileChooser.setFileFilter(filter);
-			int returnValue = fileChooser.showOpenDialog(null);
-			if (returnValue == JFileChooser.APPROVE_OPTION) {
-				fileName = fileChooser.getSelectedFile();
-			}
-			String extension = ""; 									// checking file extension. Must be .hnef
-			String name = fileName.toString();
-			int i = name.lastIndexOf('.');
-			if (i > 0) {
-				extension = name.substring(i + 1);
-			}
-			if(!extension.equals("hnef")){						// checking file extension. Must be .hnef
-				return 2;
-			}
-			fr = new FileReader(fileName);
-			br = new BufferedReader(fr);
-			String currentLine;
-			br = new BufferedReader(new FileReader(fileName));
-			i = 0;
-			while ((currentLine = br.readLine()) != null) {
-				if(i == 0){
-					savedTurnCount = Integer.parseInt(currentLine);
-				}
-				else if(i == 1){
-					savedCurrentTurn = currentLine.charAt(0);
-				}
-				else if(i == 2){
-					savedLayout = currentLine;
-				}
-				i++;
-			}
-		} catch (IOException e) {
-			return 1;
-		} finally {
-			try {
-				if (br != null)
-					br.close();
-				if (fr != null)
-					fr.close();
-			} catch (IOException ex) {
-				return 1;
-			}
+	public static boolean loadGame(){
+		File loadFile = SaveAndLoad.load();
+		if(loadFile == null){
+			return false;
 		}
-		return 0;
+		return true;
 	}
-	/**
-	*This function begins a new game.
-	*@param void
-	*@return void
-	*/
+
+    /**
+     * This function begins a new game.
+     */
 	public static void newGame(){
 		turnCount = 0;
 		turn = 'b';
@@ -717,10 +574,17 @@ public class Hnefatafl {
 		frame.remove(board);
 		hBoard = new GameBoard(boardSize, primaryColor, secondaryColor, specialColor);
 		board = hBoard.getBoard();
-		pieceLayout = hBoard.getPieceLocations();
+		pieceLayout = GameLogic.getGameBoardArray();
 		frame.add(board, BorderLayout.LINE_START);
 		frame.add(bottom, BorderLayout.SOUTH);
 		frame.pack();
-		
+	}
+
+    /**
+     * This functions gets the HBoard.
+     * @return This function will return the jPanel that is displayed to the user of the current gameboard.
+     */
+	public static GameBoard getHBoard(){
+		return hBoard;
 	}
 }
