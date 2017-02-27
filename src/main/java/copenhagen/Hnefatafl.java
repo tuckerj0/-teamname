@@ -130,7 +130,7 @@ public class Hnefatafl {
 		char chosenSquaresPiece = GameLogic.getPiece(c, r);
 
 		if (GameLogic.pieceCanMove(chosenSquaresPiece,turn)) {
-			boolean[][] highlight = getValidMoves(chosenSquaresPiece, c, r);
+			boolean[][] highlight = GameLogic.getValidMoves(chosenSquaresPiece, c, r, pieceLayout);
 			for(int i = 0; i < highlight.length; i++){
 				for(int j = 0; j < highlight[0].length; j++){
 					if(highlight[i][j] == true){
@@ -152,7 +152,7 @@ public class Hnefatafl {
      */
 	public static void movePiece(int c, int r){
         char pieceType = pieceLayout[selectedLoc.getColumn()][selectedLoc.getRow()];
-        boolean[][] validMoves = getValidMoves(pieceType, selectedLoc.getColumn(),selectedLoc.getRow());
+        boolean[][] validMoves = GameLogic.getValidMoves(pieceType, selectedLoc.getColumn(),selectedLoc.getRow(), pieceLayout);
 		if(validMoves[c][r] == true){
 			movePieceOnBoard(selectedLoc.getColumn(),selectedLoc.getRow(),c,r);
             endTurn();
