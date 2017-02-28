@@ -1,6 +1,6 @@
 /**
- * This program is a Java version of the ancient Norse game, hnefatafl ("table of the fist", in Old Norse). The game is
- * played by Copenhagen rules (11 x 11 square board), and the king must reach a corner to win.
+ * This program is a Java version of the ancient Norse game hnefatafl ("table of the fist", in Old Norse). The game is
+ * played by Copenhagen rules (11 x 11 square board).
  *
  * @author $team
  * Jennifer Fang, JFang1
@@ -119,7 +119,7 @@ public class Hnefatafl {
         }
     }
 
-    /**un
+    /**
      * This function is called whenever a square is clicked on the game board.
      * @param c This is the column of the square clicked.
      * @param r This is the row of the square clicked.

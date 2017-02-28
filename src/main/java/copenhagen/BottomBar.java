@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * This class is used for anything dealing with the bottom JPanel in the main part of the game including both the
- * whose turn it currently it is and what the the current turn number is.
+ * This class is used for anything dealing with the bottom JPanel in the main part of the game, including
+ * which player has the current turn and the current turn number.
  */
 public class BottomBar {
     private Color primaryColor;
@@ -31,7 +31,7 @@ public class BottomBar {
     }
 
     /**
-     * This function creates the bottom JPanel that will eventually be filled up with things.
+     * This function creates the bottom JPanel that will contain turn information.
      */
     private void createPanel() {
         bottom = new JPanel();
@@ -39,7 +39,7 @@ public class BottomBar {
     }
 
     /**
-     * This function with display who's starting it is based on the parameter given.
+     * This function displays who is starting based on the parameter given.
      * @param c This tells which person starts, 'b' denoting black and 'w' denoting white.
      */
     private void setTurn(char c) {
@@ -71,7 +71,7 @@ public class BottomBar {
     }
 
     /**
-     * This function is called whenever a piece is moved to display the switch in turns and update the turn number
+     * This function is called whenever a piece is moved to display the switch in turns and update the turn number.
      * @param c This parameter determines whose turn it is.
      * @param i This parameter is the current turn number.
      */
