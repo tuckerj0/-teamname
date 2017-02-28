@@ -5,8 +5,8 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- * This is the class that gives the program extra functionality that allows the user to decide if the attackers or
- * defenders go first in a new game.
+ * This is the class that gives the program extra functionality that allows the user to decide the color of the attackers
+ * (black or white) at the start of a game.  Note: The attacker always gets the first turn.
  */
 public class BlackWhiteStart {
     JFrame _blackWhiteFrame = new JFrame("Pick a color to start the attack"); // creates frame/window

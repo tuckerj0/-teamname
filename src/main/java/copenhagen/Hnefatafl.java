@@ -1,6 +1,6 @@
 /**
- * This program is a Java version of the ancient Norse game, hnefatafl ("table of the fist", in Old Norse). The game is
- * played by Copenhagen rules (11 x 11 square board), and the king must reach a corner to win.
+ * This program is a Java version of the ancient Norse game hnefatafl ("table of the fist", in Old Norse). The game is
+ * played by Copenhagen rules (11 x 11 square board).
  *
  * @author $team
  * Jennifer Fang, JFang1
@@ -35,7 +35,7 @@ public class Hnefatafl {
 	private static JMenuBar menuBar;
 	public static char[][] pieceLayout;
 	private static int boardSize = 11;
-	private static int turnCount = 0;
+	private static int turnCount = 1;
 	public static char turn = 'b';
 	private static GameBoard hBoard;
 	private static int[] primaryColor = {244,164,96};
@@ -106,29 +106,32 @@ public class Hnefatafl {
 	}
 
     /**
-     * This function changes whose turn it is at the end of each move.
+     * This function changes whose turn it is at the end of each move and updates turn info appropriately.
      * b = black = attackers
      * w = white = king and his defenders
      */
-	public static void endTurn() {
+	public static int endTurn() {
 	    if (turn == 'b') {
 	        turn = 'w';
         }
         else if (turn == 'w') {
 	        turn = 'b';
         }
+		turnCount++;
+		BottomBar.updateTurnInfo(turn, turnCount);
+		return turnCount;
     }
 
-    /**un
+    /**
      * This function is called whenever a square is clicked on the game board.
      * @param c This is the column of the square clicked.
      * @param r This is the row of the square clicked.
      * @param clickedOn This is the specific piece (JButton) that was clicked on.
      */
 	public static void squareClicked(int c, int r, JButton clickedOn){
-		GameBoard.unselectLast(pieceIsSelected, selectedLoc, selected);
+		GameBoard.unselectLast(pieceIsSelected, selectedLoc, selected); // unselects last piece
+		// highlighting valid moves for the newly chosen piece
 		char chosenSquaresPiece = GameLogic.getPiece(c, r);
-
 		if (GameLogic.pieceCanMove(chosenSquaresPiece,turn)) {
 			boolean[][] highlight = GameLogic.getValidMoves(chosenSquaresPiece, c, r, pieceLayout);
 			for(int i = 0; i < highlight.length; i++){
@@ -139,6 +142,7 @@ public class Hnefatafl {
 				}
 			}
 		}
+		// moves piece if appropriate
 		if((chosenSquaresPiece == '0' || chosenSquaresPiece == 'c') && pieceIsSelected){
 			movePiece(c,r);
 		}
@@ -156,8 +160,6 @@ public class Hnefatafl {
 		if(validMoves[c][r] == true){
 			movePieceOnBoard(selectedLoc.getColumn(),selectedLoc.getRow(),c,r);
             endTurn();
-            turnCount++;
-            BottomBar.endTurn(turn, turnCount);
 		}else{
 			JOptionPane.showMessageDialog(null, "Invalid Move");
 		}
@@ -559,8 +561,24 @@ public class Hnefatafl {
      * This function begins a new game.
      */
 	public static void newGame(){
-		turnCount = 0;
+		newGameResetTurns();
+		newGameGUI();
+	}
+
+	/**
+	 * This function sets up the logic for a new game.
+	 * @return The return value is the reset turn count (which should always be 1)
+	 */
+	public static int newGameResetTurns(){
+		turnCount = 1;
 		turn = 'b';
+		return turnCount;
+	}
+
+	/**
+	 * This function sets up the GUI for a new game.
+	 */
+	public static void newGameGUI(){
 		frame.remove(bottom);
 		BottomBar bBar = new BottomBar(primaryColor, letteringColor, turn, turnCount);
 		bottom = bBar.getBottomBar();
