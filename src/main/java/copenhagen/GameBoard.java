@@ -117,7 +117,7 @@ public class GameBoard {
 	}
 
     /**
-     * This function will "highlight" the square where a game piece is located at by changing the color at the game
+     * This function will "highlight" the square where a game piece is located by changing the color at the game
      * piece's location. This effectively shows the valid moves a piece can make.
      * @param col This parameter represents the column of the square.
      * @param row This parameter represents the row of the square.
@@ -207,7 +207,7 @@ public class GameBoard {
 			return;
 		}
         char pieceType = pieceLayout[selectedLoc.getColumn()][selectedLoc.getRow()];
-        boolean[][] unhighlight = Hnefatafl.getValidMoves(pieceType, selectedLoc.getColumn(),selectedLoc.getRow());
+        boolean[][] unhighlight = GameLogic.getValidMoves(pieceType, selectedLoc.getColumn(),selectedLoc.getRow(), pieceLayout);
 		for(int i = 0; i < unhighlight.length; i++){
 			for(int j = 0; j < unhighlight[0].length; j++){
 				if(unhighlight[i][j] == true){

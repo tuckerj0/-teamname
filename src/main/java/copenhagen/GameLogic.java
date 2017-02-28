@@ -14,9 +14,10 @@ import java.util.LinkedList;
  * 'k' for the king piece
  */
 public class GameLogic{
+
+    //TODO Add test
     private static int GRID_SIZE = 11;
     public static char[][] gameBoardArray;
-
     /**
      * This function checks whether a piece is allowed to be currently moved.
      * @param piece This is piece that is trying to be moved.
@@ -30,6 +31,7 @@ public class GameLogic{
         }
     }
 
+    //TODO Add test
     /**
      * This function updates the game board.
      * @param col This parameter is the column that will be updated.
@@ -55,13 +57,15 @@ public class GameLogic{
      * @param col This parameter is the column associated with a piece that is about to be removed.
      * @param row This parameter is the row associated with a piece that is about to be removed.
      */
-	public static void removeCapturedPieces(LinkedList<Integer> col, LinkedList<Integer> row) {
+	public static char[][] removeCapturedPieces(LinkedList<Integer> col, LinkedList<Integer> row, char[][] pieceLayout) {
+        GameBoard hBoard = Hnefatafl.getHBoard();
 	    for (int i = 0; i < col.size(); i++) {
 	        int c = col.get(i);
 	        int r = row.get(i);
             gameBoardArray[c][r] = '0';
 			GameBoard.removeCapturedPiecesUI(c,r);
 		}
+        return pieceLayout;
     }
 
     /**
@@ -103,4 +107,52 @@ public class GameLogic{
     public static char[][] getGameBoardArray() {
         return gameBoardArray;
     }
+	/**
+	 * This function finds where a piece is allowed to move based on the rules of the game.
+	 * @param piece This parameter is the current game piece that is being looked at.
+	 * @param col This parameter is the current column that the game piece is located at.
+	 * @param row This parameter is the current row that the game piece is located at.
+	 * @return This function returns a boolean array matching the gameboard with true values on all of the spaces a
+	 * piece can move to.
+	 */
+	public static boolean[][] getValidMoves(char piece, int col, int row, char[][] gameBoard){
+		boolean[][] validSpaces = new boolean[GRID_SIZE][GRID_SIZE];
+		for(int i=col+1; i<GRID_SIZE; i++){//check move right
+			if((gameBoard[i][row] == '0') || (piece == 'k' && gameBoard[i][row] == 'c')){
+				validSpaces[i][row] = true;
+			} else if (piece != 'k' && gameBoard[i][row] == 'c'){
+				validSpaces[i][row] = false;
+			} else {
+				break;
+			}
+		}
+		for(int i=col-1; i>=0; i--){//check move left
+			if((gameBoard[i][row] == '0') || (piece == 'k' && gameBoard[i][row] == 'c')){
+				validSpaces[i][row] = true;
+			}else if (piece != 'k' && gameBoard[i][row] == 'c'){
+				validSpaces[i][row] = false;
+			}else{
+				break;
+			}
+		}
+		for(int i=row+1; i<GRID_SIZE; i++){//check move down
+			if((gameBoard[col][i] == '0') || (piece == 'k' && gameBoard[col][i] == 'c')){
+				validSpaces[col][i] = true;
+			}else if (piece != 'k' && gameBoard[col][i] == 'c'){
+				validSpaces[col][i] = false;
+			}else{
+				break;
+			}
+		}
+		for(int i=row-1; i>=0; i--){//check move up
+			if((gameBoard[col][i] == '0') || (piece == 'k' && gameBoard[col][i] == 'c')){
+				validSpaces[col][i] = true;
+			}else if (piece != 'k' && gameBoard[col][i] == 'c'){
+			 	validSpaces[col][i] = false;
+			}else{
+				break;
+			}
+		}
+		return validSpaces;
+	}
 }
