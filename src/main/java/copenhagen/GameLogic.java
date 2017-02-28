@@ -15,6 +15,7 @@ import java.util.LinkedList;
  */
 public class GameLogic{
     private static int GRID_SIZE = 11;
+    private static boolean kingWasCaptured = false;
     public static char[][] gameBoardArray;
 
     /**
@@ -61,6 +62,9 @@ public class GameLogic{
 	    for (int i = 0; i < col.size(); i++) {
 	        int c = col.get(i);
 	        int r = row.get(i);
+	        if (getPiece(c,r) == 'k') {
+                kingWasCaptured = true;
+            }
             gameBoardArray[c][r] = '0';
 			GameBoard.removeCapturedPiecesUI(c,r);
 		}
@@ -161,6 +165,10 @@ public class GameLogic{
 	 */
 	public static char checkWinner(char[][] gameBoard) {
 		char winner = '0';
+        if(kingWasCaptured) {
+            winner = 'b';
+            return  winner;
+        }
 		// Check Full Surrounding of king for Attackers Win
 		for (int i = 1; i < gameBoard.length-1; i++) {
 			for (int j = 1; j < gameBoard.length-1; j++) {

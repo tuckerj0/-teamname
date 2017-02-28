@@ -181,6 +181,7 @@ public class Hnefatafl {
      * @param helperPiece This is the kind of piece that helps in a capture:
      *                     i.e. another black piece if piece == 'b'
      *                          the king piece if piece == 'w'
+     *                          a white piece if piece == 'k'
      */
     private static void findShieldwall(char piece, int col, int row, char capturePiece, char helperPiece) {
         LinkedList<Integer> capturedPieceCol = new LinkedList<>();
@@ -352,41 +353,43 @@ public class Hnefatafl {
      */
     public static void findCapturedPieces(char piece, int col, int row) {
 	    char capturablePiece;
-	    char kingPiece;
+	    char kingPiece = 'b';
+	    char helperPiece;
 	    LinkedList<Integer> capturedPieceCol = new LinkedList<>();
         LinkedList<Integer> capturedPieceRow = new LinkedList<>();
 	    if (piece == 'b') {
 	        capturablePiece = 'w';
-	        kingPiece = 'b';
+            kingPiece = 'k';
+            helperPiece = 'b';
         }
         else if (piece == 'w'){
             capturablePiece = 'b';
-            kingPiece = 'k';
+            helperPiece = 'k';
         }
         else {
             capturablePiece = 'b';
-            kingPiece = 'w';
+            helperPiece = 'w';
         }
         if (col-2 >= 0) {
-            if (pieceLayout[col - 1][row] == capturablePiece && (pieceLayout[col - 2][row] == piece || pieceLayout[col - 2][row] == kingPiece || pieceLayout[col - 2][row] == 'c')) {
+            if ((pieceLayout[col - 1][row] == capturablePiece || pieceLayout[col - 1][row] == kingPiece) && (pieceLayout[col - 2][row] == piece || pieceLayout[col - 2][row] == helperPiece || pieceLayout[col - 2][row] == 'c')) {
                 capturedPieceCol.add(col - 1);
                 capturedPieceRow.add(row);
             }
         }
         if (col+2 <= boardSize-1) {
-            if (pieceLayout[col + 1][row] == capturablePiece && (pieceLayout[col + 2][row] == piece || pieceLayout[col + 2][row] == kingPiece || pieceLayout[col + 2][row] == 'c')) {
+            if ((pieceLayout[col + 1][row] == capturablePiece || pieceLayout[col + 1][row] == kingPiece) && (pieceLayout[col + 2][row] == piece || pieceLayout[col + 2][row] == helperPiece || pieceLayout[col + 2][row] == 'c')) {
                 capturedPieceCol.add(col + 1);
                 capturedPieceRow.add(row);
             }
         }
         if (row-2 >= 0) {
-            if (pieceLayout[col][row - 1] == capturablePiece && (pieceLayout[col][row - 2] == piece || pieceLayout[col][row - 2] == kingPiece || pieceLayout[col][row - 2] == 'c')) {
+            if ((pieceLayout[col][row - 1] == capturablePiece || pieceLayout[col][row - 1] == kingPiece) && (pieceLayout[col][row - 2] == piece || pieceLayout[col][row - 2] == helperPiece || pieceLayout[col][row - 2] == 'c')) {
                 capturedPieceCol.add(col);
                 capturedPieceRow.add(row - 1);
             }
         }
         if (row+2 <= boardSize-1) {
-            if (pieceLayout[col][row + 1] == capturablePiece && (pieceLayout[col][row + 2] == piece || pieceLayout[col][row + 2] == kingPiece || pieceLayout[col][row + 2] == 'c')) {
+            if ((pieceLayout[col][row + 1] == capturablePiece || pieceLayout[col][row + 1] == kingPiece) && (pieceLayout[col][row + 2] == piece || pieceLayout[col][row + 2] == helperPiece || pieceLayout[col][row + 2] == 'c')) {
                 capturedPieceCol.add(col);
                 capturedPieceRow.add(row + 1);
             }
@@ -396,7 +399,7 @@ public class Hnefatafl {
 	    }
 	    else {
             if (col == 0 || col == 10 || row == 0 || row == 10) {
-                findShieldwall(piece, col, row, capturablePiece, kingPiece);
+                findShieldwall(piece, col, row, capturablePiece, helperPiece);
             }
         }
     }
