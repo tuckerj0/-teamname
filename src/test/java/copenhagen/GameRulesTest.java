@@ -1,15 +1,9 @@
-import copenhagen.Hnefatafl;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-
-import copenhagen.GameRules;
-import org.mockito.Mockito;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
+import static org.junit.Assert.*;
+
+import copenhagen.GameRules;
 
 public class GameRulesTest {
 

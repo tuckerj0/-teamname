@@ -4,9 +4,9 @@ import static org.junit.Assert.*;
 import copenhagen.GameLogic;
 
 public class ValidMovesTest {
-	
+
 	/**
-	 This test ensures that all spaces not along a straight path from the start space are invalid locations to move to. It tests all locations on the board with pieces set up in their initial locations.
+	 * This test ensures that all spaces not along a straight path from the start space are invalid locations to move to. It tests all locations on the board with pieces set up in their initial locations.
 	 */
 	@Test
 	public void testMovesOnlyHorizontalVertical() {
@@ -47,7 +47,7 @@ public class ValidMovesTest {
 	
 	
 	/**
-	 This test is to ensure a piece below the piece being moved invalidates all moves to locations beyond the obstacle. It tests all locations on the board with pieces set up in their initial locations.
+	 * This test is to ensure a piece below the piece being moved invalidates all moves to locations beyond the obstacle. It tests all locations on the board with pieces set up in their initial locations.
 	 */
 	@Test
 	public void testObstacleBlocksSouthernPath() {
@@ -62,8 +62,7 @@ public class ValidMovesTest {
 				pieceLayout[i][j] = '0';
 			}
 		}
-		/** Initialize gameboard with initial piece placement but without any pieces blocking the center square to ensure pieces can pass over center square.
-		 */
+		// Initialize gameboard with initial piece placement but without any pieces blocking the center square to ensure pieces can pass over center square.
 		pieceLayout[0][3] = pieceLayout[0][4] = pieceLayout[0][5] = pieceLayout[0][6] = pieceLayout[0][7] = pieceLayout[1][5] = 'b';
 		pieceLayout[3][0] = pieceLayout[4][0] = pieceLayout[5][0] = pieceLayout[6][0] = pieceLayout[7][0] = pieceLayout[5][1] = 'b';
 		pieceLayout[10][3] = pieceLayout[10][4] = pieceLayout[10][5] = pieceLayout[10][6] = pieceLayout[10][7] = pieceLayout[9][5] = 'b';
@@ -96,8 +95,7 @@ public class ValidMovesTest {
 
 	
 	/**
-	 This test is to ensure a piece above the piece being moved invalidates all moves to locations beyond the obstacle. It tests all locations on the board with pieces set up in their initial locations.
-	 
+	 * This test is to ensure a piece above the piece being moved invalidates all moves to locations beyond the obstacle. It tests all locations on the board with pieces set up in their initial locations.
 	 */
 	@Test
 	public void testObstacleBlocksNorthernPath() {
@@ -112,8 +110,7 @@ public class ValidMovesTest {
 				pieceLayout[i][j] = '0';
 			}
 		}
-		/** Initialize gameboard with initial piece placement but without any pieces blocking the center square to ensure pieces can pass over center square.
-		 */
+		// Initialize gameboard with initial piece placement but without any pieces blocking the center square to ensure pieces can pass over center square.
 		pieceLayout[0][3] = pieceLayout[0][4] = pieceLayout[0][5] = pieceLayout[0][6] = pieceLayout[0][7] = pieceLayout[1][5] = 'b';
 		pieceLayout[3][0] = pieceLayout[4][0] = pieceLayout[5][0] = pieceLayout[6][0] = pieceLayout[7][0] = pieceLayout[5][1] = 'b';
 		pieceLayout[10][3] = pieceLayout[10][4] = pieceLayout[10][5] = pieceLayout[10][6] = pieceLayout[10][7] = pieceLayout[9][5] = 'b';
@@ -146,8 +143,7 @@ public class ValidMovesTest {
 	}
 	
 	/**
-	 This test is to ensure a piece to the right of the piece being moved invalidates all moves to locations beyond the obstacle. It tests all locations on the board with pieces set up in their initial locations.
-	 
+	 * This test is to ensure a piece to the right of the piece being moved invalidates all moves to locations beyond the obstacle. It tests all locations on the board with pieces set up in their initial locations.
 	 */
 	@Test
 	public void testObstacleBlocksEasternPath() {
@@ -162,8 +158,7 @@ public class ValidMovesTest {
 				pieceLayout[i][j] = '0';
 			}
 		}
-		/** Initialize gameboard with initial piece placement but without any pieces blocking the center square to ensure pieces can pass over center square.
-		 */
+		// Initialize gameboard with initial piece placement but without any pieces blocking the center square to ensure pieces can pass over center square.
 		pieceLayout[0][3] = pieceLayout[0][4] = pieceLayout[0][5] = pieceLayout[0][6] = pieceLayout[0][7] = pieceLayout[1][5] = 'b';
 		pieceLayout[3][0] = pieceLayout[4][0] = pieceLayout[5][0] = pieceLayout[6][0] = pieceLayout[7][0] = pieceLayout[5][1] = 'b';
 		pieceLayout[10][3] = pieceLayout[10][4] = pieceLayout[10][5] = pieceLayout[10][6] = pieceLayout[10][7] = pieceLayout[9][5] = 'b';
@@ -209,8 +204,7 @@ public class ValidMovesTest {
 				pieceLayout[i][j] = '0';
 			}
 		}
-		/** Initialize gameboard with initial piece placement but without any pieces blocking the center square to ensure pieces can pass over center square.
-		 */
+		// Initialize gameboard with initial piece placement but without any pieces blocking the center square to ensure pieces can pass over center square.
 		pieceLayout[0][3] = pieceLayout[0][4] = pieceLayout[0][5] = pieceLayout[0][6] = pieceLayout[0][7] = pieceLayout[1][5] = 'b';
 		pieceLayout[3][0] = pieceLayout[4][0] = pieceLayout[5][0] = pieceLayout[6][0] = pieceLayout[7][0] = pieceLayout[5][1] = 'b';
 		pieceLayout[10][3] = pieceLayout[10][4] = pieceLayout[10][5] = pieceLayout[10][6] = pieceLayout[10][7] = pieceLayout[9][5] = 'b';

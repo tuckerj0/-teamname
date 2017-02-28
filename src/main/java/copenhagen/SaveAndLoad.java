@@ -206,12 +206,12 @@ public class SaveAndLoad {
 		}
 		//check white
 		if(size == 9){
-			if(w < 1 || w > 8){
+			if(w > 8){
 				return false;
 			}
 		}
 		else if(size == 11){
-			if(w < 1 || w > 12){
+			if(w > 12){
 				return false;
 			}
 		}
