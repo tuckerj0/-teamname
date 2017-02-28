@@ -559,8 +559,24 @@ public class Hnefatafl {
      * This function begins a new game.
      */
 	public static void newGame(){
+		newGameResetTurns();
+		newGameGUI();
+	}
+
+	/**
+	 * This function sets up the logic for a new game.
+	 * @return The return value is the reset turn count (which should be 0)
+	 */
+	public static int newGameResetTurns(){
 		turnCount = 0;
 		turn = 'b';
+		return turnCount;
+	}
+
+	/**
+	 * This function sets up the GUI for a new game.
+	 */
+	public static void newGameGUI(){
 		frame.remove(bottom);
 		BottomBar bBar = new BottomBar(primaryColor, letteringColor, turn, turnCount);
 		bottom = bBar.getBottomBar();
