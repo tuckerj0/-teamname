@@ -75,7 +75,7 @@ public class BottomBar {
      * @param c This parameter determines whose turn it is.
      * @param i This parameter is the current turn number.
      */
-    public static void endTurn(char c, int i) {
+    public static void updateTurnInfo(char c, int i) {
         if (c == 'b') {
             turn.setText("Turn: Attackers");
         }

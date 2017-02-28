@@ -35,7 +35,7 @@ public class Hnefatafl {
 	private static JMenuBar menuBar;
 	public static char[][] pieceLayout;
 	private static int boardSize = 11;
-	private static int turnCount = 0;
+	private static int turnCount = 1;
 	public static char turn = 'b';
 	private static GameBoard hBoard;
 	private static int[] primaryColor = {244,164,96};
@@ -106,7 +106,7 @@ public class Hnefatafl {
 	}
 
     /**
-     * This function changes whose turn it is at the end of each move.
+     * This function changes whose turn it is at the end of each move and updates turn info appropriately.
      * b = black = attackers
      * w = white = king and his defenders
      */
@@ -117,6 +117,8 @@ public class Hnefatafl {
         else if (turn == 'w') {
 	        turn = 'b';
         }
+		turnCount++;
+		BottomBar.updateTurnInfo(turn, turnCount);
     }
 
     /**
@@ -156,8 +158,6 @@ public class Hnefatafl {
 		if(validMoves[c][r] == true){
 			movePieceOnBoard(selectedLoc.getColumn(),selectedLoc.getRow(),c,r);
             endTurn();
-            turnCount++;
-            BottomBar.endTurn(turn, turnCount);
 		}else{
 			JOptionPane.showMessageDialog(null, "Invalid Move");
 		}
