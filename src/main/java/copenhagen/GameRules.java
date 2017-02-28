@@ -10,9 +10,13 @@ import java.io.IOException;
  * This class is used when displaying the game rules for the game.
  */
 public class GameRules {
-    private JScrollPane scrollPane;
-
-    public GridBagConstraints createGridBagConstraints(int x, int y) {
+    /**
+     * This function creates the necessary GridBagConstraints for putting things within a GridBagLayout panel.
+     * @param x This parameter is the value for gridx attribute of the GridBagConstraints variable.
+     * @param y This parameter is the value for gridy attribute of the GridBagConstraints variable.
+     * @return This function returns the newly created GridBagConstraints object.
+     */
+    public static GridBagConstraints createGridBagConstraints(int x, int y) {
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = x;
@@ -22,33 +26,26 @@ public class GameRules {
         return c;
     }
 
-    public JTextArea createRule(String rule) {
+    /**
+     * This function creates one of the rules with all of necessary attributes.
+     * @param rule This parameter is the actual rule's text.
+     * @return This function returns the created JTextArea that represents the given game rule.
+     */
+    public static JTextArea createRule(String rule) {
         JTextArea text = new JTextArea(rule);
+        text.setCaretPosition(0);
         text.setEditable(false);
         text.setOpaque(false);
         text.setFocusable(false);
-        text.setBackground(Color.black);
         return text;
     }
 
-    public JLabel createCaption(String caption) {
-        JLabel text = new JLabel(caption);
-        text.setOpaque(false);
-        text.setFocusable(false);
-        return text;
-    }
-
-    public JPanel displayPicturesAndCaption(JLabel[] items) {
-        int y = 0;
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridBagLayout());
-        for (int x = 0; x < items.length; x++) {
-            panel.add(items[x], createGridBagConstraints(x, y));
-        }
-        return panel;
-    }
-
-    public JLabel getImage(String s) {
+    /**
+     * This function grabs an image and puts it into a JLabel to later then be put in the JPanel.
+     * @param s This parameter is the path of where the image is located at.
+     * @return This function returns a JLabel representation of the image.
+     */
+    public static JLabel getImage(String s) {
         try {
             BufferedImage image = ImageIO.read(Hnefatafl.class.getResource(s));
             JLabel result = new JLabel(new ImageIcon(image), SwingConstants.LEFT);
@@ -60,7 +57,48 @@ public class GameRules {
     }
 
     /**
-     * This will create a new JFrame with the hnefatafl game rules.
+     * This function creates a label for whatever picture it relates to.
+     * @param caption This parameter is the actual caption's text.
+     * @return This function returns the created JLabel that represents the given caption.
+     */
+    public static JLabel createCaption(String caption) {
+        JLabel text = new JLabel(caption);
+        text.setOpaque(false);
+        text.setFocusable(false);
+        return text;
+    }
+
+    /**
+     * This function creates a GridBagLayout JPanel that contains the given picture(s) and captions.
+     * @param items This parameter is an array of JLabels which contains the picture(s) and the caption associated with
+     *              it.
+     * @return This function returns the created JPanel which will go into the bigger overall JPanel.
+     */
+    public static JPanel displayPicturesAndCaption(JLabel[] items) {
+        int y = 0;
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridBagLayout());
+        for (int x = 0; x < items.length; x++) {
+            panel.add(items[x], createGridBagConstraints(x, y));
+        }
+        return panel;
+    }
+
+    /**
+     * This function creates the JScrollPane which will go in the JOptionPane to finally display the game rules.
+     * @param panel This parameter is the JPanel filled with all the game rules and pictures with captions.
+     * @return This function returns the created JScrollPane.
+     */
+    public static JScrollPane createJScrollPane(JPanel panel) {
+        JScrollPane scrollPane = new JScrollPane(panel);
+        scrollPane.getVerticalScrollBar().setValue(0);
+        scrollPane.setPreferredSize(new Dimension(1100, 600));
+        scrollPane.getVerticalScrollBar().setUnitIncrement(20);
+        return scrollPane;
+    }
+
+    /**
+     * This will create a new JOptionPane with the Hnefatafl game rules.
      */
     public GameRules() {
         JPanel content = new JPanel();
@@ -124,7 +162,6 @@ public class GameRules {
         y++;
 
 
-
         JTextArea rule5b = createRule("\n\n5b.   The shieldwall rule for capturing a row of pieces on the " +
                 "board edge: A row of two or more taflmen along the board edge may be captured together, by " +
                 "bracketing the whole group at both ends, as \nlong as every member of the row has an enemy taflman " +
@@ -139,7 +176,6 @@ public class GameRules {
                 createCaption("Shieldwall captures.")};
         content.add(displayPicturesAndCaption(illustration), createGridBagConstraints(0, y));
         y++;
-
 
 
         JTextArea rule6a = createRule("\n\n6a.   The objective for the king's side is to move the king to any " +
@@ -205,6 +241,7 @@ public class GameRules {
         content.add(displayPicturesAndCaption(illustration), createGridBagConstraints(0, y));
         y++;
 
+
         JTextArea rule8b = createRule("\n\n8b.   Draw forts are forbidden: If the defenders repeat the " +
                 "defending board position three times while no piece is captured, the attackers win." +
                 "\n   (Only in force when the defenders have at least king plus four men left, which is the minimum " +
@@ -223,14 +260,14 @@ public class GameRules {
         content.add(displayPicturesAndCaption(illustration), createGridBagConstraints(0, y));
         y++;
 
+
         JTextArea rule10 = createRule("\n\n10.   The game is a draw if no capture has been made in the last " +
                 "fifty moves (for this purpose a \"move\" consists of a player completing his turn followed by his " +
                 "opponent completing his turn).\n");
         content.add(rule10, createGridBagConstraints(0, y));
 
-        scrollPane = new JScrollPane(content);
-        scrollPane.setPreferredSize(new Dimension(1100, 500));
-        JOptionPane.showMessageDialog(null, scrollPane, "Hnefatafl Game Rules",
+
+        JOptionPane.showMessageDialog(null, createJScrollPane(content), "Hnefatafl Game Rules",
                 JOptionPane.PLAIN_MESSAGE);
     }
 }
