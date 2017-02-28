@@ -436,10 +436,6 @@ public class Hnefatafl {
 		setButtonImage(pieceType,dButton);
 	}
 
-<<<<<<< HEAD
-=======
-
->>>>>>> refs/remotes/origin/master
 	/**
      * This function sets the icon of a particular button.
      * @param pieceType The value of the piece from the characters specified in gameboard.java
