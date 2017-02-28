@@ -567,7 +567,7 @@ public class Hnefatafl {
 
 	/**
 	 * This function sets up the logic for a new game.
-	 * @return The return value is the reset turn count (which should be 0)
+	 * @return The return value is the reset turn count (which should always be 1)
 	 */
 	public static int newGameResetTurns(){
 		turnCount = 1;
