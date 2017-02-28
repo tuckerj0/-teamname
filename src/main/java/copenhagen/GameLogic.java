@@ -117,17 +117,20 @@ public class GameLogic{
 	 */
 	public static boolean[][] getValidMoves(char piece, int col, int row, char[][] gameBoard){
 		boolean[][] validSpaces = new boolean[GRID_SIZE][GRID_SIZE];
-		
 		for(int i=col+1; i<GRID_SIZE; i++){//check move right
 			if((gameBoard[i][row] == '0') || (piece == 'k' && gameBoard[i][row] == 'c')){
 				validSpaces[i][row] = true;
-			}else{
+			} else if (piece != 'k' && gameBoard[i][row] == 'c'){
+				validSpaces[i][row] = false;
+			} else {
 				break;
 			}
 		}
 		for(int i=col-1; i>=0; i--){//check move left
 			if((gameBoard[i][row] == '0') || (piece == 'k' && gameBoard[i][row] == 'c')){
 				validSpaces[i][row] = true;
+			}else if (piece != 'k' && gameBoard[i][row] == 'c'){
+				validSpaces[i][row] = false;
 			}else{
 				break;
 			}
@@ -135,6 +138,8 @@ public class GameLogic{
 		for(int i=row+1; i<GRID_SIZE; i++){//check move down
 			if((gameBoard[col][i] == '0') || (piece == 'k' && gameBoard[col][i] == 'c')){
 				validSpaces[col][i] = true;
+			}else if (piece != 'k' && gameBoard[col][i] == 'c'){
+				validSpaces[col][i] = false;
 			}else{
 				break;
 			}
@@ -142,6 +147,8 @@ public class GameLogic{
 		for(int i=row-1; i>=0; i--){//check move up
 			if((gameBoard[col][i] == '0') || (piece == 'k' && gameBoard[col][i] == 'c')){
 				validSpaces[col][i] = true;
+			}else if (piece != 'k' && gameBoard[col][i] == 'c'){
+			 	validSpaces[col][i] = false;
 			}else{
 				break;
 			}
