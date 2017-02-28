@@ -110,7 +110,7 @@ public class Hnefatafl {
      * b = black = attackers
      * w = white = king and his defenders
      */
-	public static void endTurn() {
+	public static int endTurn() {
 	    if (turn == 'b') {
 	        turn = 'w';
         }
@@ -119,6 +119,7 @@ public class Hnefatafl {
         }
 		turnCount++;
 		BottomBar.updateTurnInfo(turn, turnCount);
+		return turnCount;
     }
 
     /**
@@ -128,9 +129,9 @@ public class Hnefatafl {
      * @param clickedOn This is the specific piece (JButton) that was clicked on.
      */
 	public static void squareClicked(int c, int r, JButton clickedOn){
-		GameBoard.unselectLast(pieceIsSelected, selectedLoc, selected);
+		GameBoard.unselectLast(pieceIsSelected, selectedLoc, selected); // unselects last piece
+		// highlighting valid moves for the newly chosen piece
 		char chosenSquaresPiece = GameLogic.getPiece(c, r);
-
 		if (GameLogic.pieceCanMove(chosenSquaresPiece,turn)) {
 			boolean[][] highlight = GameLogic.getValidMoves(chosenSquaresPiece, c, r, pieceLayout);
 			for(int i = 0; i < highlight.length; i++){
@@ -141,6 +142,7 @@ public class Hnefatafl {
 				}
 			}
 		}
+		// moves piece if appropriate
 		if((chosenSquaresPiece == '0' || chosenSquaresPiece == 'c') && pieceIsSelected){
 			movePiece(c,r);
 		}
@@ -568,7 +570,7 @@ public class Hnefatafl {
 	 * @return The return value is the reset turn count (which should be 0)
 	 */
 	public static int newGameResetTurns(){
-		turnCount = 0;
+		turnCount = 1;
 		turn = 'b';
 		return turnCount;
 	}
