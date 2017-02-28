@@ -45,6 +45,8 @@ public class Hnefatafl {
 	private static BoardLocation selectedLoc;
 	private static JButton selected;
 	private static boolean pieceIsSelected = false;
+	private static char winner;
+	private static FinalMenu finalMenu;
 
     /**
      * This is the main method which starts the program.
@@ -119,6 +121,10 @@ public class Hnefatafl {
         }
 		turnCount++;
 		BottomBar.updateTurnInfo(turn, turnCount);
+		winner = GameLogic.checkWinner(pieceLayout);
+		if (winner != '0') {
+			finalMenu = new FinalMenu(winner);
+		}
 		return turnCount;
     }
 
@@ -430,6 +436,10 @@ public class Hnefatafl {
 		setButtonImage(pieceType,dButton);
 	}
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/master
 	/**
      * This function sets the icon of a particular button.
      * @param pieceType The value of the piece from the characters specified in gameboard.java
