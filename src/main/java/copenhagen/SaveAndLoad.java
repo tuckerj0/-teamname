@@ -1,6 +1,5 @@
 package copenhagen;
 
-import java.awt.*;
 import javax.swing.*;
 import java.io.*;
 import java.io.IOException;
@@ -8,18 +7,18 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.File;
 import javax.swing.filechooser.*;
-import javax.imageio.ImageIO;
-import javax.swing.JButton;
 
+/**
+ * This class deals with all logic when it comes to saving and loading game files.
+ */
 public class SaveAndLoad {
 
-
-	/**
-	 * @param size of the board
-	 * @param layout of the board
-	 * @param char representing current turn
-	 * @param turn count
+    /**
      * This function saves the present game state to a save file.
+     * @param size This parameter is the size of the board.
+     * @param layout This parameter is the layout of the board and where all pieces currently reside.
+     * @param turn This parameter is whose turn it currently is.
+     * @param turnCount This parameter is the total amount of turns.
      * @return This function will return true if successful or false in the case of an IOException.
      */
 	public static boolean save(int size, char[][] layout, char turn, int turnCount){
@@ -61,6 +60,7 @@ public class SaveAndLoad {
 		}
 		return true;
 	}
+
 	/**
      * This function loads a game state from a file and validates it.
      * It must have a .hnef extension to be accepted.
@@ -126,12 +126,13 @@ public class SaveAndLoad {
 			return null;
 		}
 	}
-	/**
-	 * @param layout of the board
-	 * @param char representing current turn
-	 * @param turn count
-     * This function checks the game state
-     * @return This function will return true if valid game state. False if not.
+
+    /**
+     * This This function checks and validates the game state.
+     * @param layout This parameter is the layout of the board and where all pieces currently reside.
+     * @param turn This parameter is whose turn it currently is.
+     * @param turnCount This parameter is the total amount of turns.
+     * @return This function will return true if it is a valid game state. Otherwise, false if it is not.
      */
 	public static boolean checkState(String layout, char turn, int turnCount){
 		//check size of the board

@@ -14,10 +14,9 @@ import java.util.LinkedList;
  * 'k' for the king piece
  */
 public class GameLogic{
-
-    //TODO Add test
     private static int GRID_SIZE = 11;
     public static char[][] gameBoardArray;
+
     /**
      * This function checks whether a piece is allowed to be currently moved.
      * @param piece This is piece that is trying to be moved.
@@ -107,6 +106,7 @@ public class GameLogic{
     public static char[][] getGameBoardArray() {
         return gameBoardArray;
     }
+
 	/**
 	 * This function finds where a piece is allowed to move based on the rules of the game.
 	 * @param piece This parameter is the current game piece that is being looked at.

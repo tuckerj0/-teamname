@@ -10,6 +10,7 @@ import java.io.IOException;
  * This class is used when displaying the game rules for the game.
  */
 public class GameRules {
+
     /**
      * This function creates the necessary GridBagConstraints for putting things within a GridBagLayout panel.
      * @param x This parameter is the value for gridx attribute of the GridBagConstraints variable.
