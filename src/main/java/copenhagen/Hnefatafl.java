@@ -192,7 +192,7 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[col][i] == piece || pieceLayout[col][i] == helperPiece || pieceLayout[col][i] == 'c') {
                         if (counter >= 2) {
-                            pieceLayout = GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow, pieceLayout);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
@@ -210,7 +210,7 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[col][i] == piece || pieceLayout[col][i] == helperPiece || pieceLayout[col][i] == 'c') {
                         if (counter >= 2) {
-                            pieceLayout = GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow, pieceLayout);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
@@ -231,7 +231,7 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[col][i] == piece || pieceLayout[col][i] == helperPiece || pieceLayout[col][i] == 'c') {
                         if (counter >= 2) {
-                            pieceLayout = GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow, pieceLayout);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
@@ -249,7 +249,7 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[col][i] == piece || pieceLayout[col][i] == helperPiece || pieceLayout[col][i] == 'c') {
                         if (counter >= 2) {
-                            pieceLayout = GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow, pieceLayout);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
@@ -270,7 +270,7 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[i][row] == piece || pieceLayout[i][row] == helperPiece || pieceLayout[i][row] == 'c') {
                         if (counter >= 2) {
-                            pieceLayout = GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow, pieceLayout);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
@@ -288,7 +288,7 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[i][row] == piece || pieceLayout[i][row] == helperPiece || pieceLayout[i][row] == 'c') {
                         if (counter >= 2) {
-                            pieceLayout = GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow, pieceLayout);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
@@ -309,7 +309,7 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[i][row] == piece || pieceLayout[i][row] == helperPiece || pieceLayout[i][row] == 'c') {
                         if (counter >= 2) {
-                            pieceLayout = GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow, pieceLayout);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
@@ -327,7 +327,7 @@ public class Hnefatafl {
                     }
                     else if (pieceLayout[i][row] == piece || pieceLayout[i][row] == helperPiece || pieceLayout[i][row] == 'c') {
                         if (counter >= 2) {
-                            pieceLayout = GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow, pieceLayout);
+                            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
                         break;
                     }
@@ -384,7 +384,7 @@ public class Hnefatafl {
             }
         }
         if (!capturedPieceCol.isEmpty()) {
-            pieceLayout = GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow, pieceLayout);
+            GameLogic.removeCapturedPieces(capturedPieceCol, capturedPieceRow);
 	    }
 	    else {
             if (col == 0 || col == 10 || row == 0 || row == 10) {
