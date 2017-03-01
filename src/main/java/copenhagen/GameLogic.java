@@ -165,6 +165,7 @@ public class GameLogic{
 	public static char checkWinner(char[][] gameBoard) {
 		char winner = '0';
         if(kingWasCaptured) {
+        	kingWasCaptured = false;
             winner = 'b';
             return  winner;
         }
