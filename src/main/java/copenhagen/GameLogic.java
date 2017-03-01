@@ -106,6 +106,14 @@ public class GameLogic{
     public static char[][] getGameBoardArray() {
         return gameBoardArray;
     }
+
+    /**
+     * @return An integer which represents the length and width of the number of spaces on the gameboard
+     */
+    public static int getGridSize() {
+        return GRID_SIZE;
+    }
+
 	/**
 	 * This function finds where a piece is allowed to move based on the rules of the game.
 	 * @param piece This parameter is the current game piece that is being looked at.

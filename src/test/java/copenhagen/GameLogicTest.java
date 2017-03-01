@@ -1,10 +1,41 @@
 import org.junit.Test;
 import static org.junit.Assert.*;
-
+import org.mockito.*;
 import copenhagen.GameLogic;
+import copenhagen.GameBoard;
+import java.util.LinkedList;
 
 public class GameLogicTest {
 
+    //no pieces should be removed from the board with empty linked lists
+    @Test
+    public void testRemoveCapturedPiecesNoRemoval(){
+        LinkedList<Integer> col = new LinkedList<>();
+        LinkedList<Integer> row = new LinkedList<>();
+        GameLogic.gameBoardArray = fillPieceArray('w');
+        GameLogic.removeCapturedPieces(col,row);
+        char[][] resultBoard = GameLogic.getGameBoardArray();
+        for(int i=0; i<resultBoard.length; i++){
+            for(int j=0; j<resultBoard.length; j++){
+                assertEquals(resultBoard[i][j],'w');
+            }
+        }
+    }
+
+    /**
+    * fills up an entire array with a certain character to help with testing
+    * @return an array filled with the piece character
+    * @param piece the character to add to the array
+    */
+    public char[][] fillPieceArray(char piece){
+        char[][] testBoard = new char[GameLogic.getGridSize()][GameLogic.getGridSize()];
+        for(int i=0; i<testBoard.length; i++){
+            for(int j=0; j<testBoard[0].length; j++){
+                testBoard[i][j] = piece;
+            }
+        }
+        return testBoard;
+    }
     // This test checks if a piece can move if the piece and turn are white.
     @Test
     public void testPieceCanMoveIfPieceAndTurnAreWhite() {
