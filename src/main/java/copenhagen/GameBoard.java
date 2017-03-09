@@ -228,4 +228,20 @@ public class GameBoard {
 		JButton gamePiece = hBoard.getButtonByLocation(c,r);
 		gamePiece.setIcon(null);
 	}
+
+	/**
+	 * Update gameboard gui when a piece is moved by removing a piece from its old location and adding it to its new location
+	 * @param startCol This parameter is the starting column of the game piece.
+     * @param startRow This parameter is the starting row of the game piece.
+     * @param destCol This parameter is the destination column of the game piece.
+     * @param destRow This parameter is the destination column of the game piece.
+	 */
+	public static void movePieceOnBoard(int startCol, int startRow, int destCol, int destRow, char pieceType){
+        GameBoard hBoard = Hnefatafl.getHBoard();
+		JButton sButton = hBoard.getButtonByLocation(startCol,startRow);
+		sButton.setIcon(null);
+
+		JButton dButton = hBoard.getButtonByLocation(destCol,destRow);
+		Hnefatafl.setButtonImage(pieceType,dButton);
+	}
 }

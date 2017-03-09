@@ -157,14 +157,14 @@ public class Hnefatafl {
 
     /**
      * This function is called to try and move the selected piece (selectedLoc) if it is a valid move.
-     * @param c This parameter is the column they are trying to move to.
+     * @param c This parameter is the column theyp are trying to move to.
      * @param r This parameter is the row they are trying to move to.
      */
 	public static void movePiece(int c, int r){
         char pieceType = pieceLayout[selectedLoc.getColumn()][selectedLoc.getRow()];
         boolean[][] validMoves = GameLogic.getValidMoves(pieceType, selectedLoc.getColumn(),selectedLoc.getRow(), pieceLayout);
 		if(validMoves[c][r] == true){
-			movePieceOnBoard(selectedLoc.getColumn(),selectedLoc.getRow(),c,r);
+			GameLogic.movePieceOnBoard(selectedLoc.getColumn(),selectedLoc.getRow(),c,r);
             endTurn();
 		}else{
 			JOptionPane.showMessageDialog(null, "Invalid Move");
@@ -403,41 +403,6 @@ public class Hnefatafl {
             }
         }
     }
-
-
-    /**
-     * This is the function that does the actual work from moving a game piece from its original starting row and column
-     * to its new row and column.
-     * @param startCol This parameter is the starting column of the game piece.
-     * @param startRow This parameter is the starting row of the game piece.
-     * @param destCol This parameter is the destination column of the game piece.
-     * @param destRow This parameter is the destination column of the game piece.
-     */
-	public static void movePieceOnBoard(int startCol,int startRow,int destCol, int destRow){
-		//update gameboard array
-		char pieceType = GameLogic.getPiece(startCol, startRow);
-		if ((startCol==0 && startRow==0) ||
-			(startCol==boardSize-1 && startRow==boardSize-1) ||
-			(startCol==0 && startRow==boardSize-1) ||
-			(startCol==boardSize-1 && startRow==0) || (startCol==5 && startRow==5)) {
-			pieceLayout[startCol][startRow] = 'c';
-			GameLogic.updateGameBoard(startCol, startRow, 'c');
-
-		}else{
-			pieceLayout[startCol][startRow] = '0';
-            GameLogic.updateGameBoard(startCol, startRow, '0');
-        }
-		pieceLayout[destCol][destRow] = pieceType;
-        GameLogic.updateGameBoard(destCol, destRow, pieceType);
-        findCapturedPieces(pieceType, destCol, destRow);
-
-		//update gameboard gui
-		JButton sButton = hBoard.getButtonByLocation(startCol,startRow);
-		sButton.setIcon(null);
-
-		JButton dButton = hBoard.getButtonByLocation(destCol,destRow);
-		setButtonImage(pieceType,dButton);
-	}
 
 	/**
      * This function sets the icon of a particular button.
