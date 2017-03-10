@@ -249,8 +249,5 @@ public class GameLogic{
 		Hnefatafl.pieceLayout[destCol][destRow] = pieceType;
         GameLogic.updateGameBoard(destCol, destRow, pieceType);
         Hnefatafl.findCapturedPieces(pieceType, destCol, destRow);
-
-        //update the gameboard gui
-        GameBoard.movePieceOnBoard(startCol,startRow,destCol,destRow,pieceType);
 	}
 }
