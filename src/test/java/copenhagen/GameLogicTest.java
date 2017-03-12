@@ -1,40 +1,41 @@
+public class GameLogicTest {
+
+import GameBoard;
+import copenhagen.GameLogic;
+import copenhagen.Hnefatafl;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import copenhagen.GameLogic;
-
-public class GameLogicTest {
-	
 	// This test checks if a piece can move if the piece and turn are white.
 	@Test
 	public void testPieceCanMoveIfPieceAndTurnAreWhite() {
 		assertEquals(true, GameLogic.pieceCanMove('w', 'w'));
 	}
-	
+
 	// This test checks if a piece can move if the piece and turn are black.
 	@Test
 	public void testPieceCanMoveIfPieceAndTurnAreBlack() {
 		assertEquals(true, GameLogic.pieceCanMove('b', 'b'));
 	}
-	
+
 	// This test checks if a piece can move if the piece is the king and turn is white.
 	@Test
 	public void testPieceCanMoveIfPieceIsKingAndTurnIsWhite() {
 		assertEquals(true, GameLogic.pieceCanMove('k', 'w'));
 	}
-	
+
 	// This test checks if a piece can move if the piece is white and turn is black.
 	@Test
 	public void testPieceCanMoveIfPieceIsWhiteAndTurnIsBlack() {
 		assertEquals(false, GameLogic.pieceCanMove('w', 'b'));
 	}
-	
+
 	// This test checks if a piece can move if the piece is black and turn is white.
 	@Test
 	public void testPieceCanMoveIfPieceIsBlackAndTurnIsWhite() {
 		assertEquals(false, GameLogic.pieceCanMove('b', 'w'));
 	}
-	
+
 	// This test checks to make sure that correct piece is returned.
 	@Test
 	public void testGetPiece() {
@@ -49,13 +50,13 @@ public class GameLogicTest {
 		char actual = gl.getPiece(col, row);
 		assertEquals(expected, actual);
 	}
-	
+
 	// This test is to ensure that the game board array is created correctly with all the right pieces in the correct
 	// spot.
 	@Test
 	public void testSetStartingPiecesIfSizeIsEleven() {
 		int size = 11;
-		
+
 		char[][] expected = new char [size][size];
 		for (int i = 0; i < expected.length; i++) {
 			for (int j = 0; j < expected[i].length; j++) {
@@ -70,9 +71,9 @@ public class GameLogicTest {
 		expected[5][6] = expected[5][7] = expected[6][4] = expected[6][5] = expected[6][6] = expected[7][5] = 'w';
 		expected[0][0] = expected[0][10] = expected[10][0] = expected[10][10] = expected[5][5] = 'c';
 		expected[5][5] = 'k';
-		
+
 		char[][] actual = GameLogic.setStartingPieces(size);
-		
+
 		// check each individual position to ensure correct value
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
@@ -82,20 +83,20 @@ public class GameLogicTest {
 			}
 		}
 	}
-	
+
 	// This test checks to see if the game board array is filled with 0s if the size of the board is not 11
 	// or potentially 9 if that feature is added later.
 	@Test
 	public void testSetStartingPiecesIfInvalidSize() {
 		int size = 1;
-		
+
 		char[][] expected = new char [size][size];
 		expected[0][0] = '0';
-		
+
 		char[][] actual = GameLogic.setStartingPieces(size);
 		assertEquals(expected[0][0], actual[0][0]);
 	}
-	
+
 	// This test checks to make sure the game board array is sent back properly when called.
 	@Test
 	public void testGetGameBoardArray() {
@@ -106,7 +107,7 @@ public class GameLogicTest {
 		char[][] actual = gl.getGameBoardArray();
 		assertEquals(expected[0][0], actual[0][0]);
 	}
-	
+
 	// This test checks that the defenders win when the king reaches one of the corners
 	@Test
 	public void testDefendersWinWhenKingInCorner() {
@@ -114,12 +115,12 @@ public class GameLogicTest {
 		char[][] board = new char[11][11];
 		board[0][0] = 'k';
 		GameLogic gl = new GameLogic();
-		
+
 		char actual = gl.checkWinner(board);
 		assertEquals(actual, expected);
-		
+
 	}
-	
+
 	@Test
 	public void testAttckersWinWhenSurroundKing() {
 		char expected = 'b';
@@ -128,17 +129,17 @@ public class GameLogicTest {
 		char actual;
 		board[2][2] = 'k';
 		board[2][1] = board[1][2] = board[3][2] = board[2][3] = 'b';
-		
+
 		actual = gl.checkWinner(board);
 		assertEquals(actual, expected);
-		
+
 	}
 	@Test
 	public void testAttckersWinWhenSurroundKingOnLeftEdge() {
 		char expected = 'b';
 		char[][] hBoard = new char[11][11];
 		GameLogic gl = new GameLogic();
-		
+
 		hBoard[5][0] = 'k';
 		hBoard[4][0] = hBoard[6][0] = hBoard[5][1] = 'b';
 		char actual = gl.checkWinner(hBoard);
@@ -149,19 +150,19 @@ public class GameLogicTest {
 		char expected = 'b';
 		char[][] hBoard = new char[11][11];
 		GameLogic gl = new GameLogic();
-		
+
 		hBoard[5][10] = 'k';
 		hBoard[4][10] = hBoard[6][10] = hBoard[5][9] = 'b';
 		char actual = gl.checkWinner(hBoard);
 		assertEquals(actual, expected);
 	}
-	
+
 	@Test
 	public void testAttckersWinWhenSurroundKingOnBottomEdge() {
 		char expected = 'b';
 		char[][] hBoard = new char[11][11];
 		GameLogic gl = new GameLogic();
-		
+
 		hBoard[10][5] = 'k';
 		hBoard[10][4] = hBoard[10][6] = hBoard[9][5] = 'b';
 		char actual = gl.checkWinner(hBoard);
@@ -172,12 +173,70 @@ public class GameLogicTest {
 		char expected = 'b';
 		char[][] hBoard = new char[11][11];
 		GameLogic gl = new GameLogic();
-		
+
 		hBoard[0][5] = 'k';
 		hBoard[0][4] = hBoard[0][6] = hBoard[1][5] = 'b';
 		char actual = gl.checkWinner(hBoard);
 		assertEquals(actual, expected);
 	}
-	
-	
+
+	@Test
+	public void testMoveWhitePiece(){
+		char[][] start = new char[11][11];
+		start[1][1] = 'w';
+		GameLogic.gameBoardArray = start;
+		Hnefatafl.pieceLayout = start;
+		GameLogic.movePieceOnBoard(1,1,4,5);
+		char[][] moved = GameLogic.getGameBoardArray();
+		assertEquals(moved[1][1],'0');
+		assertEquals(moved[4][5],'w');
+	}
+
+	@Test
+	public void testMoveBlackPiece(){
+		char[][] start = new char[11][11];
+		start[8][8] = 'b';
+		GameLogic.gameBoardArray = start;
+		Hnefatafl.pieceLayout = start;
+		GameLogic.movePieceOnBoard(8,8,5,1);
+		char[][] moved = GameLogic.getGameBoardArray();
+		assertEquals(moved[8][8],'0');
+		assertEquals(moved[5][1],'b');
+	}
+
+	@Test
+	public void testMoveKingPiece(){
+		char[][] start = new char[11][11];
+		start[6][8] = 'k';
+		GameLogic.gameBoardArray = start;
+		Hnefatafl.pieceLayout = start;
+		GameLogic.movePieceOnBoard(6,8,3,9);
+		char[][] moved = GameLogic.getGameBoardArray();
+		assertEquals(moved[6][8],'0');
+		assertEquals(moved[3][9],'k');
+	}
+
+	@Test
+	public void testMoveFromCenter(){
+		char[][] start = new char[11][11];
+		start[5][5] = 'k';
+		GameLogic.gameBoardArray = start;
+		Hnefatafl.pieceLayout = start;
+		GameLogic.movePieceOnBoard(5,5,4,4);
+		char[][] moved = GameLogic.getGameBoardArray();
+		assertEquals(moved[5][5],'c');
+		assertEquals(moved[4][4],'k');
+	}
+
+	@Test
+	public void testMoveFromCorner(){
+		char[][] start = new char[11][11];
+		start[0][0] = 'w';
+		GameLogic.gameBoardArray = start;
+		Hnefatafl.pieceLayout = start;
+		GameLogic.movePieceOnBoard(0,0,7,3);
+		char[][] moved = GameLogic.getGameBoardArray();
+		assertEquals(moved[0][0],'c');
+		assertEquals(moved[7][3],'w');
+	}
 }

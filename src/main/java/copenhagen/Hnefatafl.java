@@ -165,6 +165,7 @@ public class Hnefatafl {
         boolean[][] validMoves = GameLogic.getValidMoves(pieceType, selectedLoc.getColumn(),selectedLoc.getRow(), pieceLayout);
 		if(validMoves[c][r] == true){
 			GameLogic.movePieceOnBoard(selectedLoc.getColumn(),selectedLoc.getRow(),c,r);
+			GameBoard.movePieceOnBoard(selectedLoc.getColumn(),selectedLoc.getRow(),c,r,pieceType);
             endTurn();
 		}else{
 			JOptionPane.showMessageDialog(null, "Invalid Move");
