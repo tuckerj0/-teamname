@@ -158,7 +158,7 @@ public class GameLogic{
 		}
 		return validSpaces;
 	}
-	
+
 	/**
 	 This function checks if there is a winner at the end of each turn
 	 */
@@ -222,5 +222,35 @@ public class GameLogic{
 			winner = 'w';
 		}
 		return winner;
+	}
+
+    /**
+     * This is the function that does the actual work from moving a game piece from its original starting row and column
+     * to its new row and column.
+     * @param startCol This parameter is the starting column of the game piece.
+     * @param startRow This parameter is the starting row of the game piece.
+     * @param destCol This parameter is the destination column of the game piece.
+     * @param destRow This parameter is the destination column of the game piece.
+     */
+	public static void movePieceOnBoard(int startCol,int startRow,int destCol, int destRow){
+		//update gameboard array
+		char pieceType = GameLogic.getPiece(startCol, startRow);
+		if ((startCol==0 && startRow==0) ||
+			(startCol==GRID_SIZE-1 && startRow==GRID_SIZE-1) ||
+			(startCol==0 && startRow==GRID_SIZE-1) ||
+			(startCol==GRID_SIZE-1 && startRow==0) || (startCol==5 && startRow==5)) {
+			Hnefatafl.pieceLayout[startCol][startRow] = 'c';
+			GameLogic.updateGameBoard(startCol, startRow, 'c');
+
+		}else{
+			Hnefatafl.pieceLayout[startCol][startRow] = '0';
+            GameLogic.updateGameBoard(startCol, startRow, '0');
+        }
+		Hnefatafl.pieceLayout[destCol][destRow] = pieceType;
+        GameLogic.updateGameBoard(destCol, destRow, pieceType);
+        Hnefatafl.findCapturedPieces(pieceType, destCol, destRow);
+
+        //update the gameboard gui
+        GameBoard.movePieceOnBoard(startCol,startRow,destCol,destRow,pieceType);
 	}
 }
