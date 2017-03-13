@@ -38,6 +38,8 @@ public class Hnefatafl {
 	private static int turnCount = 1;
 	public static char turn = 'b';
 	private static GameBoard hBoard;
+  private static GameLogic hLogic;
+  private static SideBar sBar;
 	private static int[] primaryColor = {244,164,96};
 	private static int[] secondaryColor = {139,69,19};
 	private static int[] letteringColor = {0,0,0};
@@ -77,12 +79,12 @@ public class Hnefatafl {
 		hBoard = new GameBoard(boardSize, primaryColor, secondaryColor, specialColor);
 		board = hBoard.getBoard();
 		pieceLayout = GameLogic.getGameBoardArray();
-		SideBar sBar = new SideBar(primaryColor, secondaryColor, letteringColor);
+    sBar = new SideBar(primaryColor, secondaryColor, letteringColor);
 		side = sBar.getSideBar();
 		BottomBar bBar = new BottomBar(primaryColor, letteringColor, turn, turnCount);
 		bottom = bBar.getBottomBar();
-        MenuBar menu = new MenuBar();
-        menuBar = menu.getMenuBar();
+    MenuBar menu = new MenuBar();
+    menuBar = menu.getMenuBar();
 		turnCount = 0;
 		turn = 'b';
 		selectedLoc = new BoardLocation();
@@ -348,9 +350,9 @@ public class Hnefatafl {
 
     /**
      * This function finds all the pieces that will be captured on the board by the move just completed.
-     * @param piece This parameter is the piece that getting moved.
-     * @param col This parameter is which column the piece will be at after it is moved.
-     * @param row This parameter is which row the piece will be at after it is moved.
+     * @param piece This parameter is the piece that is getting moved.
+     * @param col This parameter is the column that the piece will be in after it is moved.
+     * @param row This parameter is the row that the piece will be in after it is moved.
      */
     public static void findCapturedPieces(char piece, int col, int row) {
 	    char capturablePiece;
