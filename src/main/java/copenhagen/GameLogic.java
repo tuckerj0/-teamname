@@ -15,7 +15,6 @@ import java.util.LinkedList;
  */
 public class GameLogic{
     private static int GRID_SIZE = 11;
-    private static boolean kingWasCaptured = false;
     public static char[][] gameBoardArray;
 
     /**
@@ -24,7 +23,7 @@ public class GameLogic{
      * @return This function will return true if the piece can be moved, else false if it can not be moved.
      */
     public static boolean pieceCanMove(char piece, char turn) {
-        if ((piece == 'w' && turn == 'w') || (piece == 'b' && turn == 'b') || (piece == 'k' && turn == 'w')) {
+        if (piece == turn || (piece == 'k' && turn == 'w')) {
             return true;
         } else {
             return false;
@@ -59,15 +58,17 @@ public class GameLogic{
      */
 	public static void removeCapturedPieces(LinkedList<Integer> col, LinkedList<Integer> row) {
         GameBoard hBoard = Hnefatafl.getHBoard();
-	    for (int i = 0; i < col.size(); i++) {
-	        int c = col.get(i);
-	        int r = row.get(i);
-	        if (getPiece(c,r) == 'k') {
-                kingWasCaptured = true;
+        for (int i = 0; i < col.size(); i++) {
+            int c = col.get(i);
+            int r = row.get(i);
+            if (getPiece(c,r) == 'k') {
+                // Sandwiching a non-king piece captures it
+                // But the king is only captured if it is surrounded on all 4 (or 3 if the king is on an edge) sides
+                return;
             }
             gameBoardArray[c][r] = '0';
-			GameBoard.removeCapturedPiecesUI(c,r);
-		}
+            GameBoard.removeCapturedPiecesUI(c,r);
+        }
     }
 
     /**
@@ -160,68 +161,89 @@ public class GameLogic{
 	}
 
 	/**
-	 This function checks if there is a winner at the end of each turn
+	 This function checks to see if there is a winner at the end of each turn
 	 */
 	public static char checkWinner(char[][] gameBoard) {
-		char winner = '0';
-        if(kingWasCaptured) {
-        	kingWasCaptured = false;
-            winner = 'b';
-            return  winner;
-        }
-		// Check Full Surrounding of king for Attackers Win
+        boolean defendersSurrounded = false;
+        boolean foundExit = false;
+        // Check if king is entirely surrounded
 		for (int i = 1; i < gameBoard.length-1; i++) {
 			for (int j = 1; j < gameBoard.length-1; j++) {
 				if(gameBoard[i][j] == 'k') { // Found the king piece
 					if (gameBoard[i+1][j] == 'b' && gameBoard[i][j+1] == 'b' && gameBoard[i-1][j] == 'b' && gameBoard[i][j-1] == 'b' ) {
-						// King is entirely surrounded
-						winner = 'b';
+						// King is entirely surrounded so attackers win
+						return 'b';
 					}
-				}
-			}
-		}
-		// Check Left Edge for Attackers Win
-		for (int i = 1; i < gameBoard.length-1; i++) {
-			if(gameBoard[i][0] == 'k') { // Found the king piece
-				if (gameBoard[i+1][0] == 'b' && gameBoard[i][1] == 'b' && gameBoard[i-1][0] == 'b') {
-					// King is surrounded on left edge
-					winner = 'b';
-				}
-			}
-		}
-		// Check Right Edge for Attackers Win
-		for (int i = 1; i < gameBoard.length-1; i++) {
-			if(gameBoard[i][10] == 'k') { // Found the king piece
-				if (gameBoard[i+1][10] == 'b' && gameBoard[i][9] == 'b' && gameBoard[i-1][10] == 'b') {
-					// King is surrounded on right edge
-					winner = 'b';
-				}
-			}
-		}
-		// Check Bottom Edge for Attackers Win
-		for (int i = 1; i < gameBoard.length-1; i++) {
-			if(gameBoard[10][i] == 'k') { // Found the king piece
-				if (gameBoard[10][i+1] == 'b' && gameBoard[9][i] == 'b' && gameBoard[10][i-1] == 'b') {
-					// King is surrounded on bottom edge
-					winner = 'b';
-				}
-			}
-		}
-		// Check Top Edge for Attackers Win
-		for (int i = 1; i < gameBoard.length-1; i++) {
-			if(gameBoard[0][i] == 'k') { // Found the king piece
-				if (gameBoard[0][i+1] == 'b' && gameBoard[1][i] == 'b' && gameBoard[0][i-1] == 'b') {
-					// King is surrounded on bottom edge
-					winner = 'b';
 				}
 			}
 		}
 		// Check Corners for Defenders Win
 		if (gameBoard[0][0] == 'k' || gameBoard[0][10] == 'k' || gameBoard[10][0] == 'k' || gameBoard[10][10] == 'k') {
-			// King is in one of the corners
-			winner = 'w';
+			// King has reached one of the corners so defenders win
+			return 'w';
 		}
-		return winner;
+        // Check Left of Throne for Attackers Win
+        if(gameBoard[5][4] == 'k') {
+            if (gameBoard[5][3] == 'b' && gameBoard[4][4] == 'b' && gameBoard[6][4] == 'b') {
+                // King is surrounded to the left of the throne
+                return 'b';
+            }
+        }
+        // Check Right of Throne for Attackers Win
+        if(gameBoard[5][6] == 'k') {
+            if (gameBoard[5][7] == 'b' && gameBoard[4][6] == 'b' && gameBoard[6][6] == 'b') {
+                // King is surrounded to the right of the throne
+                return 'b';
+            }
+        }
+        // Check Below Throne for Attackers Win
+        if(gameBoard[6][5] == 'k') {
+            if (gameBoard[7][5] == 'b' && gameBoard[6][4] == 'b' && gameBoard[6][6] == 'b') {
+                // King is surrounded below the throne
+                return 'b';
+            }
+        }
+        // Check Above Throne for Attackers Win
+        if(gameBoard[4][5] == 'k') {
+            if (gameBoard[3][5] == 'b' && gameBoard[4][4] == 'b' && gameBoard[4][6] == 'b') {
+                // King is surrounded above the throne
+                return 'b';
+            }
+        }
+        
+        // Check if Attackers have entirely surrounded Defenders
+        for (int i = 0; i < gameBoard.length; i++) {
+             for (int j = 0; j < gameBoard.length; j++) {
+                 if(gameBoard[i][j] == 'b') {
+                     // Look for another Attacker blocking the Defenders in this collumn
+                     for (int n = 0; n < gameBoard.length; n++) {
+                         if (gameBoard[n][j] == 'w' || gameBoard[n][j] == 'k')
+                             defendersSurrounded = false;
+                         else if (gameBoard[n][j] == 'b')
+                             defendersSurrounded = true;
+                         if (defendersSurrounded == false && n == gameBoard.length - 1) {
+                             return '0';
+                         }
+                     }
+                     // Look for another Attacker blocking the Defenders in this row
+                     for (int n = 0; n < gameBoard.length; n++) {
+                         if (gameBoard[i][n] == 'w' || gameBoard[i][n] == 'k')
+                             defendersSurrounded = false;
+                         else if (gameBoard[n][j] == 'b')
+                             defendersSurrounded = true;
+                         if (defendersSurrounded == false && n == gameBoard.length - 1){
+                             return '0';
+                         }
+                     }
+                 }
+             }
+        }
+        // Defenders are entirely surrounded so Attackers win!
+        if (!foundExit)
+            return 'b';
+        
+        // There is not a winner yet so continue playing
+		return '0';
 	}
 
     /**
