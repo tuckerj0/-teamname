@@ -1,10 +1,11 @@
-public class GameLogicTest {
-
-import GameBoard;
+import copenhagen.GameBoard;
 import copenhagen.GameLogic;
 import copenhagen.Hnefatafl;
 import org.junit.Test;
 import static org.junit.Assert.*;
+
+public class GameLogicTest {
+
 
 	// This test checks if a piece can move if the piece and turn are white.
 	@Test
@@ -134,52 +135,54 @@ import static org.junit.Assert.*;
 		assertEquals(actual, expected);
 
 	}
-	@Test
-	public void testAttckersWinWhenSurroundKingOnLeftEdge() {
-		char expected = 'b';
-		char[][] hBoard = new char[11][11];
-		GameLogic gl = new GameLogic();
-
-		hBoard[5][0] = 'k';
-		hBoard[4][0] = hBoard[6][0] = hBoard[5][1] = 'b';
-		char actual = gl.checkWinner(hBoard);
-		assertEquals(actual, expected);
-	}
-	@Test
-	public void testAttckersWinWhenSurroundKingOnRightEdge() {
-		char expected = 'b';
-		char[][] hBoard = new char[11][11];
-		GameLogic gl = new GameLogic();
-
-		hBoard[5][10] = 'k';
-		hBoard[4][10] = hBoard[6][10] = hBoard[5][9] = 'b';
-		char actual = gl.checkWinner(hBoard);
-		assertEquals(actual, expected);
-	}
-
-	@Test
-	public void testAttckersWinWhenSurroundKingOnBottomEdge() {
-		char expected = 'b';
-		char[][] hBoard = new char[11][11];
-		GameLogic gl = new GameLogic();
-
-		hBoard[10][5] = 'k';
-		hBoard[10][4] = hBoard[10][6] = hBoard[9][5] = 'b';
-		char actual = gl.checkWinner(hBoard);
-		assertEquals(actual, expected);
-	}
-	@Test
-	public void testAttckersWinWhenSurroundKingOnTopEdge() {
-		char expected = 'b';
-		char[][] hBoard = new char[11][11];
-		GameLogic gl = new GameLogic();
-
-		hBoard[0][5] = 'k';
-		hBoard[0][4] = hBoard[0][6] = hBoard[1][5] = 'b';
-		char actual = gl.checkWinner(hBoard);
-		assertEquals(actual, expected);
-	}
-
+    @Test
+    public void testAttckersWinWhenSurroundKingLeftOfThrone() {
+        char expected = 'b';
+        char[][] hBoard = new char[11][11];
+        GameLogic gl = new GameLogic();
+        
+        hBoard[5][4] = 'k';
+        hBoard[5][3] = hBoard[4][4] = hBoard[6][4] = 'b';
+        char actual = gl.checkWinner(hBoard);
+        assertEquals(actual, expected);
+    }
+    
+    @Test
+    public void testAttckersWinWhenSurroundKingRightOfThrone() {
+        char expected = 'b';
+        char[][] hBoard = new char[11][11];
+        GameLogic gl = new GameLogic();
+        
+        hBoard[5][6] = 'k';
+        hBoard[5][7] = hBoard[4][6] = hBoard[6][6] = 'b';
+        char actual = gl.checkWinner(hBoard);
+        assertEquals(actual, expected);
+    }
+    
+    @Test
+    public void testAttckersWinWhenSurroundKingBelowThrone() {
+        char expected = 'b';
+        char[][] hBoard = new char[11][11];
+        GameLogic gl = new GameLogic();
+        
+        hBoard[6][5] = 'k';
+        hBoard[7][5] = hBoard[6][6] = hBoard[6][4] = 'b';
+        char actual = gl.checkWinner(hBoard);
+        assertEquals(actual, expected);
+    }
+    
+    @Test
+    public void testAttckersWinWhenSurroundKingAboveThrone() {
+        char expected = 'b';
+        char[][] hBoard = new char[11][11];
+        GameLogic gl = new GameLogic();
+        
+        hBoard[4][5] = 'k';
+        hBoard[3][5] = hBoard[4][4] = hBoard[4][6] = 'b';
+        char actual = gl.checkWinner(hBoard);
+        assertEquals(actual, expected);
+    }
+    
 	@Test
 	public void testMoveWhitePiece(){
 		char[][] start = new char[11][11];

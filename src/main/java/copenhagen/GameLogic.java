@@ -164,6 +164,7 @@ public class GameLogic{
 	 This function checks to see if there is a winner at the end of each turn
 	 */
 	public static char checkWinner(char[][] gameBoard) {
+        // Check if king is entirely surrounded
 		for (int i = 1; i < gameBoard.length-1; i++) {
 			for (int j = 1; j < gameBoard.length-1; j++) {
 				if(gameBoard[i][j] == 'k') { // Found the king piece
@@ -174,47 +175,40 @@ public class GameLogic{
 				}
 			}
 		}
-		// Check Left Edge for Attackers Win
-		for (int i = 1; i < gameBoard.length-1; i++) {
-			if(gameBoard[i][0] == 'k') { // Found the king piece
-				if (gameBoard[i+1][0] == 'b' && gameBoard[i][1] == 'b' && gameBoard[i-1][0] == 'b') {
-					// King is surrounded on the left edge so attackers win
-					return 'b';
-				}
-			}
-		}
-		// Check Right Edge for Attackers Win
-		for (int i = 1; i < gameBoard.length-1; i++) {
-			if(gameBoard[i][10] == 'k') { // Found the king piece
-				if (gameBoard[i+1][10] == 'b' && gameBoard[i][9] == 'b' && gameBoard[i-1][10] == 'b') {
-					// King is surrounded on the right edge so attackers win
-					return 'b';
-				}
-			}
-		}
-		// Check Bottom Edge for Attackers Win
-		for (int i = 1; i < gameBoard.length-1; i++) {
-			if(gameBoard[10][i] == 'k') { // Found the king piece
-				if (gameBoard[10][i+1] == 'b' && gameBoard[9][i] == 'b' && gameBoard[10][i-1] == 'b') {
-					// King is surrounded on the bottom edge so attackers win
-					return 'b';
-				}
-			}
-		}
-		// Check Top Edge for Attackers Win
-		for (int i = 1; i < gameBoard.length-1; i++) {
-			if(gameBoard[0][i] == 'k') { // Found the king piece
-				if (gameBoard[0][i+1] == 'b' && gameBoard[1][i] == 'b' && gameBoard[0][i-1] == 'b') {
-					// King is surrounded on the bottom edge so attackers win
-					return 'b';
-				}
-			}
-		}
 		// Check Corners for Defenders Win
 		if (gameBoard[0][0] == 'k' || gameBoard[0][10] == 'k' || gameBoard[10][0] == 'k' || gameBoard[10][10] == 'k') {
 			// King has reached one of the corners so defenders win
 			return 'w';
 		}
+        // Check Left of Throne for Attackers Win
+        if(gameBoard[5][4] == 'k') {
+            if (gameBoard[5][3] == 'b' && gameBoard[4][4] == 'b' && gameBoard[6][4] == 'b') {
+                // King is surrounded to the left of the throne
+                return 'b';
+            }
+        }
+        // Check Right of Throne for Attackers Win
+        if(gameBoard[5][6] == 'k') {
+            if (gameBoard[5][7] == 'b' && gameBoard[4][6] == 'b' && gameBoard[6][6] == 'b') {
+                // King is surrounded to the right of the throne
+                return 'b';
+            }
+        }
+        // Check Below Throne for Attackers Win
+        if(gameBoard[6][5] == 'k') {
+            if (gameBoard[7][5] == 'b' && gameBoard[6][4] == 'b' && gameBoard[6][6] == 'b') {
+                // King is surrounded below the throne
+                return 'b';
+            }
+        }
+        // Check Above Throne for Attackers Win
+        if(gameBoard[4][5] == 'k') {
+            if (gameBoard[3][5] == 'b' && gameBoard[4][4] == 'b' && gameBoard[4][6] == 'b') {
+                // King is surrounded above the throne
+                return 'b';
+            }
+        }
+        
         // There is not a winner yet so continue playing
 		return '0';
 	}
