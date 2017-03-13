@@ -164,6 +164,8 @@ public class GameLogic{
 	 This function checks to see if there is a winner at the end of each turn
 	 */
 	public static char checkWinner(char[][] gameBoard) {
+        boolean defendersSurrounded = false;
+        boolean foundExit = false;
         // Check if king is entirely surrounded
 		for (int i = 1; i < gameBoard.length-1; i++) {
 			for (int j = 1; j < gameBoard.length-1; j++) {
@@ -208,6 +210,37 @@ public class GameLogic{
                 return 'b';
             }
         }
+        
+        // Check if Attackers have entirely surrounded Defenders
+        for (int i = 0; i < gameBoard.length; i++) {
+             for (int j = 0; j < gameBoard.length; j++) {
+                 if(gameBoard[i][j] == 'b') {
+                     // Look for another Attacker blocking the Defenders in this collumn
+                     for (int n = 0; n < gameBoard.length; n++) {
+                         if (gameBoard[n][j] == 'w' || gameBoard[n][j] == 'k')
+                             defendersSurrounded = false;
+                         else if (gameBoard[n][j] == 'b')
+                             defendersSurrounded = true;
+                         if (defendersSurrounded == false && n == gameBoard.length - 1) {
+                             return '0';
+                         }
+                     }
+                     // Look for another Attacker blocking the Defenders in this row
+                     for (int n = 0; n < gameBoard.length; n++) {
+                         if (gameBoard[i][n] == 'w' || gameBoard[i][n] == 'k')
+                             defendersSurrounded = false;
+                         else if (gameBoard[n][j] == 'b')
+                             defendersSurrounded = true;
+                         if (defendersSurrounded == false && n == gameBoard.length - 1){
+                             return '0';
+                         }
+                     }
+                 }
+             }
+        }
+        // Defenders are entirely surrounded so Attackers win!
+        if (!foundExit)
+            return 'b';
         
         // There is not a winner yet so continue playing
 		return '0';
