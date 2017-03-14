@@ -9,26 +9,22 @@ import java.awt.event.*;
  * access the rules of the game, or change the settings.
  */
 public class MainMenu {
-    private JFrame _mainMenuFrame = new JFrame("Hnefatafl"); // creates frame/window
+    private JFrame _mainMenuFrame = new JFrame("Hnefatafl");
     private JPanel _mainMenuPanel = new JPanel();
     private JButton _playerVsButton = new JButton("START GAME!");
-    private JButton _loadGameButton = new JButton("Load Saved Game (Not yet working)");
+    private JButton _loadGameButton = new JButton("Load Saved Game");
     private JButton _howToPlayButton =  new JButton("How to Play");
     private JButton _settingsButton = new JButton("Settings (Not yet working)");
+    private static int boardSize = 11;
 
-    int choice;
 
     /**
      * This is called once the program starts and creates the main menu allowing the user to choose what they want to do.
      */
     public MainMenu() {
-    	_mainMenuFrame.setSize(400, 400); // width, height
-    	_mainMenuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // what happens when the user closes the window
-        // see Window Constants in https://docs.oracle.com/javase/8/docs/api/javax/swing/JFrame.html for more options
-
-    	_mainMenuPanel.setLayout(new FlowLayout());  // this only needs one button, so layout doesn't matter
-        // The FlowLayout will just position the elements one after another, like letters in a line of text.
-
+    	_mainMenuFrame.setSize(400, 400);
+    	_mainMenuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	_mainMenuPanel.setLayout(new FlowLayout());
     	_mainMenuFrame.add(_mainMenuPanel);
 
         // adding the buttons that were created earlier
@@ -55,8 +51,10 @@ public class MainMenu {
      */
     private class newGameListener implements  ActionListener {
         public void actionPerformed(ActionEvent e) {
-            choice = 1;
             _mainMenuFrame.dispose();
+            GameLogic.setStartingPieces(boardSize);
+            Hnefatafl.setUpGameBoard();
+            Hnefatafl.displayGameBoard();
         }
     }
 
@@ -66,7 +64,12 @@ public class MainMenu {
      */
     class loadGameListener implements ActionListener {
     	public void actionPerformed(ActionEvent e) {
-            // TODO:  Add functionality
+            boolean successfulLoad = Hnefatafl.loadGame();
+            if (successfulLoad) {
+                _mainMenuFrame.dispose();
+                Hnefatafl.setUpGameBoard();
+                Hnefatafl.displayGameBoard();
+            }
     	}
     }
 
@@ -87,15 +90,5 @@ public class MainMenu {
         public void actionPerformed(ActionEvent e) {
             // TODO:  Add functionality
         }
-    }
-
-    /**
-     * This function is called constantly from a while loop in Hnefatafl.java to check if the user has clicked to play a
-     * new game.
-     * @return The return value is an int representing the user's choice. Once the user has chosen to play, this value
-     * changes to 1.
-     */
-    public int getChoice() {
-        return choice;
     }
 }

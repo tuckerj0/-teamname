@@ -129,7 +129,11 @@ public class SideBar {
      */
 	private class loadListener implements ActionListener {
        public void actionPerformed(ActionEvent e) {
-		   Hnefatafl.loadGame();
+           boolean successfulLoad = Hnefatafl.loadGame();
+           if (successfulLoad) {
+               Hnefatafl.setUpGameBoard();
+               Hnefatafl.displayGameBoard();
+           }
        }
     }
 
@@ -152,7 +156,7 @@ public class SideBar {
             String winner;
             String loser;
             if (n == 0) {
-                char turn = Hnefatafl.turn;
+                char turn = Hnefatafl.getTurn();
                 if (turn == 'w') {
                     winner = "Attackers";
                     loser = "Defenders";

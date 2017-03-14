@@ -113,8 +113,8 @@ public class GameLogicTest {
 		char[][] board = new char[11][11];
 		board[0][0] = 'k';
 		GameLogic gl = new GameLogic();
-
-		char actual = gl.checkWinner(board);
+		gl.gameBoardArray = board;
+		char actual = gl.checkWinner();
 		assertEquals(actual, expected);
 
 	}
@@ -127,8 +127,8 @@ public class GameLogicTest {
 		char actual;
 		board[2][2] = 'k';
 		board[2][1] = board[1][2] = board[3][2] = board[2][3] = 'b';
-
-		actual = gl.checkWinner(board);
+		gl.gameBoardArray = board;
+		actual = gl.checkWinner();
 		assertEquals(actual, expected);
 
 	}
@@ -140,7 +140,8 @@ public class GameLogicTest {
         
         hBoard[5][4] = 'k';
         hBoard[5][3] = hBoard[4][4] = hBoard[6][4] = 'b';
-        char actual = gl.checkWinner(hBoard);
+		gl.gameBoardArray = hBoard;
+		char actual = gl.checkWinner();
         assertEquals(actual, expected);
     }
     
@@ -152,7 +153,8 @@ public class GameLogicTest {
         
         hBoard[5][6] = 'k';
         hBoard[5][7] = hBoard[4][6] = hBoard[6][6] = 'b';
-        char actual = gl.checkWinner(hBoard);
+		gl.gameBoardArray = hBoard;
+		char actual = gl.checkWinner();
         assertEquals(actual, expected);
     }
     
@@ -164,7 +166,8 @@ public class GameLogicTest {
         
         hBoard[6][5] = 'k';
         hBoard[7][5] = hBoard[6][6] = hBoard[6][4] = 'b';
-        char actual = gl.checkWinner(hBoard);
+		gl.gameBoardArray = hBoard;
+		char actual = gl.checkWinner();
         assertEquals(actual, expected);
     }
     
@@ -176,7 +179,8 @@ public class GameLogicTest {
         
         hBoard[4][5] = 'k';
         hBoard[3][5] = hBoard[4][4] = hBoard[4][6] = 'b';
-        char actual = gl.checkWinner(hBoard);
+		gl.gameBoardArray = hBoard;
+		char actual = gl.checkWinner();
         assertEquals(actual, expected);
     }
     
@@ -191,8 +195,8 @@ public class GameLogicTest {
 
         hBoard[2][1] = hBoard[3][1] = hBoard[4][1] = hBoard[5][1] = hBoard[6][1] = hBoard[7][1] = hBoard[8][1] = hBoard[1][2] = hBoard[1][3] = hBoard[1][4] = hBoard[1][5] = hBoard[1][6] = hBoard[1][7] = hBoard[1][8] =hBoard[8][2] = hBoard[8][3] = hBoard[8][4] = hBoard[8][5] = hBoard[8][6] = hBoard[8][7] = hBoard[1][8] = hBoard[2][8] = hBoard[3][8] = hBoard[4][8]  = hBoard[5][8] = hBoard[6][8] = hBoard[7][8] = hBoard[8][8] = 'b';
         hBoard[5][5] = 'k';
-        
-        char actual = gl.checkWinner(hBoard);
+		gl.gameBoardArray = hBoard;
+		char actual = gl.checkWinner();
         assertEquals(actual, expected);
         
     }
@@ -208,8 +212,8 @@ public class GameLogicTest {
         
         hBoard[2][1] = hBoard[3][1] = hBoard[4][1] = hBoard[5][1] = hBoard[6][1] = hBoard[7][1] = hBoard[8][1] = hBoard[1][2] = hBoard[1][3] = hBoard[1][4] = hBoard[1][5] = hBoard[1][6] = hBoard[1][7] = hBoard[1][8] =hBoard[8][2] = hBoard[8][3] = hBoard[8][4] = hBoard[8][5] = hBoard[8][6] = hBoard[8][7] = hBoard[1][8] = hBoard[2][8] = hBoard[3][8] = hBoard[4][8]  = hBoard[5][8] = hBoard[6][8] = hBoard[7][8] = hBoard[8][8] = 'b';
         hBoard[5][10] = 'k';
-        
-        char actual = gl.checkWinner(hBoard);
+		gl.gameBoardArray = hBoard;
+		char actual = gl.checkWinner();
         assertEquals(actual, expected);
     }
     
@@ -218,7 +222,6 @@ public class GameLogicTest {
 		char[][] start = new char[11][11];
 		start[1][1] = 'w';
 		GameLogic.gameBoardArray = start;
-		Hnefatafl.pieceLayout = start;
 		GameLogic.movePieceOnBoard(1,1,4,5);
 		char[][] moved = GameLogic.getGameBoardArray();
 		assertEquals(moved[1][1],'0');
@@ -230,7 +233,6 @@ public class GameLogicTest {
 		char[][] start = new char[11][11];
 		start[8][8] = 'b';
 		GameLogic.gameBoardArray = start;
-		Hnefatafl.pieceLayout = start;
 		GameLogic.movePieceOnBoard(8,8,5,1);
 		char[][] moved = GameLogic.getGameBoardArray();
 		assertEquals(moved[8][8],'0');
@@ -242,7 +244,6 @@ public class GameLogicTest {
 		char[][] start = new char[11][11];
 		start[6][8] = 'k';
 		GameLogic.gameBoardArray = start;
-		Hnefatafl.pieceLayout = start;
 		GameLogic.movePieceOnBoard(6,8,3,9);
 		char[][] moved = GameLogic.getGameBoardArray();
 		assertEquals(moved[6][8],'0');
@@ -254,7 +255,6 @@ public class GameLogicTest {
 		char[][] start = new char[11][11];
 		start[5][5] = 'k';
 		GameLogic.gameBoardArray = start;
-		Hnefatafl.pieceLayout = start;
 		GameLogic.movePieceOnBoard(5,5,4,4);
 		char[][] moved = GameLogic.getGameBoardArray();
 		assertEquals(moved[5][5],'c');
@@ -266,7 +266,6 @@ public class GameLogicTest {
 		char[][] start = new char[11][11];
 		start[0][0] = 'w';
 		GameLogic.gameBoardArray = start;
-		Hnefatafl.pieceLayout = start;
 		GameLogic.movePieceOnBoard(0,0,7,3);
 		char[][] moved = GameLogic.getGameBoardArray();
 		assertEquals(moved[0][0],'c');

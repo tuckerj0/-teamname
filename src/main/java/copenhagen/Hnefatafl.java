@@ -16,7 +16,6 @@ package copenhagen;
 
 import java.awt.*;
 import javax.swing.*;
-import java.util.concurrent.TimeUnit;
 import java.io.IOException;
 import java.io.File;
 import javax.imageio.ImageIO;
@@ -26,16 +25,14 @@ import javax.swing.JButton;
  * This is the main file that runs the program.
  */
 public class Hnefatafl {
-	private static int choice;
 	private static JFrame frame;
 	private static JPanel board;
 	private static JPanel side;
 	private static JPanel bottom;
 	private static JMenuBar menuBar;
-	public static char[][] pieceLayout;
 	private static int boardSize = 11;
 	private static int turnCount = 1;
-	public static char turn = 'b';
+	private static char turn = 'b';
 	private static GameBoard hBoard;
   	private static SideBar sBar;
 	private static int[] primaryColor = {244,164,96};
@@ -53,38 +50,21 @@ public class Hnefatafl {
      * @param args Unused.
      */
 	public static void main(String[] args) {
-		MainMenu start = new MainMenu();
-		while (choice == 0) {
-			try {
-				choice = start.getChoice();
-				TimeUnit.MILLISECONDS.sleep(1);
-			}
-			catch(InterruptedException e) {
-				System.out.println("Something went wrong. Please try running the program again.");
-				System.exit(1);
-			}
-		}
-		if (choice == 1) {
-			setUpGameBoard();
-			displayGameBoard();
-		}
+		new MainMenu();
 	}
 
     /**
      * This function sets up and retrieves the different pieces (3 JPanels) that comprise the game board.
      */
 	public static void setUpGameBoard() {
-		hBoard = new GameBoard(boardSize, primaryColor, secondaryColor, specialColor);
-		board = hBoard.getBoard();
-		pieceLayout = GameLogic.getGameBoardArray();
-		sBar = new SideBar(primaryColor, secondaryColor, letteringColor);
+        hBoard = new GameBoard(boardSize, primaryColor, secondaryColor, specialColor);
+        board = hBoard.getBoard();
+        sBar = new SideBar(primaryColor, secondaryColor, letteringColor);
 		side = sBar.getSideBar();
 		BottomBar bBar = new BottomBar(primaryColor, letteringColor, turn, turnCount);
 		bottom = bBar.getBottomBar();
 		MenuBar menu = new MenuBar();
 		menuBar = menu.getMenuBar();
-		turnCount = 0;
-		turn = 'b';
 		selectedLoc = new BoardLocation();
 	}
 
@@ -121,11 +101,35 @@ public class Hnefatafl {
         }
 		turnCount++;
 		BottomBar.updateTurnInfo(turn, turnCount);
-		winner = GameLogic.checkWinner(pieceLayout);
+		winner = GameLogic.checkWinner();
 		if (winner != '0') {
 			finalMenu = new FinalMenu(winner);
 		}
 		return turnCount;
+    }
+
+    /**
+     * This is a getter that gets whose turn it currently is.
+     * @return This function will return 'b' if it is the attackers turn or 'w' if it is the defenders turn.
+     */
+    public static char getTurn() {
+	    return turn;
+    }
+
+    /**
+     * This is a setter that sets whose turn it currently is when loading a game save.
+     * @param c This parameter is whose turn it left off that when the game was saved.
+     */
+    public static void setTurn(char c) {
+	    turn = c;
+    }
+
+    /**
+     * This is a setter that sets the current turn number when loading a game save.
+     * @param i This parameter is the turn count for the game.
+     */
+    public static void setTurnCount(int i) {
+	    turnCount = i;
     }
 
     /**
@@ -139,7 +143,7 @@ public class Hnefatafl {
 		// highlighting valid moves for the newly chosen piece
 		char chosenSquaresPiece = GameLogic.getPiece(c, r);
 		if (GameLogic.pieceCanMove(chosenSquaresPiece,turn)) {
-			boolean[][] highlight = GameLogic.getValidMoves(chosenSquaresPiece, c, r, pieceLayout);
+			boolean[][] highlight = GameLogic.getValidMoves(chosenSquaresPiece, c, r);
 			for(int i = 0; i < highlight.length; i++){
 				for(int j = 0; j < highlight[0].length; j++){
 					if(highlight[i][j] == true){
@@ -161,8 +165,8 @@ public class Hnefatafl {
      * @param r This parameter is the row they are trying to move to.
      */
 	public static void movePiece(int c, int r){
-        char pieceType = pieceLayout[selectedLoc.getColumn()][selectedLoc.getRow()];
-        boolean[][] validMoves = GameLogic.getValidMoves(pieceType, selectedLoc.getColumn(),selectedLoc.getRow(), pieceLayout);
+        char pieceType = GameLogic.getGameBoardArray()[selectedLoc.getColumn()][selectedLoc.getRow()];
+        boolean[][] validMoves = GameLogic.getValidMoves(pieceType, selectedLoc.getColumn(),selectedLoc.getRow());
 		if(validMoves[c][r] == true){
 			GameLogic.movePieceOnBoard(selectedLoc.getColumn(),selectedLoc.getRow(),c,r);
 			GameBoard.movePieceOnBoard(selectedLoc.getColumn(),selectedLoc.getRow(),c,r,pieceType);
@@ -244,7 +248,7 @@ public class Hnefatafl {
      * @return This function will return true if successful or false in the case of an IOException.
      */
 	public static boolean saveGame(){
-		return SaveAndLoad.save(boardSize, pieceLayout, turn,turnCount);
+		return SaveAndLoad.save(boardSize, GameLogic.getGameBoardArray(), turn,turnCount);
 	}
 
     /**
@@ -286,9 +290,9 @@ public class Hnefatafl {
 		BottomBar bBar = new BottomBar(primaryColor, letteringColor, turn, turnCount);
 		bottom = bBar.getBottomBar();
 		frame.remove(board);
-		hBoard = new GameBoard(boardSize, primaryColor, secondaryColor, specialColor);
+        GameLogic.setStartingPieces(boardSize);
+        hBoard = new GameBoard(boardSize, primaryColor, secondaryColor, specialColor);
 		board = hBoard.getBoard();
-		pieceLayout = GameLogic.getGameBoardArray();
 		frame.add(board, BorderLayout.LINE_START);
 		frame.add(bottom, BorderLayout.SOUTH);
 		frame.pack();

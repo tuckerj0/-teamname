@@ -8,7 +8,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import javax.swing.filechooser.*;
 
-
 /**
  * This class deals with all logic when it comes to saving and loading game files.
  */
@@ -90,6 +89,9 @@ public class SaveAndLoad {
 			if (returnValue == JFileChooser.APPROVE_OPTION) {
 				fileName = fileChooser.getSelectedFile();
 			}
+			else {
+			    return null;
+            }
 			String extension = ""; 									
 			String name = fileName.toString();
 			int i = name.lastIndexOf('.');
@@ -97,7 +99,8 @@ public class SaveAndLoad {
 				extension = name.substring(i + 1);
 			}
 			if(!extension.equals("hnef")){						// checking file extension. Must be .hnef
-				return null;
+                JOptionPane.showMessageDialog(null, "Invalid save file.");
+                return null;
 			}
 			fr = new FileReader(fileName);
 			br = new BufferedReader(fr);
@@ -117,7 +120,8 @@ public class SaveAndLoad {
 				i++;
 			}
 		} catch (IOException e) {
-			return null;
+            JOptionPane.showMessageDialog(null, "Invalid save file.");
+            return null;
 		} finally {
 			try {
 				if (br != null)
@@ -125,14 +129,16 @@ public class SaveAndLoad {
 				if (fr != null)
 					fr.close();
 			} catch (IOException ex) {
-				return null;
+                JOptionPane.showMessageDialog(null, "Invalid save file.");
+                return null;
 			}
 		}
 		if(checkState(savedLayout, savedCurrentTurn, savedTurnCount) == true){
 			return fileName;
 		}
 		else{
-			return null;
+            JOptionPane.showMessageDialog(null, "Invalid save file.");
+            return null;
 		}
 	}
 
@@ -224,7 +230,10 @@ public class SaveAndLoad {
 				return false;
 			}
 		}
-		
+
+		GameLogic.gameBoardArray = pieces;
+		Hnefatafl.setTurn(turn);
+		Hnefatafl.setTurnCount(turnCount);
 		return true;
 	}
 }

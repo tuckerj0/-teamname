@@ -118,39 +118,39 @@ public class GameLogic{
 	 * @return This function returns a boolean array matching the gameboard with true values on all of the spaces a
 	 * piece can move to.
 	 */
-	public static boolean[][] getValidMoves(char piece, int col, int row, char[][] gameBoard){
+	public static boolean[][] getValidMoves(char piece, int col, int row){
 		boolean[][] validSpaces = new boolean[GRID_SIZE][GRID_SIZE];
 		for(int i=col+1; i<GRID_SIZE; i++){//check move right
-			if((gameBoard[i][row] == '0') || (piece == 'k' && gameBoard[i][row] == 'c')){
+			if((gameBoardArray[i][row] == '0') || (piece == 'k' && gameBoardArray[i][row] == 'c')){
 				validSpaces[i][row] = true;
-			} else if (piece != 'k' && gameBoard[i][row] == 'c'){
+			} else if (piece != 'k' && gameBoardArray[i][row] == 'c'){
 				validSpaces[i][row] = false;
 			} else {
 				break;
 			}
 		}
 		for(int i=col-1; i>=0; i--){//check move left
-			if((gameBoard[i][row] == '0') || (piece == 'k' && gameBoard[i][row] == 'c')){
+			if((gameBoardArray[i][row] == '0') || (piece == 'k' && gameBoardArray[i][row] == 'c')){
 				validSpaces[i][row] = true;
-			}else if (piece != 'k' && gameBoard[i][row] == 'c'){
+			}else if (piece != 'k' && gameBoardArray[i][row] == 'c'){
 				validSpaces[i][row] = false;
 			}else{
 				break;
 			}
 		}
 		for(int i=row+1; i<GRID_SIZE; i++){//check move down
-			if((gameBoard[col][i] == '0') || (piece == 'k' && gameBoard[col][i] == 'c')){
+			if((gameBoardArray[col][i] == '0') || (piece == 'k' && gameBoardArray[col][i] == 'c')){
 				validSpaces[col][i] = true;
-			}else if (piece != 'k' && gameBoard[col][i] == 'c'){
+			}else if (piece != 'k' && gameBoardArray[col][i] == 'c'){
 				validSpaces[col][i] = false;
 			}else{
 				break;
 			}
 		}
 		for(int i=row-1; i>=0; i--){//check move up
-			if((gameBoard[col][i] == '0') || (piece == 'k' && gameBoard[col][i] == 'c')){
+			if((gameBoardArray[col][i] == '0') || (piece == 'k' && gameBoardArray[col][i] == 'c')){
 				validSpaces[col][i] = true;
-			}else if (piece != 'k' && gameBoard[col][i] == 'c'){
+			}else if (piece != 'k' && gameBoardArray[col][i] == 'c'){
 			 	validSpaces[col][i] = false;
 			}else{
 				break;
@@ -160,16 +160,16 @@ public class GameLogic{
 	}
 
 	/**
-	 This function checks to see if there is a winner at the end of each turn
+	 * This function checks to see if there is a winner at the end of each turn.
 	 */
-	public static char checkWinner(char[][] gameBoard) {
+	public static char checkWinner() {
         boolean defendersSurrounded = false;
         boolean foundExit = false;
         // Check if king is entirely surrounded
-		for (int i = 1; i < gameBoard.length-1; i++) {
-			for (int j = 1; j < gameBoard.length-1; j++) {
-				if(gameBoard[i][j] == 'k') { // Found the king piece
-					if (gameBoard[i+1][j] == 'b' && gameBoard[i][j+1] == 'b' && gameBoard[i-1][j] == 'b' && gameBoard[i][j-1] == 'b' ) {
+		for (int i = 1; i < gameBoardArray.length-1; i++) {
+			for (int j = 1; j < gameBoardArray.length-1; j++) {
+				if(gameBoardArray[i][j] == 'k') { // Found the king piece
+					if (gameBoardArray[i+1][j] == 'b' && gameBoardArray[i][j+1] == 'b' && gameBoardArray[i-1][j] == 'b' && gameBoardArray[i][j-1] == 'b' ) {
 						// King is entirely surrounded so attackers win
 						return 'b';
 					}
@@ -177,60 +177,60 @@ public class GameLogic{
 			}
 		}
 		// Check Corners for Defenders Win
-		if (gameBoard[0][0] == 'k' || gameBoard[0][10] == 'k' || gameBoard[10][0] == 'k' || gameBoard[10][10] == 'k') {
+		if (gameBoardArray[0][0] == 'k' || gameBoardArray[0][10] == 'k' || gameBoardArray[10][0] == 'k' || gameBoardArray[10][10] == 'k') {
 			// King has reached one of the corners so defenders win
 			return 'w';
 		}
         // Check Left of Throne for Attackers Win
-        if(gameBoard[5][4] == 'k') {
-            if (gameBoard[5][3] == 'b' && gameBoard[4][4] == 'b' && gameBoard[6][4] == 'b') {
+        if(gameBoardArray[5][4] == 'k') {
+            if (gameBoardArray[5][3] == 'b' && gameBoardArray[4][4] == 'b' && gameBoardArray[6][4] == 'b') {
                 // King is surrounded to the left of the throne
                 return 'b';
             }
         }
         // Check Right of Throne for Attackers Win
-        if(gameBoard[5][6] == 'k') {
-            if (gameBoard[5][7] == 'b' && gameBoard[4][6] == 'b' && gameBoard[6][6] == 'b') {
+        if(gameBoardArray[5][6] == 'k') {
+            if (gameBoardArray[5][7] == 'b' && gameBoardArray[4][6] == 'b' && gameBoardArray[6][6] == 'b') {
                 // King is surrounded to the right of the throne
                 return 'b';
             }
         }
         // Check Below Throne for Attackers Win
-        if(gameBoard[6][5] == 'k') {
-            if (gameBoard[7][5] == 'b' && gameBoard[6][4] == 'b' && gameBoard[6][6] == 'b') {
+        if(gameBoardArray[6][5] == 'k') {
+            if (gameBoardArray[7][5] == 'b' && gameBoardArray[6][4] == 'b' && gameBoardArray[6][6] == 'b') {
                 // King is surrounded below the throne
                 return 'b';
             }
         }
         // Check Above Throne for Attackers Win
-        if(gameBoard[4][5] == 'k') {
-            if (gameBoard[3][5] == 'b' && gameBoard[4][4] == 'b' && gameBoard[4][6] == 'b') {
+        if(gameBoardArray[4][5] == 'k') {
+            if (gameBoardArray[3][5] == 'b' && gameBoardArray[4][4] == 'b' && gameBoardArray[4][6] == 'b') {
                 // King is surrounded above the throne
                 return 'b';
             }
         }
         
         // Check if Attackers have entirely surrounded Defenders
-        for (int i = 0; i < gameBoard.length; i++) {
-             for (int j = 0; j < gameBoard.length; j++) {
-                 if(gameBoard[i][j] == 'b') {
+        for (int i = 0; i < gameBoardArray.length; i++) {
+             for (int j = 0; j < gameBoardArray.length; j++) {
+                 if(gameBoardArray[i][j] == 'b') {
                      // Look for another Attacker blocking the Defenders in this column
-                     for (int n = 0; n < gameBoard.length; n++) {
-                         if (gameBoard[n][j] == 'w' || gameBoard[n][j] == 'k')
+                     for (int n = 0; n < gameBoardArray.length; n++) {
+                         if (gameBoardArray[n][j] == 'w' || gameBoardArray[n][j] == 'k')
                              defendersSurrounded = false;
-                         else if (gameBoard[n][j] == 'b')
+                         else if (gameBoardArray[n][j] == 'b')
                              defendersSurrounded = true;
-                         if (defendersSurrounded == false && n == gameBoard.length - 1) {
+                         if (defendersSurrounded == false && n == gameBoardArray.length - 1) {
                              return '0';
                          }
                      }
                      // Look for another Attacker blocking the Defenders in this row
-                     for (int n = 0; n < gameBoard.length; n++) {
-                         if (gameBoard[i][n] == 'w' || gameBoard[i][n] == 'k')
+                     for (int n = 0; n < gameBoardArray.length; n++) {
+                         if (gameBoardArray[i][n] == 'w' || gameBoardArray[i][n] == 'k')
                              defendersSurrounded = false;
-                         else if (gameBoard[n][j] == 'b')
+                         else if (gameBoardArray[n][j] == 'b')
                              defendersSurrounded = true;
-                         if (defendersSurrounded == false && n == gameBoard.length - 1){
+                         if (defendersSurrounded == false && n == gameBoardArray.length - 1){
                              return '0';
                          }
                      }
@@ -260,15 +260,12 @@ public class GameLogic{
 			(startCol==GRID_SIZE-1 && startRow==GRID_SIZE-1) ||
 			(startCol==0 && startRow==GRID_SIZE-1) ||
 			(startCol==GRID_SIZE-1 && startRow==0) || (startCol==5 && startRow==5)) {
-			Hnefatafl.pieceLayout[startCol][startRow] = 'c';
-			GameLogic.updateGameBoard(startCol, startRow, 'c');
+			updateGameBoard(startCol, startRow, 'c');
 
 		}else{
-			Hnefatafl.pieceLayout[startCol][startRow] = '0';
-            GameLogic.updateGameBoard(startCol, startRow, '0');
+            updateGameBoard(startCol, startRow, '0');
         }
-		Hnefatafl.pieceLayout[destCol][destRow] = pieceType;
-        GameLogic.updateGameBoard(destCol, destRow, pieceType);
+        updateGameBoard(destCol, destRow, pieceType);
         findCapturedPieces(pieceType, destCol, destRow);
 	}
 	

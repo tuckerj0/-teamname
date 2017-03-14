@@ -28,11 +28,13 @@ public class ValidMovesTest {
 		pieceLayout[5][6] = pieceLayout[5][7] = pieceLayout[6][4] = pieceLayout[6][5] = pieceLayout[6][6] = pieceLayout[7][5] = 'w';
 		pieceLayout[0][0] = pieceLayout[0][10] = pieceLayout[10][0] = pieceLayout[10][10] = pieceLayout[5][5] = 'c';
 		pieceLayout[5][5] = 'k';
+
+        GameLogic.gameBoardArray = pieceLayout;
 		
 		for (int row = 0; row<boardSize; row++ ) {
 			for (int col = 0; col<boardSize; col++) {
 				
-				validMoves = GameLogic.getValidMoves(piece, row, col, pieceLayout);
+				validMoves = GameLogic.getValidMoves(piece, row, col);
 				
 				for (int i = 0 ; i < boardSize ; i++){
 					for (int j = 0 ; j < boardSize ; j++){
@@ -69,12 +71,14 @@ public class ValidMovesTest {
 		pieceLayout[3][10] = pieceLayout[4][10] = pieceLayout[5][10] = pieceLayout[6][10] = pieceLayout[7][10] = pieceLayout[5][9] = 'b';
 
 		pieceLayout[0][0] = pieceLayout[0][10] = pieceLayout[10][0] = pieceLayout[10][10] = pieceLayout[5][5] = 'c';
-		
+
+        GameLogic.gameBoardArray = pieceLayout;
+
 		for (int pieceType = 0; pieceType < 2; pieceType++){
 			for (int row = 0; row<boardSize; row++ ) {
 				for (int col = 0; col<boardSize; col++) {
 					
-					validMoves = GameLogic.getValidMoves(piece, row, col, pieceLayout);
+					validMoves = GameLogic.getValidMoves(piece, row, col);
 					pieceInWay = false;
 					
 					for (int i = row+1; i < boardSize ; i++){
@@ -117,12 +121,14 @@ public class ValidMovesTest {
 		pieceLayout[3][10] = pieceLayout[4][10] = pieceLayout[5][10] = pieceLayout[6][10] = pieceLayout[7][10] = pieceLayout[5][9] = 'b';
 
 		pieceLayout[0][0] = pieceLayout[0][10] = pieceLayout[10][0] = pieceLayout[10][10] = pieceLayout[5][5] = 'c';
-		
+
+        GameLogic.gameBoardArray = pieceLayout;
+
 		for (int pieceType = 0; pieceType < 2; pieceType++){
 			for (int row = 0; row<boardSize; row++ ) {
 				for (int col = 0; col<boardSize; col++) {
 					
-					validMoves = GameLogic.getValidMoves(piece, row, col, pieceLayout);
+					validMoves = GameLogic.getValidMoves(piece, row, col);
 					pieceInWay = false;
 					
 					for (int i = row-1; i >= 0 ; i--){
@@ -165,12 +171,14 @@ public class ValidMovesTest {
 		pieceLayout[3][10] = pieceLayout[4][10] = pieceLayout[5][10] = pieceLayout[6][10] = pieceLayout[7][10] = pieceLayout[5][9] = 'b';
 
 		pieceLayout[0][0] = pieceLayout[0][10] = pieceLayout[10][0] = pieceLayout[10][10] = pieceLayout[5][5] = 'c';
-		
+
+        GameLogic.gameBoardArray = pieceLayout;
+
 		for (int pieceType = 0; pieceType < 2; pieceType++){
 			for (int row = 0; row<boardSize; row++ ) {
 				for (int col = 0; col<boardSize; col++) {
 					
-					validMoves = GameLogic.getValidMoves(piece, row, col, pieceLayout);
+					validMoves = GameLogic.getValidMoves(piece, row, col);
 					pieceInWay = false;
 					
 					for (int i = col+1; i < boardSize ; i++){
@@ -211,12 +219,14 @@ public class ValidMovesTest {
 		pieceLayout[3][10] = pieceLayout[4][10] = pieceLayout[5][10] = pieceLayout[6][10] = pieceLayout[7][10] = pieceLayout[5][9] = 'b';
 		
 		pieceLayout[0][0] = pieceLayout[0][10] = pieceLayout[10][0] = pieceLayout[10][10] = pieceLayout[5][5] = 'c';
-		
+
+		GameLogic.gameBoardArray = pieceLayout;
+
 		for (int pieceType = 0; pieceType < 2; pieceType++){
 			for (int row = 0; row<boardSize; row++ ) {
 				for (int col = 0; col<boardSize; col++) {
 					
-					validMoves = GameLogic.getValidMoves(piece, row, col, pieceLayout);
+					validMoves = GameLogic.getValidMoves(piece, row, col);
 					pieceInWay = false;
 					
 					for (int i = col-1; i >= 0 ; i--){

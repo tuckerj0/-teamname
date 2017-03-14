@@ -27,7 +27,6 @@ public class GameBoard {
 	Color specialColor; //color of the center and corners
 	private JButton[][] boardSquares;
 	private JPanel board;
-	private char[][] pieceLocations;
 
     /**
      * This is called when creating the game board JPanel.
@@ -41,8 +40,7 @@ public class GameBoard {
 		primaryColor = new Color(pc[0], pc[1], pc[2]);
 		secondaryColor = new Color(sc[0], sc[1], sc[2]);
 		specialColor = new Color(spc[0], spc[1], spc[2]);
-		pieceLocations = GameLogic.setStartingPieces(gridSize);
-		initializeGUI(pieceLocations);
+		initializeGUI(GameLogic.getGameBoardArray());
 	}
 
     /**
@@ -105,12 +103,12 @@ public class GameBoard {
                 } else {
                     b.setBackground(secondaryColor);
                 }
-                boardSquares[j][i] = b;
+                boardSquares[i][j] = b;
             }
         }
 		for (int i = 0; i < gridSize; i++) {
             for (int j = 0; j < gridSize; j++) {
-                board.add(boardSquares[j][i]);
+                board.add(boardSquares[i][j]);
             }
         }
 		return true;
@@ -134,7 +132,8 @@ public class GameBoard {
      * @param col This parameter represents the column of the square.
      * @param row This parameter represents the row of the square.
      */
-	public void unhighlightButton(int col, int row){
+	public void unhighlightButton(int col, int row) {
+        char[][] pieceLocations = GameLogic.getGameBoardArray();
 		if (pieceLocations[col][row] == 'c') {
 		    boardSquares[col][row].setBackground(specialColor);
 
@@ -207,7 +206,7 @@ public class GameBoard {
 			return;
 		}
         char pieceType = pieceLayout[selectedLoc.getColumn()][selectedLoc.getRow()];
-        boolean[][] unhighlight = GameLogic.getValidMoves(pieceType, selectedLoc.getColumn(),selectedLoc.getRow(), pieceLayout);
+        boolean[][] unhighlight = GameLogic.getValidMoves(pieceType, selectedLoc.getColumn(),selectedLoc.getRow());
 		for(int i = 0; i < unhighlight.length; i++){
 			for(int j = 0; j < unhighlight[0].length; j++){
 				if(unhighlight[i][j] == true){
