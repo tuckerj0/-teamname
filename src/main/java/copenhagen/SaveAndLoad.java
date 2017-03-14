@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import javax.swing.filechooser.*;
 
+
 /**
  * This class deals with all logic when it comes to saving and loading game files.
  */
@@ -35,7 +36,15 @@ public class SaveAndLoad {
 			int userSelection = fileChooser.showSaveDialog(parentFrame);
 
 			if (userSelection == JFileChooser.APPROVE_OPTION) {
+				
 				game = fileChooser.getSelectedFile();
+				String filename = game.toString();
+				
+				if(!filename.endsWith(".hnef")){
+					game =  new File(filename + ".hnef");
+				}
+				
+				
 				System.out.println("Save as file: " + game.getAbsolutePath());
 				writer = new PrintWriter(game, "UTF-8");
 				writer.println(turnCount);
