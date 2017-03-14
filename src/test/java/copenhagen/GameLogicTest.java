@@ -182,7 +182,6 @@ public class GameLogicTest {
         assertEquals(actual, expected);
     }
     
-    @Test
     public void testAttackersWinWhenEntirelySurroundDefenders() {
         char expected = 'b';
         char[][] hBoard = new char[11][11];
@@ -199,7 +198,7 @@ public class GameLogicTest {
         
     }
     
-    @Test
+    
     public void testAttackersDoNotWinWhenNotEntirelySurroundDefenders() {
         char expected = '0';
         char[][] hBoard = new char[11][11];

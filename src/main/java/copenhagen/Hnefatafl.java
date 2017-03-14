@@ -196,7 +196,6 @@ public class Hnefatafl {
 
     
 
-	
 
     /**
      * This function sets a new game piece to the selected game piece.
