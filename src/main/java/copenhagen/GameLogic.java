@@ -57,7 +57,6 @@ public class GameLogic{
      * @param row This parameter is the row associated with a piece that is about to be removed.
      */
 	public static void removeCapturedPieces(LinkedList<Integer> col, LinkedList<Integer> row) {
-        GameBoard hBoard = Hnefatafl.getHBoard();
         for (int i = 0; i < col.size(); i++) {
             int c = col.get(i);
             int r = row.get(i);
@@ -215,7 +214,7 @@ public class GameLogic{
         for (int i = 0; i < gameBoard.length; i++) {
              for (int j = 0; j < gameBoard.length; j++) {
                  if(gameBoard[i][j] == 'b') {
-                     // Look for another Attacker blocking the Defenders in this collumn
+                     // Look for another Attacker blocking the Defenders in this column
                      for (int n = 0; n < gameBoard.length; n++) {
                          if (gameBoard[n][j] == 'w' || gameBoard[n][j] == 'k')
                              defendersSurrounded = false;

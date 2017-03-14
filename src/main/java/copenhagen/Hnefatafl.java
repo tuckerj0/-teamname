@@ -16,7 +16,6 @@ package copenhagen;
 
 import java.awt.*;
 import javax.swing.*;
-import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
 import java.io.IOException;
 import java.io.File;
@@ -38,8 +37,7 @@ public class Hnefatafl {
 	private static int turnCount = 1;
 	public static char turn = 'b';
 	private static GameBoard hBoard;
-  private static GameLogic hLogic;
-  private static SideBar sBar;
+  	private static SideBar sBar;
 	private static int[] primaryColor = {244,164,96};
 	private static int[] secondaryColor = {139,69,19};
 	private static int[] letteringColor = {0,0,0};
@@ -178,8 +176,8 @@ public class Hnefatafl {
 
 	/**
      * This function sets the icon of a particular button.
-     * @param pieceType The value of the piece from the characters specified in gameboard.java
-     * @param button The button to add this image to
+     * @param pieceType The value of the piece from the characters specified in GameBoard.java.
+     * @param button The button to add the image to.
      */
 	public static void setButtonImage(char pieceType, JButton button){
 		try {

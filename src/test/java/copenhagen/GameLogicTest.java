@@ -1,4 +1,3 @@
-import copenhagen.GameBoard;
 import copenhagen.GameLogic;
 import copenhagen.Hnefatafl;
 import org.junit.Test;
@@ -78,8 +77,6 @@ public class GameLogicTest {
 		// check each individual position to ensure correct value
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
-				//System.out.println("Expected: " + expected[i][j]);
-				//System.out.println("Actual: " + actual[i][j]);
 				assertEquals(expected[i][j], actual[i][j]);
 			}
 		}
@@ -123,7 +120,7 @@ public class GameLogicTest {
 	}
 
 	@Test
-	public void testAttckersWinWhenSurroundKing() {
+	public void testAttackersWinWhenSurroundKing() {
 		char expected = 'b';
 		char[][] board = new char[11][11];
 		GameLogic gl = new GameLogic();
@@ -136,7 +133,7 @@ public class GameLogicTest {
 
 	}
     @Test
-    public void testAttckersWinWhenSurroundKingLeftOfThrone() {
+    public void testAttackersWinWhenSurroundKingLeftOfThrone() {
         char expected = 'b';
         char[][] hBoard = new char[11][11];
         GameLogic gl = new GameLogic();
@@ -148,7 +145,7 @@ public class GameLogicTest {
     }
     
     @Test
-    public void testAttckersWinWhenSurroundKingRightOfThrone() {
+    public void testAttackersWinWhenSurroundKingRightOfThrone() {
         char expected = 'b';
         char[][] hBoard = new char[11][11];
         GameLogic gl = new GameLogic();
@@ -160,7 +157,7 @@ public class GameLogicTest {
     }
     
     @Test
-    public void testAttckersWinWhenSurroundKingBelowThrone() {
+    public void testAttackersWinWhenSurroundKingBelowThrone() {
         char expected = 'b';
         char[][] hBoard = new char[11][11];
         GameLogic gl = new GameLogic();
@@ -172,7 +169,7 @@ public class GameLogicTest {
     }
     
     @Test
-    public void testAttckersWinWhenSurroundKingAboveThrone() {
+    public void testAttackersWinWhenSurroundKingAboveThrone() {
         char expected = 'b';
         char[][] hBoard = new char[11][11];
         GameLogic gl = new GameLogic();
@@ -213,7 +210,6 @@ public class GameLogicTest {
         hBoard[5][10] = 'k';
         
         char actual = gl.checkWinner(hBoard);
-        System.out.println(actual);
         assertEquals(actual, expected);
     }
     
