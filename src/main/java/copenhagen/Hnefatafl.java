@@ -161,7 +161,7 @@ public class Hnefatafl {
 
     /**
      * This function is called to try and move the selected piece (selectedLoc) if it is a valid move.
-     * @param c This parameter is the column theyp are trying to move to.
+     * @param c This parameter is the column they are trying to move to.
      * @param r This parameter is the row they are trying to move to.
      */
 	public static void movePiece(int c, int r){
@@ -247,8 +247,8 @@ public class Hnefatafl {
      * This function saves the present game state to a save file.
      * @return This function will return true if successful or false in the case of an IOException.
      */
-	public static boolean saveGame(){
-		return SaveAndLoad.save(boardSize, GameLogic.getGameBoardArray(), turn,turnCount);
+	public static boolean saveGame(SaveAndLoad sl) {
+		return sl.save(boardSize, turn, turnCount);
 	}
 
     /**
@@ -256,8 +256,8 @@ public class Hnefatafl {
      * It must have a .hnef extension to be accepted.
      * @return The return value is a boolean representing success or failure
      */
-	public static boolean loadGame(){
-		File loadFile = SaveAndLoad.load();
+	public static boolean loadGame(SaveAndLoad sl) {
+		File loadFile = sl.load();
 		if(loadFile == null){
 			return false;
 		}

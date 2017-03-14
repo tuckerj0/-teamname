@@ -16,12 +16,11 @@ public class SaveAndLoad {
     /**
      * This function saves the present game state to a save file.
      * @param size This parameter is the size of the board.
-     * @param layout This parameter is the layout of the board and where all pieces currently reside.
      * @param turn This parameter is whose turn it currently is.
      * @param turnCount This parameter is the total amount of turns.
      * @return This function will return true if successful or false in the case of an IOException.
      */
-	public static boolean save(int size, char[][] layout, char turn, int turnCount){
+	public boolean save(int size, char turn, int turnCount){
 		PrintWriter writer = null;
 		File game = null;
 		try{
@@ -50,7 +49,7 @@ public class SaveAndLoad {
 				writer.println(turn);
 				for(int i = 0; i < size; i++){
 					for(int j = 0; j < size; j++){
-						writer.print(layout[i][j]);
+						writer.print(GameLogic.gameBoardArray[i][j]);
 					}
 				}
 			}
@@ -74,7 +73,7 @@ public class SaveAndLoad {
      * It must have a .hnef extension to be accepted.
      * @return The file containing game state
      */
-	public static File load(){
+	public File load() {
 		BufferedReader br = null;
 		FileReader fr = null;
 		File fileName = null;

@@ -1,10 +1,8 @@
 import copenhagen.GameLogic;
-import copenhagen.Hnefatafl;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class GameLogicTest {
-
 
 	// This test checks if a piece can move if the piece and turn are white.
 	@Test

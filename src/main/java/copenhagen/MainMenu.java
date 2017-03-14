@@ -64,7 +64,7 @@ public class MainMenu {
      */
     class loadGameListener implements ActionListener {
     	public void actionPerformed(ActionEvent e) {
-            boolean successfulLoad = Hnefatafl.loadGame();
+            boolean successfulLoad = Hnefatafl.loadGame(new SaveAndLoad());
             if (successfulLoad) {
                 _mainMenuFrame.dispose();
                 Hnefatafl.setUpGameBoard();

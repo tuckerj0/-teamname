@@ -104,7 +104,7 @@ public class SideBar {
      */
     private class SaveListener implements ActionListener {
        public void actionPerformed(ActionEvent e) {
-			Hnefatafl.saveGame();
+			Hnefatafl.saveGame(new SaveAndLoad());
 		}
     }
 	/**
@@ -129,7 +129,7 @@ public class SideBar {
      */
 	private class loadListener implements ActionListener {
        public void actionPerformed(ActionEvent e) {
-           boolean successfulLoad = Hnefatafl.loadGame();
+           boolean successfulLoad = Hnefatafl.loadGame(new SaveAndLoad());
            if (successfulLoad) {
                Hnefatafl.setUpGameBoard();
                Hnefatafl.displayGameBoard();
@@ -171,7 +171,7 @@ public class SideBar {
                 int m = JOptionPane.showOptionDialog(exitWindow, (loser + " Forfeit\n\n" + winner + " Win!\n\nWant to save your final game state?"), "Hnefatafl", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, saveOptions, saveOptions[0]);
                 
                 if (m == 0) {
-                    Hnefatafl.saveGame();
+                    Hnefatafl.saveGame(new SaveAndLoad());
                     System.exit(0);
                 }
                 if (m == 1) {
@@ -194,7 +194,7 @@ public class SideBar {
            Object[] options = {"Save", "Don't Save", "Cancel"};
            int n = JOptionPane.showOptionDialog(exitWindow, "Want to save your game progress?", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
            if (n == 0) {
-               Hnefatafl.saveGame();
+               Hnefatafl.saveGame(new SaveAndLoad());
 			   System.exit(0);
            }
            if (n == 1) {
