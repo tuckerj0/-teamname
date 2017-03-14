@@ -5,7 +5,10 @@ import copenhagen.SaveAndLoad;
 
 public class SaveAndLoadTest {
 
-	// This test checks that the checkState function returns true when given valid data.
+	/**
+     * These functions test the checkState function from saveAndLoad
+     *
+     */
 	@Test
     public void testCheckStateIfValid1() {
         String layout = "c00bbbbb00c00000b0000000000000000b0000w0000bb000www000bbb0wwkww0bbb000www000bb0000w0000b0000000000000000b00000c00bbbbb00c";

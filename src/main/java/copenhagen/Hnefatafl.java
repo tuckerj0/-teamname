@@ -79,12 +79,12 @@ public class Hnefatafl {
 		hBoard = new GameBoard(boardSize, primaryColor, secondaryColor, specialColor);
 		board = hBoard.getBoard();
 		pieceLayout = GameLogic.getGameBoardArray();
-    sBar = new SideBar(primaryColor, secondaryColor, letteringColor);
+		sBar = new SideBar(primaryColor, secondaryColor, letteringColor);
 		side = sBar.getSideBar();
 		BottomBar bBar = new BottomBar(primaryColor, letteringColor, turn, turnCount);
 		bottom = bBar.getBottomBar();
-    MenuBar menu = new MenuBar();
-    menuBar = menu.getMenuBar();
+		MenuBar menu = new MenuBar();
+		menuBar = menu.getMenuBar();
 		turnCount = 0;
 		turn = 'b';
 		selectedLoc = new BoardLocation();
