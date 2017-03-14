@@ -30,6 +30,7 @@ public class Hnefatafl {
 	private static JPanel side;
 	private static JPanel bottom;
 	private static JMenuBar menuBar;
+	private static boolean saved = true;
 	private static int boardSize = 11;
 	private static int turnCount = 1;
 	private static char turn = 'b';
@@ -105,6 +106,7 @@ public class Hnefatafl {
 		if (winner != '0') {
 			finalMenu = new FinalMenu(winner);
 		}
+		saved = false;
 		return turnCount;
     }
 
@@ -130,6 +132,14 @@ public class Hnefatafl {
      */
     public static void setTurnCount(int i) {
 	    turnCount = i;
+    }
+
+    /**
+     * This is a getter that gets whether the game was saved already before exiting.
+     * @return This will return true it the game was already saved. Otherwise, false.
+     */
+    public static boolean getSaved() {
+        return saved;
     }
 
     /**
@@ -248,7 +258,8 @@ public class Hnefatafl {
      * @return This function will return true if successful or false in the case of an IOException.
      */
 	public static boolean saveGame(SaveAndLoad sl) {
-		return sl.save(boardSize, turn, turnCount);
+	    saved = sl.save(boardSize, turn, turnCount);
+		return saved;
 	}
 
     /**
@@ -279,6 +290,7 @@ public class Hnefatafl {
 	public static int newGameResetTurns(){
 		turnCount = 1;
 		turn = 'b';
+		saved = true;
 		return turnCount;
 	}
 

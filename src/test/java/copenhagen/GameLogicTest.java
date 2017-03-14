@@ -104,7 +104,7 @@ public class GameLogicTest {
 		assertEquals(expected[0][0], actual[0][0]);
 	}
 
-	// This test checks that the defenders win when the king reaches one of the corners
+	// This test checks that the defenders win when the king reaches one of the corners.
 	@Test
 	public void testDefendersWinWhenKingInCorner() {
 		char expected = 'w';
