@@ -55,6 +55,14 @@ public class Hnefatafl {
 	}
 
     /**
+     * This function disposes of the old UI display of the game when a new game is loaded if a board is already present
+     * on the screen.
+     */
+	public static void removeOldGameBoard() {
+	    frame.dispose();
+    }
+
+    /**
      * This function sets up and retrieves the different pieces (3 JPanels) that comprise the game board.
      */
 	public static void setUpGameBoard() {
