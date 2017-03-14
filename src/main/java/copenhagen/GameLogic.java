@@ -270,6 +270,239 @@ public class GameLogic{
         }
 		Hnefatafl.pieceLayout[destCol][destRow] = pieceType;
         GameLogic.updateGameBoard(destCol, destRow, pieceType);
-        Hnefatafl.findCapturedPieces(pieceType, destCol, destRow);
+        findCapturedPieces(pieceType, destCol, destRow);
 	}
+	
+	/**
+     * This function is called to determine if there is a shieldwall during a move by a piece.
+     * TODO: Refactor this code!
+     * @param piece This is the piece that has been moved.
+     * @param col This is the column of where the piece will be going.
+     * @param row This is the row of where the piece will be going.
+     * @param capturePiece This is the kind of piece that is allowed to be captured.
+     * @param helperPiece This is the kind of piece that helps in a capture:
+     *                     i.e. another black piece if piece == 'b'
+     *                          the king piece if piece == 'w'
+     *                          a white piece if piece == 'k'
+     */
+    private static void findShieldwall(char piece, int col, int row, char capturePiece, char helperPiece) {
+        LinkedList<Integer> capturedPieceCol = new LinkedList<>();
+        LinkedList<Integer> capturedPieceRow = new LinkedList<>();
+        int counter = 0;
+
+        if (col == 0) {
+            if (row <= 7) {
+                for (int i = row+1; i < 11; i++) {
+                    if (gameBoardArray[col][i] == '0') {
+                        break;
+                    }
+                    else if (gameBoardArray[col][i] == capturePiece && (gameBoardArray[col+1][i] == piece || gameBoardArray[col+1][i] == helperPiece)) {
+                        capturedPieceCol.add(col);
+                        capturedPieceRow.add(i);
+                        counter++;
+                    }
+                    else if (gameBoardArray[col][i] == piece || gameBoardArray[col][i] == helperPiece || gameBoardArray[col][i] == 'c') {
+                        if (counter >= 2) {
+                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                        }
+                        break;
+                    }
+                }
+            }
+            if (row >= 3) {
+                for (int i = row-1; i >= 0; i--) {
+                    if (gameBoardArray[col][i] == '0') {
+                        break;
+                    }
+                    else if (gameBoardArray[col][i] == capturePiece && (gameBoardArray[col+1][i] == piece || gameBoardArray[col+1][i] == helperPiece)) {
+                        capturedPieceCol.add(col);
+                        capturedPieceRow.add(i);
+                        counter++;
+                    }
+                    else if (gameBoardArray[col][i] == piece || gameBoardArray[col][i] == helperPiece || gameBoardArray[col][i] == 'c') {
+                        if (counter >= 2) {
+                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (col == GRID_SIZE-1) {
+            if (row <= 7) {
+                for (int i = row+1; i < 11; i++) {
+                    if (gameBoardArray[col][i] == '0') {
+                        break;
+                    }
+                    else if (gameBoardArray[col][i] == capturePiece && (gameBoardArray[col-1][i] == piece || gameBoardArray[col-1][i] == helperPiece)) {
+                        capturedPieceCol.add(col);
+                        capturedPieceRow.add(i);
+                        counter++;
+                    }
+                    else if (gameBoardArray[col][i] == piece || gameBoardArray[col][i] == helperPiece || gameBoardArray[col][i] == 'c') {
+                        if (counter >= 2) {
+                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                        }
+                        break;
+                    }
+                }
+            }
+            if (row >= 3) {
+                for (int i = row-1; i >= 0; i--) {
+                    if (gameBoardArray[col][i] == '0') {
+                        break;
+                    }
+                    else if (gameBoardArray[col][i] == capturePiece && (gameBoardArray[col-1][i] == piece || gameBoardArray[col-1][i] == helperPiece)) {
+                        capturedPieceCol.add(col);
+                        capturedPieceRow.add(i);
+                        counter++;
+                    }
+                    else if (gameBoardArray[col][i] == piece || gameBoardArray[col][i] == helperPiece || gameBoardArray[col][i] == 'c') {
+                        if (counter >= 2) {
+                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (row == 0) {
+            if (col <= 7) {
+                for (int i = col+1; i < 11; i++) {
+                    if (gameBoardArray[i][row] == '0') {
+                        break;
+                    }
+                    else if (gameBoardArray[i][row] == capturePiece && (gameBoardArray[i][row+1] == piece || gameBoardArray[i][row+1] == helperPiece)) {
+                        capturedPieceCol.add(i);
+                        capturedPieceRow.add(row);
+                        counter++;
+                    }
+                    else if (gameBoardArray[i][row] == piece || gameBoardArray[i][row] == helperPiece || gameBoardArray[i][row] == 'c') {
+                        if (counter >= 2) {
+                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                        }
+                        break;
+                    }
+                }
+            }
+            if (col >= 3) {
+                for (int i = col-1; i >= 0; i--) {
+                    if (gameBoardArray[i][row] == '0') {
+                        break;
+                    }
+                    else if (gameBoardArray[i][row] == capturePiece && (gameBoardArray[i][row+1] == piece || gameBoardArray[i][row+1] == helperPiece)) {
+                        capturedPieceCol.add(i);
+                        capturedPieceRow.add(row);
+                        counter++;
+                    }
+                    else if (gameBoardArray[i][row] == piece || gameBoardArray[i][row] == helperPiece || gameBoardArray[i][row] == 'c') {
+                        if (counter >= 2) {
+                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (row == GRID_SIZE-1) {
+            if (col <= 7) {
+                for (int i = col+1; i < 11; i++) {
+                    if (gameBoardArray[i][row] == '0') {
+                        break;
+                    }
+                    else if (gameBoardArray[i][row] == capturePiece && (gameBoardArray[i][row-1] == piece || gameBoardArray[i][row-1] == helperPiece)) {
+                        capturedPieceCol.add(i);
+                        capturedPieceRow.add(row);
+                        counter++;
+                    }
+                    else if (gameBoardArray[i][row] == piece || gameBoardArray[i][row] == helperPiece || gameBoardArray[i][row] == 'c') {
+                        if (counter >= 2) {
+                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                        }
+                        break;
+                    }
+                }
+            }
+            if (col >= 3) {
+                for (int i = col-1; i >= 0; i--) {
+                    if (gameBoardArray[i][row] == '0') {
+                        break;
+                    }
+                    else if (gameBoardArray[i][row] == capturePiece && (gameBoardArray[i][row-1] == piece || gameBoardArray[i][row-1] == helperPiece)) {
+                        capturedPieceCol.add(i);
+                        capturedPieceRow.add(row);
+                        counter++;
+                    }
+                    else if (gameBoardArray[i][row] == piece || gameBoardArray[i][row] == helperPiece || gameBoardArray[i][row] == 'c') {
+                        if (counter >= 2) {
+                            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * This function finds all the pieces that will be captured on the board by the move just completed.
+     * @param piece This parameter is the piece that is getting moved.
+     * @param col This parameter is the column that the piece will be in after it is moved.
+     * @param row This parameter is the row that the piece will be in after it is moved.
+     */
+    public static void findCapturedPieces(char piece, int col, int row) {
+	    char capturablePiece;
+	    char kingPiece = 'b';
+	    char helperPiece;
+	    LinkedList<Integer> capturedPieceCol = new LinkedList<>();
+        LinkedList<Integer> capturedPieceRow = new LinkedList<>();
+	    if (piece == 'b') {
+	        capturablePiece = 'w';
+            kingPiece = 'k';
+            helperPiece = 'b';
+        }
+        else if (piece == 'w'){
+            capturablePiece = 'b';
+            helperPiece = 'k';
+        }
+        else {
+            capturablePiece = 'b';
+            helperPiece = 'w';
+        }
+        if (col-2 >= 0) {
+            if ((gameBoardArray[col - 1][row] == capturablePiece || gameBoardArray[col - 1][row] == kingPiece) && (gameBoardArray[col - 2][row] == piece || gameBoardArray[col - 2][row] == helperPiece || gameBoardArray[col - 2][row] == 'c')) {
+                capturedPieceCol.add(col - 1);
+                capturedPieceRow.add(row);
+            }
+        }
+        if (col+2 <= GRID_SIZE-1) {
+            if ((gameBoardArray[col + 1][row] == capturablePiece || gameBoardArray[col + 1][row] == kingPiece) && (gameBoardArray[col + 2][row] == piece || gameBoardArray[col + 2][row] == helperPiece || gameBoardArray[col + 2][row] == 'c')) {
+                capturedPieceCol.add(col + 1);
+                capturedPieceRow.add(row);
+            }
+        }
+        if (row-2 >= 0) {
+            if ((gameBoardArray[col][row - 1] == capturablePiece || gameBoardArray[col][row - 1] == kingPiece) && (gameBoardArray[col][row - 2] == piece || gameBoardArray[col][row - 2] == helperPiece || gameBoardArray[col][row - 2] == 'c')) {
+                capturedPieceCol.add(col);
+                capturedPieceRow.add(row - 1);
+            }
+        }
+        if (row+2 <= GRID_SIZE-1) {
+            if ((gameBoardArray[col][row + 1] == capturablePiece || gameBoardArray[col][row + 1] == kingPiece) && (gameBoardArray[col][row + 2] == piece || gameBoardArray[col][row + 2] == helperPiece || gameBoardArray[col][row + 2] == 'c')) {
+                capturedPieceCol.add(col);
+                capturedPieceRow.add(row + 1);
+            }
+        }
+        if (!capturedPieceCol.isEmpty()) {
+            removeCapturedPieces(capturedPieceCol, capturedPieceRow);
+	    }
+	    else {
+            if (col == 0 || col == 10 || row == 0 || row == 10) {
+                findShieldwall(piece, col, row, capturablePiece, helperPiece);
+            }
+        }
+    }
 }
