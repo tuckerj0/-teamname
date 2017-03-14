@@ -108,9 +108,6 @@ public class FinalMenu {
 			int n = JOptionPane.showOptionDialog(exitWindow, "Are you sure you want to exit?", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 			if (n == 0) {
 				System.exit(0);
-				//start = new MainMenu();
-				//menuFrame.dispose();
-				//Hnefatafl.frame.dispose();
 			}
 			if (n == 1) {
 				return;

@@ -8,7 +8,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import javax.swing.filechooser.*;
 
-
 /**
  * This class deals with all logic when it comes to saving and loading game files.
  */
@@ -17,12 +16,11 @@ public class SaveAndLoad {
     /**
      * This function saves the present game state to a save file.
      * @param size This parameter is the size of the board.
-     * @param layout This parameter is the layout of the board and where all pieces currently reside.
      * @param turn This parameter is whose turn it currently is.
      * @param turnCount This parameter is the total amount of turns.
      * @return This function will return true if successful or false in the case of an IOException.
      */
-	public static boolean save(int size, char[][] layout, char turn, int turnCount){
+	public boolean save(int size, char turn, int turnCount){
 		PrintWriter writer = null;
 		File game = null;
 		try{
@@ -51,7 +49,7 @@ public class SaveAndLoad {
 				writer.println(turn);
 				for(int i = 0; i < size; i++){
 					for(int j = 0; j < size; j++){
-						writer.print(layout[i][j]);
+						writer.print(GameLogic.gameBoardArray[i][j]);
 					}
 				}
 			}
@@ -75,7 +73,7 @@ public class SaveAndLoad {
      * It must have a .hnef extension to be accepted.
      * @return The file containing game state
      */
-	public static File load(){
+	public File load() {
 		BufferedReader br = null;
 		FileReader fr = null;
 		File fileName = null;
@@ -90,6 +88,9 @@ public class SaveAndLoad {
 			if (returnValue == JFileChooser.APPROVE_OPTION) {
 				fileName = fileChooser.getSelectedFile();
 			}
+			else {
+			    return null;
+            }
 			String extension = ""; 									
 			String name = fileName.toString();
 			int i = name.lastIndexOf('.');
@@ -97,7 +98,8 @@ public class SaveAndLoad {
 				extension = name.substring(i + 1);
 			}
 			if(!extension.equals("hnef")){						// checking file extension. Must be .hnef
-				return null;
+                JOptionPane.showMessageDialog(null, "Invalid save file.");
+                return null;
 			}
 			fr = new FileReader(fileName);
 			br = new BufferedReader(fr);
@@ -117,7 +119,8 @@ public class SaveAndLoad {
 				i++;
 			}
 		} catch (IOException e) {
-			return null;
+            JOptionPane.showMessageDialog(null, "Invalid save file.");
+            return null;
 		} finally {
 			try {
 				if (br != null)
@@ -125,14 +128,16 @@ public class SaveAndLoad {
 				if (fr != null)
 					fr.close();
 			} catch (IOException ex) {
-				return null;
+                JOptionPane.showMessageDialog(null, "Invalid save file.");
+                return null;
 			}
 		}
 		if(checkState(savedLayout, savedCurrentTurn, savedTurnCount) == true){
 			return fileName;
 		}
 		else{
-			return null;
+            JOptionPane.showMessageDialog(null, "Invalid save file.");
+            return null;
 		}
 	}
 
@@ -224,7 +229,10 @@ public class SaveAndLoad {
 				return false;
 			}
 		}
-		
+
+		GameLogic.gameBoardArray = pieces;
+		Hnefatafl.setTurn(turn);
+		Hnefatafl.setTurnCount(turnCount);
 		return true;
 	}
 }

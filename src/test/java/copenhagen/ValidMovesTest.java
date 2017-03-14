@@ -28,11 +28,13 @@ public class ValidMovesTest {
 		pieceLayout[5][6] = pieceLayout[5][7] = pieceLayout[6][4] = pieceLayout[6][5] = pieceLayout[6][6] = pieceLayout[7][5] = 'w';
 		pieceLayout[0][0] = pieceLayout[0][10] = pieceLayout[10][0] = pieceLayout[10][10] = pieceLayout[5][5] = 'c';
 		pieceLayout[5][5] = 'k';
+
+        GameLogic.gameBoardArray = pieceLayout;
 		
 		for (int row = 0; row<boardSize; row++ ) {
 			for (int col = 0; col<boardSize; col++) {
 				
-				validMoves = GameLogic.getValidMoves(piece, row, col, pieceLayout);
+				validMoves = GameLogic.getValidMoves(piece, row, col);
 				
 				for (int i = 0 ; i < boardSize ; i++){
 					for (int j = 0 ; j < boardSize ; j++){
@@ -45,7 +47,23 @@ public class ValidMovesTest {
 		}
 	}
 	
-	
+	public char[][] boardWithoutBlockingCenterSquare() {
+	    char[][] pieceLayout = new char[11][11];
+        for (int i = 0; i < pieceLayout.length; i++) {
+            for (int j = 0; j < pieceLayout[i].length; j++) {
+                pieceLayout[i][j] = '0';
+            }
+        }
+        // Initialize gameboard with initial piece placement but without any pieces blocking the center square to ensure pieces can pass over center square.
+        pieceLayout[0][3] = pieceLayout[0][4] = pieceLayout[0][5] = pieceLayout[0][6] = pieceLayout[0][7] = pieceLayout[1][5] = 'b';
+        pieceLayout[3][0] = pieceLayout[4][0] = pieceLayout[5][0] = pieceLayout[6][0] = pieceLayout[7][0] = pieceLayout[5][1] = 'b';
+        pieceLayout[10][3] = pieceLayout[10][4] = pieceLayout[10][5] = pieceLayout[10][6] = pieceLayout[10][7] = pieceLayout[9][5] = 'b';
+        pieceLayout[3][10] = pieceLayout[4][10] = pieceLayout[5][10] = pieceLayout[6][10] = pieceLayout[7][10] = pieceLayout[5][9] = 'b';
+
+        pieceLayout[0][0] = pieceLayout[0][10] = pieceLayout[10][0] = pieceLayout[10][10] = pieceLayout[5][5] = 'c';
+
+        return pieceLayout;
+    }
 	/**
 	 * This test is to ensure a piece below the piece being moved invalidates all moves to locations beyond the obstacle. It tests all locations on the board with pieces set up in their initial locations.
 	 */
@@ -54,27 +72,16 @@ public class ValidMovesTest {
 		char piece = 'w';
 		int boardSize = 11;
 		boolean pieceInWay = false;
-		char[][] pieceLayout = new char [boardSize][boardSize];
+		char[][] pieceLayout = boardWithoutBlockingCenterSquare();
 		boolean[][] validMoves;
-		
-		for (int i = 0; i < pieceLayout.length; i++) {
-			for (int j = 0; j < pieceLayout[i].length; j++) {
-				pieceLayout[i][j] = '0';
-			}
-		}
-		// Initialize gameboard with initial piece placement but without any pieces blocking the center square to ensure pieces can pass over center square.
-		pieceLayout[0][3] = pieceLayout[0][4] = pieceLayout[0][5] = pieceLayout[0][6] = pieceLayout[0][7] = pieceLayout[1][5] = 'b';
-		pieceLayout[3][0] = pieceLayout[4][0] = pieceLayout[5][0] = pieceLayout[6][0] = pieceLayout[7][0] = pieceLayout[5][1] = 'b';
-		pieceLayout[10][3] = pieceLayout[10][4] = pieceLayout[10][5] = pieceLayout[10][6] = pieceLayout[10][7] = pieceLayout[9][5] = 'b';
-		pieceLayout[3][10] = pieceLayout[4][10] = pieceLayout[5][10] = pieceLayout[6][10] = pieceLayout[7][10] = pieceLayout[5][9] = 'b';
 
-		pieceLayout[0][0] = pieceLayout[0][10] = pieceLayout[10][0] = pieceLayout[10][10] = pieceLayout[5][5] = 'c';
-		
+        GameLogic.gameBoardArray = pieceLayout;
+
 		for (int pieceType = 0; pieceType < 2; pieceType++){
 			for (int row = 0; row<boardSize; row++ ) {
 				for (int col = 0; col<boardSize; col++) {
 					
-					validMoves = GameLogic.getValidMoves(piece, row, col, pieceLayout);
+					validMoves = GameLogic.getValidMoves(piece, row, col);
 					pieceInWay = false;
 					
 					for (int i = row+1; i < boardSize ; i++){
@@ -102,27 +109,16 @@ public class ValidMovesTest {
 		char piece = 'w';
 		int boardSize = 11;
 		boolean pieceInWay = false;
-		char[][] pieceLayout = new char [boardSize][boardSize];
+		char[][] pieceLayout = boardWithoutBlockingCenterSquare();
 		boolean[][] validMoves;
-		
-		for (int i = 0; i < pieceLayout.length; i++) {
-			for (int j = 0; j < pieceLayout[i].length; j++) {
-				pieceLayout[i][j] = '0';
-			}
-		}
-		// Initialize gameboard with initial piece placement but without any pieces blocking the center square to ensure pieces can pass over center square.
-		pieceLayout[0][3] = pieceLayout[0][4] = pieceLayout[0][5] = pieceLayout[0][6] = pieceLayout[0][7] = pieceLayout[1][5] = 'b';
-		pieceLayout[3][0] = pieceLayout[4][0] = pieceLayout[5][0] = pieceLayout[6][0] = pieceLayout[7][0] = pieceLayout[5][1] = 'b';
-		pieceLayout[10][3] = pieceLayout[10][4] = pieceLayout[10][5] = pieceLayout[10][6] = pieceLayout[10][7] = pieceLayout[9][5] = 'b';
-		pieceLayout[3][10] = pieceLayout[4][10] = pieceLayout[5][10] = pieceLayout[6][10] = pieceLayout[7][10] = pieceLayout[5][9] = 'b';
 
-		pieceLayout[0][0] = pieceLayout[0][10] = pieceLayout[10][0] = pieceLayout[10][10] = pieceLayout[5][5] = 'c';
-		
+        GameLogic.gameBoardArray = pieceLayout;
+
 		for (int pieceType = 0; pieceType < 2; pieceType++){
 			for (int row = 0; row<boardSize; row++ ) {
 				for (int col = 0; col<boardSize; col++) {
 					
-					validMoves = GameLogic.getValidMoves(piece, row, col, pieceLayout);
+					validMoves = GameLogic.getValidMoves(piece, row, col);
 					pieceInWay = false;
 					
 					for (int i = row-1; i >= 0 ; i--){
@@ -150,27 +146,16 @@ public class ValidMovesTest {
 		char piece = 'w';
 		int boardSize = 11;
 		boolean pieceInWay = false;
-		char[][] pieceLayout = new char [boardSize][boardSize];
+		char[][] pieceLayout = boardWithoutBlockingCenterSquare();
 		boolean[][] validMoves;
-		
-		for (int i = 0; i < pieceLayout.length; i++) {
-			for (int j = 0; j < pieceLayout[i].length; j++) {
-				pieceLayout[i][j] = '0';
-			}
-		}
-		// Initialize gameboard with initial piece placement but without any pieces blocking the center square to ensure pieces can pass over center square.
-		pieceLayout[0][3] = pieceLayout[0][4] = pieceLayout[0][5] = pieceLayout[0][6] = pieceLayout[0][7] = pieceLayout[1][5] = 'b';
-		pieceLayout[3][0] = pieceLayout[4][0] = pieceLayout[5][0] = pieceLayout[6][0] = pieceLayout[7][0] = pieceLayout[5][1] = 'b';
-		pieceLayout[10][3] = pieceLayout[10][4] = pieceLayout[10][5] = pieceLayout[10][6] = pieceLayout[10][7] = pieceLayout[9][5] = 'b';
-		pieceLayout[3][10] = pieceLayout[4][10] = pieceLayout[5][10] = pieceLayout[6][10] = pieceLayout[7][10] = pieceLayout[5][9] = 'b';
 
-		pieceLayout[0][0] = pieceLayout[0][10] = pieceLayout[10][0] = pieceLayout[10][10] = pieceLayout[5][5] = 'c';
-		
+        GameLogic.gameBoardArray = pieceLayout;
+
 		for (int pieceType = 0; pieceType < 2; pieceType++){
 			for (int row = 0; row<boardSize; row++ ) {
 				for (int col = 0; col<boardSize; col++) {
 					
-					validMoves = GameLogic.getValidMoves(piece, row, col, pieceLayout);
+					validMoves = GameLogic.getValidMoves(piece, row, col);
 					pieceInWay = false;
 					
 					for (int i = col+1; i < boardSize ; i++){
@@ -196,27 +181,16 @@ public class ValidMovesTest {
 		char piece = 'w';
 		int boardSize = 11;
 		boolean pieceInWay = false;
-		char[][] pieceLayout = new char [boardSize][boardSize];
+		char[][] pieceLayout = boardWithoutBlockingCenterSquare();
 		boolean[][] validMoves;
-		
-		for (int i = 0; i < pieceLayout.length; i++) {
-			for (int j = 0; j < pieceLayout[i].length; j++) {
-				pieceLayout[i][j] = '0';
-			}
-		}
-		// Initialize gameboard with initial piece placement but without any pieces blocking the center square to ensure pieces can pass over center square.
-		pieceLayout[0][3] = pieceLayout[0][4] = pieceLayout[0][5] = pieceLayout[0][6] = pieceLayout[0][7] = pieceLayout[1][5] = 'b';
-		pieceLayout[3][0] = pieceLayout[4][0] = pieceLayout[5][0] = pieceLayout[6][0] = pieceLayout[7][0] = pieceLayout[5][1] = 'b';
-		pieceLayout[10][3] = pieceLayout[10][4] = pieceLayout[10][5] = pieceLayout[10][6] = pieceLayout[10][7] = pieceLayout[9][5] = 'b';
-		pieceLayout[3][10] = pieceLayout[4][10] = pieceLayout[5][10] = pieceLayout[6][10] = pieceLayout[7][10] = pieceLayout[5][9] = 'b';
-		
-		pieceLayout[0][0] = pieceLayout[0][10] = pieceLayout[10][0] = pieceLayout[10][10] = pieceLayout[5][5] = 'c';
-		
+
+		GameLogic.gameBoardArray = pieceLayout;
+
 		for (int pieceType = 0; pieceType < 2; pieceType++){
 			for (int row = 0; row<boardSize; row++ ) {
 				for (int col = 0; col<boardSize; col++) {
 					
-					validMoves = GameLogic.getValidMoves(piece, row, col, pieceLayout);
+					validMoves = GameLogic.getValidMoves(piece, row, col);
 					pieceInWay = false;
 					
 					for (int i = col-1; i >= 0 ; i--){

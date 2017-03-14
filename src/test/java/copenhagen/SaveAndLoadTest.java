@@ -7,7 +7,6 @@ public class SaveAndLoadTest {
 
 	/**
      * These functions test the checkState function from saveAndLoad
-     *
      */
 	@Test
     public void testCheckStateIfValid1() {

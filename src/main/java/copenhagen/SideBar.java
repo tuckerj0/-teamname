@@ -11,7 +11,6 @@ import java.awt.Color;
  * button that is contained in the side bar.
  */
 public class SideBar {
-    public boolean gameSaved;   // anytime a move is made in the game, set this this boolean to false
     private static final int buttonWidth = 120;
     private static final int buttonHeight = 40;
     private static final int startEndGap = 60;
@@ -76,7 +75,7 @@ public class SideBar {
 
         concede = new JButton("Forfeit");
         styleButton(concede, midGap);
-	concede.addActionListener(new ConcedeListener());
+	    concede.addActionListener(new ConcedeListener());
 
 
         exit = new JButton("Exit");
@@ -104,7 +103,7 @@ public class SideBar {
      */
     private class SaveListener implements ActionListener {
        public void actionPerformed(ActionEvent e) {
-			Hnefatafl.saveGame();
+			Hnefatafl.saveGame(new SaveAndLoad());
 		}
     }
 	/**
@@ -129,7 +128,11 @@ public class SideBar {
      */
 	private class loadListener implements ActionListener {
        public void actionPerformed(ActionEvent e) {
-		   Hnefatafl.loadGame();
+           boolean successfulLoad = Hnefatafl.loadGame(new SaveAndLoad());
+           if (successfulLoad) {
+               Hnefatafl.setUpGameBoard();
+               Hnefatafl.displayGameBoard();
+           }
        }
     }
 
@@ -142,36 +145,19 @@ public class SideBar {
         }
     }
     /**
-     * This is a button listener for when the forfeit button is clicked and will ask
-     * the user if they want to save his or her game, then exits the program.
+     * This is a button listener for when the forfeit button is clicked and will bring up the final menu if someone
+     * concedes.
      */
     private class ConcedeListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             Object[] forfeitOptions = {"Forfeit", "Don't Forfeit", "Cancel"};
             int n = JOptionPane.showOptionDialog(concedeWindow, "Are you sure you want to forfeit?", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, forfeitOptions, forfeitOptions[0]);
-            String winner;
-            String loser;
             if (n == 0) {
-                char turn = Hnefatafl.turn;
+                char turn = Hnefatafl.getTurn();
                 if (turn == 'w') {
-                    winner = "Attackers";
-                    loser = "Defenders";
+                    new FinalMenu('b');
                 } else {
-                    winner = "Defenders";
-                    loser = "Attackers";
-                }
-                if (gameSaved) {
-                    System.exit(0);
-                }
-                Object[] saveOptions = {"Save", "Don't Save"};
-                int m = JOptionPane.showOptionDialog(exitWindow, (loser + " Forfeit\n\n" + winner + " Win!\n\nWant to save your final game state?"), "Hnefatafl", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, saveOptions, saveOptions[0]);
-                
-                if (m == 0) {
-                    Hnefatafl.saveGame();
-                    System.exit(0);
-                }
-                if (m == 1) {
-                    System.exit(0);
+                    new FinalMenu('w');
                 }
             }
             
@@ -184,13 +170,13 @@ public class SideBar {
      */
      private class ExitListener implements ActionListener {
        public void actionPerformed(ActionEvent e) {
-           if (gameSaved) {
+           if (Hnefatafl.getSaved()) {
                System.exit(0);
            }
            Object[] options = {"Save", "Don't Save", "Cancel"};
            int n = JOptionPane.showOptionDialog(exitWindow, "Want to save your game progress?", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
            if (n == 0) {
-               Hnefatafl.saveGame();
+               Hnefatafl.saveGame(new SaveAndLoad());
 			   System.exit(0);
            }
            if (n == 1) {
