@@ -196,33 +196,7 @@ public class Hnefatafl {
 
     
 
-	/**
-     * This function sets the icon of a particular button.
-     * @param pieceType The value of the piece from the characters specified in GameBoard.java.
-     * @param button The button to add the image to.
-     */
-	public static void setButtonImage(char pieceType, JButton button){
-		try {
-			Image img;
-			ImageIcon icon;
-			if(pieceType == 'b'){
-				img = ImageIO.read(Hnefatafl.class.getResource("images/blackpiece.png"));
-				icon = new ImageIcon(img);
-				button.setIcon(icon);
-			}else if(pieceType == 'w'){
-				img = ImageIO.read(Hnefatafl.class.getResource("images/whitePiece.png"));
-				icon = new ImageIcon(img);
-				button.setIcon(icon);
-			}else if(pieceType == 'k'){
-				img = ImageIO.read(Hnefatafl.class.getResource("images/king.png"));
-				icon = new ImageIcon(img);
-				button.setIcon(icon);
-			}
-		} catch (IOException e) {
-			System.out.println("Image Didn't Load");
-			System.exit(1);
-		}
-	}
+	
 
     /**
      * This function sets a new game piece to the selected game piece.
