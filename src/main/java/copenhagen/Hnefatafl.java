@@ -335,26 +335,50 @@ public class Hnefatafl {
 		return hBoard;
 	}
 
+	/**
+     * This functionss gets the attack piece image address.
+     * @return This function will return the String for the attack piece image address.
+     */
 	public static String getAttackPieceAddr(){
 		return attackPieceAddr;
 	}
 
+	/**
+	 * This functionss gets the defend piece image address.
+	 * @return This function will return the String for the defend piece image address.
+	 */
 	public static String getDefendPieceAddr(){
 		return defendPieceAddr;
 	}
 
+	/**
+     * This functionss gets the king piece image address.
+     * @return This function will return the String for the king piece image address.
+     */
 	public static String getKingPieceAddr(){
 		return kingPieceAddr;
 	}
 
+	/**
+     * This functionss gets the selected attack piece image address.
+     * @return This function will return the String for the selected attack piece image address.
+     */
 	public static String getAttackSelAddr(){
 		return attackSelAddr;
 	}
 
+	/**
+     * This functionss gets the selected defend piece image address.
+     * @return This function will return the String for the selected defend piece image address.
+     */
 	public static String getDefendSelAddr(){
 		return defendSelAddr;
 	}
 
+	/**
+     * This functionss gets the selected king piece image address.
+     * @return This function will return the String for the selected king piece image address.
+     */
 	public static String getKingSelAddr(){
 		return kingSelAddr;
 	}
