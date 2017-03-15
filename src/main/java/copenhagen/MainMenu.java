@@ -15,7 +15,6 @@ public class MainMenu {
     private JButton _loadGameButton = new JButton("Load Saved Game");
     private JButton _howToPlayButton =  new JButton("How to Play");
     private JButton _settingsButton = new JButton("Settings (Not yet working)");
-    private static int boardSize = 11;
 
 
     /**
@@ -52,9 +51,7 @@ public class MainMenu {
     private class newGameListener implements  ActionListener {
         public void actionPerformed(ActionEvent e) {
             _mainMenuFrame.dispose();
-            GameLogic.setStartingPieces(boardSize);
-            Hnefatafl.setUpGameBoard();
-            Hnefatafl.displayGameBoard();
+            new BlackWhiteStart();
         }
     }
 
