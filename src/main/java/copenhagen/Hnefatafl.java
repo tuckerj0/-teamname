@@ -50,12 +50,17 @@ public class Hnefatafl {
 	private static boolean pieceIsSelected = false;
 	private static char winner;
 	private static FinalMenu finalMenu;
-	private static String attackPieceAddr = "images/blackpiece.png";
-	private static String defendPieceAddr = "images/whitepiece.png";
+	private static String blackPieceAddr = "images/blackpiece.png";
+	private static String whitePieceAddr = "images/whitepiece.png";
 	private static String kingPieceAddr = "images/king.png";
-	private static String attackSelAddr = "images/blackpieceSelected.png";
-	private static String defendSelAddr = "images/whitepieceSelected.png";
+	private static String blackSelAddr = "images/blackpieceSelected.png";
+	private static String whiteSelAddr = "images/whitepieceSelected.png";
 	private static String kingSelAddr = "images/kingSelected.png";
+	private static String attackPieceAddr;
+	private static String defendPieceAddr;
+	private static String attackSelAddr;
+	private static String defendSelAddr;
+	private static boolean blackStart = true;
 
     /**
      * This is the main method which starts the program.
@@ -330,7 +335,33 @@ public class Hnefatafl {
 	}
 
 	/**
-     * This functionss gets the attack piece image address.
+	 * This function makes the attack pieces white and the defend pieces black.
+	 */
+	public static void whiteStart(){
+		attackPieceAddr = whitePieceAddr;
+		defendPieceAddr = blackPieceAddr;
+		blackStart = false;
+	}
+
+	/**
+	 * This function makes the attack pieces black and the defend pieces white.
+	 */
+	public static void blackStart(){
+		attackPieceAddr = blackPieceAddr;
+		defendPieceAddr = whitePieceAddr;
+		blackStart = true;
+	}
+
+	/**
+	 * This function gets the boolean for whether the black pieces start/attack.
+	 * @return This function returns the boolean for whether black starts/attacks.
+	 */
+	public static boolean getBlackStartBoolean(){
+		return blackStart;
+	}
+
+	/**
+     * This function gets the attack piece image address.
      * @return This function will return the String for the attack piece image address.
      */
 	public static String getAttackPieceAddr(){
@@ -338,7 +369,7 @@ public class Hnefatafl {
 	}
 
 	/**
-	 * This functionss gets the defend piece image address.
+	 * This function gets the defend piece image address.
 	 * @return This function will return the String for the defend piece image address.
 	 */
 	public static String getDefendPieceAddr(){
@@ -346,7 +377,7 @@ public class Hnefatafl {
 	}
 
 	/**
-     * This functionss gets the king piece image address.
+     * This function gets the king piece image address.
      * @return This function will return the String for the king piece image address.
      */
 	public static String getKingPieceAddr(){
@@ -354,7 +385,7 @@ public class Hnefatafl {
 	}
 
 	/**
-     * This functionss gets the selected attack piece image address.
+     * This function gets the selected attack piece image address.
      * @return This function will return the String for the selected attack piece image address.
      */
 	public static String getAttackSelAddr(){
@@ -362,7 +393,7 @@ public class Hnefatafl {
 	}
 
 	/**
-     * This functionss gets the selected defend piece image address.
+     * This function gets the selected defend piece image address.
      * @return This function will return the String for the selected defend piece image address.
      */
 	public static String getDefendSelAddr(){
@@ -370,7 +401,7 @@ public class Hnefatafl {
 	}
 
 	/**
-     * This functionss gets the selected king piece image address.
+     * This function gets the selected king piece image address.
      * @return This function will return the String for the selected king piece image address.
      */
 	public static String getKingSelAddr(){
