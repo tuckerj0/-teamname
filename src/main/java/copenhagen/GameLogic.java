@@ -9,13 +9,18 @@ import java.util.LinkedList;
  * The char value represents the piece type:
  * '0' for empty
  * 'c' for the throne and the corner squares (the five restricted squares)
- * 'w' for a white piece
- * 'b' for a black piece
+ * 'w' for a defending piece
+ * 'b' for an attacking piece
  * 'k' for the king piece
  */
 public class GameLogic{
     private static int GRID_SIZE = 11;
     public static char[][] gameBoardArray;
+    private static char attackers = 'b';
+	private static char defenders = 'w';
+	private static char king = 'k';
+	private static char empty = '0';
+	private static char restricted = 'c';
 
     /**
      * This function checks whether a piece is allowed to be currently moved.
@@ -23,7 +28,7 @@ public class GameLogic{
      * @return This function will return true if the piece can be moved, else false if it can not be moved.
      */
     public static boolean pieceCanMove(char piece, char turn) {
-        if (piece == turn || (piece == 'k' && turn == 'w')) {
+        if (piece == turn || (piece == king && turn == defenders)) {
             return true;
         } else {
             return false;
@@ -60,12 +65,12 @@ public class GameLogic{
         for (int i = 0; i < col.size(); i++) {
             int c = col.get(i);
             int r = row.get(i);
-            if (getPiece(c,r) == 'k') {
+            if (getPiece(c,r) == king) {
                 // Sandwiching a non-king piece captures it
                 // But the king is only captured if it is surrounded on all 4 (or 3 if the king is on an edge) sides
                 return;
             }
-            gameBoardArray[c][r] = '0';
+            gameBoardArray[c][r] = empty;
             GameBoard.removeCapturedPiecesUI(c,r);
         }
     }
@@ -82,20 +87,20 @@ public class GameLogic{
         //Initialize to null char
         for (int i = 0; i < s.length; i++) {
             for (int j = 0; j < s[i].length; j++) {
-                s[i][j] = '0';
+                s[i][j] = empty;
             }
         }
 
         if (GRID_SIZE==11) {
-            s[0][3] = s[0][4] = s[0][5] = s[0][6] = s[0][7] = s[1][5] = 'b';
-            s[3][0] = s[4][0] = s[5][0] = s[6][0] = s[7][0] = s[5][1] = 'b';
-            s[10][3] = s[10][4] = s[10][5] = s[10][6] = s[10][7] = s[9][5] = 'b';
-            s[3][10] = s[4][10] = s[5][10] = s[6][10] = s[7][10] = s[5][9] = 'b';
+            s[0][3] = s[0][4] = s[0][5] = s[0][6] = s[0][7] = s[1][5] = attackers;
+            s[3][0] = s[4][0] = s[5][0] = s[6][0] = s[7][0] = s[5][1] = attackers;
+            s[10][3] = s[10][4] = s[10][5] = s[10][6] = s[10][7] = s[9][5] = attackers;
+            s[3][10] = s[4][10] = s[5][10] = s[6][10] = s[7][10] = s[5][9] = attackers;
 
-            s[3][5] = s[4][4] = s[4][5] = s[4][6] = s[5][3] = s[5][4] = 'w';
-            s[5][6] = s[5][7] = s[6][4] = s[6][5] = s[6][6] = s[7][5] = 'w';
-            s[0][0] = s[0][10] = s[10][0] = s[10][10] = s[5][5] = 'c';
-            s[5][5] = 'k';
+            s[3][5] = s[4][4] = s[4][5] = s[4][6] = s[5][3] = s[5][4] = defenders;
+            s[5][6] = s[5][7] = s[6][4] = s[6][5] = s[6][6] = s[7][5] = defenders;
+            s[0][0] = s[0][10] = s[10][0] = s[10][10] = s[5][5] = restricted;
+            s[5][5] = king;
         }
         gameBoardArray = s;
         return s;
@@ -121,36 +126,36 @@ public class GameLogic{
 	public static boolean[][] getValidMoves(char piece, int col, int row){
 		boolean[][] validSpaces = new boolean[GRID_SIZE][GRID_SIZE];
 		for(int i=col+1; i<GRID_SIZE; i++){//check move right
-			if((gameBoardArray[i][row] == '0') || (piece == 'k' && gameBoardArray[i][row] == 'c')){
+			if((gameBoardArray[i][row] == empty) || (piece == king && gameBoardArray[i][row] == restricted)){
 				validSpaces[i][row] = true;
-			} else if (piece != 'k' && gameBoardArray[i][row] == 'c'){
+			} else if (piece != king && gameBoardArray[i][row] == restricted){
 				validSpaces[i][row] = false;
 			} else {
 				break;
 			}
 		}
 		for(int i=col-1; i>=0; i--){//check move left
-			if((gameBoardArray[i][row] == '0') || (piece == 'k' && gameBoardArray[i][row] == 'c')){
+			if((gameBoardArray[i][row] == empty) || (piece == king && gameBoardArray[i][row] == restricted)){
 				validSpaces[i][row] = true;
-			}else if (piece != 'k' && gameBoardArray[i][row] == 'c'){
+			}else if (piece != king && gameBoardArray[i][row] == restricted){
 				validSpaces[i][row] = false;
 			}else{
 				break;
 			}
 		}
 		for(int i=row+1; i<GRID_SIZE; i++){//check move down
-			if((gameBoardArray[col][i] == '0') || (piece == 'k' && gameBoardArray[col][i] == 'c')){
+			if((gameBoardArray[col][i] == empty) || (piece == king && gameBoardArray[col][i] == restricted)){
 				validSpaces[col][i] = true;
-			}else if (piece != 'k' && gameBoardArray[col][i] == 'c'){
+			}else if (piece != king && gameBoardArray[col][i] == restricted){
 				validSpaces[col][i] = false;
 			}else{
 				break;
 			}
 		}
 		for(int i=row-1; i>=0; i--){//check move up
-			if((gameBoardArray[col][i] == '0') || (piece == 'k' && gameBoardArray[col][i] == 'c')){
+			if((gameBoardArray[col][i] == empty) || (piece == king && gameBoardArray[col][i] == restricted)){
 				validSpaces[col][i] = true;
-			}else if (piece != 'k' && gameBoardArray[col][i] == 'c'){
+			}else if (piece != king && gameBoardArray[col][i] == restricted){
 			 	validSpaces[col][i] = false;
 			}else{
 				break;
@@ -168,70 +173,70 @@ public class GameLogic{
         // Check if king is entirely surrounded
 		for (int i = 1; i < gameBoardArray.length-1; i++) {
 			for (int j = 1; j < gameBoardArray.length-1; j++) {
-				if(gameBoardArray[i][j] == 'k') { // Found the king piece
-					if (gameBoardArray[i+1][j] == 'b' && gameBoardArray[i][j+1] == 'b' && gameBoardArray[i-1][j] == 'b' && gameBoardArray[i][j-1] == 'b' ) {
+				if(gameBoardArray[i][j] == king) { // Found the king piece
+					if (gameBoardArray[i+1][j] == attackers && gameBoardArray[i][j+1] == attackers && gameBoardArray[i-1][j] == attackers && gameBoardArray[i][j-1] == attackers ) {
 						// King is entirely surrounded so attackers win
-						return 'b';
+						return attackers;
 					}
 				}
 			}
 		}
 		// Check Corners for Defenders Win
-		if (gameBoardArray[0][0] == 'k' || gameBoardArray[0][10] == 'k' || gameBoardArray[10][0] == 'k' || gameBoardArray[10][10] == 'k') {
+		if (gameBoardArray[0][0] == king || gameBoardArray[0][10] == king || gameBoardArray[10][0] == king || gameBoardArray[10][10] == king) {
 			// King has reached one of the corners so defenders win
-			return 'w';
+			return defenders;
 		}
         // Check Left of Throne for Attackers Win
-        if(gameBoardArray[5][4] == 'k') {
-            if (gameBoardArray[5][3] == 'b' && gameBoardArray[4][4] == 'b' && gameBoardArray[6][4] == 'b') {
+        if(gameBoardArray[5][4] == king) {
+            if (gameBoardArray[5][3] == attackers && gameBoardArray[4][4] == attackers && gameBoardArray[6][4] == attackers) {
                 // King is surrounded to the left of the throne
-                return 'b';
+                return attackers;
             }
         }
         // Check Right of Throne for Attackers Win
-        if(gameBoardArray[5][6] == 'k') {
-            if (gameBoardArray[5][7] == 'b' && gameBoardArray[4][6] == 'b' && gameBoardArray[6][6] == 'b') {
+        if(gameBoardArray[5][6] == king) {
+            if (gameBoardArray[5][7] == attackers && gameBoardArray[4][6] == attackers && gameBoardArray[6][6] == attackers) {
                 // King is surrounded to the right of the throne
-                return 'b';
+                return attackers;
             }
         }
         // Check Below Throne for Attackers Win
-        if(gameBoardArray[6][5] == 'k') {
-            if (gameBoardArray[7][5] == 'b' && gameBoardArray[6][4] == 'b' && gameBoardArray[6][6] == 'b') {
+        if(gameBoardArray[6][5] == king) {
+            if (gameBoardArray[7][5] == attackers && gameBoardArray[6][4] == attackers && gameBoardArray[6][6] == attackers) {
                 // King is surrounded below the throne
-                return 'b';
+                return attackers;
             }
         }
         // Check Above Throne for Attackers Win
-        if(gameBoardArray[4][5] == 'k') {
-            if (gameBoardArray[3][5] == 'b' && gameBoardArray[4][4] == 'b' && gameBoardArray[4][6] == 'b') {
+        if(gameBoardArray[4][5] == king) {
+            if (gameBoardArray[3][5] == attackers && gameBoardArray[4][4] == attackers && gameBoardArray[4][6] == attackers) {
                 // King is surrounded above the throne
-                return 'b';
+                return attackers;
             }
         }
-        
+
         // Check if Attackers have entirely surrounded Defenders
         for (int i = 0; i < gameBoardArray.length; i++) {
              for (int j = 0; j < gameBoardArray.length; j++) {
-                 if(gameBoardArray[i][j] == 'b') {
+                 if(gameBoardArray[i][j] == attackers) {
                      // Look for another Attacker blocking the Defenders in this column
                      for (int n = 0; n < gameBoardArray.length; n++) {
-                         if (gameBoardArray[n][j] == 'w' || gameBoardArray[n][j] == 'k')
+                         if (gameBoardArray[n][j] == defenders || gameBoardArray[n][j] == king)
                              defendersSurrounded = false;
-                         else if (gameBoardArray[n][j] == 'b')
+                         else if (gameBoardArray[n][j] == attackers)
                              defendersSurrounded = true;
                          if (defendersSurrounded == false && n == gameBoardArray.length - 1) {
-                             return '0';
+                             return empty;
                          }
                      }
                      // Look for another Attacker blocking the Defenders in this row
                      for (int n = 0; n < gameBoardArray.length; n++) {
-                         if (gameBoardArray[i][n] == 'w' || gameBoardArray[i][n] == 'k')
+                         if (gameBoardArray[i][n] == defenders || gameBoardArray[i][n] == king)
                              defendersSurrounded = false;
-                         else if (gameBoardArray[n][j] == 'b')
+                         else if (gameBoardArray[n][j] == attackers)
                              defendersSurrounded = true;
                          if (defendersSurrounded == false && n == gameBoardArray.length - 1){
-                             return '0';
+                             return empty;
                          }
                      }
                  }
@@ -239,10 +244,10 @@ public class GameLogic{
         }
         // Defenders are entirely surrounded so Attackers win!
         if (!foundExit)
-            return 'b';
-        
+            return attackers;
+
         // There is not a winner yet so continue playing
-		return '0';
+		return empty;
 	}
 
     /**
@@ -260,15 +265,15 @@ public class GameLogic{
 			(startCol==GRID_SIZE-1 && startRow==GRID_SIZE-1) ||
 			(startCol==0 && startRow==GRID_SIZE-1) ||
 			(startCol==GRID_SIZE-1 && startRow==0) || (startCol==5 && startRow==5)) {
-			updateGameBoard(startCol, startRow, 'c');
+			updateGameBoard(startCol, startRow, restricted);
 
 		}else{
-            updateGameBoard(startCol, startRow, '0');
+            updateGameBoard(startCol, startRow, empty);
         }
         updateGameBoard(destCol, destRow, pieceType);
         findCapturedPieces(pieceType, destCol, destRow);
 	}
-	
+
 	/**
      * This function is called to determine if there is a shieldwall during a move by a piece.
      * TODO: Refactor this code!
@@ -277,9 +282,9 @@ public class GameLogic{
      * @param row This is the row of where the piece will be going.
      * @param capturePiece This is the kind of piece that is allowed to be captured.
      * @param helperPiece This is the kind of piece that helps in a capture:
-     *                     i.e. another black piece if piece == 'b'
-     *                          the king piece if piece == 'w'
-     *                          a white piece if piece == 'k'
+     *                     i.e. another black piece if piece is black
+     *                          the king piece if piece == defenders
+     *                          another white piece if piece is white
      */
     private static void findShieldwall(char piece, int col, int row, char capturePiece, char helperPiece) {
         LinkedList<Integer> capturedPieceCol = new LinkedList<>();
@@ -289,7 +294,7 @@ public class GameLogic{
         if (col == 0) {
             if (row <= 7) {
                 for (int i = row+1; i < 11; i++) {
-                    if (gameBoardArray[col][i] == '0') {
+                    if (gameBoardArray[col][i] == empty) {
                         break;
                     }
                     else if (gameBoardArray[col][i] == capturePiece && (gameBoardArray[col+1][i] == piece || gameBoardArray[col+1][i] == helperPiece)) {
@@ -297,7 +302,7 @@ public class GameLogic{
                         capturedPieceRow.add(i);
                         counter++;
                     }
-                    else if (gameBoardArray[col][i] == piece || gameBoardArray[col][i] == helperPiece || gameBoardArray[col][i] == 'c') {
+                    else if (gameBoardArray[col][i] == piece || gameBoardArray[col][i] == helperPiece || gameBoardArray[col][i] == restricted) {
                         if (counter >= 2) {
                             removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
@@ -307,7 +312,7 @@ public class GameLogic{
             }
             if (row >= 3) {
                 for (int i = row-1; i >= 0; i--) {
-                    if (gameBoardArray[col][i] == '0') {
+                    if (gameBoardArray[col][i] == empty) {
                         break;
                     }
                     else if (gameBoardArray[col][i] == capturePiece && (gameBoardArray[col+1][i] == piece || gameBoardArray[col+1][i] == helperPiece)) {
@@ -315,7 +320,7 @@ public class GameLogic{
                         capturedPieceRow.add(i);
                         counter++;
                     }
-                    else if (gameBoardArray[col][i] == piece || gameBoardArray[col][i] == helperPiece || gameBoardArray[col][i] == 'c') {
+                    else if (gameBoardArray[col][i] == piece || gameBoardArray[col][i] == helperPiece || gameBoardArray[col][i] == restricted) {
                         if (counter >= 2) {
                             removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
@@ -328,7 +333,7 @@ public class GameLogic{
         if (col == GRID_SIZE-1) {
             if (row <= 7) {
                 for (int i = row+1; i < 11; i++) {
-                    if (gameBoardArray[col][i] == '0') {
+                    if (gameBoardArray[col][i] == empty) {
                         break;
                     }
                     else if (gameBoardArray[col][i] == capturePiece && (gameBoardArray[col-1][i] == piece || gameBoardArray[col-1][i] == helperPiece)) {
@@ -336,7 +341,7 @@ public class GameLogic{
                         capturedPieceRow.add(i);
                         counter++;
                     }
-                    else if (gameBoardArray[col][i] == piece || gameBoardArray[col][i] == helperPiece || gameBoardArray[col][i] == 'c') {
+                    else if (gameBoardArray[col][i] == piece || gameBoardArray[col][i] == helperPiece || gameBoardArray[col][i] == restricted) {
                         if (counter >= 2) {
                             removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
@@ -346,7 +351,7 @@ public class GameLogic{
             }
             if (row >= 3) {
                 for (int i = row-1; i >= 0; i--) {
-                    if (gameBoardArray[col][i] == '0') {
+                    if (gameBoardArray[col][i] == empty) {
                         break;
                     }
                     else if (gameBoardArray[col][i] == capturePiece && (gameBoardArray[col-1][i] == piece || gameBoardArray[col-1][i] == helperPiece)) {
@@ -354,7 +359,7 @@ public class GameLogic{
                         capturedPieceRow.add(i);
                         counter++;
                     }
-                    else if (gameBoardArray[col][i] == piece || gameBoardArray[col][i] == helperPiece || gameBoardArray[col][i] == 'c') {
+                    else if (gameBoardArray[col][i] == piece || gameBoardArray[col][i] == helperPiece || gameBoardArray[col][i] == restricted) {
                         if (counter >= 2) {
                             removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
@@ -367,7 +372,7 @@ public class GameLogic{
         if (row == 0) {
             if (col <= 7) {
                 for (int i = col+1; i < 11; i++) {
-                    if (gameBoardArray[i][row] == '0') {
+                    if (gameBoardArray[i][row] == empty) {
                         break;
                     }
                     else if (gameBoardArray[i][row] == capturePiece && (gameBoardArray[i][row+1] == piece || gameBoardArray[i][row+1] == helperPiece)) {
@@ -375,7 +380,7 @@ public class GameLogic{
                         capturedPieceRow.add(row);
                         counter++;
                     }
-                    else if (gameBoardArray[i][row] == piece || gameBoardArray[i][row] == helperPiece || gameBoardArray[i][row] == 'c') {
+                    else if (gameBoardArray[i][row] == piece || gameBoardArray[i][row] == helperPiece || gameBoardArray[i][row] == restricted) {
                         if (counter >= 2) {
                             removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
@@ -385,7 +390,7 @@ public class GameLogic{
             }
             if (col >= 3) {
                 for (int i = col-1; i >= 0; i--) {
-                    if (gameBoardArray[i][row] == '0') {
+                    if (gameBoardArray[i][row] == empty) {
                         break;
                     }
                     else if (gameBoardArray[i][row] == capturePiece && (gameBoardArray[i][row+1] == piece || gameBoardArray[i][row+1] == helperPiece)) {
@@ -393,7 +398,7 @@ public class GameLogic{
                         capturedPieceRow.add(row);
                         counter++;
                     }
-                    else if (gameBoardArray[i][row] == piece || gameBoardArray[i][row] == helperPiece || gameBoardArray[i][row] == 'c') {
+                    else if (gameBoardArray[i][row] == piece || gameBoardArray[i][row] == helperPiece || gameBoardArray[i][row] == restricted) {
                         if (counter >= 2) {
                             removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
@@ -406,7 +411,7 @@ public class GameLogic{
         if (row == GRID_SIZE-1) {
             if (col <= 7) {
                 for (int i = col+1; i < 11; i++) {
-                    if (gameBoardArray[i][row] == '0') {
+                    if (gameBoardArray[i][row] == empty) {
                         break;
                     }
                     else if (gameBoardArray[i][row] == capturePiece && (gameBoardArray[i][row-1] == piece || gameBoardArray[i][row-1] == helperPiece)) {
@@ -414,7 +419,7 @@ public class GameLogic{
                         capturedPieceRow.add(row);
                         counter++;
                     }
-                    else if (gameBoardArray[i][row] == piece || gameBoardArray[i][row] == helperPiece || gameBoardArray[i][row] == 'c') {
+                    else if (gameBoardArray[i][row] == piece || gameBoardArray[i][row] == helperPiece || gameBoardArray[i][row] == restricted) {
                         if (counter >= 2) {
                             removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
@@ -424,7 +429,7 @@ public class GameLogic{
             }
             if (col >= 3) {
                 for (int i = col-1; i >= 0; i--) {
-                    if (gameBoardArray[i][row] == '0') {
+                    if (gameBoardArray[i][row] == empty) {
                         break;
                     }
                     else if (gameBoardArray[i][row] == capturePiece && (gameBoardArray[i][row-1] == piece || gameBoardArray[i][row-1] == helperPiece)) {
@@ -432,7 +437,7 @@ public class GameLogic{
                         capturedPieceRow.add(row);
                         counter++;
                     }
-                    else if (gameBoardArray[i][row] == piece || gameBoardArray[i][row] == helperPiece || gameBoardArray[i][row] == 'c') {
+                    else if (gameBoardArray[i][row] == piece || gameBoardArray[i][row] == helperPiece || gameBoardArray[i][row] == restricted) {
                         if (counter >= 2) {
                             removeCapturedPieces(capturedPieceCol, capturedPieceRow);
                         }
@@ -451,43 +456,43 @@ public class GameLogic{
      */
     public static void findCapturedPieces(char piece, int col, int row) {
 	    char capturablePiece;
-	    char kingPiece = 'b';
+	    char kingPiece = attackers;
 	    char helperPiece;
 	    LinkedList<Integer> capturedPieceCol = new LinkedList<>();
         LinkedList<Integer> capturedPieceRow = new LinkedList<>();
-	    if (piece == 'b') {
-	        capturablePiece = 'w';
-            kingPiece = 'k';
-            helperPiece = 'b';
+	    if (piece == attackers) {
+	        capturablePiece = defenders;
+            kingPiece = king;
+            helperPiece = attackers;
         }
-        else if (piece == 'w'){
-            capturablePiece = 'b';
-            helperPiece = 'k';
+        else if (piece == defenders){
+            capturablePiece = attackers;
+            helperPiece = king;
         }
         else {
-            capturablePiece = 'b';
-            helperPiece = 'w';
+            capturablePiece = attackers;
+            helperPiece = defenders;
         }
         if (col-2 >= 0) {
-            if ((gameBoardArray[col - 1][row] == capturablePiece || gameBoardArray[col - 1][row] == kingPiece) && (gameBoardArray[col - 2][row] == piece || gameBoardArray[col - 2][row] == helperPiece || gameBoardArray[col - 2][row] == 'c')) {
+            if ((gameBoardArray[col - 1][row] == capturablePiece || gameBoardArray[col - 1][row] == kingPiece) && (gameBoardArray[col - 2][row] == piece || gameBoardArray[col - 2][row] == helperPiece || gameBoardArray[col - 2][row] == restricted)) {
                 capturedPieceCol.add(col - 1);
                 capturedPieceRow.add(row);
             }
         }
         if (col+2 <= GRID_SIZE-1) {
-            if ((gameBoardArray[col + 1][row] == capturablePiece || gameBoardArray[col + 1][row] == kingPiece) && (gameBoardArray[col + 2][row] == piece || gameBoardArray[col + 2][row] == helperPiece || gameBoardArray[col + 2][row] == 'c')) {
+            if ((gameBoardArray[col + 1][row] == capturablePiece || gameBoardArray[col + 1][row] == kingPiece) && (gameBoardArray[col + 2][row] == piece || gameBoardArray[col + 2][row] == helperPiece || gameBoardArray[col + 2][row] == restricted)) {
                 capturedPieceCol.add(col + 1);
                 capturedPieceRow.add(row);
             }
         }
         if (row-2 >= 0) {
-            if ((gameBoardArray[col][row - 1] == capturablePiece || gameBoardArray[col][row - 1] == kingPiece) && (gameBoardArray[col][row - 2] == piece || gameBoardArray[col][row - 2] == helperPiece || gameBoardArray[col][row - 2] == 'c')) {
+            if ((gameBoardArray[col][row - 1] == capturablePiece || gameBoardArray[col][row - 1] == kingPiece) && (gameBoardArray[col][row - 2] == piece || gameBoardArray[col][row - 2] == helperPiece || gameBoardArray[col][row - 2] == restricted)) {
                 capturedPieceCol.add(col);
                 capturedPieceRow.add(row - 1);
             }
         }
         if (row+2 <= GRID_SIZE-1) {
-            if ((gameBoardArray[col][row + 1] == capturablePiece || gameBoardArray[col][row + 1] == kingPiece) && (gameBoardArray[col][row + 2] == piece || gameBoardArray[col][row + 2] == helperPiece || gameBoardArray[col][row + 2] == 'c')) {
+            if ((gameBoardArray[col][row + 1] == capturablePiece || gameBoardArray[col][row + 1] == kingPiece) && (gameBoardArray[col][row + 2] == piece || gameBoardArray[col][row + 2] == helperPiece || gameBoardArray[col][row + 2] == restricted)) {
                 capturedPieceCol.add(col);
                 capturedPieceRow.add(row + 1);
             }

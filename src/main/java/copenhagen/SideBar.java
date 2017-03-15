@@ -15,6 +15,11 @@ public class SideBar {
     private static final int buttonHeight = 40;
     private static final int startEndGap = 60;
     private static final int midGap = 70;
+    private static char attackers = 'b';
+	private static char defenders = 'w';
+	private static char king = 'k';
+	private static char empty = '0';
+	private static char restricted = 'c';
     private Color primaryColor;
     private Color secondaryColor;
     private Color letteringColor;
@@ -60,7 +65,7 @@ public class SideBar {
         newGame = new JButton("New Game");
         styleButton(newGame, midGap);
 		newGame.addActionListener(new newListener());
-		
+
         saveGame = new JButton("Save Game");
         styleButton(saveGame, midGap);
         saveGame.addActionListener(new SaveListener());
@@ -154,13 +159,13 @@ public class SideBar {
             int n = JOptionPane.showOptionDialog(concedeWindow, "Are you sure you want to forfeit?", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, forfeitOptions, forfeitOptions[0]);
             if (n == 0) {
                 char turn = Hnefatafl.getTurn();
-                if (turn == 'w') {
-                    new FinalMenu('b');
+                if (turn == defenders) {
+                    new FinalMenu(attackers);
                 } else {
-                    new FinalMenu('w');
+                    new FinalMenu(defenders);
                 }
             }
-            
+
         }
     }
 

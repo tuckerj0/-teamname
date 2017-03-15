@@ -13,6 +13,11 @@ public class BottomBar {
     private JPanel bottom;
     private static JLabel turn;
     private static JLabel turnCount;
+    private static char attackers = 'b';
+	private static char defenders = 'w';
+	private static char king = 'k';
+	private static char empty = '0';
+	private static char restricted = 'c';
 
     /**
      * This is called when creating the bottom bar JPanel.
@@ -40,13 +45,13 @@ public class BottomBar {
 
     /**
      * This function displays who is starting based on the parameter given.
-     * @param c This tells which person starts, 'b' denoting black and 'w' denoting white.
+     * @param c This tells which person starts, attackers or defenders
      */
     private void setTurn(char c) {
-        if (c == 'b') {
+        if (c == attackers) {
             turn = new JLabel("Turn: Attackers");
         }
-        else if (c == 'w') {
+        else if (c == defenders) {
             turn = new JLabel("Turn: Defenders");
         }
         turn.setForeground(letteringColor);
@@ -76,10 +81,10 @@ public class BottomBar {
      * @param i This parameter is the current turn number.
      */
     public static void updateTurnInfo(char c, int i) {
-        if (c == 'b') {
+        if (c == attackers) {
             turn.setText("Turn: Attackers");
         }
-        else if (c == 'w') {
+        else if (c == defenders) {
             turn.setText("Turn: Defenders");
         }
         turnCount.setText("Turn Number: " + i);

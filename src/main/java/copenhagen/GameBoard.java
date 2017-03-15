@@ -13,9 +13,9 @@ import java.awt.event.*;
  * the second dimension represents the column.
  * The char value represents the piece type:
  * '0' for empty
- * 'c' for the throne and the corner squares (the five restricted squares)
- * 'w' for a white piece
- * 'b' for a black piece
+ * restricted for the throne and the corner squares (the five restricted squares)
+ * 'w' for a defending piece
+ * 'b' for an attacking piece
  * 'k' for the king piece
  */
 public class GameBoard {
@@ -27,6 +27,11 @@ public class GameBoard {
 	Color specialColor; //color of the center and corners
 	private JButton[][] boardSquares;
 	private JPanel board;
+	private static char attackers = 'b';
+	private static char defenders = 'w';
+	private static char king = 'k';
+	private static char empty = '0';
+	private static char restricted = 'c';
 
     /**
      * This is called when creating the game board JPanel.
@@ -134,7 +139,7 @@ public class GameBoard {
      */
 	public void unhighlightButton(int col, int row) {
         char[][] pieceLocations = GameLogic.getGameBoardArray();
-		if (pieceLocations[col][row] == 'c') {
+		if (pieceLocations[col][row] == restricted) {
 		    boardSquares[col][row].setBackground(specialColor);
 
         }
@@ -165,15 +170,15 @@ public class GameBoard {
 	    try {
 	        Image img;
 	        ImageIcon icon;
-            if (pieceName == 'b') {
+            if (pieceName == attackers) {
                 img = ImageIO.read(getClass().getResource("images/blackpiece.png"));
                 icon = new ImageIcon(img);
                 button.setIcon(icon);
-            } else if (pieceName == 'w') {
+            } else if (pieceName == defenders) {
                 img = ImageIO.read(getClass().getResource("images/whitepiece.png"));
                 icon = new ImageIcon(img);
                 button.setIcon(icon);
-            } else if (pieceName == 'k') {
+            } else if (pieceName == king) {
                 img = ImageIO.read(getClass().getResource("images/king.png"));
                 icon = new ImageIcon(img);
                 button.setIcon(icon);
