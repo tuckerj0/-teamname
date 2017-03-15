@@ -50,6 +50,12 @@ public class Hnefatafl {
 	private static boolean pieceIsSelected = false;
 	private static char winner;
 	private static FinalMenu finalMenu;
+	private static String attackPieceAddr = "images/blackpiece.png";
+	private static String defendPieceAddr = "images/whitepiece.png";
+	private static String kingPieceAddr = "images/king.png";
+	private static String attackSelAddr = "images/blackpieceSelected.png";
+	private static String defendSelAddr = "images/whitepieceSelected.png";
+	private static String kingSelAddr = "images/kingSelected.png";
 
     /**
      * This is the main method which starts the program.
@@ -203,15 +209,15 @@ public class Hnefatafl {
 			Image img;
 			ImageIcon icon;
 			if(pieceType == attackers){
-				img = ImageIO.read(Hnefatafl.class.getResource("images/blackpiece.png"));
+				img = ImageIO.read(Hnefatafl.class.getResource(attackPieceAddr));
 				icon = new ImageIcon(img);
 				button.setIcon(icon);
 			}else if(pieceType == defenders){
-				img = ImageIO.read(Hnefatafl.class.getResource("images/whitePiece.png"));
+				img = ImageIO.read(Hnefatafl.class.getResource(defendPieceAddr));
 				icon = new ImageIcon(img);
 				button.setIcon(icon);
 			}else if(pieceType == king){
-				img = ImageIO.read(Hnefatafl.class.getResource("images/king.png"));
+				img = ImageIO.read(Hnefatafl.class.getResource(kingPieceAddr));
 				icon = new ImageIcon(img);
 				button.setIcon(icon);
 			}
@@ -238,15 +244,15 @@ public class Hnefatafl {
 			ImageIcon icon;
 			pieceIsSelected = true;
 			if(piece == attackers && turn == attackers){
-				img = ImageIO.read(Hnefatafl.class.getResource("images/blackpieceSelected.png"));
+				img = ImageIO.read(Hnefatafl.class.getResource(attackSelAddr));
 				icon = new ImageIcon(img);
 				clickedOn.setIcon(icon);
 			}else if(piece == defenders && turn == defenders){
-				img = ImageIO.read(Hnefatafl.class.getResource("images/whitepieceSelected.png"));
+				img = ImageIO.read(Hnefatafl.class.getResource(defendSelAddr));
 				icon = new ImageIcon(img);
 				clickedOn.setIcon(icon);
 			}else if(piece == king && turn == defenders){
-				img = ImageIO.read(Hnefatafl.class.getResource("images/kingSelected.png"));
+				img = ImageIO.read(Hnefatafl.class.getResource(kingSelAddr));
 				icon = new ImageIcon(img);
 				clickedOn.setIcon(icon);
 			}else{
@@ -316,10 +322,34 @@ public class Hnefatafl {
 	}
 
     /**
-     * This functions gets the HBoard.
+     * This functionss gets the HBoard.
      * @return This function will return the jPanel that is displayed to the user of the current gameboard.
      */
 	public static GameBoard getHBoard(){
 		return hBoard;
+	}
+
+	public static String getAttackPieceAddr(){
+		return attackPieceAddr;
+	}
+
+	public static String getDefendPieceAddr(){
+		return defendPieceAddr;
+	}
+
+	public static String getKingPieceAddr(){
+		return kingPieceAddr;
+	}
+
+	public static String getAttackSelAddr(){
+		return attackSelAddr;
+	}
+
+	public static String getDefendSelAddr(){
+		return defendSelAddr;
+	}
+
+	public static String getKingSelAddr(){
+		return kingSelAddr;
 	}
 }
