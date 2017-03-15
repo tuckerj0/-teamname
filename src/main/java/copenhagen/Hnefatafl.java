@@ -33,7 +33,12 @@ public class Hnefatafl {
 	private static boolean saved = true;
 	private static int boardSize = 11;
 	private static int turnCount = 1;
-	private static char turn = 'b';
+	private static char attackers = 'b';
+	private static char defenders = 'w';
+	private static char king = 'k';
+	private static char empty = '0';
+	private static char restricted = 'c';
+	private static char turn = attackers;
 	private static GameBoard hBoard;
   	private static SideBar sBar;
 	private static int[] primaryColor = {244,164,96};
@@ -102,16 +107,16 @@ public class Hnefatafl {
      * w = white = king and his defenders
      */
 	public static int endTurn() {
-	    if (turn == 'b') {
-	        turn = 'w';
+	    if (turn == attackers) {
+	        turn = defenders;
         }
-        else if (turn == 'w') {
-	        turn = 'b';
+        else if (turn == defenders) {
+	        turn = attackers;
         }
 		turnCount++;
 		BottomBar.updateTurnInfo(turn, turnCount);
 		winner = GameLogic.checkWinner();
-		if (winner != '0') {
+		if (winner != empty) {
 			finalMenu = new FinalMenu(winner);
 		}
 		saved = false;
@@ -120,7 +125,7 @@ public class Hnefatafl {
 
     /**
      * This is a getter that gets whose turn it currently is.
-     * @return This function will return 'b' if it is the attackers turn or 'w' if it is the defenders turn.
+     * @return This function will return 'attackers' if it is the attackers turn or 'defenders' if it is the defenders' turn.
      */
     public static char getTurn() {
 	    return turn;
@@ -171,7 +176,7 @@ public class Hnefatafl {
 			}
 		}
 		// moves piece if appropriate
-		if((chosenSquaresPiece == '0' || chosenSquaresPiece == 'c') && pieceIsSelected){
+		if((chosenSquaresPiece == empty || chosenSquaresPiece == restricted) && pieceIsSelected){
 			movePiece(c,r);
 		}
 		selectNew(clickedOn,c,r);
@@ -194,8 +199,33 @@ public class Hnefatafl {
 		}
 	}
 
-    
-
+	/**
+     * This function sets the icon of a particular button.
+     * @param pieceType The value of the piece from the characters specified in GameBoard.java.
+     * @param button The button to add the image to.
+     */
+	public static void setButtonImage(char pieceType, JButton button){
+		try {
+			Image img;
+			ImageIcon icon;
+			if(pieceType == attackers){
+				img = ImageIO.read(Hnefatafl.class.getResource("images/blackpiece.png"));
+				icon = new ImageIcon(img);
+				button.setIcon(icon);
+			}else if(pieceType == defenders){
+				img = ImageIO.read(Hnefatafl.class.getResource("images/whitePiece.png"));
+				icon = new ImageIcon(img);
+				button.setIcon(icon);
+			}else if(pieceType == king){
+				img = ImageIO.read(Hnefatafl.class.getResource("images/king.png"));
+				icon = new ImageIcon(img);
+				button.setIcon(icon);
+			}
+		} catch (IOException e) {
+			System.out.println("Image Didn't Load");
+			System.exit(1);
+		}
+	}
 
     /**
      * This function sets a new game piece to the selected game piece.
@@ -213,15 +243,15 @@ public class Hnefatafl {
 			Image img;
 			ImageIcon icon;
 			pieceIsSelected = true;
-			if(piece == 'b' && turn == 'b'){
+			if(piece == attackers && turn == attackers){
 				img = ImageIO.read(Hnefatafl.class.getResource("images/blackpieceSelected.png"));
 				icon = new ImageIcon(img);
 				clickedOn.setIcon(icon);
-			}else if(piece == 'w' && turn == 'w'){
+			}else if(piece == defenders && turn == defenders){
 				img = ImageIO.read(Hnefatafl.class.getResource("images/whitepieceSelected.png"));
 				icon = new ImageIcon(img);
 				clickedOn.setIcon(icon);
-			}else if(piece == 'k' && turn == 'w'){
+			}else if(piece == king && turn == defenders){
 				img = ImageIO.read(Hnefatafl.class.getResource("images/kingSelected.png"));
 				icon = new ImageIcon(img);
 				clickedOn.setIcon(icon);
@@ -270,7 +300,7 @@ public class Hnefatafl {
 	 */
 	public static int newGameResetTurns(){
 		turnCount = 1;
-		turn = 'b';
+		turn = attackers;
 		saved = true;
 		return turnCount;
 	}
