@@ -163,8 +163,9 @@ public class GameLogic{
 	 * This function checks to see if there is a winner at the end of each turn.
 	 */
 	public static char checkWinner() {
-        boolean defendersSurrounded = false;
-        boolean foundExit = false;
+        //boolean defendersSurrounded = false;
+        //boolean foundExit = false;
+        
         // Check if king is entirely surrounded
 		for (int i = 1; i < gameBoardArray.length-1; i++) {
 			for (int j = 1; j < gameBoardArray.length-1; j++) {
@@ -210,6 +211,9 @@ public class GameLogic{
             }
         }
         
+        /**
+         Doesn't work correctly
+        
         // Check if Attackers have entirely surrounded Defenders
         for (int i = 0; i < gameBoardArray.length; i++) {
              for (int j = 0; j < gameBoardArray.length; j++) {
@@ -240,6 +244,7 @@ public class GameLogic{
         // Defenders are entirely surrounded so Attackers win!
         if (!foundExit)
             return 'b';
+        */
         
         // There is not a winner yet so continue playing
 		return '0';

@@ -59,7 +59,9 @@ public class GameBoard {
 			}
 		}
 	}
-
+    
+    
+    
     /**
      * This function gets the JButton at a given location in the two dimensional array.
      * @param col This parameter represents the column of the JButton.
@@ -214,8 +216,37 @@ public class GameBoard {
 				}
 			}
 		}
-		Hnefatafl.setButtonImage(pieceType,selected);
+		setButtonImage(pieceType,selected);
 	}
+    
+    /**
+     * This function sets the icon of a particular button.
+     * @param pieceType The value of the piece from the characters specified in GameBoard.java.
+     * @param button The button to add the image to.
+     */
+    public static void setButtonImage(char pieceType, JButton button){
+        try {
+            Image img;
+            ImageIcon icon;
+            if(pieceType == 'b'){
+                img = ImageIO.read(Hnefatafl.class.getResource("images/blackpiece.png"));
+                icon = new ImageIcon(img);
+                button.setIcon(icon);
+            }else if(pieceType == 'w'){
+                img = ImageIO.read(Hnefatafl.class.getResource("images/whitePiece.png"));
+                icon = new ImageIcon(img);
+                button.setIcon(icon);
+            }else if(pieceType == 'k'){
+                img = ImageIO.read(Hnefatafl.class.getResource("images/king.png"));
+                icon = new ImageIcon(img);
+                button.setIcon(icon);
+            }
+        } catch (IOException e) {
+            System.out.println("Image Didn't Load");
+            System.exit(1);
+        }
+    }
+    
 
 	/**
      * This function will remove the gamePiece from a given square
@@ -241,6 +272,6 @@ public class GameBoard {
 		sButton.setIcon(null);
 
 		JButton dButton = hBoard.getButtonByLocation(destCol,destRow);
-		Hnefatafl.setButtonImage(pieceType,dButton);
+		setButtonImage(pieceType,dButton);
 	}
 }
