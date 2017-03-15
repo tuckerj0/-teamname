@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
  * This class is used for displaying the options a user has after a game of hnefatafl has finished.
  */
 public class FinalMenu {
-	
+
 	private JFrame menuFrame;
 	private JFrame exitWindow;
 	private JPanel menu;
@@ -19,67 +19,72 @@ public class FinalMenu {
 	private JLabel text;
 	private JLabel winnerText;
 	private MainMenu start;
-	
+	private static char attackers = 'b';
+	private static char defenders = 'w';
+	private static char king = 'k';
+	private static char empty = '0';
+	private static char restricted = 'c';
+
 	/**
 	 * This function calls a function to create the final menu.
 	 */
 	public FinalMenu(char winningSide) {
 		createMenu(winningSide);
 	}
-	
+
 	/**
 	 * This function creates and displays the final menu after a game has finished.
 	 */
 	private void createMenu(char winningSide) {
 		String winner;
-		if (winningSide == 'w') {
+		if (winningSide == defenders) {
 			winner = "DEFENDERS";
 		} else {
 			winner = "ATTACKERS";
 		}
-		
+
 		menuFrame = new JFrame();
 		menuFrame.setSize(new Dimension(400, 200));
-		
+
 		menu = new JPanel();
 		buttonPanel = new JPanel();
-		
+
 		text = new JLabel("Game Over!\n\n");
 		text.setFont(new Font("Courier", Font.PLAIN, 30));
 		winnerText = new JLabel(winner + " WIN\n\n");
 		winnerText.setFont(new Font("Courier", Font.PLAIN, 40));
-		
+
 		addButtons();
-		
+
 		menu.add(text, BorderLayout.CENTER);
 		menu.add(winnerText, BorderLayout.CENTER);
 		menu.add(buttonPanel, BorderLayout.SOUTH);
 		menuFrame.add(menu, BorderLayout.CENTER);
-		
+
 		showMenu();
-		
+
 	}
 	private void showMenu() {
 		menuFrame.setLocationRelativeTo(null);
 		menuFrame.setVisible(true);
 		menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-	
+
 	private void addButtons() {
 		newGameBtn = new JButton("New Game");
 		newGameBtn.addActionListener(new newListener());
-		
+
 		mainMenuBtn = new JButton("Exit Game");
 		mainMenuBtn.addActionListener(new mainMenuListener());
-		
+
 		buttonPanel.add(newGameBtn);
 		buttonPanel.add(mainMenuBtn);
-		
+
 	}
-	
-	
-	
-	
+
+
+
+
 	/**
 	 *This is a button listener for when the new game button is clicked. It will prompt the user to confirm.
 	 *If the user confirms, it will class a new game function to reset the board and begin a new game.
@@ -95,7 +100,7 @@ public class FinalMenu {
 			if (n == 1) {
 				return;
 			}
-			
+
 		}
 	}
 	/**
@@ -112,7 +117,7 @@ public class FinalMenu {
 			if (n == 1) {
 				return;
 			}
-			
+
 		}
 	}
 }

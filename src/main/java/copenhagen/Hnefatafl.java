@@ -33,7 +33,12 @@ public class Hnefatafl {
 	private static boolean saved = true;
 	private static int boardSize = 11;
 	private static int turnCount = 1;
-	private static char turn = 'b';
+	private static char attackers = 'b';
+	private static char defenders = 'w';
+	private static char king = 'k';
+	private static char empty = '0';
+	private static char restricted = 'c';
+	private static char turn = attackers;
 	private static GameBoard hBoard;
   	private static SideBar sBar;
 	private static int[] primaryColor = {244,164,96};
@@ -45,6 +50,17 @@ public class Hnefatafl {
 	private static boolean pieceIsSelected = false;
 	private static char winner;
 	private static FinalMenu finalMenu;
+	private static String blackPieceAddr = "images/blackpiece.png";
+	private static String whitePieceAddr = "images/whitepiece.png";
+	private static String kingPieceAddr = "images/king.png";
+	private static String blackSelAddr = "images/blackpieceSelected.png";
+	private static String whiteSelAddr = "images/whitepieceSelected.png";
+	private static String kingSelAddr = "images/kingSelected.png";
+	private static String attackPieceAddr = blackPieceAddr;
+	private static String defendPieceAddr = whitePieceAddr;
+	private static String attackSelAddr = blackSelAddr;
+	private static String defendSelAddr = whiteSelAddr;
+	private static boolean blackStart = true;
 
     /**
      * This is the main method which starts the program.
@@ -102,16 +118,16 @@ public class Hnefatafl {
      * w = white = king and his defenders
      */
 	public static int endTurn() {
-	    if (turn == 'b') {
-	        turn = 'w';
+	    if (turn == attackers) {
+	        turn = defenders;
         }
-        else if (turn == 'w') {
-	        turn = 'b';
+        else if (turn == defenders) {
+	        turn = attackers;
         }
 		turnCount++;
 		BottomBar.updateTurnInfo(turn, turnCount);
 		winner = GameLogic.checkWinner();
-		if (winner != '0') {
+		if (winner != empty) {
 			finalMenu = new FinalMenu(winner);
 		}
 		saved = false;
@@ -120,7 +136,7 @@ public class Hnefatafl {
 
     /**
      * This is a getter that gets whose turn it currently is.
-     * @return This function will return 'b' if it is the attackers turn or 'w' if it is the defenders turn.
+     * @return This function will return 'attackers' if it is the attackers turn or 'defenders' if it is the defenders' turn.
      */
     public static char getTurn() {
 	    return turn;
@@ -171,7 +187,7 @@ public class Hnefatafl {
 			}
 		}
 		// moves piece if appropriate
-		if((chosenSquaresPiece == '0' || chosenSquaresPiece == 'c') && pieceIsSelected){
+		if((chosenSquaresPiece == empty || chosenSquaresPiece == restricted) && pieceIsSelected){
 			movePiece(c,r);
 		}
 		selectNew(clickedOn,c,r);
@@ -194,8 +210,33 @@ public class Hnefatafl {
 		}
 	}
 
-    
-
+	/**
+     * This function sets the icon of a particular button.
+     * @param pieceType The value of the piece from the characters specified in GameBoard.java.
+     * @param button The button to add the image to.
+     */
+	public static void setButtonImage(char pieceType, JButton button){
+		try {
+			Image img;
+			ImageIcon icon;
+			if(pieceType == attackers){
+				img = ImageIO.read(Hnefatafl.class.getResource(attackPieceAddr));
+				icon = new ImageIcon(img);
+				button.setIcon(icon);
+			}else if(pieceType == defenders){
+				img = ImageIO.read(Hnefatafl.class.getResource(defendPieceAddr));
+				icon = new ImageIcon(img);
+				button.setIcon(icon);
+			}else if(pieceType == king){
+				img = ImageIO.read(Hnefatafl.class.getResource(kingPieceAddr));
+				icon = new ImageIcon(img);
+				button.setIcon(icon);
+			}
+		} catch (IOException e) {
+			System.out.println("Image Didn't Load");
+			System.exit(1);
+		}
+	}
 
     /**
      * This function sets a new game piece to the selected game piece.
@@ -213,16 +254,16 @@ public class Hnefatafl {
 			Image img;
 			ImageIcon icon;
 			pieceIsSelected = true;
-			if(piece == 'b' && turn == 'b'){
-				img = ImageIO.read(Hnefatafl.class.getResource("images/blackpieceSelected.png"));
+			if(piece == attackers && turn == attackers){
+				img = ImageIO.read(Hnefatafl.class.getResource(attackSelAddr));
 				icon = new ImageIcon(img);
 				clickedOn.setIcon(icon);
-			}else if(piece == 'w' && turn == 'w'){
-				img = ImageIO.read(Hnefatafl.class.getResource("images/whitepieceSelected.png"));
+			}else if(piece == defenders && turn == defenders){
+				img = ImageIO.read(Hnefatafl.class.getResource(defendSelAddr));
 				icon = new ImageIcon(img);
 				clickedOn.setIcon(icon);
-			}else if(piece == 'k' && turn == 'w'){
-				img = ImageIO.read(Hnefatafl.class.getResource("images/kingSelected.png"));
+			}else if(piece == king && turn == defenders){
+				img = ImageIO.read(Hnefatafl.class.getResource(kingSelAddr));
 				icon = new ImageIcon(img);
 				clickedOn.setIcon(icon);
 			}else{
@@ -270,7 +311,7 @@ public class Hnefatafl {
 	 */
 	public static int newGameResetTurns(){
 		turnCount = 1;
-		turn = 'b';
+		turn = attackers;
 		saved = true;
 		return turnCount;
 	}
@@ -292,10 +333,95 @@ public class Hnefatafl {
 	}
 
     /**
-     * This functions gets the HBoard.
+     * This functionss gets the HBoard.
      * @return This function will return the jPanel that is displayed to the user of the current gameboard.
      */
 	public static GameBoard getHBoard(){
 		return hBoard;
+	}
+
+	/**
+	 * This function makes the attack pieces white and the defend pieces black.
+	 */
+	public static void whiteStart(){
+		attackPieceAddr = whitePieceAddr;
+		defendPieceAddr = blackPieceAddr;
+		attackSelAddr = whiteSelAddr;
+		defendSelAddr = blackSelAddr;
+		blackStart = false;
+	}
+
+	/**
+	 * This function makes the attack pieces black and the defend pieces white.
+	 */
+	public static void blackStart(){
+		attackPieceAddr = blackPieceAddr;
+		defendPieceAddr = whitePieceAddr;
+		attackSelAddr = blackSelAddr;
+		defendSelAddr = whiteSelAddr;
+		setBlackStartBoolean(true);
+	}
+
+	/**
+	 * This function sets the boolean for if black starts/attacks
+	 */
+	public static void setBlackStartBoolean(boolean bStart){
+		blackStart = bStart;
+	}
+
+	/**
+	 * This function gets the boolean for whether the black pieces start/attack.
+	 * @return This function returns the boolean for whether black starts/attacks.
+	 */
+	public static boolean getBlackStartBoolean(){
+		return blackStart;
+	}
+
+	/**
+     * This function gets the attack piece image address.
+     * @return This function will return the String for the attack piece image address.
+     */
+	public static String getAttackPieceAddr(){
+		return attackPieceAddr;
+	}
+
+	/**
+	 * This function gets the defend piece image address.
+	 * @return This function will return the String for the defend piece image address.
+	 */
+	public static String getDefendPieceAddr(){
+		return defendPieceAddr;
+	}
+
+	/**
+     * This function gets the king piece image address.
+     * @return This function will return the String for the king piece image address.
+     */
+	public static String getKingPieceAddr(){
+		return kingPieceAddr;
+	}
+
+	/**
+     * This function gets the selected attack piece image address.
+     * @return This function will return the String for the selected attack piece image address.
+     */
+	public static String getAttackSelAddr(){
+		return attackSelAddr;
+	}
+
+	/**
+     * This function gets the selected defend piece image address.
+     * @return This function will return the String for the selected defend piece image address.
+     */
+	public static String getDefendSelAddr(){
+		return defendSelAddr;
+	}
+
+	/**
+     * This function gets the selected king piece image address.
+     * @return This function will return the String for the selected king piece image address.
+     */
+	public static String getKingSelAddr(){
+		return kingSelAddr;
 	}
 }

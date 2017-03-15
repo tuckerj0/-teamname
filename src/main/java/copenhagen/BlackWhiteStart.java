@@ -9,12 +9,12 @@ import java.awt.event.*;
  * (black or white) at the start of a game.  Note: The attacker always gets the first turn.
  */
 public class BlackWhiteStart {
-    JFrame _blackWhiteFrame = new JFrame("Pick a color to start the attack"); // creates frame/window
-    JPanel _blackWhitePanel = new JPanel(); // one single flow panel
-    JButton _blackButton = new JButton("Black");
-    JButton _whiteButton = new JButton("White");
+    private JFrame _blackWhiteFrame = new JFrame("Pick a color to start the attack"); // creates frame/window
+    private JPanel _blackWhitePanel = new JPanel(); // one single flow panel
+    private JButton _blackButton = new JButton("Black");
+    private JButton _whiteButton = new JButton("White");
+    private static int boardSize = 11;
 
-    boolean blackStart;
 
     /**
      * This function will create the JFrame that will ask the user which side they want to go first.
@@ -48,22 +48,28 @@ public class BlackWhiteStart {
     }
 
     /**
-     * This is a button listener for when the _blackButton button is clicked and will set the blackStart boolean to true.
+     * This is a button listener for when the _blackButton button is clicked for the black pieces to start as the attackers.  This is implemented as the default state.
      */
     class BlackListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            blackStart = true;
-            // TODO: Add code to start game
+            Hnefatafl.blackStart();
+            _blackWhiteFrame.dispose();
+            GameLogic.setStartingPieces(boardSize);
+            Hnefatafl.setUpGameBoard();
+            Hnefatafl.displayGameBoard();
         }
     }
 
     /**
-     * This is a button listener for when the _whiteButton button is clicked and will set the blackStart boolean to false.
+     * This is a button listener for when the _whiteButton button is clicked for the white pieces to start as the attackers.
      */
     class WhiteListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            blackStart = false;
-            // TODO: Add code to start game
+            Hnefatafl.whiteStart();
+            _blackWhiteFrame.dispose();
+            GameLogic.setStartingPieces(boardSize);
+            Hnefatafl.setUpGameBoard();
+            Hnefatafl.displayGameBoard();
         }
     }
 }

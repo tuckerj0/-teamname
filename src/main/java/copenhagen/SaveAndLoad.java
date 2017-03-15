@@ -12,6 +12,11 @@ import javax.swing.filechooser.*;
  * This class deals with all logic when it comes to saving and loading game files.
  */
 public class SaveAndLoad {
+	private static char attackers = 'b';
+	private static char defenders = 'w';
+	private static char king = 'k';
+	private static char empty = '0';
+	private static char restricted = 'c';
 
     /**
      * This function saves the present game state to a save file.
@@ -34,19 +39,20 @@ public class SaveAndLoad {
 			int userSelection = fileChooser.showSaveDialog(parentFrame);
 
 			if (userSelection == JFileChooser.APPROVE_OPTION) {
-				
+
 				game = fileChooser.getSelectedFile();
 				String filename = game.toString();
-				
+
 				if(!filename.endsWith(".hnef")){
 					game =  new File(filename + ".hnef");
 				}
-				
-				
+
+
 				System.out.println("Save as file: " + game.getAbsolutePath());
 				writer = new PrintWriter(game, "UTF-8");
 				writer.println(turnCount);
 				writer.println(turn);
+				writer.println(Hnefatafl.getBlackStartBoolean());
 				for(int i = 0; i < size; i++){
 					for(int j = 0; j < size; j++){
 						writer.print(GameLogic.gameBoardArray[i][j]);
@@ -91,7 +97,7 @@ public class SaveAndLoad {
 			else {
 			    return null;
             }
-			String extension = ""; 									
+			String extension = "";
 			String name = fileName.toString();
 			int i = name.lastIndexOf('.');
 			if (i > 0) {
@@ -114,6 +120,16 @@ public class SaveAndLoad {
 					savedCurrentTurn = currentLine.charAt(0);
 				}
 				else if(i == 2){
+					boolean savedBool = Boolean.valueOf(currentLine);
+					Hnefatafl.setBlackStartBoolean(savedBool);
+					if (Hnefatafl.getBlackStartBoolean()) {
+						Hnefatafl.blackStart();
+					}
+					else {
+						Hnefatafl.whiteStart();
+					}
+				}
+				else if(i == 3){
 					savedLayout = currentLine;
 				}
 				i++;
@@ -165,13 +181,13 @@ public class SaveAndLoad {
 		if(turnCount < 1){
 			return false;
 		}
-		
+
 		//check turn
-		if(turn == 'b' || turn == 'w');
+		if(turn == attackers || turn == defenders);
 		else{
 			return false;
 		}
-		
+
 		//count pieces
 		int b = 0;
 		int w = 0;
@@ -180,25 +196,25 @@ public class SaveAndLoad {
 		for(int i = 0; i < size; i++){
 			for(int j = 0; j < size; j++){
 				pieces[i][j] = layout.charAt((i*size)+j);
-				if(pieces[i][j] == 'b'){
+				if(pieces[i][j] == attackers){
 					b++;
 				}
-				else if(pieces[i][j] == 'w'){
+				else if(pieces[i][j] == defenders){
 					w++;
 				}
-				else if(pieces[i][j] == 'k'){
+				else if(pieces[i][j] == king){
 					k++;
 				}
-				else if(pieces[i][j] == 'c'){
+				else if(pieces[i][j] == restricted){
 					c++;
 				}
-				else if(pieces[i][j] == '0');
+				else if(pieces[i][j] == empty);
 				else{
 					return false;
 				}
 			}
 		}
-		
+
 		//check corner tiles
 		if(c != 5 && c != 4){
 			return false;
