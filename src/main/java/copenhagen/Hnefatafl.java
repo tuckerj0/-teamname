@@ -56,10 +56,10 @@ public class Hnefatafl {
 	private static String blackSelAddr = "images/blackpieceSelected.png";
 	private static String whiteSelAddr = "images/whitepieceSelected.png";
 	private static String kingSelAddr = "images/kingSelected.png";
-	private static String attackPieceAddr;
-	private static String defendPieceAddr;
-	private static String attackSelAddr;
-	private static String defendSelAddr;
+	private static String attackPieceAddr = blackPieceAddr;
+	private static String defendPieceAddr = whitePieceAddr;
+	private static String attackSelAddr = blackSelAddr;
+	private static String defendSelAddr = whiteSelAddr;
 	private static boolean blackStart = true;
 
     /**
