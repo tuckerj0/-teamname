@@ -173,15 +173,15 @@ public class GameBoard {
 	        Image img;
 	        ImageIcon icon;
             if (pieceName == attackers) {
-                img = ImageIO.read(getClass().getResource("images/blackpiece.png"));
+                img = ImageIO.read(getClass().getResource(Hnefatafl.getAttackPieceAddr()));
                 icon = new ImageIcon(img);
                 button.setIcon(icon);
             } else if (pieceName == defenders) {
-                img = ImageIO.read(getClass().getResource("images/whitepiece.png"));
+                img = ImageIO.read(getClass().getResource(Hnefatafl.getDefendPieceAddr()));
                 icon = new ImageIcon(img);
                 button.setIcon(icon);
             } else if (pieceName == king) {
-                img = ImageIO.read(getClass().getResource("images/king.png"));
+                img = ImageIO.read(getClass().getResource(Hnefatafl.getKingPieceAddr()));
                 icon = new ImageIcon(img);
                 button.setIcon(icon);
             }
