@@ -340,6 +340,8 @@ public class Hnefatafl {
 	public static void whiteStart(){
 		attackPieceAddr = whitePieceAddr;
 		defendPieceAddr = blackPieceAddr;
+		attackSelAddr = whiteSelAddr;
+		defendSelAddr = blackSelAddr;
 		blackStart = false;
 	}
 
@@ -349,6 +351,8 @@ public class Hnefatafl {
 	public static void blackStart(){
 		attackPieceAddr = blackPieceAddr;
 		defendPieceAddr = whitePieceAddr;
+		attackSelAddr = blackSelAddr;
+		defendSelAddr = whiteSelAddr;
 		setBlackStartBoolean(true);
 	}
 
