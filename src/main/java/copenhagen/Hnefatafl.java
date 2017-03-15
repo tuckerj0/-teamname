@@ -349,7 +349,14 @@ public class Hnefatafl {
 	public static void blackStart(){
 		attackPieceAddr = blackPieceAddr;
 		defendPieceAddr = whitePieceAddr;
-		blackStart = true;
+		setBlackStartBoolean(true);
+	}
+
+	/**
+	 * This function sets the boolean for if black starts/attacks
+	 */
+	public static void setBlackStartBoolean(boolean bStart){
+		blackStart = bStart;
 	}
 
 	/**

@@ -52,6 +52,7 @@ public class SaveAndLoad {
 				writer = new PrintWriter(game, "UTF-8");
 				writer.println(turnCount);
 				writer.println(turn);
+				writer.println(Hnefatafl.getBlackStartBoolean());
 				for(int i = 0; i < size; i++){
 					for(int j = 0; j < size; j++){
 						writer.print(GameLogic.gameBoardArray[i][j]);
@@ -119,6 +120,16 @@ public class SaveAndLoad {
 					savedCurrentTurn = currentLine.charAt(0);
 				}
 				else if(i == 2){
+					boolean savedBool = Boolean.valueOf(currentLine);
+					Hnefatafl.setBlackStartBoolean(savedBool);
+					if (Hnefatafl.getBlackStartBoolean()) {
+						Hnefatafl.blackStart();
+					}
+					else {
+						Hnefatafl.whiteStart();
+					}
+				}
+				else if(i == 3){
 					savedLayout = currentLine;
 				}
 				i++;
