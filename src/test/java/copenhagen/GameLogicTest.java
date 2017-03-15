@@ -104,7 +104,7 @@ public class GameLogicTest {
 		assertEquals(expected[0][0], actual[0][0]);
 	}
 
-	// This test checks that the defenders win when the king reaches one of the corners.
+	// This test checks to see if the defenders win when the king reaches one of the corners.
 	@Test
 	public void testDefendersWinWhenKingInCorner() {
 		char expected = 'w';
@@ -116,7 +116,8 @@ public class GameLogicTest {
 		assertEquals(actual, expected);
 
 	}
-
+    
+    // This test checks to see if the attackers win when the king is surrounded on all 4 adjacent sides.
 	@Test
 	public void testAttackersWinWhenSurroundKing() {
 		char expected = 'b';
@@ -130,6 +131,8 @@ public class GameLogicTest {
 		assertEquals(actual, expected);
 
 	}
+    
+    // This test checks to see if the attackers win when the king is to the one space left of the throne and surrounded on the other 3 sides.
     @Test
     public void testAttackersWinWhenSurroundKingLeftOfThrone() {
         char expected = 'b';
@@ -143,6 +146,7 @@ public class GameLogicTest {
         assertEquals(actual, expected);
     }
     
+    // This test checks to see if the attackers win when the king is to the one space right of the throne and surrounded on the other 3 sides.
     @Test
     public void testAttackersWinWhenSurroundKingRightOfThrone() {
         char expected = 'b';
@@ -156,6 +160,7 @@ public class GameLogicTest {
         assertEquals(actual, expected);
     }
     
+    // This test checks to see if the attackers win when the king is to the one space below of the throne and surrounded on the other 3 sides.
     @Test
     public void testAttackersWinWhenSurroundKingBelowThrone() {
         char expected = 'b';
@@ -169,6 +174,7 @@ public class GameLogicTest {
         assertEquals(actual, expected);
     }
     
+    // This test checks to see if the attackers win when the king is to the one space above of the throne and surrounded on the other 3 sides.
     @Test
     public void testAttackersWinWhenSurroundKingAboveThrone() {
         char expected = 'b';
@@ -182,6 +188,7 @@ public class GameLogicTest {
         assertEquals(actual, expected);
     }
     
+    // This test checks to see if the attackers win when the attackers entirely surround the defenders. That functionality is not implemented yet, so this test not needed.
     public void testAttackersWinWhenEntirelySurroundDefenders() {
         char expected = 'b';
         char[][] hBoard = new char[11][11];
@@ -198,7 +205,7 @@ public class GameLogicTest {
         
     }
     
-    
+    // This test checks to make sure the attackers are not delcared winners when they have not entirely surrounded the defenders. That functionality is not implemented yet, so this test not needed.
     public void testAttackersDoNotWinWhenNotEntirelySurroundDefenders() {
         char expected = '0';
         char[][] hBoard = new char[11][11];
@@ -214,6 +221,7 @@ public class GameLogicTest {
         assertEquals(actual, expected);
     }
     
+    // This test checks to see if white pieces are moved to the correct location and the previous location is reset to be empty.
 	@Test
 	public void testMoveWhitePiece(){
 		char[][] start = new char[11][11];
@@ -224,7 +232,8 @@ public class GameLogicTest {
 		assertEquals(moved[1][1],'0');
 		assertEquals(moved[4][5],'w');
 	}
-
+    
+    // This test checks to see if black pieces are moved to the correct location and the previous location is reset to be empty.
 	@Test
 	public void testMoveBlackPiece(){
 		char[][] start = new char[11][11];
@@ -235,7 +244,8 @@ public class GameLogicTest {
 		assertEquals(moved[8][8],'0');
 		assertEquals(moved[5][1],'b');
 	}
-
+    
+    // This test checks to see if the king piece is moved to the correct location and the previous location is reset to be empty.
 	@Test
 	public void testMoveKingPiece(){
 		char[][] start = new char[11][11];
@@ -246,7 +256,8 @@ public class GameLogicTest {
 		assertEquals(moved[6][8],'0');
 		assertEquals(moved[3][9],'k');
 	}
-
+    
+    // This test checks to see if the king piece is moved to the correct location and the previous location, which is the center, is reset to be an empty special square.
 	@Test
 	public void testMoveFromCenter(){
 		char[][] start = new char[11][11];
@@ -257,7 +268,8 @@ public class GameLogicTest {
 		assertEquals(moved[5][5],'c');
 		assertEquals(moved[4][4],'k');
 	}
-
+    
+    // This test checks to see if the king piece is moved to the correct location and the previous location, which is a corner, is reset to be an empty special square.
 	@Test
 	public void testMoveFromCorner(){
 		char[][] start = new char[11][11];
@@ -267,5 +279,5 @@ public class GameLogicTest {
 		char[][] moved = GameLogic.getGameBoardArray();
 		assertEquals(moved[0][0],'c');
 		assertEquals(moved[7][3],'w');
-	}
+    }
 }
