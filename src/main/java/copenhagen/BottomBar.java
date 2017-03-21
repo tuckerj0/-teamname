@@ -2,8 +2,6 @@ package copenhagen;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * This class is used for anything dealing with the bottom JPanel in the main part of the game, including
@@ -20,11 +18,11 @@ public class BottomBar {
 	private static char king = 'k';
 	private static char empty = '0';
 	private static char restricted = 'c';
-    public static Clock attackersClock;
-    public static Clock defendersClock;
-    public static JLabel attackersTime;
-    public static JLabel defendersTime;
-    private static JFrame frame;
+    private static Clock attackersClock;
+    private static Clock defendersClock;
+    private static JLabel attackersTime;
+    private static JLabel defendersTime;
+    private static CountDownTimer timer;
 
     /**
      * This is called when creating the bottom bar JPanel.
@@ -84,25 +82,15 @@ public class BottomBar {
     }
     
     /**
-     * This function adds the clocks to the bottom panel.
+     * This function adds the clocks to the bottom panel and starts the countdown timer.
      */
     private void addClocks() {
+        attackersClock = new Clock(0,5,0);
+        defendersClock = new Clock(0,5,0);
+        timer = new CountDownTimer();
         
-        
-        attackersClock = new Clock(0,0,3);
-        defendersClock = new Clock(0,0,3);
-        
-        
-        attackersTime = new JLabel(attackersClock.getTime());
-        defendersTime = new JLabel(attackersClock.getTime());
-        
-        attackersTime.setHorizontalAlignment(JLabel.CENTER);
-        attackersTime.setVerticalAlignment(JLabel.CENTER);
-        defendersTime.setHorizontalAlignment(JLabel.CENTER);
-        defendersTime.setVerticalAlignment(JLabel.CENTER);
-        
-        attackersTime.setText("Attackers Time: " + attackersClock.getTime());
-        defendersTime.setText("Defenders Time: " + defendersClock.getTime());
+        attackersTime = attackersClock.formatClock("Attackers");
+        defendersTime = defendersClock.formatClock("Defenders");
         
         bottom.add(Box.createRigidArea(new Dimension(75, 0)));
         bottom.add(attackersTime);
@@ -110,35 +98,10 @@ public class BottomBar {
         bottom.add(defendersTime);
         bottom.add(Box.createRigidArea(new Dimension(75, 0)));
         
-        startTimer();
-        
-        
+        timer.runCountdown(attackersClock, defendersClock, attackersTime, defendersTime);
     }
     
-    public static void startTimer() {
-        Timer t = new java.util.Timer();
-        
-        t.scheduleAtFixedRate(
-                              new TimerTask()
-                              {
-            public void run()
-            {
-                if(Hnefatafl.getTurn() == attackers) {
-                    attackersClock.decr();
-                    attackersTime.setText("Attackers Time: " + attackersClock.getTime());
-                    if (attackersClock.outOfTime()) {
-                        FinalMenu finalMenu = new FinalMenu(defenders);
-                    }
-                } else {
-                    defendersClock.decr();
-                    defendersTime.setText("Defenders Time: " + defendersClock.getTime());
-                    if (defendersClock.outOfTime()) {
-                        FinalMenu finalMenu = new FinalMenu(attackers);
-                    }
-                }
-            }
-        },1000, 1000);  // run every second
-    }
+    
 
     
 
