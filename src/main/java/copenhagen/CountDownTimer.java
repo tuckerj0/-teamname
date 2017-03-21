@@ -26,16 +26,23 @@ public class CountDownTimer {
                     attackersTime.setText("Attackers Time: " + attackersClock.getTime());
                     if (attackersClock.outOfTime()) {
                         FinalMenu finalMenu = new FinalMenu(defenders);
+                        stopCountDown();
                     }
                 } else {
                     defendersClock.decr();
                     defendersTime.setText("Defenders Time: " + defendersClock.getTime());
                     if (defendersClock.outOfTime()) {
                         FinalMenu finalMenu = new FinalMenu(attackers);
+                        stopCountDown();
                     }
                 }
             }
         },1000, 1000);
+    }
+    
+    public void stopCountDown() {
+        t.cancel();
+        t.purge();
     }
 
 }

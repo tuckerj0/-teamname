@@ -101,10 +101,6 @@ public class BottomBar {
         timer.runCountdown(attackersClock, defendersClock, attackersTime, defendersTime);
     }
     
-    
-
-    
-
     /**
      * This function is called whenever a piece is moved to display the switch in turns and update the turn number.
      * @param c This parameter determines whose turn it is.

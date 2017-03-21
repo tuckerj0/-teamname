@@ -15,8 +15,11 @@ public class Clock {
         this.ss = ss;
     }
     
+    /**
+     * This function formats the clock into a JLabel to be displayed on the bottom bar.
+     */
     public JLabel formatClock(String teamName) {
-        clockLabel = new JLabel();
+        clockLabel = new JLabel(getTime());
         clockLabel.setHorizontalAlignment(JLabel.CENTER);
         clockLabel.setVerticalAlignment(JLabel.CENTER);
         clockLabel.setText(teamName + " Time: " + getTime());
@@ -24,10 +27,16 @@ public class Clock {
     
     }
     
+    /**
+     * This function checks if the clock has reached all zeros.
+     */
     public boolean outOfTime() {
         return (hh == 0 && mm == 0 && ss == 0);
     }
     
+    /**
+     * This function decreases the time by one second.
+     */
     public void decr() {
         if (this.mm == 0 && this.ss == 0) {
             this.ss = 59;
@@ -40,7 +49,8 @@ public class Clock {
     }
     
     /**
-     * This function returns the current time
+     * This function returns the current time formatted as a string.
+     * @param fTime the current time formatted as a string
      */
     public String getTime() {
         String fHrs = String.format("%02d", this.hh);
@@ -51,7 +61,7 @@ public class Clock {
     }
     
     /**
-     * This function adds a certain number of seconds to the countdown clock
+     * This function adds a certain number of seconds to the countdown clock.
      * @param secs This is the number of seconds to add to the countdown clock
      */
     public void addSeconds(int secs) {

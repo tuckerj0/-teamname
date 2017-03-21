@@ -171,14 +171,12 @@ public class SideBar {
     }
 
     /**
-     * This is a button listener for when the user exits the game and depending if the game is saved or not, will ask
+     * This is a button listener for when the user exits the game and will ask
      * the user if they want to save his or her game before exiting the program.
      */
      private class ExitListener implements ActionListener {
        public void actionPerformed(ActionEvent e) {
-           if (Hnefatafl.getSaved()) {
-               System.exit(0);
-           }
+           
            Object[] options = {"Save", "Don't Save", "Cancel"};
            int n = JOptionPane.showOptionDialog(exitWindow, "Want to save your game progress?", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
            if (n == 0) {
