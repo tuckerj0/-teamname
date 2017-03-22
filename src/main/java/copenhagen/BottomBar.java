@@ -18,6 +18,11 @@ public class BottomBar {
 	private static char king = 'k';
 	private static char empty = '0';
 	private static char restricted = 'c';
+    private static Clock attackersClock;
+    private static Clock defendersClock;
+    private static JLabel attackersTime;
+    private static JLabel defendersTime;
+    private static CountDownTimer timer;
 
     /**
      * This is called when creating the bottom bar JPanel.
@@ -33,6 +38,7 @@ public class BottomBar {
         setTurn(start);
         setTurnCount(count);
         addLabels();
+        
     }
 
     /**
@@ -71,16 +77,37 @@ public class BottomBar {
      */
     private void addLabels() {
         bottom.add(turn);
-        bottom.add(Box.createRigidArea(new Dimension(300, 0)));
+        addClocks();
         bottom.add(turnCount);
     }
-
+    
+    /**
+     * This function adds the clocks to the bottom panel and starts the countdown timer.
+     */
+    private void addClocks() {
+        attackersClock = new Clock(0,5,0);
+        defendersClock = new Clock(0,5,0);
+        timer = new CountDownTimer();
+        
+        attackersTime = attackersClock.formatClock("Attackers");
+        defendersTime = defendersClock.formatClock("Defenders");
+        
+        bottom.add(Box.createRigidArea(new Dimension(75, 0)));
+        bottom.add(attackersTime);
+        bottom.add(Box.createRigidArea(new Dimension(75, 0)));
+        bottom.add(defendersTime);
+        bottom.add(Box.createRigidArea(new Dimension(75, 0)));
+        
+        timer.runCountdown(attackersClock, defendersClock, attackersTime, defendersTime);
+    }
+    
     /**
      * This function is called whenever a piece is moved to display the switch in turns and update the turn number.
      * @param c This parameter determines whose turn it is.
      * @param i This parameter is the current turn number.
      */
     public static void updateTurnInfo(char c, int i) {
+        updateClock(c);
         if (c == attackers) {
             turn.setText("Turn: Attackers");
         }
@@ -96,5 +123,15 @@ public class BottomBar {
      */
     public JPanel getBottomBar() {
         return bottom;
+    }
+    
+    public static void updateClock(char c) {
+        if(c == defenders) {
+            attackersClock.addSeconds(3);
+            attackersTime.setText("Attackers Time: " + attackersClock.getTime());
+        }else if ( c == attackers){
+            defendersClock.addSeconds(3);
+            defendersTime.setText("Defenders Time: " + defendersClock.getTime());
+        }
     }
 }
