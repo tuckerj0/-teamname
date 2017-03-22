@@ -167,54 +167,13 @@ public class GameLogic{
 	/**
 	 * This function checks to see if there is a winner at the end of each turn.
 	 */
-	public static char checkWinner() {
+	public static char checkWinner(char turn) {
+		if (turn == attackers)
+			return checkAttackWin();
+		else
+			return checkDefendWin();
         //boolean defendersSurrounded = false;
         //boolean foundExit = false;
-
-        // Check if king is entirely surrounded
-		for (int i = 1; i < gameBoardArray.length-1; i++) {
-			for (int j = 1; j < gameBoardArray.length-1; j++) {
-				if(gameBoardArray[i][j] == king) { // Found the king piece
-					if (gameBoardArray[i+1][j] == attackers && gameBoardArray[i][j+1] == attackers && gameBoardArray[i-1][j] == attackers && gameBoardArray[i][j-1] == attackers ) {
-						// King is entirely surrounded so attackers win
-						return attackers;
-					}
-				}
-			}
-		}
-		// Check Corners for Defenders Win
-		if (gameBoardArray[0][0] == king || gameBoardArray[0][10] == king || gameBoardArray[10][0] == king || gameBoardArray[10][10] == king) {
-			// King has reached one of the corners so defenders win
-			return defenders;
-		}
-        // Check Left of Throne for Attackers Win
-        if(gameBoardArray[5][4] == king) {
-            if (gameBoardArray[5][3] == attackers && gameBoardArray[4][4] == attackers && gameBoardArray[6][4] == attackers) {
-                // King is surrounded to the left of the throne
-                return attackers;
-            }
-        }
-        // Check Right of Throne for Attackers Win
-        if(gameBoardArray[5][6] == king) {
-            if (gameBoardArray[5][7] == attackers && gameBoardArray[4][6] == attackers && gameBoardArray[6][6] == attackers) {
-                // King is surrounded to the right of the throne
-                return attackers;
-            }
-        }
-        // Check Below Throne for Attackers Win
-        if(gameBoardArray[6][5] == king) {
-            if (gameBoardArray[7][5] == attackers && gameBoardArray[6][4] == attackers && gameBoardArray[6][6] == attackers) {
-                // King is surrounded below the throne
-                return attackers;
-            }
-        }
-        // Check Above Throne for Attackers Win
-        if(gameBoardArray[4][5] == king) {
-            if (gameBoardArray[3][5] == attackers && gameBoardArray[4][4] == attackers && gameBoardArray[4][6] == attackers) {
-                // King is surrounded above the throne
-                return attackers;
-            }
-        }
 
         /**
          Doesn't work correctly
@@ -252,9 +211,98 @@ public class GameLogic{
         */
 
         // There is not a winner yet so continue playing
+	}
+	/**
+	 * This function checks if the attacking team has won
+	 * @param void
+	 * @return char representing if attackers have won.
+	 */
+	public static char checkAttackWin(){
+		// Check Left of Throne for Attackers Win
+        if(gameBoardArray[5][4] == king) {
+            if (gameBoardArray[5][3] == attackers && gameBoardArray[4][4] == attackers && gameBoardArray[6][4] == attackers) {
+                // King is surrounded to the left of the throne
+                return attackers;
+            }
+        }
+        // Check Right of Throne for Attackers Win
+        if(gameBoardArray[5][6] == king) {
+            if (gameBoardArray[5][7] == attackers && gameBoardArray[4][6] == attackers && gameBoardArray[6][6] == attackers) {
+                // King is surrounded to the right of the throne
+                return attackers;
+            }
+        }
+        // Check Below Throne for Attackers Win
+        if(gameBoardArray[6][5] == king) {
+            if (gameBoardArray[7][5] == attackers && gameBoardArray[6][4] == attackers && gameBoardArray[6][6] == attackers) {
+                // King is surrounded below the throne
+                return attackers;
+            }
+        }
+        // Check Above Throne for Attackers Win
+        if(gameBoardArray[4][5] == king) {
+            if (gameBoardArray[3][5] == attackers && gameBoardArray[4][4] == attackers && gameBoardArray[4][6] == attackers) {
+                // King is surrounded above the throne
+                return attackers;
+            }
+        }
+		for (int i = 1; i < gameBoardArray.length-1; i++) {
+			for (int j = 1; j < gameBoardArray.length-1; j++) {
+				if(gameBoardArray[i][j] == king) { // Found the king piece
+					if (gameBoardArray[i+1][j] == attackers && gameBoardArray[i][j+1] == attackers && gameBoardArray[i-1][j] == attackers && gameBoardArray[i][j-1] == attackers ) {
+						// King is entirely surrounded so attackers win
+						return attackers;
+					}
+				}
+			}
+		}
+		if(checkEncircled()){
+			return attackers;
+		}
 		return empty;
 	}
-
+	/**
+	 * This function checks if the defending team has won
+	 * @param void
+	 * @return char representing if defenders have won.
+	 */
+	public static char checkDefendWin(){
+		// Check Corners for Defenders Win
+		if (gameBoardArray[0][0] == king || gameBoardArray[0][10] == king || gameBoardArray[10][0] == king || gameBoardArray[10][10] == king) {
+			// King has reached one of the corners so defenders win
+			return defenders;
+		}
+		return empty;
+	}
+	/**
+	 * This function checks if the defending team is encircled.
+	 * @param void
+	 * @return boolean representing encirclement. Ture if encircled, false if not.
+	 */
+	public static boolean checkEncircled(){
+		char[][] circle = findCircle();
+		if(circle == null){
+			return false;
+		}
+		for(int i = 0; i < GRID_SIZE - 1; i++){
+			for(int j = 0; j < GRID_SIZE - 1; j++){
+				
+				
+			}
+		}
+		return false;
+	}
+	/**
+	 * This function checks if the attacking team has made a full circle
+	 * @param void
+	 * @return 2D char array representation of circle. Null if no circle was found;
+	 */
+	public static char[][] findCircle(){
+		char[][] circle = new char[GRID_SIZE][GRID_SIZE];
+		
+		return circle;
+	}
+	
     /**
      * This is the function that does the actual work from moving a game piece from its original starting row and column
      * to its new row and column.

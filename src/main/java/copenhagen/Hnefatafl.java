@@ -118,6 +118,7 @@ public class Hnefatafl {
      * w = white = king and his defenders
      */
 	public static int endTurn() {
+		winner = GameLogic.checkWinner(turn);
 	    if (turn == attackers) {
 	        turn = defenders;
         }
@@ -126,7 +127,6 @@ public class Hnefatafl {
         }
 		turnCount++;
 		BottomBar.updateTurnInfo(turn, turnCount);
-		winner = GameLogic.checkWinner();
 		if (winner != empty) {
 			finalMenu = new FinalMenu(winner);
 		}
