@@ -237,7 +237,7 @@ public class GameBoard {
                 img = ImageIO.read(Hnefatafl.class.getResource(Hnefatafl.getAttackPieceAddr()));
                 icon = new ImageIcon(img);
                 button.setIcon(icon);
-            }else if(pieceType == defendPieceAddr){
+            }else if(pieceType == defenders){
                 img = ImageIO.read(Hnefatafl.class.getResource(Hnefatafl.getDefendPieceAddr()));
                 icon = new ImageIcon(img);
                 button.setIcon(icon);
