@@ -89,7 +89,7 @@ public class MainMenu {
      */
     class settingsListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            // TODO:  Add functionality
+            new Settings();
         }
     }
 }
