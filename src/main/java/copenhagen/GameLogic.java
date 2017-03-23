@@ -274,18 +274,20 @@ public class GameLogic{
 		}
 		return empty;
 	}
+
+
+	//*The follow variables and methods are helpers to find encirclement
+	//*START
+	
+	private static char[][] visited = new char[GRID_SIZE][GRID_SIZE];
+	private static int e;  //Flag
+	
 	/**
 	 * This function checks if the defending team is encircled.
 	 * @param void
 	 * @return boolean representing encirclement. True if encircled, false if not.
 	 */
 
-	/**
-	*
-	*/
-	private static char[][] visited = new char[GRID_SIZE][GRID_SIZE];
-	private static int e;
-	
 	public static boolean checkEncircled(){
 		setGrid();
 		e = 0;
@@ -307,6 +309,13 @@ public class GameLogic{
 			return false;
 		}
 	}
+	/**
+	 * This function simulates the escape of a piece. It is a helper method to checkEncircled.
+	 * @param int i, a integer representing x axis coordinates
+	 * @param int j, a integer representing y axis coordinates
+	 * @return boolean representing escape. True, if escaped. False, if not.
+	 */
+
 	public static boolean escape(int i, int j){
 		visited[i][j] = 's';
 		boolean escaped = markSurrondings(i,j);
@@ -320,6 +329,12 @@ public class GameLogic{
 		}
 		return false;
 	}
+	/**
+	 * This function marks a piece's immediate surrodnings. It is a helper method to checkEncircled.
+	 * @param int i, a integer representing x axis coordinates
+	 * @param int j, a integer representing y axis coordinates
+	 * @return boolean representing escape(finding edge of board). True, if escaped. False, if not.
+	 */
 	public static boolean markSurrondings(int i, int j){
 		if((i + 1 >= 0) && (i + 1 <= 10)){
 			mark(i+1, j);
@@ -340,6 +355,13 @@ public class GameLogic{
 			return false;
 		}
 	}
+	/**
+	 * This function marks a spot on the visited grid based off
+	 * of what piece is on the gameboard. It is a helper method to checkEncircled.
+	 * @param int i, a integer representing x axis coordinates
+	 * @param int j, a integer representing y axis coordinates
+	 * @return void
+	 */
 	public static void mark(int i, int j){
 		if(visited[i][j] == '0'){
 			if(gameBoardArray[i][j] == attackers || gameBoardArray[i][j] == restricted){
@@ -353,6 +375,12 @@ public class GameLogic{
 			}
 		}
 	}
+	/**
+	 * This function simulates moving to a unseen part of the board.
+	 * @param int i, a integer representing x axis coordinates
+	 * @param int j, a integer representing y axis coordinates
+	 * @return int[][] representing the set of coordinates moved to.
+	 */
 	public static int[][] move(int i, int j){
 		int[][] xy = new int[4][2];
 		int num = 0;
@@ -383,6 +411,12 @@ public class GameLogic{
 		}
 		return r;
 	}
+	/**
+	 * This function sets the visited grid to all '0'.
+	 * '0' represents unseen.
+	 * @param void
+	 * @return void
+	 */
 	public static void setGrid(){
 		for(int i = 0; i < GRID_SIZE - 1; i++){
 			for(int j = 0; j < GRID_SIZE-1; j++){
@@ -390,6 +424,9 @@ public class GameLogic{
 			}
 		}
 	}
+	
+	//*END
+	
     /**
      * This is the function that does the actual work from moving a game piece from its original starting row and column
      * to its new row and column.
