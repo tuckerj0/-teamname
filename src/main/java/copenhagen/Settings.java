@@ -44,7 +44,7 @@ public class Settings{
         colorPanel.add(blackOption);
         settingsPanel.add(colorPanel);
 
-        JLabel gameLengthLabel = new JLabel("Set Game Length");
+        JLabel gameLengthLabel = new JLabel("Set Turn Length");
         gameLengthLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         settingsPanel.add(gameLengthLabel);
 
