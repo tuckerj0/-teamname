@@ -14,7 +14,7 @@ public class MainMenu {
     private JButton _playerVsButton = new JButton("START GAME!");
     private JButton _loadGameButton = new JButton("Load Saved Game");
     private JButton _howToPlayButton =  new JButton("How to Play");
-    private JButton _settingsButton = new JButton("Settings (Not yet working)");
+    private JButton _settingsButton = new JButton("Settings");
 
 
     /**
@@ -85,7 +85,7 @@ public class MainMenu {
      */
     class settingsListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            // TODO:  Add functionality
+            new Settings();
         }
     }
 }
