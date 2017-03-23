@@ -279,84 +279,117 @@ public class GameLogic{
 	 * @param void
 	 * @return boolean representing encirclement. True if encircled, false if not.
 	 */
-	private static int[][] visited = new int[GRID_SIZE][GRID_SIZE];
-	private static char[][] circles = new char[GRID_SIZE][GRID_SIZE];
+
+	/**
+	*
+	*/
+	private static char[][] visited = new char[GRID_SIZE][GRID_SIZE];
+	private static int e;
 	
 	public static boolean checkEncircled(){
-		setChecks();
-		
+		setGrid();
+		e = 0;
 		for(int i = 0; i < GRID_SIZE - 1; i++){
 			for(int j = 0; j < GRID_SIZE-1; j++){
-				if((visited[i][j] == 0) && (gameBoardArray[i][j] == attackers)){
-					Stack st = new Stack();
-					int[] xy = new int[]{i,j};
-					st.push(xy);
-					boolean found = gridDFS(i,j,st,xy);
-					System.out.println("---End one---");
-				}
-			}
-		}
-		System.out.println("------End all------");
-		return false;
-	}
-	public static void setChecks(){
-		for(int i = 0; i < GRID_SIZE - 1; i++){
-			for(int j = 0; j < GRID_SIZE-1; j++){
-				visited[i][j] = 0;
-				circles[i][j] = '0';
-			}
-		}
-	}
-	public static boolean gridDFS(int x, int y, Stack st, int[] og){
-		while(true){
-			int[] next = findNext(x,y);
-			if(x == next[0] && y == next[1]){
-				if(st.empty() == false){
-					st.pop();
-					if(st.empty() == false){
-						Object r = st.peek();
-						int[] xy = (int[])r;
-						x = xy[0];
-						y = xy[1];
-					}
-					else{
+				if((visited[i][j] == '0') && (gameBoardArray[i][j] == defenders)){
+					boolean escaped = escape(i, j);
+					if(escaped){
+						e = 1;
 						return false;
 					}
 				}
-				else{
-					return false;
-				}
-			}
-			else{
-				x = next[0];
-				y = next[1];
-				visited[x][y] = 1;
-				st.push(next);
-			}
-			System.out.println(x + " " + y);
-			
-		}
-	} 
-	public static int[] findNext(int x, int y){
-		int[] xy = new int[]{x,y};
-		for(int i = -1; i < 2; i++){
-			for(int j = -1; j < 2; j++){
-				if(j == 0 && i == 0){}
-				else if((x + i > 10 || x + i < 0) || (y + j > 10 || y + j < 0)){}
-				else{
-					if(gameBoardArray[x+i][y+j] == attackers){
-						if(visited[x+i][y+j] != 1){
-							xy[0] = x + i;
-							xy[1] = y + j;
-							return xy;
-						}
-					}
-				}
 			}
 		}
-		return xy;
+		if(e == 0){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
-	
+	public static boolean escape(int i, int j){
+		visited[i][j] = 's';
+		boolean escaped = markSurrondings(i,j);
+		if(escaped){
+			e = 1;
+			return true;
+		}
+		int[][] xy = move(i,j);
+		for(int k = 0; k < xy.length; k++){
+			escape(xy[k][0],xy[k][1]);
+		}
+		return false;
+	}
+	public static boolean markSurrondings(int i, int j){
+		if((i + 1 >= 0) && (i + 1 <= 10)){
+			mark(i+1, j);
+		}
+		if((i - 1 >= 0) && (i - 1 <= 10)){
+			mark(i-1, j);
+		}
+		if((j + 1 >= 0) && (j + 1 <= 10)){
+			mark(i, j+1);
+		}
+		if((j - 1 >= 0) && (j - 1 <= 10)){
+			mark(i, j-1);
+		}
+		if(i + 1 > 10 || i - 1 < 0 || j + 1 > 10 || j - 1 < 0){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	public static void mark(int i, int j){
+		if(visited[i][j] == '0'){
+			if(gameBoardArray[i][j] == attackers || gameBoardArray[i][j] == restricted){
+				visited[i][j] = 'a';
+			}
+			else if (gameBoardArray[i][j] == defenders || gameBoardArray[i][j] == king){
+				visited[i][j] = 't';
+			}
+			else if(gameBoardArray[i][j] == empty){
+				visited[i][j] = 'u';
+			}
+		}
+	}
+	public static int[][] move(int i, int j){
+		int[][] xy = new int[4][2];
+		int num = 0;
+		if(visited[i+1][j] == 'u' || visited[i+1][j] == 't'){
+			xy[num][0] = i + 1;
+			xy[num][1] = j;
+			num++;
+		}
+		if(visited[i-1][j] == 'u' || visited[i-1][j] == 't'){
+			xy[num][0] = i - 1;
+			xy[num][1] = j;
+			num++;
+		}
+		if(visited[i][j+1] == 'u' || visited[i][j+1] == 't'){
+			xy[num][0] = i;
+			xy[num][1] = j+1;
+			num++;
+		}
+		if(visited[i][j-1] == 'u' || visited[i][j-1] == 't'){
+			xy[num][0] = i ;
+			xy[num][1] = j-1;
+			num++;
+		}
+		int[][] r = new int[num][2];
+		for(int k = 0; k < num; k++){
+			r[k][0] = xy[k][0];
+			r[k][1] = xy[k][1];
+		}
+		return r;
+	}
+	public static void setGrid(){
+		for(int i = 0; i < GRID_SIZE - 1; i++){
+			for(int j = 0; j < GRID_SIZE-1; j++){
+				visited[i][j] = '0';
+			}
+		}
+	}
     /**
      * This is the function that does the actual work from moving a game piece from its original starting row and column
      * to its new row and column.
