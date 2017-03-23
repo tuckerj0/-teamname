@@ -23,6 +23,10 @@ public class BottomBar {
     private static JLabel attackersTime;
     private static JLabel defendersTime;
     private static CountDownTimer timer;
+    private static int perMoveTime = 3;//number of seconds added to each user after their move
+    private static int startingMinutes = 5;//default game set to 5 minutes
+    private static int startingHours = 0;
+    private static int startingSeconds = 0;
 
     /**
      * This is called when creating the bottom bar JPanel.
@@ -38,7 +42,7 @@ public class BottomBar {
         setTurn(start);
         setTurnCount(count);
         addLabels();
-        
+
     }
 
     /**
@@ -80,27 +84,27 @@ public class BottomBar {
         addClocks();
         bottom.add(turnCount);
     }
-    
+
     /**
      * This function adds the clocks to the bottom panel and starts the countdown timer.
      */
     private void addClocks() {
-        attackersClock = new Clock(0,5,0);
-        defendersClock = new Clock(0,5,0);
+        attackersClock = new Clock(startingHours,startingMinutes,startingSeconds);
+        defendersClock = new Clock(startingHours,startingMinutes,startingSeconds);
         timer = new CountDownTimer();
-        
+
         attackersTime = attackersClock.formatClock("Attackers");
         defendersTime = defendersClock.formatClock("Defenders");
-        
+
         bottom.add(Box.createRigidArea(new Dimension(75, 0)));
         bottom.add(attackersTime);
         bottom.add(Box.createRigidArea(new Dimension(75, 0)));
         bottom.add(defendersTime);
         bottom.add(Box.createRigidArea(new Dimension(75, 0)));
-        
+
         timer.runCountdown(attackersClock, defendersClock, attackersTime, defendersTime);
     }
-    
+
     /**
      * This function is called whenever a piece is moved to display the switch in turns and update the turn number.
      * @param c This parameter determines whose turn it is.
@@ -124,14 +128,30 @@ public class BottomBar {
     public JPanel getBottomBar() {
         return bottom;
     }
-    
+
     public static void updateClock(char c) {
         if(c == defenders) {
-            attackersClock.addSeconds(3);
+            attackersClock.addSeconds(perMoveTime);
             attackersTime.setText("Attackers Time: " + attackersClock.getTime());
         }else if ( c == attackers){
-            defendersClock.addSeconds(3);
+            defendersClock.addSeconds(perMoveTime);
             defendersTime.setText("Defenders Time: " + defendersClock.getTime());
         }
+    }
+
+    /**
+	 * This function sets the game clock
+	 */
+    public static void setStartingTime(int s,int m,int h){
+        startingHours = h;
+        startingMinutes = m;
+        startingSeconds = s;
+    }
+
+    /**
+	 * This function sets the per move time
+	 */
+    public static void setPerMoveTime(int seconds){
+        perMoveTime = seconds;
     }
 }

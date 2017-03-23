@@ -166,6 +166,14 @@ public class Hnefatafl {
         return saved;
     }
 
+	/**
+     * This is a getter that gets the size of the gameboard
+     * @return This will return an interger representing the length/width of the gameboard
+     */
+    public static int getBoardSize() {
+        return boardSize;
+    }
+
     /**
      * This function is called whenever a square is clicked on the game board.
      * @param c This is the column of the square clicked.
