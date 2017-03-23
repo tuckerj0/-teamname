@@ -291,9 +291,9 @@ public class GameLogic{
 	public static boolean checkEncircled(){
 		setGrid();
 		e = 0;
-		for(int i = 0; i < GRID_SIZE - 1; i++){
-			for(int j = 0; j < GRID_SIZE-1; j++){
-				if((visited[i][j] == '0') && (gameBoardArray[i][j] == defenders)){
+		for(int i = 0; i < GRID_SIZE; i++){
+			for(int j = 0; j < GRID_SIZE; j++){
+				if((visited[i][j] == '0' || visited[i][j] == 't') && (gameBoardArray[i][j] == defenders)){
 					boolean escaped = escape(i, j);
 					if(escaped){
 						e = 1;
@@ -309,13 +309,23 @@ public class GameLogic{
 			return false;
 		}
 	}
+	/**Function used for manual error testing
+	*
+	*/
+	public static void printVisited(){
+		for(int i = 0; i < GRID_SIZE ; i++){
+			for(int j = 0; j < GRID_SIZE; j++){
+				System.out.print(visited[i][j] + " ");
+			}
+			System.out.println("");
+		}
+	}
 	/**
 	 * This function simulates the escape of a piece. It is a helper method to checkEncircled.
 	 * @param int i, a integer representing x axis coordinates
 	 * @param int j, a integer representing y axis coordinates
 	 * @return boolean representing escape. True, if escaped. False, if not.
 	 */
-
 	public static boolean escape(int i, int j){
 		visited[i][j] = 's';
 		boolean escaped = markSurrondings(i,j);
@@ -336,19 +346,20 @@ public class GameLogic{
 	 * @return boolean representing escape(finding edge of board). True, if escaped. False, if not.
 	 */
 	public static boolean markSurrondings(int i, int j){
-		if((i + 1 >= 0) && (i + 1 <= 10)){
+		if((i + 1 >= 0) && (i + 1 < GRID_SIZE)){
 			mark(i+1, j);
 		}
-		if((i - 1 >= 0) && (i - 1 <= 10)){
+		if((i - 1 >= 0) && (i - 1 < GRID_SIZE)){
 			mark(i-1, j);
 		}
-		if((j + 1 >= 0) && (j + 1 <= 10)){
+		if((j + 1 >= 0) && (j + 1 < GRID_SIZE)){
 			mark(i, j+1);
 		}
-		if((j - 1 >= 0) && (j - 1 <= 10)){
+		if((j - 1 >= 0) && (j - 1 < GRID_SIZE)){
 			mark(i, j-1);
 		}
-		if(i + 1 > 10 || i - 1 < 0 || j + 1 > 10 || j - 1 < 0){
+		if(i + 1 >= GRID_SIZE || i - 1 < 0 || j + 1 >= GRID_SIZE || j - 1 < 0){
+			e = 1;
 			return true;
 		}
 		else{
@@ -418,8 +429,8 @@ public class GameLogic{
 	 * @return void
 	 */
 	public static void setGrid(){
-		for(int i = 0; i < GRID_SIZE - 1; i++){
-			for(int j = 0; j < GRID_SIZE-1; j++){
+		for(int i = 0; i < GRID_SIZE; i++){
+			for(int j = 0; j < GRID_SIZE; j++){
 				visited[i][j] = '0';
 			}
 		}
