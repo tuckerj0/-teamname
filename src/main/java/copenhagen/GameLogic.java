@@ -1,7 +1,7 @@
 package copenhagen;
 
 import java.util.LinkedList;
-
+import java.util.*;
 /**
  * This class contains all the logic for the game board. The game board is represented by a two dimensional
  * character array. The location in the array is the location on the board. The first dimension represents the row and
@@ -277,30 +277,84 @@ public class GameLogic{
 	/**
 	 * This function checks if the defending team is encircled.
 	 * @param void
-	 * @return boolean representing encirclement. Ture if encircled, false if not.
+	 * @return boolean representing encirclement. True if encircled, false if not.
 	 */
+	private static int[][] visited = new int[GRID_SIZE][GRID_SIZE];
+	private static char[][] circles = new char[GRID_SIZE][GRID_SIZE];
+	
 	public static boolean checkEncircled(){
-		char[][] circle = findCircle();
-		if(circle == null){
-			return false;
-		}
+		setChecks();
+		
 		for(int i = 0; i < GRID_SIZE - 1; i++){
-			for(int j = 0; j < GRID_SIZE - 1; j++){
-				
-				
+			for(int j = 0; j < GRID_SIZE-1; j++){
+				if((visited[i][j] == 0) && (gameBoardArray[i][j] == attackers)){
+					Stack st = new Stack();
+					int[] xy = new int[]{i,j};
+					st.push(xy);
+					boolean found = gridDFS(i,j,st,xy);
+					System.out.println("---End one---");
+				}
 			}
 		}
+		System.out.println("------End all------");
 		return false;
 	}
-	/**
-	 * This function checks if the attacking team has made a full circle
-	 * @param void
-	 * @return 2D char array representation of circle. Null if no circle was found;
-	 */
-	public static char[][] findCircle(){
-		char[][] circle = new char[GRID_SIZE][GRID_SIZE];
-		
-		return circle;
+	public static void setChecks(){
+		for(int i = 0; i < GRID_SIZE - 1; i++){
+			for(int j = 0; j < GRID_SIZE-1; j++){
+				visited[i][j] = 0;
+				circles[i][j] = '0';
+			}
+		}
+	}
+	public static boolean gridDFS(int x, int y, Stack st, int[] og){
+		while(true){
+			int[] next = findNext(x,y);
+			if(x == next[0] && y == next[1]){
+				if(st.empty() == false){
+					st.pop();
+					if(st.empty() == false){
+						Object r = st.peek();
+						int[] xy = (int[])r;
+						x = xy[0];
+						y = xy[1];
+					}
+					else{
+						return false;
+					}
+				}
+				else{
+					return false;
+				}
+			}
+			else{
+				x = next[0];
+				y = next[1];
+				visited[x][y] = 1;
+				st.push(next);
+			}
+			System.out.println(x + " " + y);
+			
+		}
+	} 
+	public static int[] findNext(int x, int y){
+		int[] xy = new int[]{x,y};
+		for(int i = -1; i < 2; i++){
+			for(int j = -1; j < 2; j++){
+				if(j == 0 && i == 0){}
+				else if((x + i > 10 || x + i < 0) || (y + j > 10 || y + j < 0)){}
+				else{
+					if(gameBoardArray[x+i][y+j] == attackers){
+						if(visited[x+i][y+j] != 1){
+							xy[0] = x + i;
+							xy[1] = y + j;
+							return xy;
+						}
+					}
+				}
+			}
+		}
+		return xy;
 	}
 	
     /**
