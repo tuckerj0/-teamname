@@ -50,6 +50,7 @@ public class Hnefatafl {
 	private static boolean pieceIsSelected = false;
 	private static char winner;
 	private static FinalMenu finalMenu;
+
 	private static String blackPieceAddr = "images/blackpiece.png";
 	private static String whitePieceAddr = "images/whitepiece.png";
 	private static String kingPieceAddr = "images/king.png";
@@ -367,7 +368,30 @@ public class Hnefatafl {
 		defendPieceAddr = whitePieceAddr;
 		attackSelAddr = blackSelAddr;
 		defendSelAddr = whiteSelAddr;
-		setBlackStartBoolean(true);
+	}
+
+	/**
+	 * This function set the color of the attacking pieces on the board.
+	 * @param color string representing color of the piece
+	 */
+	public static void setAttackColor(String color){
+		String address = "images/";
+		color = color.toLowerCase();
+		address = address + color;
+		attackPieceAddr = address + "piece.png";
+		attackSelAddr = address + "pieceSelected.png";
+	}
+
+	/**
+	 * This function set the color of the defending pieces on the board.
+	 * @param color string representing color of the piece
+	 */
+	public static void setDefenseColor(String color){
+		String address = "images/";
+		color = color.toLowerCase();
+		address = address + color;
+		defendPieceAddr = address + "piece.png";
+		defendSelAddr = address + "pieceSelected.png";
 	}
 
 	/**
