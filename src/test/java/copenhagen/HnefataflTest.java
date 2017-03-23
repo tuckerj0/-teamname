@@ -46,18 +46,4 @@ public class HnefataflTest {
     public void testNewGameResetTurns() {
         assertEquals(1, Hnefatafl.newGameResetTurns());
     }
-
-    // This test checks that getBlackStartBoolean() returns true when blackStart == true.
-    @Test
-    public void testGetBlackStartBooleanTrue() {
-        Hnefatafl.setBlackStartBoolean(true);
-        assertEquals(true, Hnefatafl.getBlackStartBoolean());
-    }
-
-    // This test checks that getBlackStartBoolean() returns false when blackStart == false.
-    @Test
-    public void testGetBlackStartBooleanFalse() {
-        Hnefatafl.setBlackStartBoolean(false);
-        assertEquals(false, Hnefatafl.getBlackStartBoolean());
-    }
 }

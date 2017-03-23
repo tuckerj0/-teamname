@@ -51,17 +51,15 @@ public class Hnefatafl {
 	private static char winner;
 	private static FinalMenu finalMenu;
 
-	private static String blackPieceAddr = "images/blackpiece.png";
-	private static String whitePieceAddr = "images/whitepiece.png";
+	//Piece colors set to black and white by default, can be changed in the settings menu
+	private static String attackColor = "black";
+	private static String defenseColor = "white";
 	private static String kingPieceAddr = "images/king.png";
-	private static String blackSelAddr = "images/blackpieceSelected.png";
-	private static String whiteSelAddr = "images/whitepieceSelected.png";
 	private static String kingSelAddr = "images/kingSelected.png";
-	private static String attackPieceAddr = blackPieceAddr;
-	private static String defendPieceAddr = whitePieceAddr;
-	private static String attackSelAddr = blackSelAddr;
-	private static String defendSelAddr = whiteSelAddr;
-	private static boolean blackStart = true;
+	private static String attackPieceAddr = "images/blackpiece.png";
+	private static String defendPieceAddr = "images/whitepiece.png";
+	private static String attackSelAddr = "images/blackpieceSelected.png";
+	private static String defendSelAddr = "images/whitepieceSelected.png";
 
     /**
      * This is the main method which starts the program.
@@ -350,31 +348,11 @@ public class Hnefatafl {
 	}
 
 	/**
-	 * This function makes the attack pieces white and the defend pieces black.
-	 */
-	public static void whiteStart(){
-		attackPieceAddr = whitePieceAddr;
-		defendPieceAddr = blackPieceAddr;
-		attackSelAddr = whiteSelAddr;
-		defendSelAddr = blackSelAddr;
-		blackStart = false;
-	}
-
-	/**
-	 * This function makes the attack pieces black and the defend pieces white.
-	 */
-	public static void blackStart(){
-		attackPieceAddr = blackPieceAddr;
-		defendPieceAddr = whitePieceAddr;
-		attackSelAddr = blackSelAddr;
-		defendSelAddr = whiteSelAddr;
-	}
-
-	/**
 	 * This function set the color of the attacking pieces on the board.
 	 * @param color string representing color of the piece
 	 */
 	public static void setAttackColor(String color){
+		attackColor = color;
 		String address = "images/";
 		color = color.toLowerCase();
 		address = address + color;
@@ -387,26 +365,12 @@ public class Hnefatafl {
 	 * @param color string representing color of the piece
 	 */
 	public static void setDefenseColor(String color){
+		defenseColor = color;
 		String address = "images/";
 		color = color.toLowerCase();
 		address = address + color;
 		defendPieceAddr = address + "piece.png";
 		defendSelAddr = address + "pieceSelected.png";
-	}
-
-	/**
-	 * This function sets the boolean for if black starts/attacks
-	 */
-	public static void setBlackStartBoolean(boolean bStart){
-		blackStart = bStart;
-	}
-
-	/**
-	 * This function gets the boolean for whether the black pieces start/attack.
-	 * @return This function returns the boolean for whether black starts/attacks.
-	 */
-	public static boolean getBlackStartBoolean(){
-		return blackStart;
 	}
 
 	/**
@@ -455,5 +419,19 @@ public class Hnefatafl {
      */
 	public static String getKingSelAddr(){
 		return kingSelAddr;
+	}
+
+	/**
+     * @return This function will return the String for the attack piece color.
+     */
+	public static String getAttackColor(){
+		return attackColor;
+	}
+
+	/**
+     * @return This function will return the String for the attack piece color.
+     */
+	public static String getDefenseColor(){
+		return defenseColor;
 	}
 }

@@ -55,7 +55,9 @@ public class MainMenu {
     private class newGameListener implements  ActionListener {
         public void actionPerformed(ActionEvent e) {
             _mainMenuFrame.dispose();
-            new BlackWhiteStart();
+            GameLogic.setStartingPieces(Hnefatafl.getBoardSize());
+            Hnefatafl.setUpGameBoard();
+            Hnefatafl.displayGameBoard();            
         }
     }
 
