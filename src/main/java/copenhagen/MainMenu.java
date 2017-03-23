@@ -14,23 +14,27 @@ public class MainMenu {
     private JButton _playerVsButton = new JButton("START GAME!");
     private JButton _loadGameButton = new JButton("Load Saved Game");
     private JButton _howToPlayButton =  new JButton("How to Play");
-    private JButton _settingsButton = new JButton("Settings (Not yet working)");
+    private JButton _settingsButton = new JButton("Settings");
 
 
     /**
      * This is called once the program starts and creates the main menu allowing the user to choose what they want to do.
      */
     public MainMenu() {
-    	_mainMenuFrame.setSize(400, 400);
+    	_mainMenuFrame.setSize(450, 400);
     	_mainMenuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    	_mainMenuPanel.setLayout(new FlowLayout());
+    	_mainMenuPanel.setLayout(new GridLayout(4,1));
     	_mainMenuFrame.add(_mainMenuPanel);
 
         // adding the buttons that were created earlier
         _playerVsButton.addActionListener(new newGameListener());
+		_playerVsButton.setPreferredSize(new Dimension(450,100));
         _loadGameButton.addActionListener(new loadGameListener());
+		_loadGameButton.setPreferredSize(new Dimension(450,100));
         _howToPlayButton.addActionListener(new howToPlayListener());
+		_howToPlayButton.setPreferredSize(new Dimension(450,100));
         _settingsButton.addActionListener(new settingsListener());
+		_settingsButton.setPreferredSize(new Dimension(450,100));
         _playerVsButton.setFont(new Font("Courier", Font.PLAIN, 40));
     	_loadGameButton.setFont(new Font("Courier", Font.PLAIN, 40));
         _howToPlayButton.setFont(new Font("Courier", Font.PLAIN, 40));
