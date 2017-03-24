@@ -47,17 +47,45 @@ public class HnefataflTest {
         assertEquals(1, Hnefatafl.newGameResetTurns());
     }
 
-    // This test checks that getBlackStartBoolean() returns true when blackStart == true.
+    //test that attack color is set correctly and to lowercase
     @Test
-    public void testGetBlackStartBooleanTrue() {
-        Hnefatafl.setBlackStartBoolean(true);
-        assertEquals(true, Hnefatafl.getBlackStartBoolean());
+    public void testSetAttackColor(){
+        Hnefatafl.setAttackColor("Green");
+        assertEquals("green",Hnefatafl.getAttackColor());
     }
 
-    // This test checks that getBlackStartBoolean() returns false when blackStart == false.
+    //test that defense color is set correctly and to lowercase
     @Test
-    public void testGetBlackStartBooleanFalse() {
-        Hnefatafl.setBlackStartBoolean(false);
-        assertEquals(false, Hnefatafl.getBlackStartBoolean());
+    public void testSetDefenseColor(){
+        Hnefatafl.setDefenseColor("Blue");
+        assertEquals("blue",Hnefatafl.getDefenseColor());
+    }
+
+    //Test that the image link is formatted correctly
+    @Test
+    public void testSetDefenseColorSetsImage(){
+        Hnefatafl.setDefenseColor("Orange");
+        assertEquals("images/orangepiece.png",Hnefatafl.getDefendPieceAddr());
+    }
+
+    //Test that the selected image link is formatted correcly
+    @Test
+    public void testSetDefenseColorSetsSelectedImage(){
+        Hnefatafl.setDefenseColor("Black");
+        assertEquals("images/blackpieceSelected.png",Hnefatafl.getDefendSelAddr());
+    }
+
+    //Test that the image link is formatted correcly
+    @Test
+    public void testSetAttackColorSetsImage(){
+        Hnefatafl.setAttackColor("Orange");
+        assertEquals("images/orangepiece.png",Hnefatafl.getAttackPieceAddr());
+    }
+
+    //Test that the selected image link is formatted correcly
+    @Test
+    public void testSetAttackColorSetsSelectedImage(){
+        Hnefatafl.setAttackColor("Black");
+        assertEquals("images/blackpieceSelected.png",Hnefatafl.getAttackSelAddr());
     }
 }
