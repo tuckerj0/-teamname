@@ -352,9 +352,9 @@ public class Hnefatafl {
 	 * @param color string representing color of the piece
 	 */
 	public static void setAttackColor(String color){
+		color = color.toLowerCase();
 		attackColor = color;
 		String address = "images/";
-		color = color.toLowerCase();
 		address = address + color;
 		attackPieceAddr = address + "piece.png";
 		attackSelAddr = address + "pieceSelected.png";
@@ -365,9 +365,9 @@ public class Hnefatafl {
 	 * @param color string representing color of the piece
 	 */
 	public static void setDefenseColor(String color){
+		color = color.toLowerCase();
 		defenseColor = color;
 		String address = "images/";
-		color = color.toLowerCase();
 		address = address + color;
 		defendPieceAddr = address + "piece.png";
 		defendSelAddr = address + "pieceSelected.png";
