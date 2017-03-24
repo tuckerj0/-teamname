@@ -70,8 +70,7 @@ public class Settings{
         }
         settingsPanel.add(defensePanel);
 
-        //Game Time Choice
-        JLabel gameLengthLabel = new JLabel("Set Game Length");
+        JLabel gameLengthLabel = new JLabel("Set Starting Game Time");
         gameLengthLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         settingsPanel.add(gameLengthLabel);
 
