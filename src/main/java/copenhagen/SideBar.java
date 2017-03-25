@@ -27,8 +27,6 @@ public class SideBar {
     private JButton help;
     private JButton concede;
     private JButton exit;
-    private JFrame exitWindow;
-    private JFrame concedeWindow;
 
     /**
      * This is called when creating the side bar JPanel.
@@ -115,7 +113,7 @@ public class SideBar {
 	private class newListener implements ActionListener {
        public void actionPerformed(ActionEvent e) {
 		   Object[] options = {"Confirm", "Cancel"};
-           int n = JOptionPane.showOptionDialog(exitWindow, "Are you sure you want to begin a new game? All progress wil be lost.", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+           int n = JOptionPane.showOptionDialog(new JFrame(), "Are you sure you want to begin a new game? All progress wil be lost.", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
            if (n == 0) {
                Hnefatafl.removeOldGameBoard();
                new MainMenu();
@@ -156,7 +154,7 @@ public class SideBar {
     private class ConcedeListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             Object[] forfeitOptions = {"Forfeit", "Don't Forfeit", "Cancel"};
-            int n = JOptionPane.showOptionDialog(concedeWindow, "Are you sure you want to forfeit?", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, forfeitOptions, forfeitOptions[0]);
+            int n = JOptionPane.showOptionDialog(new JFrame(), "Are you sure you want to forfeit?", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, forfeitOptions, forfeitOptions[0]);
             if (n == 0) {
                 char turn = Hnefatafl.getTurn();
                 if (turn == defenders) {
@@ -177,7 +175,7 @@ public class SideBar {
        public void actionPerformed(ActionEvent e) {
            
            Object[] options = {"Save", "Don't Save", "Cancel"};
-           int n = JOptionPane.showOptionDialog(exitWindow, "Want to save your game progress?", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+           int n = JOptionPane.showOptionDialog(new JFrame(), "Want to save your game progress?", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
            if (n == 0) {
                Hnefatafl.saveGame(new SaveAndLoad());
 			   System.exit(0);

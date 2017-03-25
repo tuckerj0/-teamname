@@ -131,7 +131,8 @@ public class Hnefatafl {
 
     /**
      * This is a getter that gets whose turn it currently is.
-     * @return This function will return 'attackers' if it is the attackers turn or 'defenders' if it is the defenders' turn.
+     * @return This function will return 'attackers' if it is the attackers turn or 'defenders' if it is the defenders'
+     * turn.
      */
     public static char getTurn() {
 	    return turn;
@@ -162,8 +163,8 @@ public class Hnefatafl {
     }
 
 	/**
-     * This is a getter that gets the size of the gameboard
-     * @return This will return an interger representing the length/width of the gameboard
+     * This is a getter that gets the size of the gameboard.
+     * @return This will return an integer representing the length/width of the gameboard.
      */
     public static int getBoardSize() {
         return boardSize;
@@ -284,7 +285,7 @@ public class Hnefatafl {
 	}
 
     /**
-     * This functionss gets the HBoard.
+     * This function gets the HBoard.
      * @return This function will return the jPanel that is displayed to the user of the current gameboard.
      */
 	public static GameBoard getHBoard(){
@@ -293,7 +294,7 @@ public class Hnefatafl {
 
 	/**
 	 * This function set the color of the attacking pieces on the board.
-	 * @param color string representing color of the piece
+	 * @param color This parameter is a String representing the color of the piece.
 	 */
 	public static void setAttackColor(String color){
 		color = color.toLowerCase();
@@ -306,7 +307,7 @@ public class Hnefatafl {
 
 	/**
 	 * This function set the color of the defending pieces on the board.
-	 * @param color string representing color of the piece
+     * @param color This parameter is a String representing the color of the piece.
 	 */
 	public static void setDefenseColor(String color){
 		color = color.toLowerCase();

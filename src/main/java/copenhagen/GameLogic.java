@@ -1,7 +1,7 @@
 package copenhagen;
 
 import java.util.LinkedList;
-import java.util.*;
+
 /**
  * This class contains all the logic for the game board. The game board is represented by a two dimensional
  * character array. The location in the array is the location on the board. The first dimension represents the row and
@@ -25,6 +25,7 @@ public class GameLogic{
     /**
      * This function checks whether a piece is allowed to be currently moved.
      * @param piece This is piece that is trying to be moved.
+     * @param turn This is which side's turn it currently is.
      * @return This function will return true if the piece can be moved, else false if it can not be moved.
      */
     public static boolean pieceCanMove(char piece, char turn) {
@@ -35,7 +36,6 @@ public class GameLogic{
         }
     }
 
-    //TODO Add test
     /**
      * This function updates the game board.
      * @param col This parameter is the column that will be updated.
@@ -164,9 +164,12 @@ public class GameLogic{
 		return validSpaces;
 	}
 
-	/**
-	 * This function checks to see if there is a winner at the end of each turn.
-	 */
+    /**
+     * This function checks to see if there is a winner at the end of each turn.
+     * @param turn This parameter is whose turn it currently is indicating which side to check if they won the game.
+     * @return This function returns the results of which side won if anyone did. ('b' or 'w'; otherwise '0' if no
+     * winner)
+     */
 	public static char checkWinner(char turn) {
 		if (turn == attackers)
 			return checkAttackWin();
@@ -212,11 +215,11 @@ public class GameLogic{
 
         // There is not a winner yet so continue playing
 	}
-	/**
-	 * This function checks if the attacking team has won
-	 * @param void
-	 * @return char representing if attackers have won.
-	 */
+
+    /**
+     * This function checks if the attacking team has won.
+     * @return This returns a character 'b' representing if the attackers have won. Otherwise, returns '0'.
+     */
 	public static char checkAttackWin(){
 		// Check Left of Throne for Attackers Win
         if(gameBoardArray[5][4] == king) {
@@ -261,11 +264,11 @@ public class GameLogic{
 		}
 		return empty;
 	}
-	/**
-	 * This function checks if the defending team has won
-	 * @param void
-	 * @return char representing if defenders have won.
-	 */
+
+    /**
+     * This function checks if the defending team has won.
+     * @return This returns a character 'w' representing if the defenders have won. Otherwise, returns '0'.
+     */
 	public static char checkDefendWin(){
 		// Check Corners for Defenders Win
 		if (gameBoardArray[0][0] == king || gameBoardArray[0][10] == king || gameBoardArray[10][0] == king || gameBoardArray[10][10] == king) {
@@ -275,19 +278,16 @@ public class GameLogic{
 		return empty;
 	}
 
-
 	//*The follow variables and methods are helpers to find encirclement
 	//*START
 	
 	private static char[][] visited = new char[GRID_SIZE][GRID_SIZE];
 	private static int e;  //Flag
-	
-	/**
-	 * This function checks if the defending team is encircled.
-	 * @param void
-	 * @return boolean representing encirclement. True if encircled, false if not.
-	 */
 
+    /**
+     * This function checks if the defending team is encircled.
+     * @return This returns true if they are encircled. Otherwise, false.
+     */
 	public static boolean checkEncircled(){
 		setGrid();
 		e = 0;
@@ -309,9 +309,10 @@ public class GameLogic{
 			return false;
 		}
 	}
-	/**Function used for manual error testing
-	*
-	*/
+
+    /**
+     * Function used for manual error testing
+     */
 	public static void printVisited(){
 		for(int i = 0; i < GRID_SIZE ; i++){
 			for(int j = 0; j < GRID_SIZE; j++){
@@ -320,11 +321,12 @@ public class GameLogic{
 			System.out.println("");
 		}
 	}
+
 	/**
 	 * This function simulates the escape of a piece. It is a helper method to checkEncircled.
-	 * @param int i, a integer representing x axis coordinates
-	 * @param int j, a integer representing y axis coordinates
-	 * @return boolean representing escape. True, if escaped. False, if not.
+	 * @param i This parameter is an integer representing x axis coordinates.
+	 * @param j This parameter is an integer representing y axis coordinates.
+	 * @return This returns a boolean representing escape. True, if escaped. False, if not.
 	 */
 	public static boolean escape(int i, int j){
 		visited[i][j] = 's';
@@ -339,11 +341,12 @@ public class GameLogic{
 		}
 		return false;
 	}
+
 	/**
-	 * This function marks a piece's immediate surrodnings. It is a helper method to checkEncircled.
-	 * @param int i, a integer representing x axis coordinates
-	 * @param int j, a integer representing y axis coordinates
-	 * @return boolean representing escape(finding edge of board). True, if escaped. False, if not.
+	 * This function marks a piece's immediate surroundings. It is a helper method to checkEncircled.
+	 * @param i This parameter is an integer representing x axis coordinates
+	 * @param j This parameter is an integer representing y axis coordinates
+	 * @return This returns a boolean representing escape(finding edge of board). True, if escaped. False, if not.
 	 */
 	public static boolean markSurrondings(int i, int j){
 		if((i + 1 >= 0) && (i + 1 < GRID_SIZE)){
@@ -366,12 +369,12 @@ public class GameLogic{
 			return false;
 		}
 	}
+
 	/**
-	 * This function marks a spot on the visited grid based off
-	 * of what piece is on the gameboard. It is a helper method to checkEncircled.
-	 * @param int i, a integer representing x axis coordinates
-	 * @param int j, a integer representing y axis coordinates
-	 * @return void
+	 * This function marks a spot on the visited grid based off of what piece is on the gameboard. It is a helper method
+     * to checkEncircled.
+	 * @param i This parameter is an integer representing x axis coordinates
+	 * @param j This parameter is an integer representing y axis coordinates
 	 */
 	public static void mark(int i, int j){
 		if(visited[i][j] == '0'){
@@ -386,12 +389,13 @@ public class GameLogic{
 			}
 		}
 	}
-	/**
-	 * This function simulates moving to a unseen part of the board.
-	 * @param int i, a integer representing x axis coordinates
-	 * @param int j, a integer representing y axis coordinates
-	 * @return int[][] representing the set of coordinates moved to.
-	 */
+
+    /**
+     * This function simulates moving to a unseen part of the board.
+     * @param i This parameter is an integer representing x axis coordinates.
+     * @param j This parameter is an integer representing y axis coordinates.
+     * @return This returns an int[][] representing the set of coordinates moved to.
+     */
 	public static int[][] move(int i, int j){
 		int[][] xy = new int[4][2];
 		int num = 0;
@@ -422,12 +426,11 @@ public class GameLogic{
 		}
 		return r;
 	}
-	/**
-	 * This function sets the visited grid to all '0'.
-	 * '0' represents unseen.
-	 * @param void
-	 * @return void
-	 */
+
+    /**
+     *  This function sets the visited grid to all '0'.
+     *  '0' represents unseen.
+     */
 	public static void setGrid(){
 		for(int i = 0; i < GRID_SIZE; i++){
 			for(int j = 0; j < GRID_SIZE; j++){

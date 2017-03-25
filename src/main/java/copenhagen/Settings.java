@@ -8,31 +8,30 @@ import javax.swing.JRadioButton;
 import java.util.ArrayList;
 
 public class Settings{
-
     private static ArrayList<JRadioButton> attackButtons = new ArrayList<JRadioButton>();
     private static ArrayList<JRadioButton> defenseButtons = new ArrayList<JRadioButton>();
     private static JSpinner hourSpinner;
     private static JSpinner minSpinner;
     private static JSpinner secSpinner;
     private static JSpinner perMoveSpinner;
-    private JFrame settingsFrame= new JFrame("Settings"); // creates frame/window
+    private JFrame settingsFrame= new JFrame("Settings");   // creates frame/window
     private JPanel attackPanel = new JPanel();
     private JPanel defensePanel = new JPanel();
     private JPanel timePanel = new JPanel();
     private JPanel perMovePanel = new JPanel();
     private JPanel savePanel = new JPanel();
     private JPanel settingsPanel = new JPanel();
-    private JButton saveSettingsButton = new JButton("Save");//allows user to save seetings
-    private static int boardSize = 11;
+    private JButton saveSettingsButton = new JButton("Save");   //allows user to save settings
 
+    /**
+     * This function will create the JFrame that will allow user to set time settings, color settings, and starting
+     * side.
+     */
     public Settings(){
-        /**
-         * This function will create the JFrame that will allow user to set time settings, color settings, and start side
-         */
         settingsFrame.setSize(400, 400); // width, height
         settingsPanel.setLayout(new BoxLayout(settingsPanel, BoxLayout.Y_AXIS));
 
-        //Attack Color Butons
+        // Attack Color Buttons
         JLabel attackLabel = new JLabel("Choose Attack Color");
         attackLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         settingsPanel.add(attackLabel);
@@ -51,7 +50,7 @@ public class Settings{
         }
         settingsPanel.add(attackPanel);
 
-        //Defense Color Buttons
+        // Defense Color Buttons
         JLabel defenseLabel = new JLabel("Choose Defense Color");
         defenseLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         settingsPanel.add(defenseLabel);
@@ -74,7 +73,7 @@ public class Settings{
         gameLengthLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         settingsPanel.add(gameLengthLabel);
 
-        //hours spinner
+        // hours spinner
         timePanel.add(new JLabel("Hours"));
         SpinnerModel hourModel = new SpinnerNumberModel(0, //initial value
            0, //min
@@ -83,7 +82,7 @@ public class Settings{
         hourSpinner = new JSpinner(hourModel);
         timePanel.add(hourSpinner);
 
-        //minutes spinner
+        // minutes spinner
         timePanel.add(new JLabel("Minutes"));
         SpinnerModel minModel = new SpinnerNumberModel(5, //initial value
            0, //min
@@ -92,7 +91,7 @@ public class Settings{
         minSpinner = new JSpinner(minModel);
         timePanel.add(minSpinner);
 
-        //seconds spinner
+        // seconds spinner
         timePanel.add(new JLabel("Seconds"));
         SpinnerModel secModel = new SpinnerNumberModel(0, //initial value
            0, //min
@@ -102,7 +101,7 @@ public class Settings{
         timePanel.add(secSpinner);
         settingsPanel.add(timePanel);
 
-        //Per Move Added Time Choice
+        // Per Move Added Time Choice
         JLabel perMoveLabel = new JLabel("Time Added Per Turn");
         perMoveLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         settingsPanel.add(perMoveLabel);
@@ -116,7 +115,7 @@ public class Settings{
         perMovePanel.add(perMoveSpinner);
         settingsPanel.add(perMovePanel);
 
-        //Save Button
+        // Save Button
         ActionListener saveSettingsListener = new SaveSettingsListener();
         saveSettingsButton.addActionListener(saveSettingsListener);
         saveSettingsButton.setFont(new Font("Courier", Font.PLAIN, 48));
@@ -130,8 +129,8 @@ public class Settings{
     }
 
     /**
-     * This functionss saves the settings chosen by the user
-     * @return true if the user settings are valid
+     * This function saves the settings chosen by the user.
+     * @return This function returns true if the user's settings are valid.
      */
     public static boolean saveSettings(){
         String attackColor = "";

@@ -9,9 +9,7 @@ import java.awt.event.ActionListener;
  * This class is used for displaying the options a user has after a game of hnefatafl has finished.
  */
 public class FinalMenu {
-
 	private JFrame menuFrame;
-	private JFrame exitWindow;
 	private JPanel menu;
 	private JPanel buttonPanel;
 	private JButton newGameBtn;
@@ -20,16 +18,18 @@ public class FinalMenu {
 	private JLabel winnerText;
 	private static char defenders = 'w';
 
-	/**
-	 * This function calls a function to create the final menu.
-	 */
+    /**
+     * This function calls a function to create the final menu.
+     * @param winningSide This parameter represents which side won as a character.
+     */
 	public FinalMenu(char winningSide) {
 		createMenu(winningSide);
 	}
 
-	/**
-	 * This function creates and displays the final menu after a game has finished.
-	 */
+    /**
+     * This function creates and displays the final menu after a game has finished.
+     * @param winningSide This parameter represents which side won as a character.
+     */
 	private void createMenu(char winningSide) {
 		String winner;
 		if (winningSide == defenders) {
@@ -57,7 +57,6 @@ public class FinalMenu {
 		menuFrame.add(menu, BorderLayout.CENTER);
 
 		showMenu();
-
 	}
 
 	private void showMenu() {
@@ -75,17 +74,16 @@ public class FinalMenu {
 
 		buttonPanel.add(newGameBtn);
 		buttonPanel.add(mainMenuBtn);
-
 	}
 
 	/**
-	 *This is a button listener for when the new game button is clicked. It will prompt the user to confirm.
-	 *If the user confirms, it will class a new game function to reset the board and begin a new game.
+	 * This is a button listener for when the new game button is clicked. It will prompt the user to confirm.
+	 * If the user confirms, it will class a new game function to reset the board and begin a new game.
 	 */
 	private class newListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			Object[] options = {"Confirm", "Cancel"};
-			int n = JOptionPane.showOptionDialog(exitWindow, "Are you sure you want to begin a new game?", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+			int n = JOptionPane.showOptionDialog(new JFrame(), "Are you sure you want to begin a new game?", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 			if (n == 0) {
                 Hnefatafl.removeOldGameBoard();
                 menuFrame.dispose();
@@ -99,13 +97,13 @@ public class FinalMenu {
 	}
 
 	/**
-	 *This is a button listener for when the main menu button is clicked. It will prompt the user to confirm.
-	 *If the user confirms, it will class a new game function to reset the board and begin a new game.
+	 * This is a button listener for when the main menu button is clicked. It will prompt the user to confirm.
+	 * If the user confirms, it will class a new game function to reset the board and begin a new game.
 	 */
 	private class mainMenuListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			Object[] options = {"Confirm", "Cancel"};
-			int n = JOptionPane.showOptionDialog(exitWindow, "Are you sure you want to exit?", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+			int n = JOptionPane.showOptionDialog(new JFrame(), "Are you sure you want to exit?", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 			if (n == 0) {
 				System.exit(0);
 			}

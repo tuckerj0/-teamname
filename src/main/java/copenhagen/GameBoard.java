@@ -19,7 +19,6 @@ import java.awt.event.*;
  * 'k' for the king piece
  */
 public class GameBoard {
-
 	int gridSize;
 	Color highlight = new Color(255,0,0);
 	Color primaryColor;

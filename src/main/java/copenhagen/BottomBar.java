@@ -39,7 +39,6 @@ public class BottomBar {
         setTurn(start);
         setTurnCount(count);
         addLabels();
-
     }
 
     /**
@@ -52,7 +51,7 @@ public class BottomBar {
 
     /**
      * This function displays who is starting based on the parameter given.
-     * @param c This tells which person starts, attackers or defenders
+     * @param c This tells which person starts, attackers or defenders.
      */
     private void setTurn(char c) {
         if (c == attackers) {
@@ -127,29 +126,34 @@ public class BottomBar {
         return bottom;
     }
 
+    /**
+     * This function updates the clock at the end of a side's turn.
+     * @param c This parameter is which side's turn it currently is.
+     */
     public static void updateClock(char c) {
-        if(c == defenders) {
+        if (c == defenders) {
             attackersClock.addSeconds(perMoveTime);
             attackersTime.setText("Attackers Time: " + attackersClock.getTime());
-        }else if ( c == attackers){
+        }
+        else if (c == attackers) {
             defendersClock.addSeconds(perMoveTime);
             defendersTime.setText("Defenders Time: " + defendersClock.getTime());
         }
     }
 
     /**
-	 * This function sets the game clock
+	 * This function sets the game clock.
 	 */
-    public static void setStartingTime(int s,int m,int h){
+    public static void setStartingTime(int s, int m, int h) {
         startingHours = h;
         startingMinutes = m;
         startingSeconds = s;
     }
 
     /**
-	 * This function sets the per move time
+	 * This function sets the per move time.
 	 */
-    public static void setPerMoveTime(int seconds){
+    public static void setPerMoveTime(int seconds) {
         perMoveTime = seconds;
     }
 }
