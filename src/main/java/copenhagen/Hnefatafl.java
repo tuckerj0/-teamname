@@ -80,6 +80,7 @@ public class Hnefatafl {
      * This function sets up and retrieves the different pieces (3 JPanels) that comprise the game board.
      */
 	public static void setUpGameBoard() {
+        newGameResetTurns();
         hBoard = new GameBoard(boardSize, primaryColor, secondaryColor, specialColor);
         board = hBoard.getBoard();
         sBar = new SideBar(primaryColor, secondaryColor, letteringColor);
@@ -299,14 +300,6 @@ public class Hnefatafl {
 		return true;
 	}
 
-    /**
-     * This function begins a new game.
-     */
-	public static void newGame(){
-		newGameResetTurns();
-		newGameGUI();
-	}
-
 	/**
 	 * This function sets up the logic for a new game.
 	 * @return The return value is the reset turn count (which should always be 1)
@@ -316,22 +309,6 @@ public class Hnefatafl {
 		turn = attackers;
 		saved = true;
 		return turnCount;
-	}
-
-	/**
-	 * This function sets up the GUI for a new game.
-	 */
-	public static void newGameGUI(){
-		frame.remove(bottom);
-		BottomBar bBar = new BottomBar(primaryColor, letteringColor, turn, turnCount);
-		bottom = bBar.getBottomBar();
-		frame.remove(board);
-        GameLogic.setStartingPieces(boardSize);
-        hBoard = new GameBoard(boardSize, primaryColor, secondaryColor, specialColor);
-		board = hBoard.getBoard();
-		frame.add(board, BorderLayout.LINE_START);
-		frame.add(bottom, BorderLayout.SOUTH);
-		frame.pack();
 	}
 
     /**

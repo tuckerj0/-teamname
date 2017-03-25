@@ -95,7 +95,8 @@ public class BottomBar {
 
         attackersTime = attackersClock.formatClock("Attackers");
         defendersTime = defendersClock.formatClock("Defenders");
-
+        attackersTime.setForeground(letteringColor);
+        defendersTime.setForeground(letteringColor);
         bottom.add(Box.createRigidArea(new Dimension(75, 0)));
         bottom.add(attackersTime);
         bottom.add(Box.createRigidArea(new Dimension(75, 0)));

@@ -120,7 +120,8 @@ public class SideBar {
 		   Object[] options = {"Confirm", "Cancel"};
            int n = JOptionPane.showOptionDialog(exitWindow, "Are you sure you want to begin a new game? All progress wil be lost.", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
            if (n == 0) {
-               Hnefatafl.newGame();
+               Hnefatafl.removeOldGameBoard();
+               new MainMenu();
            }
            if (n == 1) {
                return;

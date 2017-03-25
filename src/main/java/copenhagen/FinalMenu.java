@@ -94,8 +94,9 @@ public class FinalMenu {
 			Object[] options = {"Confirm", "Cancel"};
 			int n = JOptionPane.showOptionDialog(exitWindow, "Are you sure you want to begin a new game?", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 			if (n == 0) {
-				Hnefatafl.newGame();
-				menuFrame.dispose();
+                Hnefatafl.removeOldGameBoard();
+                menuFrame.dispose();
+				new MainMenu();
 			}
 			if (n == 1) {
 				return;
