@@ -17,9 +17,6 @@ public class SideBar {
     private static final int midGap = 70;
     private static char attackers = 'b';
 	private static char defenders = 'w';
-	private static char king = 'k';
-	private static char empty = '0';
-	private static char restricted = 'c';
     private Color primaryColor;
     private Color secondaryColor;
     private Color letteringColor;
@@ -32,7 +29,6 @@ public class SideBar {
     private JButton exit;
     private JFrame exitWindow;
     private JFrame concedeWindow;
-
 
     /**
      * This is called when creating the side bar JPanel.
@@ -111,9 +107,10 @@ public class SideBar {
 			Hnefatafl.saveGame(new SaveAndLoad());
 		}
     }
+
 	/**
-	*This is a button listener for when the new game button is clicked. It will prompt the user to confirm.
-	*If the user confirms, it will class a new game function to reset the board and begin a new game.
+	* This is a button listener for when the new game button is clicked. It will prompt the user to confirm.
+	* If the user confirms, it will class a new game function to reset the board and begin a new game.
 	*/
 	private class newListener implements ActionListener {
        public void actionPerformed(ActionEvent e) {
@@ -151,6 +148,7 @@ public class SideBar {
             new GameRules();
         }
     }
+
     /**
      * This is a button listener for when the forfeit button is clicked and will bring up the final menu if someone
      * concedes.

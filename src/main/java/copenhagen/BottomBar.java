@@ -15,9 +15,6 @@ public class BottomBar {
     private static JLabel turnCount;
     private static char attackers = 'b';
 	private static char defenders = 'w';
-	private static char king = 'k';
-	private static char empty = '0';
-	private static char restricted = 'c';
     private static Clock attackersClock;
     private static Clock defendersClock;
     private static JLabel attackersTime;

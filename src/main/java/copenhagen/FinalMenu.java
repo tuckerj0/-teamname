@@ -18,12 +18,7 @@ public class FinalMenu {
 	private JButton mainMenuBtn;
 	private JLabel text;
 	private JLabel winnerText;
-	private MainMenu start;
-	private static char attackers = 'b';
 	private static char defenders = 'w';
-	private static char king = 'k';
-	private static char empty = '0';
-	private static char restricted = 'c';
 
 	/**
 	 * This function calls a function to create the final menu.
@@ -64,6 +59,7 @@ public class FinalMenu {
 		showMenu();
 
 	}
+
 	private void showMenu() {
 		menuFrame.setLocationRelativeTo(null);
 		menuFrame.setVisible(true);
@@ -81,9 +77,6 @@ public class FinalMenu {
 		buttonPanel.add(mainMenuBtn);
 
 	}
-
-
-
 
 	/**
 	 *This is a button listener for when the new game button is clicked. It will prompt the user to confirm.
@@ -104,6 +97,7 @@ public class FinalMenu {
 
 		}
 	}
+
 	/**
 	 *This is a button listener for when the main menu button is clicked. It will prompt the user to confirm.
 	 *If the user confirms, it will class a new game function to reset the board and begin a new game.

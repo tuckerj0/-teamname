@@ -30,7 +30,6 @@ public class GameBoard {
 	private static char attackers = 'b';
 	private static char defenders = 'w';
 	private static char king = 'k';
-	private static char empty = '0';
 	private static char restricted = 'c';
 
     /**
@@ -64,8 +63,6 @@ public class GameBoard {
 			}
 		}
 	}
-
-
 
     /**
      * This function gets the JButton at a given location in the two dimensional array.
@@ -251,7 +248,6 @@ public class GameBoard {
             System.exit(1);
         }
     }
-
 
 	/**
      * This function will remove the gamePiece from a given square
