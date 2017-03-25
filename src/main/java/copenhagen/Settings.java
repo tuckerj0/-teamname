@@ -181,13 +181,13 @@ public class Settings {
         }
         if(attackSelected && defenseSelected){
             if(attackColor.equals(defenseColor)){
-                JOptionPane.showMessageDialog(null, "Attack and defense cant be the same color!");
+                JOptionPane.showMessageDialog(null, "Attack and defense can't be the same color!");
                 return false;
             }
             Hnefatafl.setAttackColor(attackColor);
             Hnefatafl.setDefenseColor(defenseColor);
         }else{
-            JOptionPane.showMessageDialog(null, "Please select a both and attack and defense color");
+            JOptionPane.showMessageDialog(null, "Please select both an attack and defense color.");
             return false;
         }
 
