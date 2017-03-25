@@ -9,7 +9,7 @@ import java.awt.event.*;
  * access the rules of the game, or change the settings.
  */
 public class MainMenu {
-    private JFrame _mainMenuFrame = new JFrame("Hnefatafl");
+    private static JFrame _mainMenuFrame = new JFrame("Hnefatafl");
     private JPanel _mainMenuPanel = new JPanel();
     private JButton _playerVsButton = new JButton("START GAME!");
     private JButton _loadGameButton = new JButton("Load Saved Game");
@@ -46,6 +46,10 @@ public class MainMenu {
 
         _mainMenuFrame.setLocationRelativeTo(null);
     	_mainMenuFrame.setVisible(true);
+    }
+
+    public static void enableFrame() {
+        _mainMenuFrame.setEnabled(true);
     }
 
     /**
@@ -91,6 +95,7 @@ public class MainMenu {
      */
     class settingsListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            _mainMenuFrame.setEnabled(false);
             new Settings();
         }
     }

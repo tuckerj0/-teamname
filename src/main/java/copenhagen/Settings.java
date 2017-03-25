@@ -7,9 +7,13 @@ import javax.swing.*;
 import javax.swing.JRadioButton;
 import java.util.ArrayList;
 
-public class Settings{
-    private static ArrayList<JRadioButton> attackButtons = new ArrayList<JRadioButton>();
-    private static ArrayList<JRadioButton> defenseButtons = new ArrayList<JRadioButton>();
+public class Settings {
+    private static ArrayList<JRadioButton> attackButtons = new ArrayList<>();
+    private static ArrayList<JRadioButton> defenseButtons = new ArrayList<>();
+    private static int hour = 0;
+    private static int minute = 5;
+    private static int second = 0;
+    private static int additionalTimePerMove = 3;
     private static JSpinner hourSpinner;
     private static JSpinner minSpinner;
     private static JSpinner secSpinner;
@@ -19,7 +23,6 @@ public class Settings{
     private JPanel defensePanel = new JPanel();
     private JPanel timePanel = new JPanel();
     private JPanel perMovePanel = new JPanel();
-    private JPanel savePanel = new JPanel();
     private JPanel settingsPanel = new JPanel();
     private JButton saveSettingsButton = new JButton("Save");   //allows user to save settings
 
@@ -27,21 +30,17 @@ public class Settings{
      * This function will create the JFrame that will allow user to set time settings, color settings, and starting
      * side.
      */
-    public Settings(){
+    public Settings() {
         settingsFrame.setSize(400, 400); // width, height
+        settingsFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         settingsPanel.setLayout(new BoxLayout(settingsPanel, BoxLayout.Y_AXIS));
-
+        if (attackButtons.isEmpty()) {
+            createColorSelectorForPieces();
+        }
         // Attack Color Buttons
         JLabel attackLabel = new JLabel("Choose Attack Color");
         attackLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         settingsPanel.add(attackLabel);
-
-        attackButtons.add(new JRadioButton("White"));
-        attackButtons.add(new JRadioButton("Black"));
-        attackButtons.add(new JRadioButton("Green"));
-        attackButtons.add(new JRadioButton("Blue"));
-        attackButtons.add(new JRadioButton("Red"));
-        attackButtons.add(new JRadioButton("Orange"));
 
         ButtonGroup attackGroup = new ButtonGroup();
         for(JRadioButton button:attackButtons){
@@ -54,13 +53,6 @@ public class Settings{
         JLabel defenseLabel = new JLabel("Choose Defense Color");
         defenseLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         settingsPanel.add(defenseLabel);
-
-        defenseButtons.add(new JRadioButton("White"));
-        defenseButtons.add(new JRadioButton("Black"));
-        defenseButtons.add(new JRadioButton("Green"));
-        defenseButtons.add(new JRadioButton("Blue"));
-        defenseButtons.add(new JRadioButton("Red"));
-        defenseButtons.add(new JRadioButton("Orange"));
 
         ButtonGroup defenseGroup = new ButtonGroup();
         for(JRadioButton button:defenseButtons){
@@ -75,7 +67,7 @@ public class Settings{
 
         // hours spinner
         timePanel.add(new JLabel("Hours"));
-        SpinnerModel hourModel = new SpinnerNumberModel(0, //initial value
+        SpinnerModel hourModel = new SpinnerNumberModel(hour, //initial value
            0, //min
            100, //max
            1);//step
@@ -84,7 +76,7 @@ public class Settings{
 
         // minutes spinner
         timePanel.add(new JLabel("Minutes"));
-        SpinnerModel minModel = new SpinnerNumberModel(5, //initial value
+        SpinnerModel minModel = new SpinnerNumberModel(minute, //initial value
            0, //min
            59, //max
            1);//step
@@ -93,7 +85,7 @@ public class Settings{
 
         // seconds spinner
         timePanel.add(new JLabel("Seconds"));
-        SpinnerModel secModel = new SpinnerNumberModel(0, //initial value
+        SpinnerModel secModel = new SpinnerNumberModel(second, //initial value
            0, //min
            59, //max
            1);//step
@@ -107,7 +99,7 @@ public class Settings{
         settingsPanel.add(perMoveLabel);
 
         perMovePanel.add(new JLabel("Seconds"));
-        SpinnerModel perMoveModel = new SpinnerNumberModel(3, //initial value
+        SpinnerModel perMoveModel = new SpinnerNumberModel(additionalTimePerMove, //initial value
            0, //min
            1000, //max
            1);//step
@@ -126,6 +118,22 @@ public class Settings{
         settingsFrame.pack();
         settingsFrame.setLocationRelativeTo(null);
         settingsFrame.setVisible(true);
+    }
+
+    private void createColorSelectorForPieces() {
+        attackButtons.add(new JRadioButton("White"));
+        attackButtons.add(new JRadioButton("Black"));
+        attackButtons.add(new JRadioButton("Green"));
+        attackButtons.add(new JRadioButton("Blue"));
+        attackButtons.add(new JRadioButton("Red"));
+        attackButtons.add(new JRadioButton("Orange"));
+
+        defenseButtons.add(new JRadioButton("White"));
+        defenseButtons.add(new JRadioButton("Black"));
+        defenseButtons.add(new JRadioButton("Green"));
+        defenseButtons.add(new JRadioButton("Blue"));
+        defenseButtons.add(new JRadioButton("Red"));
+        defenseButtons.add(new JRadioButton("Orange"));
     }
 
     /**
@@ -166,7 +174,11 @@ public class Settings{
         int secs = (Integer) secSpinner.getValue();
         int mins = (Integer) minSpinner.getValue();
         int hours = (Integer) hourSpinner.getValue();
+        second = secs;
+        minute = mins;
+        hour = hours;
         int perMoveTime = (Integer) perMoveSpinner.getValue();
+        additionalTimePerMove = perMoveTime;
         BottomBar.setStartingTime(secs,mins,hours);
         BottomBar.setPerMoveTime(perMoveTime);
 
@@ -180,9 +192,7 @@ public class Settings{
         public void actionPerformed(ActionEvent e) {
             if(Settings.saveSettings()){
                 settingsFrame.dispose();
-                GameLogic.setStartingPieces(Hnefatafl.getBoardSize());
-                Hnefatafl.setUpGameBoard();
-                Hnefatafl.displayGameBoard();
+                MainMenu.enableFrame();
             }
         }
     }
