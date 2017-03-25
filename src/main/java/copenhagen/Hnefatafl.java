@@ -268,6 +268,7 @@ public class Hnefatafl {
 	public static boolean loadGame(SaveAndLoad sl) {
 		File loadFile = sl.load();
 		if(loadFile == null){
+			Settings.setDefaults();
 			return false;
 		}
 		return true;

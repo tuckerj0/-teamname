@@ -48,6 +48,9 @@ public class MainMenu {
     	_mainMenuFrame.setVisible(true);
     }
 
+    /**
+     * This function re-enables the JFrame after changing the settings of the game.
+     */
     public static void enableFrame() {
         _mainMenuFrame.setEnabled(true);
     }

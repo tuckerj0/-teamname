@@ -7,9 +7,14 @@ import javax.swing.*;
 import javax.swing.JRadioButton;
 import java.util.ArrayList;
 
+/**
+ * This class contains everything that happens when the Settings button is clicked in the main menu.
+ */
 public class Settings {
     private static ArrayList<JRadioButton> attackButtons = new ArrayList<>();
     private static ArrayList<JRadioButton> defenseButtons = new ArrayList<>();
+    private static String attackColor = "Black";
+    private static String defenseColor = "White";
     private static int hour = 0;
     private static int minute = 5;
     private static int second = 0;
@@ -120,15 +125,32 @@ public class Settings {
         settingsFrame.setVisible(true);
     }
 
+    /**
+     * This function resets all the parameters in settings back to the defaults if the save file is invalid.
+     */
+    public static void setDefaults() {
+        attackColor = "Black";
+        Hnefatafl.setAttackColor(attackColor);
+        defenseColor = "White";
+        Hnefatafl.setDefenseColor(defenseColor);
+        hour = 0;
+        minute = 5;
+        second = 0;
+        additionalTimePerMove = 3;
+    }
+
+    /**
+     * This function adds the JRadioButtons color selectors to the arraylists for both the attackers and the defenders.
+     */
     private void createColorSelectorForPieces() {
         attackButtons.add(new JRadioButton("White"));
-        attackButtons.add(new JRadioButton("Black"));
+        attackButtons.add(new JRadioButton("Black", true));
         attackButtons.add(new JRadioButton("Green"));
         attackButtons.add(new JRadioButton("Blue"));
         attackButtons.add(new JRadioButton("Red"));
         attackButtons.add(new JRadioButton("Orange"));
 
-        defenseButtons.add(new JRadioButton("White"));
+        defenseButtons.add(new JRadioButton("White", true));
         defenseButtons.add(new JRadioButton("Black"));
         defenseButtons.add(new JRadioButton("Green"));
         defenseButtons.add(new JRadioButton("Blue"));
@@ -141,8 +163,6 @@ public class Settings {
      * @return This function returns true if the user's settings are valid.
      */
     public static boolean saveSettings(){
-        String attackColor = "";
-        String defenseColor = "";
         boolean attackSelected = false;
         boolean defenseSelected = false;
         for(JRadioButton button:attackButtons){
