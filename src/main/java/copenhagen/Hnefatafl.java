@@ -29,7 +29,6 @@ public class Hnefatafl {
 	private static JPanel board;
 	private static JPanel side;
 	private static JPanel bottom;
-	private static JMenuBar menuBar;
 	private static boolean saved = true;
 	private static int boardSize = 11;
 	private static int turnCount = 1;
@@ -87,8 +86,6 @@ public class Hnefatafl {
 		side = sBar.getSideBar();
 		BottomBar bBar = new BottomBar(primaryColor, letteringColor, turn, turnCount);
 		bottom = bBar.getBottomBar();
-		MenuBar menu = new MenuBar();
-		menuBar = menu.getMenuBar();
 		selectedLoc = new BoardLocation();
 	}
 
@@ -103,8 +100,6 @@ public class Hnefatafl {
 		frame.add(board, BorderLayout.LINE_START);
 		frame.add(side, BorderLayout.EAST);
 		frame.add(bottom, BorderLayout.SOUTH);
-		/* Add Menu bar at top of JFrame*/
-		frame.setJMenuBar(menuBar);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
 		frame.setLocationRelativeTo(null);
