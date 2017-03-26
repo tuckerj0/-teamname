@@ -159,4 +159,15 @@ public class SaveAndLoadTest {
         assertEquals(false, SaveAndLoad.checkState(layout,turn,turnCount, aTime, dTime));
     }
 	
+	// This test checks that the checkState function returns false when an invalid time is given
+    @Test
+    public void testCheckStateTime() {
+        String layout = "c00bbbbb00c00000b0000000000000000b0000w0000bb000www000bbb0wwkww0bbb000www000bb0000w0000b0000000000000000b00000c00bbbbb00";
+        int turnCount = 1;
+        char turn = 'w';
+		String aTime = "00:00:-2";
+		String dTime = "11:11:11";
+        assertEquals(false, SaveAndLoad.checkState(layout,turn,turnCount, aTime, dTime));
+    }
+	
 }

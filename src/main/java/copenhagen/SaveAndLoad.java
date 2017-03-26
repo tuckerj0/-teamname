@@ -254,6 +254,19 @@ public class SaveAndLoad {
 				return false;
 			}
 		}
+		
+		int hours = Integer.parseInt(aTime.substring(0,2));
+		int minutes = Integer.parseInt(aTime.substring(3,5));
+		int seconds = Integer.parseInt(aTime.substring(6,8));
+		if(hours < 0 && minutes < 0 && seconds < 0){
+			return false;
+		}
+		hours = Integer.parseInt(dTime.substring(0,2));
+		minutes = Integer.parseInt(dTime.substring(3,5));
+		seconds = Integer.parseInt(dTime.substring(6,8));
+		if(hours < 0 && minutes < 0 && seconds < 0){
+			return false;
+		}
 
 		GameLogic.gameBoardArray = pieces;
 		Hnefatafl.changeTimes(aTime, dTime);
