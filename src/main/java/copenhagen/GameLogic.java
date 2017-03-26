@@ -21,6 +21,8 @@ public class GameLogic{
 	private static char king = 'k';
 	private static char empty = '0';
 	private static char restricted = 'c';
+	private static int numOfAttackersLeft;
+	private static int numOfDefendersLeft;
 
     /**
      * This function checks whether a piece is allowed to be currently moved.
@@ -57,6 +59,38 @@ public class GameLogic{
     }
 
     /**
+     * This function gets the number of attackers left on the board.
+     * @return This returns the number of attackers left as an integer.
+     */
+    public static int getNumOfAttackersLeft() {
+    	return numOfAttackersLeft;
+	}
+
+    /**
+     * This function gets the number of defenders left on the board.
+     * @return This returns the number of defenders left as an integer.
+     */
+	public static int getNumOfDefendersLeft() {
+		return numOfDefendersLeft;
+	}
+
+    /**
+     * This function sets the number of attackers left on the board.
+     * @param i This parameter is the integer representing the number of attackers left.
+     */
+	public static void setNumOfAttackersLeft(int i) {
+        numOfAttackersLeft = i;
+    }
+
+    /**
+     * This function sets the number of defenders left on the board.
+     * @param i This parameter is the integer representing the number of defenders left.
+     */
+    public static void setNumOfDefendersLeft(int i) {
+        numOfDefendersLeft = i;
+    }
+
+    /**
      * This function removes all the pieces that were captured on the board by the move just completed.
      * @param col This parameter is the column associated with a piece that is about to be removed.
      * @param row This parameter is the row associated with a piece that is about to be removed.
@@ -70,9 +104,16 @@ public class GameLogic{
                 // But the king is only captured if it is surrounded on all 4 (or 3 if the king is on an edge) sides
                 return;
             }
+            if (gameBoardArray[c][r] == attackers) {
+                numOfAttackersLeft--;
+            }
+            else {
+                numOfDefendersLeft--;
+            }
             gameBoardArray[c][r] = empty;
             GameBoard.removeCapturedPiecesUI(c,r);
         }
+        BottomBar.updateNumOfPiecesLeft();
     }
 
     /**
@@ -102,6 +143,8 @@ public class GameLogic{
             s[0][0] = s[0][10] = s[10][0] = s[10][10] = s[5][5] = restricted;
             s[5][5] = king;
         }
+        numOfAttackersLeft = 24;
+        numOfDefendersLeft = 12;
         gameBoardArray = s;
         return s;
     }

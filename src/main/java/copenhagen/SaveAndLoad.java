@@ -256,6 +256,9 @@ public class SaveAndLoad {
 		}
 
 		GameLogic.gameBoardArray = pieces;
+		GameLogic.setNumOfAttackersLeft(b);
+		GameLogic.setNumOfDefendersLeft(w);
+		BottomBar.updateNumOfPiecesLeft();
 		Hnefatafl.changeTimes(aTime, dTime);
 		Hnefatafl.setTurn(turn);
 		Hnefatafl.setTurnCount(turnCount);

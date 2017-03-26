@@ -173,7 +173,9 @@ public class SideBar {
      */
      private class ExitListener implements ActionListener {
        public void actionPerformed(ActionEvent e) {
-           
+           if (Hnefatafl.getSaved()) {
+               System.exit(0);
+           }
            Object[] options = {"Save", "Don't Save", "Cancel"};
            int n = JOptionPane.showOptionDialog(new JFrame(), "Want to save your game progress?", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
            if (n == 0) {
