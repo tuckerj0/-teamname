@@ -29,7 +29,6 @@ public class Hnefatafl {
 	private static JPanel board;
 	private static JPanel side;
 	private static JPanel bottom;
-	private static JMenuBar menuBar;
 	private static boolean saved = true;
 	private static int boardSize = 11;
 	private static int turnCount = 1;
@@ -81,14 +80,13 @@ public class Hnefatafl {
      * This function sets up and retrieves the different pieces (3 JPanels) that comprise the game board.
      */
 	public static void setUpGameBoard() {
+        newGameResetTurns();
         hBoard = new GameBoard(boardSize, primaryColor, secondaryColor, specialColor);
         board = hBoard.getBoard();
         sBar = new SideBar(primaryColor, secondaryColor, letteringColor);
 		side = sBar.getSideBar();
 		BottomBar bBar = new BottomBar(primaryColor, letteringColor, turn, turnCount);
 		bottom = bBar.getBottomBar();
-		MenuBar menu = new MenuBar();
-		menuBar = menu.getMenuBar();
 		selectedLoc = new BoardLocation();
 	}
 
@@ -103,8 +101,6 @@ public class Hnefatafl {
 		frame.add(board, BorderLayout.LINE_START);
 		frame.add(side, BorderLayout.EAST);
 		frame.add(bottom, BorderLayout.SOUTH);
-		/* Add Menu bar at top of JFrame*/
-		frame.setJMenuBar(menuBar);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
 		frame.setLocationRelativeTo(null);
@@ -135,7 +131,8 @@ public class Hnefatafl {
 
     /**
      * This is a getter that gets whose turn it currently is.
-     * @return This function will return 'attackers' if it is the attackers turn or 'defenders' if it is the defenders' turn.
+     * @return This function will return 'attackers' if it is the attackers turn or 'defenders' if it is the defenders'
+     * turn.
      */
     public static char getTurn() {
 	    return turn;
@@ -166,8 +163,8 @@ public class Hnefatafl {
     }
 
 	/**
-     * This is a getter that gets the size of the gameboard
-     * @return This will return an interger representing the length/width of the gameboard
+     * This is a getter that gets the size of the gameboard.
+     * @return This will return an integer representing the length/width of the gameboard.
      */
     public static int getBoardSize() {
         return boardSize;
@@ -214,34 +211,6 @@ public class Hnefatafl {
             endTurn();
 		}else{
 			JOptionPane.showMessageDialog(null, "Invalid Move");
-		}
-	}
-
-	/**
-     * This function sets the icon of a particular button.
-     * @param pieceType The value of the piece from the characters specified in GameBoard.java.
-     * @param button The button to add the image to.
-     */
-	public static void setButtonImage(char pieceType, JButton button){
-		try {
-			Image img;
-			ImageIcon icon;
-			if(pieceType == attackers){
-				img = ImageIO.read(Hnefatafl.class.getResource(attackPieceAddr));
-				icon = new ImageIcon(img);
-				button.setIcon(icon);
-			}else if(pieceType == defenders){
-				img = ImageIO.read(Hnefatafl.class.getResource(defendPieceAddr));
-				icon = new ImageIcon(img);
-				button.setIcon(icon);
-			}else if(pieceType == king){
-				img = ImageIO.read(Hnefatafl.class.getResource(kingPieceAddr));
-				icon = new ImageIcon(img);
-				button.setIcon(icon);
-			}
-		} catch (IOException e) {
-			System.out.println("Image Didn't Load");
-			System.exit(1);
 		}
 	}
 
@@ -299,17 +268,10 @@ public class Hnefatafl {
 	public static boolean loadGame(SaveAndLoad sl) {
 		File loadFile = sl.load();
 		if(loadFile == null){
+			Settings.setDefaults();
 			return false;
 		}
 		return true;
-	}
-
-    /**
-     * This function begins a new game.
-     */
-	public static void newGame(){
-		newGameResetTurns();
-		newGameGUI();
 	}
 
 	/**
@@ -323,24 +285,8 @@ public class Hnefatafl {
 		return turnCount;
 	}
 
-	/**
-	 * This function sets up the GUI for a new game.
-	 */
-	public static void newGameGUI(){
-		frame.remove(bottom);
-		BottomBar bBar = new BottomBar(primaryColor, letteringColor, turn, turnCount);
-		bottom = bBar.getBottomBar();
-		frame.remove(board);
-        GameLogic.setStartingPieces(boardSize);
-        hBoard = new GameBoard(boardSize, primaryColor, secondaryColor, specialColor);
-		board = hBoard.getBoard();
-		frame.add(board, BorderLayout.LINE_START);
-		frame.add(bottom, BorderLayout.SOUTH);
-		frame.pack();
-	}
-
     /**
-     * This functionss gets the HBoard.
+     * This function gets the HBoard.
      * @return This function will return the jPanel that is displayed to the user of the current gameboard.
      */
 	public static GameBoard getHBoard(){
@@ -349,7 +295,7 @@ public class Hnefatafl {
 
 	/**
 	 * This function set the color of the attacking pieces on the board.
-	 * @param color string representing color of the piece
+	 * @param color This parameter is a String representing the color of the piece.
 	 */
 	public static void setAttackColor(String color){
 		color = color.toLowerCase();
@@ -362,7 +308,7 @@ public class Hnefatafl {
 
 	/**
 	 * This function set the color of the defending pieces on the board.
-	 * @param color string representing color of the piece
+     * @param color This parameter is a String representing the color of the piece.
 	 */
 	public static void setDefenseColor(String color){
 		color = color.toLowerCase();

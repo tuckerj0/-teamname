@@ -7,42 +7,45 @@ import javax.swing.*;
 import javax.swing.JRadioButton;
 import java.util.ArrayList;
 
-public class Settings{
-
-    private static ArrayList<JRadioButton> attackButtons = new ArrayList<JRadioButton>();
-    private static ArrayList<JRadioButton> defenseButtons = new ArrayList<JRadioButton>();
+/**
+ * This class contains everything that happens when the Settings button is clicked in the main menu.
+ */
+public class Settings {
+    private static ArrayList<JRadioButton> attackButtons = new ArrayList<>();
+    private static ArrayList<JRadioButton> defenseButtons = new ArrayList<>();
+    private static String attackColor = "Black";
+    private static String defenseColor = "White";
+    private static int hour = 0;
+    private static int minute = 5;
+    private static int second = 0;
+    private static int additionalTimePerMove = 3;
     private static JSpinner hourSpinner;
     private static JSpinner minSpinner;
     private static JSpinner secSpinner;
     private static JSpinner perMoveSpinner;
-    private JFrame settingsFrame= new JFrame("Settings"); // creates frame/window
+    private JFrame settingsFrame= new JFrame("Settings");   // creates frame/window
     private JPanel attackPanel = new JPanel();
     private JPanel defensePanel = new JPanel();
     private JPanel timePanel = new JPanel();
     private JPanel perMovePanel = new JPanel();
-    private JPanel savePanel = new JPanel();
     private JPanel settingsPanel = new JPanel();
-    private JButton saveSettingsButton = new JButton("Save");//allows user to save seetings
-    private static int boardSize = 11;
+    private JButton saveSettingsButton = new JButton("Save");   //allows user to save settings
 
-    public Settings(){
-        /**
-         * This function will create the JFrame that will allow user to set time settings, color settings, and start side
-         */
+    /**
+     * This function will create the JFrame that will allow user to set time settings, color settings, and starting
+     * side.
+     */
+    public Settings() {
         settingsFrame.setSize(400, 400); // width, height
+        settingsFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         settingsPanel.setLayout(new BoxLayout(settingsPanel, BoxLayout.Y_AXIS));
-
-        //Attack Color Butons
+        if (attackButtons.isEmpty()) {
+            createColorSelectorForPieces();
+        }
+        // Attack Color Buttons
         JLabel attackLabel = new JLabel("Choose Attack Color");
         attackLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         settingsPanel.add(attackLabel);
-
-        attackButtons.add(new JRadioButton("White"));
-        attackButtons.add(new JRadioButton("Black"));
-        attackButtons.add(new JRadioButton("Green"));
-        attackButtons.add(new JRadioButton("Blue"));
-        attackButtons.add(new JRadioButton("Red"));
-        attackButtons.add(new JRadioButton("Orange"));
 
         ButtonGroup attackGroup = new ButtonGroup();
         for(JRadioButton button:attackButtons){
@@ -51,17 +54,10 @@ public class Settings{
         }
         settingsPanel.add(attackPanel);
 
-        //Defense Color Buttons
+        // Defense Color Buttons
         JLabel defenseLabel = new JLabel("Choose Defense Color");
         defenseLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         settingsPanel.add(defenseLabel);
-
-        defenseButtons.add(new JRadioButton("White"));
-        defenseButtons.add(new JRadioButton("Black"));
-        defenseButtons.add(new JRadioButton("Green"));
-        defenseButtons.add(new JRadioButton("Blue"));
-        defenseButtons.add(new JRadioButton("Red"));
-        defenseButtons.add(new JRadioButton("Orange"));
 
         ButtonGroup defenseGroup = new ButtonGroup();
         for(JRadioButton button:defenseButtons){
@@ -74,27 +70,27 @@ public class Settings{
         gameLengthLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         settingsPanel.add(gameLengthLabel);
 
-        //hours spinner
+        // hours spinner
         timePanel.add(new JLabel("Hours"));
-        SpinnerModel hourModel = new SpinnerNumberModel(0, //initial value
+        SpinnerModel hourModel = new SpinnerNumberModel(hour, //initial value
            0, //min
            100, //max
            1);//step
         hourSpinner = new JSpinner(hourModel);
         timePanel.add(hourSpinner);
 
-        //minutes spinner
+        // minutes spinner
         timePanel.add(new JLabel("Minutes"));
-        SpinnerModel minModel = new SpinnerNumberModel(5, //initial value
+        SpinnerModel minModel = new SpinnerNumberModel(minute, //initial value
            0, //min
            59, //max
            1);//step
         minSpinner = new JSpinner(minModel);
         timePanel.add(minSpinner);
 
-        //seconds spinner
+        // seconds spinner
         timePanel.add(new JLabel("Seconds"));
-        SpinnerModel secModel = new SpinnerNumberModel(0, //initial value
+        SpinnerModel secModel = new SpinnerNumberModel(second, //initial value
            0, //min
            59, //max
            1);//step
@@ -102,13 +98,13 @@ public class Settings{
         timePanel.add(secSpinner);
         settingsPanel.add(timePanel);
 
-        //Per Move Added Time Choice
+        // Per Move Added Time Choice
         JLabel perMoveLabel = new JLabel("Time Added Per Turn");
         perMoveLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         settingsPanel.add(perMoveLabel);
 
         perMovePanel.add(new JLabel("Seconds"));
-        SpinnerModel perMoveModel = new SpinnerNumberModel(3, //initial value
+        SpinnerModel perMoveModel = new SpinnerNumberModel(additionalTimePerMove, //initial value
            0, //min
            1000, //max
            1);//step
@@ -116,7 +112,7 @@ public class Settings{
         perMovePanel.add(perMoveSpinner);
         settingsPanel.add(perMovePanel);
 
-        //Save Button
+        // Save Button
         ActionListener saveSettingsListener = new SaveSettingsListener();
         saveSettingsButton.addActionListener(saveSettingsListener);
         saveSettingsButton.setFont(new Font("Courier", Font.PLAIN, 48));
@@ -130,12 +126,43 @@ public class Settings{
     }
 
     /**
-     * This functionss saves the settings chosen by the user
-     * @return true if the user settings are valid
+     * This function resets all the parameters in settings back to the defaults if the save file is invalid.
+     */
+    public static void setDefaults() {
+        attackColor = "Black";
+        Hnefatafl.setAttackColor(attackColor);
+        defenseColor = "White";
+        Hnefatafl.setDefenseColor(defenseColor);
+        hour = 0;
+        minute = 5;
+        second = 0;
+        additionalTimePerMove = 3;
+    }
+
+    /**
+     * This function adds the JRadioButtons color selectors to the arraylists for both the attackers and the defenders.
+     */
+    private void createColorSelectorForPieces() {
+        attackButtons.add(new JRadioButton("White"));
+        attackButtons.add(new JRadioButton("Black", true));
+        attackButtons.add(new JRadioButton("Green"));
+        attackButtons.add(new JRadioButton("Blue"));
+        attackButtons.add(new JRadioButton("Red"));
+        attackButtons.add(new JRadioButton("Orange"));
+
+        defenseButtons.add(new JRadioButton("White", true));
+        defenseButtons.add(new JRadioButton("Black"));
+        defenseButtons.add(new JRadioButton("Green"));
+        defenseButtons.add(new JRadioButton("Blue"));
+        defenseButtons.add(new JRadioButton("Red"));
+        defenseButtons.add(new JRadioButton("Orange"));
+    }
+
+    /**
+     * This function saves the settings chosen by the user.
+     * @return This function returns true if the user's settings are valid.
      */
     public static boolean saveSettings(){
-        String attackColor = "";
-        String defenseColor = "";
         boolean attackSelected = false;
         boolean defenseSelected = false;
         for(JRadioButton button:attackButtons){
@@ -154,20 +181,24 @@ public class Settings{
         }
         if(attackSelected && defenseSelected){
             if(attackColor.equals(defenseColor)){
-                JOptionPane.showMessageDialog(null, "Attack and defense cant be the same color!");
+                JOptionPane.showMessageDialog(null, "Attack and defense can't be the same color!");
                 return false;
             }
             Hnefatafl.setAttackColor(attackColor);
             Hnefatafl.setDefenseColor(defenseColor);
         }else{
-            JOptionPane.showMessageDialog(null, "Please select a both and attack and defense color");
+            JOptionPane.showMessageDialog(null, "Please select both an attack and defense color.");
             return false;
         }
 
         int secs = (Integer) secSpinner.getValue();
         int mins = (Integer) minSpinner.getValue();
         int hours = (Integer) hourSpinner.getValue();
+        second = secs;
+        minute = mins;
+        hour = hours;
         int perMoveTime = (Integer) perMoveSpinner.getValue();
+        additionalTimePerMove = perMoveTime;
         BottomBar.setStartingTime(secs,mins,hours);
         BottomBar.setPerMoveTime(perMoveTime);
 
@@ -181,9 +212,7 @@ public class Settings{
         public void actionPerformed(ActionEvent e) {
             if(Settings.saveSettings()){
                 settingsFrame.dispose();
-                GameLogic.setStartingPieces(Hnefatafl.getBoardSize());
-                Hnefatafl.setUpGameBoard();
-                Hnefatafl.displayGameBoard();
+                MainMenu.enableFrame();
             }
         }
     }
