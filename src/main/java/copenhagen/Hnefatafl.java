@@ -81,7 +81,6 @@ public class Hnefatafl {
      * This function sets up and retrieves the different pieces (3 JPanels) that comprise the game board.
      */
 	public static void setUpGameBoard() {
-        newGameResetTurns();
         hBoard = new GameBoard(boardSize, primaryColor, secondaryColor, specialColor);
         board = hBoard.getBoard();
         sBar = new SideBar(primaryColor, secondaryColor, letteringColor);
@@ -269,10 +268,8 @@ public class Hnefatafl {
      * @return The return value is a boolean representing success or failure
      */
 	public static boolean loadGame(SaveAndLoad sl) {
-		
 		File loadFile = sl.load();
 		if(loadFile == null){
-			Settings.setDefaults();
 			return false;
 		}
 		return true;

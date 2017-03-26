@@ -63,6 +63,7 @@ public class MainMenu {
         public void actionPerformed(ActionEvent e) {
             _mainMenuFrame.dispose();
             GameLogic.setStartingPieces(Hnefatafl.getBoardSize());
+            Hnefatafl.newGameResetTurns();
             Hnefatafl.setUpGameBoard();
             Hnefatafl.displayGameBoard();            
         }

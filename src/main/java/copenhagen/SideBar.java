@@ -116,6 +116,7 @@ public class SideBar {
            int n = JOptionPane.showOptionDialog(new JFrame(), "Are you sure you want to begin a new game? All progress wil be lost.", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
            if (n == 0) {
                Hnefatafl.removeOldGameBoard();
+               Settings.setDefaults();
                new MainMenu();
            }
            if (n == 1) {
