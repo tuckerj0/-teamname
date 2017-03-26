@@ -21,9 +21,12 @@ public class BottomBar {
     private static JLabel defendersTime;
     private static CountDownTimer timer;
     private static int perMoveTime = 3;//number of seconds added to each user after their move
-    private static int startingMinutes = 5;//default game set to 5 minutes
-    private static int startingHours = 0;
-    private static int startingSeconds = 0;
+    private static int aStartingMinutes = 5;//default game set to 5 minutes
+    private static int aStartingHours = 0;
+    private static int aStartingSeconds = 0;
+	private static int dStartingMinutes = 5;//default game set to 5 minutes
+    private static int dStartingHours = 0;
+    private static int dStartingSeconds = 0;
 
     /**
      * This is called when creating the bottom bar JPanel.
@@ -85,8 +88,8 @@ public class BottomBar {
      * This function adds the clocks to the bottom panel and starts the countdown timer.
      */
     private void addClocks() {
-        attackersClock = new Clock(startingHours,startingMinutes,startingSeconds);
-        defendersClock = new Clock(startingHours,startingMinutes,startingSeconds);
+        attackersClock = new Clock(aStartingHours,aStartingMinutes,aStartingSeconds);
+        defendersClock = new Clock(dStartingHours,dStartingMinutes,dStartingSeconds);
         timer = new CountDownTimer();
 
         attackersTime = attackersClock.formatClock("Attackers");
@@ -145,15 +148,70 @@ public class BottomBar {
 	 * This function sets the game clock.
 	 */
     public static void setStartingTime(int s, int m, int h) {
-        startingHours = h;
-        startingMinutes = m;
-        startingSeconds = s;
+        aStartingHours = h;
+        aStartingMinutes = m;
+        aStartingSeconds = s;
+		dStartingHours = h;
+        dStartingMinutes = m;
+        dStartingSeconds = s;
     }
-
+	
+	public static void aSetStartingTime(int s, int m, int h) {
+        aStartingHours = h;
+        aStartingMinutes = m;
+        aStartingSeconds = s;
+    }
+	public static void dSetStartingTime(int s, int m, int h) {
+        dStartingHours = h;
+        dStartingMinutes = m;
+        dStartingSeconds = s;
+    }
     /**
 	 * This function sets the per move time.
 	 */
     public static void setPerMoveTime(int seconds) {
         perMoveTime = seconds;
     }
+	/**
+	 * This function returns the attacker's clock
+	 */
+	public Clock getAttackersClock(){
+		return attackersClock;
+	}
+	/**
+	 * This function returns the defender's clock
+	 */
+	public Clock getDefendersClock(){
+		return defendersClock;
+	}
+	/**
+	 * This function sets the defender's and attacker's clocs
+	 */
+	public void setClocks(String aTime, String dTime){
+		timer.stopCountDown();
+		int hours = Integer.parseInt(aTime.substring(0,2));
+		int minutes = Integer.parseInt(aTime.substring(3,5));
+		int seconds = Integer.parseInt(aTime.substring(6,8));
+		aSetStartingTime(seconds, minutes, hours);
+		
+		int dhours = Integer.parseInt(dTime.substring(0,2));
+		int dminutes = Integer.parseInt(dTime.substring(3,5));
+		int dseconds = Integer.parseInt(dTime.substring(6,8));
+		dSetStartingTime(dseconds, dminutes, dhours);
+		
+		timer = new CountDownTimer();
+		attackersTime = attackersClock.formatClock("Attackers");
+        defendersTime = defendersClock.formatClock("Defenders");
+        attackersTime.setForeground(letteringColor);
+        defendersTime.setForeground(letteringColor);
+        bottom.add(Box.createRigidArea(new Dimension(75, 0)));
+        bottom.add(attackersTime);
+        bottom.add(Box.createRigidArea(new Dimension(75, 0)));
+        bottom.add(defendersTime);
+        bottom.add(Box.createRigidArea(new Dimension(75, 0)));
+
+        timer.runCountdown(attackersClock, defendersClock, attackersTime, defendersTime);
+		return;
+	}
+	
 }

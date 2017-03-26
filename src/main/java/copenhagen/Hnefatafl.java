@@ -49,6 +49,7 @@ public class Hnefatafl {
 	private static boolean pieceIsSelected = false;
 	private static char winner;
 	private static FinalMenu finalMenu;
+	private static BottomBar bBar = new BottomBar(primaryColor, letteringColor, turn, turnCount);
 
 	//Piece colors set to black and white by default, can be changed in the settings menu
 	private static String attackColor = "black";
@@ -85,7 +86,7 @@ public class Hnefatafl {
         board = hBoard.getBoard();
         sBar = new SideBar(primaryColor, secondaryColor, letteringColor);
 		side = sBar.getSideBar();
-		BottomBar bBar = new BottomBar(primaryColor, letteringColor, turn, turnCount);
+		bBar = new BottomBar(primaryColor, letteringColor, turn, turnCount);
 		bottom = bBar.getBottomBar();
 		selectedLoc = new BoardLocation();
 	}
@@ -256,7 +257,9 @@ public class Hnefatafl {
      * @return This function will return true if successful or false in the case of an IOException.
      */
 	public static boolean saveGame(SaveAndLoad sl) {
-	    saved = sl.save(boardSize, turn, turnCount);
+		String aClock = bBar.getAttackersClock().getTime();
+		String dClock = bBar.getDefendersClock().getTime();
+	    saved = sl.save(boardSize, turn, turnCount, aClock, dClock);
 		return saved;
 	}
 
@@ -266,12 +269,23 @@ public class Hnefatafl {
      * @return The return value is a boolean representing success or failure
      */
 	public static boolean loadGame(SaveAndLoad sl) {
+		
 		File loadFile = sl.load();
 		if(loadFile == null){
 			Settings.setDefaults();
 			return false;
 		}
 		return true;
+	}
+	
+	/**
+	*The function sets attack and defense clocks to given times
+	*
+	*@param String aTime. Formatted string representing time on attacker's clock
+	*@param String dTime. Formatted string representing time on defender's clock
+	*/
+	public static void changeTimes(String aTime, String dTime){
+		bBar.setClocks(aTime, dTime);
 	}
 
 	/**
