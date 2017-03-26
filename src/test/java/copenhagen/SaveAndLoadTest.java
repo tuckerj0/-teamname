@@ -8,7 +8,7 @@ public class SaveAndLoadTest {
 	/**
      * These functions test the checkState function from saveAndLoad
      */
-	 /*
+	 
 	@Test
     public void testCheckStateIfValid1() {
         String layout = "c00bbbbb00c00000b0000000000000000b0000w0000bb000www000bbb0wwkww0bbb000www000bb0000w0000b0000000000000000b00000c00bbbbb00c";
@@ -158,5 +158,5 @@ public class SaveAndLoadTest {
 		String dTime = "11:11:11";
         assertEquals(false, SaveAndLoad.checkState(layout,turn,turnCount, aTime, dTime));
     }
-	*/
+	
 }
