@@ -25,7 +25,7 @@ public class SaveAndLoad {
      * @param turnCount This parameter is the total amount of turns.
      * @return This function will return true if successful or false in the case of an IOException.
      */
-	public boolean save(int size, char turn, int turnCount){
+	public boolean save(int size, char turn, int turnCount, String aClock, String dClock){
 		PrintWriter writer = null;
 		File game = null;
 		try{
@@ -54,6 +54,8 @@ public class SaveAndLoad {
 				writer.println(turn);
 				writer.println(Hnefatafl.getAttackColor());
 				writer.println(Hnefatafl.getDefenseColor());
+				writer.println(aClock);
+				writer.println(dClock);
 				for(int i = 0; i < size; i++){
 					for(int j = 0; j < size; j++){
 						writer.print(GameLogic.gameBoardArray[i][j]);
@@ -87,6 +89,8 @@ public class SaveAndLoad {
 		int savedTurnCount = -1;
 		char savedCurrentTurn = 'n';
 		String savedLayout = "";
+		String aTime = "";
+		String dTime = "";
 		try {
 			JFileChooser fileChooser = new JFileChooser();
 			FileNameExtensionFilter filter = new FileNameExtensionFilter("hnef","hnef");
@@ -129,6 +133,12 @@ public class SaveAndLoad {
 					Hnefatafl.setDefenseColor(savedDefenseColor);
 				}
 				else if(i == 4){
+					aTime = currentLine;
+				}
+				else if(i == 5){
+					dTime = currentLine;
+				}
+				else if(i == 6){
 					savedLayout = currentLine;
 				}
 				i++;
@@ -147,7 +157,7 @@ public class SaveAndLoad {
                 return null;
 			}
 		}
-		if(checkState(savedLayout, savedCurrentTurn, savedTurnCount) == true){
+		if(checkState(savedLayout, savedCurrentTurn, savedTurnCount, aTime, dTime) == true){
 			return fileName;
 		}
 		else{
@@ -163,7 +173,7 @@ public class SaveAndLoad {
      * @param turnCount This parameter is the total amount of turns.
      * @return This function will return true if it is a valid game state. Otherwise, false if it is not.
      */
-	public static boolean checkState(String layout, char turn, int turnCount){
+	public static boolean checkState(String layout, char turn, int turnCount, String aTime, String dTime){
 		//check size of the board
 		int size = layout.length();
 		if(size/9 == 9 ){
@@ -246,6 +256,7 @@ public class SaveAndLoad {
 		}
 
 		GameLogic.gameBoardArray = pieces;
+		Hnefatafl.changeTimes(aTime, dTime);
 		Hnefatafl.setTurn(turn);
 		Hnefatafl.setTurnCount(turnCount);
 		return true;
