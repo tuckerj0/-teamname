@@ -116,6 +116,7 @@ public class SideBar {
            int n = JOptionPane.showOptionDialog(new JFrame(), "Are you sure you want to begin a new game? All progress wil be lost.", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
            if (n == 0) {
                Hnefatafl.removeOldGameBoard();
+               Settings.setDefaults();
                new MainMenu();
            }
            if (n == 1) {
@@ -173,7 +174,9 @@ public class SideBar {
      */
      private class ExitListener implements ActionListener {
        public void actionPerformed(ActionEvent e) {
-           
+           if (Hnefatafl.getSaved()) {
+               System.exit(0);
+           }
            Object[] options = {"Save", "Don't Save", "Cancel"};
            int n = JOptionPane.showOptionDialog(new JFrame(), "Want to save your game progress?", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
            if (n == 0) {

@@ -137,6 +137,8 @@ public class Settings {
         minute = 5;
         second = 0;
         additionalTimePerMove = 3;
+        BottomBar.setStartingTime(second, minute, hour);
+        BottomBar.setPerMoveTime(additionalTimePerMove);
     }
 
     /**

@@ -91,6 +91,8 @@ public class SaveAndLoad {
 		String savedLayout = "";
 		String aTime = "";
 		String dTime = "";
+        String savedAttackColor = "";
+        String savedDefenseColor = "";
 		try {
 			JFileChooser fileChooser = new JFileChooser();
 			FileNameExtensionFilter filter = new FileNameExtensionFilter("hnef","hnef");
@@ -125,12 +127,10 @@ public class SaveAndLoad {
 					savedCurrentTurn = currentLine.charAt(0);
 				}
 				else if(i == 2){
-					String savedAttackColor = String.valueOf(currentLine);
-					Hnefatafl.setAttackColor(savedAttackColor);
-				}
+					savedAttackColor = String.valueOf(currentLine);
+                }
 				else if(i == 3){
-					String savedDefenseColor = String.valueOf(currentLine);
-					Hnefatafl.setDefenseColor(savedDefenseColor);
+					savedDefenseColor = String.valueOf(currentLine);
 				}
 				else if(i == 4){
 					aTime = currentLine;
@@ -157,8 +157,10 @@ public class SaveAndLoad {
                 return null;
 			}
 		}
-		if(checkState(savedLayout, savedCurrentTurn, savedTurnCount, aTime, dTime) == true){
-			return fileName;
+		if(checkState(savedLayout, savedCurrentTurn, savedTurnCount, aTime, dTime)){
+            Hnefatafl.setAttackColor(savedAttackColor);
+            Hnefatafl.setDefenseColor(savedDefenseColor);
+            return fileName;
 		}
 		else{
             JOptionPane.showMessageDialog(null, "Invalid save file.");
@@ -269,6 +271,9 @@ public class SaveAndLoad {
 		}
 
 		GameLogic.gameBoardArray = pieces;
+		GameLogic.setNumOfAttackersLeft(b);
+		GameLogic.setNumOfDefendersLeft(w);
+		BottomBar.updateNumOfPiecesLeft();
 		Hnefatafl.changeTimes(aTime, dTime);
 		Hnefatafl.setTurn(turn);
 		Hnefatafl.setTurnCount(turnCount);

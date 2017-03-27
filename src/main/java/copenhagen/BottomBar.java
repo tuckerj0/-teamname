@@ -13,6 +13,8 @@ public class BottomBar {
     private JPanel bottom;
     private static JLabel turn;
     private static JLabel turnCount;
+    private static JLabel numOfAttackPieces;
+    private static JLabel numOfDefensePieces;
     private static char attackers = 'b';
 	private static char defenders = 'w';
     private static Clock attackersClock;
@@ -41,6 +43,7 @@ public class BottomBar {
         createPanel();
         setTurn(start);
         setTurnCount(count);
+        setRemainingPieces();
         addLabels();
     }
 
@@ -49,6 +52,7 @@ public class BottomBar {
      */
     private void createPanel() {
         bottom = new JPanel();
+        bottom.setLayout(new GridBagLayout());
         bottom.setBackground(primaryColor);
     }
 
@@ -75,13 +79,32 @@ public class BottomBar {
         turnCount.setForeground(letteringColor);
     }
 
+    private void setRemainingPieces() {
+        int attackPieces = GameLogic.getNumOfAttackersLeft();
+        int defensePieces = GameLogic.getNumOfDefendersLeft();
+        numOfAttackPieces = new JLabel("Attack (" + Hnefatafl.getAttackColor() + ") Pieces Left: " + attackPieces);
+        numOfDefensePieces = new JLabel("Defense (" + Hnefatafl.getDefenseColor() + ") Pieces Left: " + defensePieces);
+        numOfAttackPieces.setForeground(letteringColor);
+        numOfDefensePieces.setForeground(letteringColor);
+    }
+
     /**
      * This function adds the labels to the bottom panel.
      */
     private void addLabels() {
-        bottom.add(turn);
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 0;
+        bottom.add(turn, c);
         addClocks();
-        bottom.add(turnCount);
+        c.gridx = 6;
+        bottom.add(turnCount, c);
+        c.gridy = 1;
+        c. gridx = 0;
+        bottom.add(numOfAttackPieces, c);
+        c.gridx = 6;
+        bottom.add(numOfDefensePieces, c);
     }
 
     /**
@@ -96,12 +119,19 @@ public class BottomBar {
         defendersTime = defendersClock.formatClock("Defenders");
         attackersTime.setForeground(letteringColor);
         defendersTime.setForeground(letteringColor);
-        bottom.add(Box.createRigidArea(new Dimension(75, 0)));
-        bottom.add(attackersTime);
-        bottom.add(Box.createRigidArea(new Dimension(75, 0)));
-        bottom.add(defendersTime);
-        bottom.add(Box.createRigidArea(new Dimension(75, 0)));
-
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 1;
+        c.gridy = 0;
+        bottom.add(Box.createRigidArea(new Dimension(0, 0)), c);
+        c.gridx++;
+        bottom.add(attackersTime, c);
+        c.gridx++;
+        bottom.add(Box.createRigidArea(new Dimension(75, 0)), c);
+        c.gridx++;
+        bottom.add(defendersTime, c);
+        c.gridx++;
+        bottom.add(Box.createRigidArea(new Dimension(75, 0)), c);
         timer.runCountdown(attackersClock, defendersClock, attackersTime, defendersTime);
     }
 
@@ -119,6 +149,16 @@ public class BottomBar {
             turn.setText("Turn: Defenders");
         }
         turnCount.setText("Turn Number: " + i);
+    }
+
+    /**
+     * This function is called whenever a piece is captured and updates the number of pieces left.
+     */
+    public static void updateNumOfPiecesLeft() {
+        int attackPieces = GameLogic.getNumOfAttackersLeft();
+        int defensePieces = GameLogic.getNumOfDefendersLeft();
+        numOfAttackPieces.setText("Attack (" + Hnefatafl.getAttackColor() + ") Pieces Left: " + attackPieces);
+        numOfDefensePieces.setText("Defense (" + Hnefatafl.getDefenseColor() + ") Pieces Left: " + defensePieces);
     }
 
     /**
@@ -213,5 +253,4 @@ public class BottomBar {
         timer.runCountdown(attackersClock, defendersClock, attackersTime, defendersTime);
 		return;
 	}
-	
 }
