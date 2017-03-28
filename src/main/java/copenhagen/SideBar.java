@@ -27,6 +27,7 @@ public class SideBar {
     private JButton help;
     private JButton concede;
     private JButton exit;
+    private CountDownTimer timer;
 
     /**
      * This is called when creating the side bar JPanel.
@@ -104,7 +105,9 @@ public class SideBar {
      */
     private class SaveListener implements ActionListener {
        public void actionPerformed(ActionEvent e) {
-			Hnefatafl.saveGame(new SaveAndLoad());
+           BottomBar.getTimer().stopCountDown();
+           Hnefatafl.saveGame(new SaveAndLoad());
+           Hnefatafl.restartTimers(BottomBar.getAttackersClock().getTime(), BottomBar.getDefendersClock().getTime());
 		}
     }
 
@@ -114,6 +117,7 @@ public class SideBar {
 	*/
 	private class newListener implements ActionListener {
        public void actionPerformed(ActionEvent e) {
+           BottomBar.getTimer().stopCountDown();
 		   Object[] options = {"Confirm", "Cancel"};
            int n = JOptionPane.showOptionDialog(new JFrame(), "Are you sure you want to begin a new game? All progress wil be lost.", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
            if (n == 0) {
@@ -122,9 +126,10 @@ public class SideBar {
                new MainMenu();
            }
            if (n == 1) {
+               Hnefatafl.restartTimers(BottomBar.getAttackersClock().getTime(), BottomBar.getDefendersClock().getTime());
                return;
            }
-		}
+       }
     }
 
     /**
@@ -132,12 +137,14 @@ public class SideBar {
      */
 	private class loadListener implements ActionListener {
        public void actionPerformed(ActionEvent e) {
+           BottomBar.getTimer().stopCountDown();
            boolean successfulLoad = Hnefatafl.loadGame(new SaveAndLoad());
            if (successfulLoad) {
                Hnefatafl.setUpGameBoard();
                Hnefatafl.removeOldGameBoard();
                Hnefatafl.displayGameBoard();
            }
+           Hnefatafl.restartTimers(BottomBar.getAttackersClock().getTime(), BottomBar.getDefendersClock().getTime());
        }
     }
 
@@ -146,7 +153,9 @@ public class SideBar {
      */
     private class HelpListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            BottomBar.getTimer().stopCountDown();
             new GameRules();
+            Hnefatafl.restartTimers(BottomBar.getAttackersClock().getTime(), BottomBar.getDefendersClock().getTime());
         }
     }
 
@@ -156,6 +165,7 @@ public class SideBar {
      */
     private class ConcedeListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            BottomBar.getTimer().stopCountDown();
             Object[] forfeitOptions = {"Forfeit", "Don't Forfeit", "Cancel"};
             int n = JOptionPane.showOptionDialog(new JFrame(), "Are you sure you want to forfeit?", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, forfeitOptions, forfeitOptions[0]);
             if (n == 0) {
@@ -166,6 +176,7 @@ public class SideBar {
                     new FinalMenu(defenders);
                 }
             }
+            Hnefatafl.restartTimers(BottomBar.getAttackersClock().getTime(), BottomBar.getDefendersClock().getTime());
 
         }
     }
@@ -176,6 +187,7 @@ public class SideBar {
      */
      private class ExitListener implements ActionListener {
        public void actionPerformed(ActionEvent e) {
+           BottomBar.getTimer().stopCountDown();
            if (Hnefatafl.getSaved()) {
                System.exit(0);
            }
@@ -188,6 +200,7 @@ public class SideBar {
            if (n == 1) {
                System.exit(0);
            }
+           Hnefatafl.restartTimers(BottomBar.getAttackersClock().getTime(), BottomBar.getDefendersClock().getTime());
        }
     }
 

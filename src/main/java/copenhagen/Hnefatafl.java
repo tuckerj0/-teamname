@@ -284,6 +284,16 @@ public class Hnefatafl {
 	public static void changeTimes(String aTime, String dTime){
 		bBar.setClocks(aTime, dTime);
 	}
+    
+    /**
+     *The function restarts attack and defense clocks beginning at given times
+     *
+     *@param String aTime. Formatted string representing time on attacker's clock
+     *@param String dTime. Formatted string representing time on defender's clock
+     */
+    public static void restartTimers(String aTime, String dTime) {
+        bBar.restartClocks(aTime, dTime);
+    }
 
 	/**
 	 * This function sets up the logic for a new game.
