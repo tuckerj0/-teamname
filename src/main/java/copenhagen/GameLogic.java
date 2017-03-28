@@ -218,45 +218,6 @@ public class GameLogic{
 			return checkAttackWin();
 		else
 			return checkDefendWin();
-        //boolean defendersSurrounded = false;
-        //boolean foundExit = false;
-
-        /**
-         Doesn't work correctly
-
-        // Check if Attackers have entirely surrounded Defenders
-        for (int i = 0; i < gameBoardArray.length; i++) {
-             for (int j = 0; j < gameBoardArray.length; j++) {
-                 if(gameBoardArray[i][j] == attackers) {
-                     // Look for another Attacker blocking the Defenders in this column
-                     for (int n = 0; n < gameBoardArray.length; n++) {
-                         if (gameBoardArray[n][j] == defenders || gameBoardArray[n][j] == king)
-                             defendersSurrounded = false;
-                         else if (gameBoardArray[n][j] == attackers)
-                             defendersSurrounded = true;
-                         if (defendersSurrounded == false && n == gameBoardArray.length - 1) {
-                             return empty;
-                         }
-                     }
-                     // Look for another Attacker blocking the Defenders in this row
-                     for (int n = 0; n < gameBoardArray.length; n++) {
-                         if (gameBoardArray[i][n] == defenders || gameBoardArray[i][n] == king)
-                             defendersSurrounded = false;
-                         else if (gameBoardArray[n][j] == attackers)
-                             defendersSurrounded = true;
-                         if (defendersSurrounded == false && n == gameBoardArray.length - 1){
-                             return empty;
-                         }
-                     }
-                 }
-             }
-        }
-        // Defenders are entirely surrounded so Attackers win!
-        if (!foundExit)
-            return 'b';
-        */
-
-        // There is not a winner yet so continue playing
 	}
 
     /**
@@ -353,17 +314,6 @@ public class GameLogic{
 		}
 	}
 
-    /**
-     * Function used for manual error testing
-     */
-	public static void printVisited(){
-		for(int i = 0; i < GRID_SIZE ; i++){
-			for(int j = 0; j < GRID_SIZE; j++){
-				System.out.print(visited[i][j] + " ");
-			}
-			System.out.println("");
-		}
-	}
 
 	/**
 	 * This function simulates the escape of a piece. It is a helper method to checkEncircled.
