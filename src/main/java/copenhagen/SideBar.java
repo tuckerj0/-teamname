@@ -50,6 +50,8 @@ public class SideBar {
         side.setLayout(new BoxLayout(side, BoxLayout.Y_AXIS));
         side.setBackground(secondaryColor);
         side.add(Box.createRigidArea(new Dimension(0, startEndGap)));
+        side.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        
     }
 
     /**
@@ -88,7 +90,7 @@ public class SideBar {
      * @param gap This is the gap of blank space that will be created below the button.
      */
     private void styleButton(JButton btn, int gap) {
-	btn.setOpaque(true);
+        btn.setOpaque(true);
         btn.setBorderPainted(false);
         btn.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
         btn.setBackground(primaryColor);
