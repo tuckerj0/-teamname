@@ -106,6 +106,18 @@ public class BottomBar {
         c.gridx = 6;
         bottom.add(numOfDefensePieces, c);
     }
+    
+    /**
+     * This function removes the labels from the bottom panel.
+     */
+    public void removeLabels() {
+        bottom.remove(turn);
+        bottom.remove(turnCount);
+        bottom.remove(attackersTime);
+        bottom.remove(defendersTime);
+        bottom.remove(numOfAttackPieces);
+        bottom.remove(numOfDefensePieces);
+    }
 
     /**
      * This function adds the clocks to the bottom panel and starts the countdown timer.
@@ -215,17 +227,50 @@ public class BottomBar {
 	/**
 	 * This function returns the attacker's clock
 	 */
-	public Clock getAttackersClock(){
+	public static Clock getAttackersClock(){
 		return attackersClock;
 	}
 	/**
 	 * This function returns the defender's clock
 	 */
-	public Clock getDefendersClock(){
+	public static Clock getDefendersClock(){
 		return defendersClock;
 	}
+    
+    /**
+     * This function returns the count down timer
+     */
+    public static CountDownTimer getTimer() {
+        return timer;
+    }
+    
+    /**
+     * This function restarts the clocks after a button in the side bar is pressed
+     *@param String aTime. Formatted string representing time on attacker's clock
+     *@param String dTime. Formatted string representing time on defender's clock
+     */
+    public void restartClocks(String aTime, String dTime) {
+        removeLabels();
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 0;
+        bottom.add(turn, c);
+        setClocks(aTime, dTime);
+        c.gridx = 6;
+        bottom.add(turnCount, c);
+        c.gridy = 1;
+        c. gridx = 0;
+        bottom.add(numOfAttackPieces, c);
+        c.gridx = 6;
+        bottom.add(numOfDefensePieces, c);
+        return;
+    }
+    
 	/**
-	 * This function sets the defender's and attacker's clocs
+	 * This function sets the defender's and attacker's clocks
+     *@param String aTime. Formatted string representing time on attacker's clock
+     *@param String dTime. Formatted string representing time on defender's clock
 	 */
 	public void setClocks(String aTime, String dTime){
 		timer.stopCountDown();
@@ -238,18 +283,28 @@ public class BottomBar {
 		int dminutes = Integer.parseInt(dTime.substring(3,5));
 		int dseconds = Integer.parseInt(dTime.substring(6,8));
 		dSetStartingTime(dseconds, dminutes, dhours);
-		
+        
+        attackersClock = new Clock(aStartingHours,aStartingMinutes,aStartingSeconds);
+        defendersClock = new Clock(dStartingHours,dStartingMinutes,dStartingSeconds);
 		timer = new CountDownTimer();
-		attackersTime = attackersClock.formatClock("Attackers");
+		
+        attackersTime = attackersClock.formatClock("Attackers");
         defendersTime = defendersClock.formatClock("Defenders");
         attackersTime.setForeground(letteringColor);
         defendersTime.setForeground(letteringColor);
-        bottom.add(Box.createRigidArea(new Dimension(75, 0)));
-        bottom.add(attackersTime);
-        bottom.add(Box.createRigidArea(new Dimension(75, 0)));
-        bottom.add(defendersTime);
-        bottom.add(Box.createRigidArea(new Dimension(75, 0)));
-
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 1;
+        c.gridy = 0;
+        bottom.add(Box.createRigidArea(new Dimension(0, 0)), c);
+        c.gridx++;
+        bottom.add(attackersTime, c);
+        c.gridx++;
+        bottom.add(Box.createRigidArea(new Dimension(75, 0)), c);
+        c.gridx++;
+        bottom.add(defendersTime, c);
+        c.gridx++;
+        bottom.add(Box.createRigidArea(new Dimension(75, 0)), c);
         timer.runCountdown(attackersClock, defendersClock, attackersTime, defendersTime);
 		return;
 	}
