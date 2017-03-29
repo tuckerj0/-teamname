@@ -7,4 +7,4 @@ Deliverable 5:
 https://drive.google.com/drive/folders/0B8HgLGZiTWD4ajBqMVJ6QkNuS00?usp=sharing
 
 Deliverable 6: 
-https://drive.google.com/drive/folders/0B6Q9Xgnvz5FlcVp4NXNVTlp4RDA
+https://drive.google.com/drive/folders/0B6Q9Xgnvz5FlcVp4NXNVTlp4RDA?usp=sharing
