@@ -65,7 +65,7 @@ public class MainMenu {
             GameLogic.setStartingPieces(Hnefatafl.getBoardSize());
             Hnefatafl.newGameResetTurns();
             Hnefatafl.setUpGameBoard();
-            Hnefatafl.displayGameBoard();            
+            Hnefatafl.displayGameBoard();
         }
     }
 

@@ -52,7 +52,7 @@ public class SideBar {
         side.setBackground(secondaryColor);
         side.add(Box.createRigidArea(new Dimension(0, startEndGap)));
         side.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
-        
+
     }
 
     /**
