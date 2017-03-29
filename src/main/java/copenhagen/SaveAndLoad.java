@@ -25,7 +25,7 @@ public class SaveAndLoad {
      * @param turnCount This parameter is the total amount of turns.
      * @return This function will return true if successful or false in the case of an IOException.
      */
-	public boolean save(int size, char turn, int turnCount){
+	public boolean save(int size, char turn, int turnCount, String aClock, String dClock){
 		PrintWriter writer = null;
 		File game = null;
 		try{
@@ -54,6 +54,8 @@ public class SaveAndLoad {
 				writer.println(turn);
 				writer.println(Hnefatafl.getAttackColor());
 				writer.println(Hnefatafl.getDefenseColor());
+				writer.println(aClock);
+				writer.println(dClock);
 				for(int i = 0; i < size; i++){
 					for(int j = 0; j < size; j++){
 						writer.print(GameLogic.gameBoardArray[i][j]);
@@ -87,6 +89,10 @@ public class SaveAndLoad {
 		int savedTurnCount = -1;
 		char savedCurrentTurn = 'n';
 		String savedLayout = "";
+		String aTime = "";
+		String dTime = "";
+        String savedAttackColor = "";
+        String savedDefenseColor = "";
 		try {
 			JFileChooser fileChooser = new JFileChooser();
 			FileNameExtensionFilter filter = new FileNameExtensionFilter("hnef","hnef");
@@ -121,14 +127,18 @@ public class SaveAndLoad {
 					savedCurrentTurn = currentLine.charAt(0);
 				}
 				else if(i == 2){
-					String savedAttackColor = String.valueOf(currentLine);
-					Hnefatafl.setAttackColor(savedAttackColor);
-				}
+					savedAttackColor = String.valueOf(currentLine);
+                }
 				else if(i == 3){
-					String savedDefenseColor = String.valueOf(currentLine);
-					Hnefatafl.setDefenseColor(savedDefenseColor);
+					savedDefenseColor = String.valueOf(currentLine);
 				}
 				else if(i == 4){
+					aTime = currentLine;
+				}
+				else if(i == 5){
+					dTime = currentLine;
+				}
+				else if(i == 6){
 					savedLayout = currentLine;
 				}
 				i++;
@@ -147,8 +157,10 @@ public class SaveAndLoad {
                 return null;
 			}
 		}
-		if(checkState(savedLayout, savedCurrentTurn, savedTurnCount) == true){
-			return fileName;
+		if(checkState(savedLayout, savedCurrentTurn, savedTurnCount, aTime, dTime)){
+            Hnefatafl.setAttackColor(savedAttackColor);
+            Hnefatafl.setDefenseColor(savedDefenseColor);
+            return fileName;
 		}
 		else{
             JOptionPane.showMessageDialog(null, "Invalid save file.");
@@ -163,7 +175,7 @@ public class SaveAndLoad {
      * @param turnCount This parameter is the total amount of turns.
      * @return This function will return true if it is a valid game state. Otherwise, false if it is not.
      */
-	public static boolean checkState(String layout, char turn, int turnCount){
+	public static boolean checkState(String layout, char turn, int turnCount, String aTime, String dTime){
 		//check size of the board
 		int size = layout.length();
 		if(size/9 == 9 ){
@@ -244,8 +256,25 @@ public class SaveAndLoad {
 				return false;
 			}
 		}
+		
+		int hours = Integer.parseInt(aTime.substring(0,2));
+		int minutes = Integer.parseInt(aTime.substring(3,5));
+		int seconds = Integer.parseInt(aTime.substring(6,8));
+		if(hours < 0 && minutes < 0 && seconds < 0){
+			return false;
+		}
+		hours = Integer.parseInt(dTime.substring(0,2));
+		minutes = Integer.parseInt(dTime.substring(3,5));
+		seconds = Integer.parseInt(dTime.substring(6,8));
+		if(hours < 0 && minutes < 0 && seconds < 0){
+			return false;
+		}
 
 		GameLogic.gameBoardArray = pieces;
+		GameLogic.setNumOfAttackersLeft(b);
+		GameLogic.setNumOfDefendersLeft(w);
+		BottomBar.updateNumOfPiecesLeft();
+		Hnefatafl.changeTimes(aTime, dTime);
 		Hnefatafl.setTurn(turn);
 		Hnefatafl.setTurnCount(turnCount);
 		return true;

@@ -8,12 +8,15 @@ public class SaveAndLoadTest {
 	/**
      * These functions test the checkState function from saveAndLoad
      */
+	 
 	@Test
     public void testCheckStateIfValid1() {
         String layout = "c00bbbbb00c00000b0000000000000000b0000w0000bb000www000bbb0wwkww0bbb000www000bb0000w0000b0000000000000000b00000c00bbbbb00c";
         int turnCount = 1;
         char turn = 'b';
-        assertEquals(true, SaveAndLoad.checkState(layout,turn,turnCount));
+		String aTime = "11:11:11";
+		String dTime = "11:11:11";
+        assertEquals(true, SaveAndLoad.checkState(layout,turn,turnCount, aTime, dTime));
     }
 
     // This is another test which checks that the checkState function returns true when given valid data.
@@ -22,7 +25,9 @@ public class SaveAndLoadTest {
         String layout = "c00b0b0000c0000000000000000000000000b0bb000bbw00b0b000bbbw0wkb0wbb000bww00000bw000000b000000000w00000000b0b000c000bb0000c";
         int turnCount = 25;
         char turn = 'w';
-        assertEquals(true, SaveAndLoad.checkState(layout,turn,turnCount));
+		String aTime = "11:11:11";
+		String dTime = "11:11:11";
+        assertEquals(true, SaveAndLoad.checkState(layout,turn,turnCount, aTime, dTime));
     }
 
     // This test checks that the checkState function returns true when given valid data that has the absolute bare
@@ -32,7 +37,9 @@ public class SaveAndLoadTest {
         String layout = "c000000000c00000b00000000000000000000000000bb000000000bbb000k0000000000000000000000000000000000000000000000000c000000000c";
         int turnCount = 1;
         char turn = 'b';
-        assertEquals(true, SaveAndLoad.checkState(layout,turn,turnCount));
+		String aTime = "11:11:11";
+		String dTime = "11:11:11";
+        assertEquals(true, SaveAndLoad.checkState(layout,turn,turnCount, aTime, dTime));
     }
 
     // This test checks that the checkState function will return false when given an empty string layout.
@@ -41,7 +48,9 @@ public class SaveAndLoadTest {
         String layout = "";
         int turnCount = 1;
         char turn = 'b';
-        assertEquals(false, SaveAndLoad.checkState(layout, turn, turnCount));
+		String aTime = "11:11:11";
+		String dTime = "11:11:11";
+        assertEquals(false, SaveAndLoad.checkState(layout, turn, turnCount, aTime, dTime));
     }
 
     // This test checks that the checkState function returns false when given an invalid turn count.
@@ -50,7 +59,9 @@ public class SaveAndLoadTest {
         String layout = "c00bbbbb00c00000b0000000000000000b0000w0000bb000www000bbb0wwkww0bbb000www000bb0000w0000b0000000000000000b00000c00bbbbb00c";
         int turnCount = -1;
         char turn = 'b';
-        assertEquals(false, SaveAndLoad.checkState(layout,turn,turnCount));
+		String aTime = "11:11:11";
+		String dTime = "11:11:11";
+        assertEquals(false, SaveAndLoad.checkState(layout,turn,turnCount, aTime, dTime));
     }
 
     // This test checks that the checkState function returns false when given an invalid turn. It has to be either 'w'
@@ -60,7 +71,9 @@ public class SaveAndLoadTest {
         String layout = "c00bbbbb00c00000b0000000000000000b0000w0000bb000www000bbb0wwkww0bbb000www000bb0000w0000b0000000000000000b00000c00bbbbb00c";
         int turnCount = 1;
         char turn = 'k';
-        assertEquals(false, SaveAndLoad.checkState(layout,turn,turnCount));
+		String aTime = "11:11:11";
+		String dTime = "11:11:11";
+        assertEquals(false, SaveAndLoad.checkState(layout,turn,turnCount, aTime, dTime));
     }
 
     // This test checks that the checkState function returns false when given an invalid layout with too many characters
@@ -70,7 +83,9 @@ public class SaveAndLoadTest {
         String layout = "0c00b0b0000c0000000000000000000000000b0bb000bbw00b0b000bbbw0wkb0wbb000bww00000bw000000b000000000w00000000b0b000c000bb0000c";
         int turnCount = 25;
         char turn = 'w';
-        assertEquals(false, SaveAndLoad.checkState(layout,turn,turnCount));
+		String aTime = "11:11:11";
+		String dTime = "11:11:11";
+        assertEquals(false, SaveAndLoad.checkState(layout,turn,turnCount, aTime, dTime));
     }
 
     // This test checks that the checkState function returns false when given an invalid layout with an invalid
@@ -80,7 +95,9 @@ public class SaveAndLoadTest {
         String layout = "c00b0b0000c0000000000000000000000000b0bb000tbw00b0b000bbbw0wkb0wbb000bww00000bw000000b000000000w00000000b0b000c000bb0000c";
         int turnCount = 25;
         char turn = 'w';
-        assertEquals(false, SaveAndLoad.checkState(layout,turn,turnCount));
+		String aTime = "11:11:11";
+		String dTime = "11:11:11";
+        assertEquals(false, SaveAndLoad.checkState(layout,turn,turnCount, aTime, dTime));
     }
 
     // This test checks that the checkState function returns false when given an invalid layout with no king piece.
@@ -89,7 +106,9 @@ public class SaveAndLoadTest {
         String layout = "c00bbbbb00c00000b0000000000000000b0000w0000bb000www000bbb0ww0ww0bbb000www000bb0000w0000b0000000000000000b00000c00bbbbb00c";
         int turnCount = 1;
         char turn = 'b';
-        assertEquals(false, SaveAndLoad.checkState(layout,turn,turnCount));
+		String aTime = "11:11:11";
+		String dTime = "11:11:11";
+        assertEquals(false, SaveAndLoad.checkState(layout,turn,turnCount, aTime, dTime));
     }
 
     // This test checks that the checkState function returns false when given an invalid layout with too many white
@@ -99,7 +118,9 @@ public class SaveAndLoadTest {
         String layout = "c00bbbbb00c00000b0000000000000000b0000w0000bb000www000bbb0wwkww0bbb000www000bw0000w0000b0000000000000000b00000c00bbbbb00c";
         int turnCount = 1;
         char turn = 'b';
-        assertEquals(false, SaveAndLoad.checkState(layout,turn,turnCount));
+		String aTime = "11:11:11";
+		String dTime = "11:11:11";
+        assertEquals(false, SaveAndLoad.checkState(layout,turn,turnCount, aTime, dTime));
     }
 
     // This test checks that the checkState function returns false when given an invalid layout with too many black
@@ -109,7 +130,9 @@ public class SaveAndLoadTest {
         String layout = "c00bbbbb00c00bbbb0000000000000000b0000w0000bb000www000bbb0wwkww0bbb000www000bb0000w0000b0000000000000000b00000c00bbbbb00c";
         int turnCount = 1;
         char turn = 'w';
-        assertEquals(false, SaveAndLoad.checkState(layout,turn,turnCount));
+		String aTime = "11:11:11";
+		String dTime = "11:11:11";
+        assertEquals(false, SaveAndLoad.checkState(layout,turn,turnCount, aTime, dTime));
 
     }
 
@@ -119,7 +142,9 @@ public class SaveAndLoadTest {
         String layout = "c000000000c000000000000000000000000000w000000000www0000000wwkww0000000www000000000w000000000000000000000000000c000000000c";
         int turnCount = 1;
         char turn = 'b';
-        assertEquals(false, SaveAndLoad.checkState(layout,turn,turnCount));
+		String aTime = "11:11:11";
+		String dTime = "11:11:11";
+        assertEquals(false, SaveAndLoad.checkState(layout,turn,turnCount, aTime, dTime));
     }
 
     // This test checks that the checkState function returns false when given an invalid layout with not enough corner
@@ -129,6 +154,20 @@ public class SaveAndLoadTest {
         String layout = "c00bbbbb00c00000b0000000000000000b0000w0000bb000www000bbb0wwkww0bbb000www000bb0000w0000b0000000000000000b00000c00bbbbb00";
         int turnCount = 1;
         char turn = 'w';
-        assertEquals(false, SaveAndLoad.checkState(layout,turn,turnCount));
+		String aTime = "11:11:11";
+		String dTime = "11:11:11";
+        assertEquals(false, SaveAndLoad.checkState(layout,turn,turnCount, aTime, dTime));
     }
+	
+	// This test checks that the checkState function returns false when an invalid time is given
+    @Test
+    public void testCheckStateTime() {
+        String layout = "c00bbbbb00c00000b0000000000000000b0000w0000bb000www000bbb0wwkww0bbb000www000bb0000w0000b0000000000000000b00000c00bbbbb00";
+        int turnCount = 1;
+        char turn = 'w';
+		String aTime = "00:00:-2";
+		String dTime = "11:11:11";
+        assertEquals(false, SaveAndLoad.checkState(layout,turn,turnCount, aTime, dTime));
+    }
+	
 }

@@ -9,7 +9,7 @@ import java.awt.event.*;
  * access the rules of the game, or change the settings.
  */
 public class MainMenu {
-    private JFrame _mainMenuFrame = new JFrame("Hnefatafl");
+    private static JFrame _mainMenuFrame = new JFrame("Hnefatafl");
     private JPanel _mainMenuPanel = new JPanel();
     private JButton _playerVsButton = new JButton("START GAME!");
     private JButton _loadGameButton = new JButton("Load Saved Game");
@@ -49,6 +49,13 @@ public class MainMenu {
     }
 
     /**
+     * This function re-enables the JFrame after changing the settings of the game.
+     */
+    public static void enableFrame() {
+        _mainMenuFrame.setEnabled(true);
+    }
+
+    /**
      * This is a button listener for when the _playerVsButton is clicked and will close the main menu and start a new
      * game.
      */
@@ -56,6 +63,7 @@ public class MainMenu {
         public void actionPerformed(ActionEvent e) {
             _mainMenuFrame.dispose();
             GameLogic.setStartingPieces(Hnefatafl.getBoardSize());
+            Hnefatafl.newGameResetTurns();
             Hnefatafl.setUpGameBoard();
             Hnefatafl.displayGameBoard();
         }
@@ -91,6 +99,7 @@ public class MainMenu {
      */
     class settingsListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            _mainMenuFrame.setEnabled(false);
             new Settings();
         }
     }

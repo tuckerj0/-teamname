@@ -13,20 +13,22 @@ public class BottomBar {
     private JPanel bottom;
     private static JLabel turn;
     private static JLabel turnCount;
+    private static JLabel numOfAttackPieces;
+    private static JLabel numOfDefensePieces;
     private static char attackers = 'b';
 	private static char defenders = 'w';
-	private static char king = 'k';
-	private static char empty = '0';
-	private static char restricted = 'c';
     private static Clock attackersClock;
     private static Clock defendersClock;
     private static JLabel attackersTime;
     private static JLabel defendersTime;
     private static CountDownTimer timer;
     private static int perMoveTime = 3;//number of seconds added to each user after their move
-    private static int startingMinutes = 5;//default game set to 5 minutes
-    private static int startingHours = 0;
-    private static int startingSeconds = 0;
+    private static int aStartingMinutes = 5;//default game set to 5 minutes
+    private static int aStartingHours = 0;
+    private static int aStartingSeconds = 0;
+	private static int dStartingMinutes = 5;//default game set to 5 minutes
+    private static int dStartingHours = 0;
+    private static int dStartingSeconds = 0;
 
     /**
      * This is called when creating the bottom bar JPanel.
@@ -41,8 +43,8 @@ public class BottomBar {
         createPanel();
         setTurn(start);
         setTurnCount(count);
+        setRemainingPieces();
         addLabels();
-
     }
 
     /**
@@ -50,12 +52,13 @@ public class BottomBar {
      */
     private void createPanel() {
         bottom = new JPanel();
+        bottom.setLayout(new GridBagLayout());
         bottom.setBackground(primaryColor);
     }
 
     /**
      * This function displays who is starting based on the parameter given.
-     * @param c This tells which person starts, attackers or defenders
+     * @param c This tells which person starts, attackers or defenders.
      */
     private void setTurn(char c) {
         if (c == attackers) {
@@ -76,32 +79,71 @@ public class BottomBar {
         turnCount.setForeground(letteringColor);
     }
 
+    private void setRemainingPieces() {
+        int attackPieces = GameLogic.getNumOfAttackersLeft();
+        int defensePieces = GameLogic.getNumOfDefendersLeft();
+        numOfAttackPieces = new JLabel("Attack (" + Hnefatafl.getAttackColor() + ") Pieces Left: " + attackPieces);
+        numOfDefensePieces = new JLabel("Defense (" + Hnefatafl.getDefenseColor() + ") Pieces Left: " + defensePieces);
+        numOfAttackPieces.setForeground(letteringColor);
+        numOfDefensePieces.setForeground(letteringColor);
+    }
+
     /**
      * This function adds the labels to the bottom panel.
      */
     private void addLabels() {
-        bottom.add(turn);
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 0;
+        bottom.add(turn, c);
         addClocks();
-        bottom.add(turnCount);
+        c.gridx = 6;
+        bottom.add(turnCount, c);
+        c.gridy = 1;
+        c. gridx = 0;
+        bottom.add(numOfAttackPieces, c);
+        c.gridx = 6;
+        bottom.add(numOfDefensePieces, c);
+    }
+    
+    /**
+     * This function removes the labels from the bottom panel.
+     */
+    public void removeLabels() {
+        bottom.remove(turn);
+        bottom.remove(turnCount);
+        bottom.remove(attackersTime);
+        bottom.remove(defendersTime);
+        bottom.remove(numOfAttackPieces);
+        bottom.remove(numOfDefensePieces);
     }
 
     /**
      * This function adds the clocks to the bottom panel and starts the countdown timer.
      */
     private void addClocks() {
-        attackersClock = new Clock(startingHours,startingMinutes,startingSeconds);
-        defendersClock = new Clock(startingHours,startingMinutes,startingSeconds);
+        attackersClock = new Clock(aStartingHours,aStartingMinutes,aStartingSeconds);
+        defendersClock = new Clock(dStartingHours,dStartingMinutes,dStartingSeconds);
         timer = new CountDownTimer();
 
         attackersTime = attackersClock.formatClock("Attackers");
         defendersTime = defendersClock.formatClock("Defenders");
-
-        bottom.add(Box.createRigidArea(new Dimension(75, 0)));
-        bottom.add(attackersTime);
-        bottom.add(Box.createRigidArea(new Dimension(75, 0)));
-        bottom.add(defendersTime);
-        bottom.add(Box.createRigidArea(new Dimension(75, 0)));
-
+        attackersTime.setForeground(letteringColor);
+        defendersTime.setForeground(letteringColor);
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 1;
+        c.gridy = 0;
+        bottom.add(Box.createRigidArea(new Dimension(0, 0)), c);
+        c.gridx++;
+        bottom.add(attackersTime, c);
+        c.gridx++;
+        bottom.add(Box.createRigidArea(new Dimension(75, 0)), c);
+        c.gridx++;
+        bottom.add(defendersTime, c);
+        c.gridx++;
+        bottom.add(Box.createRigidArea(new Dimension(75, 0)), c);
         timer.runCountdown(attackersClock, defendersClock, attackersTime, defendersTime);
     }
 
@@ -122,6 +164,16 @@ public class BottomBar {
     }
 
     /**
+     * This function is called whenever a piece is captured and updates the number of pieces left.
+     */
+    public static void updateNumOfPiecesLeft() {
+        int attackPieces = GameLogic.getNumOfAttackersLeft();
+        int defensePieces = GameLogic.getNumOfDefendersLeft();
+        numOfAttackPieces.setText("Attack (" + Hnefatafl.getAttackColor() + ") Pieces Left: " + attackPieces);
+        numOfDefensePieces.setText("Defense (" + Hnefatafl.getDefenseColor() + ") Pieces Left: " + defensePieces);
+    }
+
+    /**
      * This function is called once the JPanel is fully formed and completed.
      * @return This returns the newly created JPanel when the program is ran.
      */
@@ -129,29 +181,131 @@ public class BottomBar {
         return bottom;
     }
 
+    /**
+     * This function updates the clock at the end of a side's turn.
+     * @param c This parameter is which side's turn it currently is.
+     */
     public static void updateClock(char c) {
-        if(c == defenders) {
+        if (c == defenders) {
             attackersClock.addSeconds(perMoveTime);
             attackersTime.setText("Attackers Time: " + attackersClock.getTime());
-        }else if ( c == attackers){
+        }
+        else if (c == attackers) {
             defendersClock.addSeconds(perMoveTime);
             defendersTime.setText("Defenders Time: " + defendersClock.getTime());
         }
     }
 
     /**
-	 * This function sets the game clock
+	 * This function sets the game clock.
 	 */
-    public static void setStartingTime(int s,int m,int h){
-        startingHours = h;
-        startingMinutes = m;
-        startingSeconds = s;
+    public static void setStartingTime(int s, int m, int h) {
+        aStartingHours = h;
+        aStartingMinutes = m;
+        aStartingSeconds = s;
+		dStartingHours = h;
+        dStartingMinutes = m;
+        dStartingSeconds = s;
     }
-
+	
+	public static void aSetStartingTime(int s, int m, int h) {
+        aStartingHours = h;
+        aStartingMinutes = m;
+        aStartingSeconds = s;
+    }
+	public static void dSetStartingTime(int s, int m, int h) {
+        dStartingHours = h;
+        dStartingMinutes = m;
+        dStartingSeconds = s;
+    }
     /**
-	 * This function sets the per move time
+	 * This function sets the per move time.
 	 */
-    public static void setPerMoveTime(int seconds){
+    public static void setPerMoveTime(int seconds) {
         perMoveTime = seconds;
     }
+	/**
+	 * This function returns the attacker's clock
+	 */
+	public static Clock getAttackersClock(){
+		return attackersClock;
+	}
+	/**
+	 * This function returns the defender's clock
+	 */
+	public static Clock getDefendersClock(){
+		return defendersClock;
+	}
+    
+    /**
+     * This function returns the count down timer
+     */
+    public static CountDownTimer getTimer() {
+        return timer;
+    }
+    
+    /**
+     * This function restarts the clocks after a button in the side bar is pressed
+     *@param String aTime. Formatted string representing time on attacker's clock
+     *@param String dTime. Formatted string representing time on defender's clock
+     */
+    public void restartClocks(String aTime, String dTime) {
+        removeLabels();
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 0;
+        bottom.add(turn, c);
+        setClocks(aTime, dTime);
+        c.gridx = 6;
+        bottom.add(turnCount, c);
+        c.gridy = 1;
+        c. gridx = 0;
+        bottom.add(numOfAttackPieces, c);
+        c.gridx = 6;
+        bottom.add(numOfDefensePieces, c);
+        return;
+    }
+    
+	/**
+	 * This function sets the defender's and attacker's clocks
+     *@param String aTime. Formatted string representing time on attacker's clock
+     *@param String dTime. Formatted string representing time on defender's clock
+	 */
+	public void setClocks(String aTime, String dTime){
+		timer.stopCountDown();
+		int hours = Integer.parseInt(aTime.substring(0,2));
+		int minutes = Integer.parseInt(aTime.substring(3,5));
+		int seconds = Integer.parseInt(aTime.substring(6,8));
+		aSetStartingTime(seconds, minutes, hours);
+		
+		int dhours = Integer.parseInt(dTime.substring(0,2));
+		int dminutes = Integer.parseInt(dTime.substring(3,5));
+		int dseconds = Integer.parseInt(dTime.substring(6,8));
+		dSetStartingTime(dseconds, dminutes, dhours);
+        
+        attackersClock = new Clock(aStartingHours,aStartingMinutes,aStartingSeconds);
+        defendersClock = new Clock(dStartingHours,dStartingMinutes,dStartingSeconds);
+		timer = new CountDownTimer();
+		
+        attackersTime = attackersClock.formatClock("Attackers");
+        defendersTime = defendersClock.formatClock("Defenders");
+        attackersTime.setForeground(letteringColor);
+        defendersTime.setForeground(letteringColor);
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 1;
+        c.gridy = 0;
+        bottom.add(Box.createRigidArea(new Dimension(0, 0)), c);
+        c.gridx++;
+        bottom.add(attackersTime, c);
+        c.gridx++;
+        bottom.add(Box.createRigidArea(new Dimension(75, 0)), c);
+        c.gridx++;
+        bottom.add(defendersTime, c);
+        c.gridx++;
+        bottom.add(Box.createRigidArea(new Dimension(75, 0)), c);
+        timer.runCountdown(attackersClock, defendersClock, attackersTime, defendersTime);
+		return;
+	}
 }

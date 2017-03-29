@@ -17,9 +17,6 @@ public class SideBar {
     private static final int midGap = 70;
     private static char attackers = 'b';
 	private static char defenders = 'w';
-	private static char king = 'k';
-	private static char empty = '0';
-	private static char restricted = 'c';
     private Color primaryColor;
     private Color secondaryColor;
     private Color letteringColor;
@@ -30,9 +27,7 @@ public class SideBar {
     private JButton help;
     private JButton concede;
     private JButton exit;
-    private JFrame exitWindow;
-    private JFrame concedeWindow;
-
+    private CountDownTimer timer;
 
     /**
      * This is called when creating the side bar JPanel.
@@ -56,6 +51,8 @@ public class SideBar {
         side.setLayout(new BoxLayout(side, BoxLayout.Y_AXIS));
         side.setBackground(secondaryColor);
         side.add(Box.createRigidArea(new Dimension(0, startEndGap)));
+        side.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+
     }
 
     /**
@@ -94,7 +91,7 @@ public class SideBar {
      * @param gap This is the gap of blank space that will be created below the button.
      */
     private void styleButton(JButton btn, int gap) {
-	btn.setOpaque(true);
+        btn.setOpaque(true);
         btn.setBorderPainted(false);
         btn.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
         btn.setBackground(primaryColor);
@@ -108,24 +105,31 @@ public class SideBar {
      */
     private class SaveListener implements ActionListener {
        public void actionPerformed(ActionEvent e) {
-			Hnefatafl.saveGame(new SaveAndLoad());
+           BottomBar.getTimer().stopCountDown();
+           Hnefatafl.saveGame(new SaveAndLoad());
+           Hnefatafl.restartTimers(BottomBar.getAttackersClock().getTime(), BottomBar.getDefendersClock().getTime());
 		}
     }
+
 	/**
-	*This is a button listener for when the new game button is clicked. It will prompt the user to confirm.
-	*If the user confirms, it will class a new game function to reset the board and begin a new game.
+	* This is a button listener for when the new game button is clicked. It will prompt the user to confirm.
+	* If the user confirms, it will class a new game function to reset the board and begin a new game.
 	*/
 	private class newListener implements ActionListener {
        public void actionPerformed(ActionEvent e) {
+           BottomBar.getTimer().stopCountDown();
 		   Object[] options = {"Confirm", "Cancel"};
-           int n = JOptionPane.showOptionDialog(exitWindow, "Are you sure you want to begin a new game? All progress wil be lost.", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+           int n = JOptionPane.showOptionDialog(new JFrame(), "Are you sure you want to begin a new game? All progress wil be lost.", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
            if (n == 0) {
-               Hnefatafl.newGame();
+               Hnefatafl.removeOldGameBoard();
+               Settings.setDefaults();
+               new MainMenu();
            }
            if (n == 1) {
+               Hnefatafl.restartTimers(BottomBar.getAttackersClock().getTime(), BottomBar.getDefendersClock().getTime());
                return;
            }
-		}
+       }
     }
 
     /**
@@ -133,12 +137,14 @@ public class SideBar {
      */
 	private class loadListener implements ActionListener {
        public void actionPerformed(ActionEvent e) {
+           BottomBar.getTimer().stopCountDown();
            boolean successfulLoad = Hnefatafl.loadGame(new SaveAndLoad());
            if (successfulLoad) {
                Hnefatafl.setUpGameBoard();
                Hnefatafl.removeOldGameBoard();
                Hnefatafl.displayGameBoard();
            }
+           Hnefatafl.restartTimers(BottomBar.getAttackersClock().getTime(), BottomBar.getDefendersClock().getTime());
        }
     }
 
@@ -147,17 +153,21 @@ public class SideBar {
      */
     private class HelpListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            BottomBar.getTimer().stopCountDown();
             new GameRules();
+            Hnefatafl.restartTimers(BottomBar.getAttackersClock().getTime(), BottomBar.getDefendersClock().getTime());
         }
     }
+
     /**
      * This is a button listener for when the forfeit button is clicked and will bring up the final menu if someone
      * concedes.
      */
     private class ConcedeListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            BottomBar.getTimer().stopCountDown();
             Object[] forfeitOptions = {"Forfeit", "Don't Forfeit", "Cancel"};
-            int n = JOptionPane.showOptionDialog(concedeWindow, "Are you sure you want to forfeit?", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, forfeitOptions, forfeitOptions[0]);
+            int n = JOptionPane.showOptionDialog(new JFrame(), "Are you sure you want to forfeit?", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, forfeitOptions, forfeitOptions[0]);
             if (n == 0) {
                 char turn = Hnefatafl.getTurn();
                 if (turn == defenders) {
@@ -166,6 +176,7 @@ public class SideBar {
                     new FinalMenu(defenders);
                 }
             }
+            Hnefatafl.restartTimers(BottomBar.getAttackersClock().getTime(), BottomBar.getDefendersClock().getTime());
 
         }
     }
@@ -176,9 +187,12 @@ public class SideBar {
      */
      private class ExitListener implements ActionListener {
        public void actionPerformed(ActionEvent e) {
-
+           BottomBar.getTimer().stopCountDown();
+           if (Hnefatafl.getSaved()) {
+               System.exit(0);
+           }
            Object[] options = {"Save", "Don't Save", "Cancel"};
-           int n = JOptionPane.showOptionDialog(exitWindow, "Want to save your game progress?", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+           int n = JOptionPane.showOptionDialog(new JFrame(), "Want to save your game progress?", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
            if (n == 0) {
                Hnefatafl.saveGame(new SaveAndLoad());
 			   System.exit(0);
@@ -186,6 +200,7 @@ public class SideBar {
            if (n == 1) {
                System.exit(0);
            }
+           Hnefatafl.restartTimers(BottomBar.getAttackersClock().getTime(), BottomBar.getDefendersClock().getTime());
        }
     }
 
