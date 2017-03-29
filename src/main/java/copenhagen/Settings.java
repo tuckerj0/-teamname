@@ -38,9 +38,11 @@ public class Settings{
     private static int[] White = {255, 255, 255};
     private static int[] LightGray = {180, 180, 180};
     private static int[] DarkGray = {50, 50, 50};
-    private static int[] Red = {255, 0, 0};
+    private static int[] Red = {100, 00, 0};
     private static int[] Green = {0, 255, 0};
     private static int[] Blue = {0, 0, 255};
+    private static int[] defaultDarkBrown = {244,164,96};
+	private static int[] defaultLightBrown = {139,69,19};
     private static int boardSize = 11;
 
     /**
@@ -63,6 +65,7 @@ public class Settings{
         boardColor1.add(new JRadioButton("Red"));
         boardColor1.add(new JRadioButton("Blue"));
         boardColor1.add(new JRadioButton("Green"));
+        boardColor1.add(new JRadioButton("Dark Brown (default)", true));
         ButtonGroup primaryColorGroup = new ButtonGroup();
         for(JRadioButton button:boardColor1){
             primaryColorGroup.add(button);
@@ -80,6 +83,7 @@ public class Settings{
         boardColor2.add(new JRadioButton("Red"));
         boardColor2.add(new JRadioButton("Blue"));
         boardColor2.add(new JRadioButton("Green"));
+        boardColor2.add(new JRadioButton("Light Brown (default)", true));
         ButtonGroup secondaryColorGroup = new ButtonGroup();
         for(JRadioButton button:boardColor2){
             secondaryColorGroup.add(button);
@@ -262,12 +266,17 @@ public class Settings{
                     colors[1] = Green[1];
                     colors[2] = Green[2];
                     break;
-                default: // blue
+                case "Blue":
                     colors[0] = Blue[0];
                     colors[1] = Blue[1];
                     colors[2] = Blue[2];
+                    break;
+                default:
+                    colors[0] = defaultDarkBrown[0];
+                    colors[1] = defaultDarkBrown[1];
+                    colors[2] = defaultDarkBrown[2];
             }
-            if (primColor.equals("Black") || primColor.equals("Dark Gray")) {
+            if (primColor.equals("Black") || primColor.equals("Dark Gray") || primColor.equals("Red")) {
                 Hnefatafl.setLetteringColor(White[0], White[1], White[2]);
             }
             else {
@@ -304,10 +313,15 @@ public class Settings{
                     colors[4] = Green[1];
                     colors[5] = Green[2];
                     break;
-                default: // blue
+                case "Blue":
                     colors[3] = Blue[0];
                     colors[4] = Blue[1];
                     colors[5] = Blue[2];
+                    break;
+                default:
+                    colors[3] = defaultLightBrown[0];
+                    colors[4] = defaultLightBrown[1];
+                    colors[5] = defaultLightBrown[2];
             }
             Hnefatafl.setBoardColors(colors[0], colors[1], colors[2], colors[3], colors[4], colors[5]);
         }else{
