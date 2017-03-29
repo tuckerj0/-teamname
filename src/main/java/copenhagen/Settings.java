@@ -54,18 +54,13 @@ public class Settings{
         settingsPanel.setLayout(new BoxLayout(settingsPanel, BoxLayout.Y_AXIS));
 
         // Board colors buttons
+        if (boardColor1.isEmpty()) {
+            createColorSelectorForBoard();
+        }
         JLabel boardPrimColorLabel = new JLabel("Choose primary board color:");
         boardPrimColorLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         settingsPanel.add(boardPrimColorLabel);
-        boardColor1.clear();
-        boardColor1.add(new JRadioButton("White"));
-        boardColor1.add(new JRadioButton("Light Gray"));
-        boardColor1.add(new JRadioButton("Dark Gray"));
-        boardColor1.add(new JRadioButton("Black"));
-        boardColor1.add(new JRadioButton("Red"));
-        boardColor1.add(new JRadioButton("Blue"));
-        boardColor1.add(new JRadioButton("Green"));
-        boardColor1.add(new JRadioButton("Dark Brown (default)", true));
+        // primary board colors
         ButtonGroup primaryColorGroup = new ButtonGroup();
         for(JRadioButton button:boardColor1){
             primaryColorGroup.add(button);
@@ -75,15 +70,7 @@ public class Settings{
         JLabel boardSecColorLabel = new JLabel("Choose secondary board color:");
         boardSecColorLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         settingsPanel.add(boardSecColorLabel);
-        boardColor2.clear();
-        boardColor2.add(new JRadioButton("White"));
-        boardColor2.add(new JRadioButton("Light Gray"));
-        boardColor2.add(new JRadioButton("Dark Gray"));
-        boardColor2.add(new JRadioButton("Black"));
-        boardColor2.add(new JRadioButton("Red"));
-        boardColor2.add(new JRadioButton("Blue"));
-        boardColor2.add(new JRadioButton("Green"));
-        boardColor2.add(new JRadioButton("Light Brown (default)", true));
+        // secondary board colors
         ButtonGroup secondaryColorGroup = new ButtonGroup();
         for(JRadioButton button:boardColor2){
             secondaryColorGroup.add(button);
@@ -181,6 +168,7 @@ public class Settings{
      * This function resets all the parameters in settings back to the defaults if the save file is invalid.
      */
     public static void setDefaults() {
+        Hnefatafl.setBoardColors(defaultDarkBrown[0], defaultDarkBrown[1], defaultDarkBrown[2], defaultLightBrown[0], defaultLightBrown[1], defaultLightBrown[2]);
         attackColor = "Black";
         Hnefatafl.setAttackColor(attackColor);
         defenseColor = "White";
@@ -191,6 +179,29 @@ public class Settings{
         additionalTimePerMove = 3;
         BottomBar.setStartingTime(second, minute, hour);
         BottomBar.setPerMoveTime(additionalTimePerMove);
+    }
+
+    /**
+     * This function adds the JRadioButtons color selectors to the arraylists for both the attackers and the defenders.
+     */
+    private void createColorSelectorForBoard() {
+        boardColor1.add(new JRadioButton("White"));
+        boardColor1.add(new JRadioButton("Light Gray"));
+        boardColor1.add(new JRadioButton("Dark Gray"));
+        boardColor1.add(new JRadioButton("Black"));
+        boardColor1.add(new JRadioButton("Red"));
+        boardColor1.add(new JRadioButton("Blue"));
+        boardColor1.add(new JRadioButton("Green"));
+        boardColor1.add(new JRadioButton("Dark Brown (default)", true));
+
+        boardColor2.add(new JRadioButton("White"));
+        boardColor2.add(new JRadioButton("Light Gray"));
+        boardColor2.add(new JRadioButton("Dark Gray"));
+        boardColor2.add(new JRadioButton("Black"));
+        boardColor2.add(new JRadioButton("Red"));
+        boardColor2.add(new JRadioButton("Blue"));
+        boardColor2.add(new JRadioButton("Green"));
+        boardColor2.add(new JRadioButton("Light Brown (default)", true));
     }
 
     /**
