@@ -15,6 +15,8 @@ public class Settings{
     private static ArrayList<JRadioButton> defenseButtons = new ArrayList<JRadioButton>();
     private static ArrayList<JRadioButton> boardColor1 = new ArrayList<JRadioButton>();
     private static ArrayList<JRadioButton> boardColor2 = new ArrayList<JRadioButton>();
+    private static String attackColor = "Black";
+    private static String defenseColor = "White";
     private static int hour = 0;
     private static int minute = 5;
     private static int second = 0;
@@ -31,7 +33,7 @@ public class Settings{
     private JPanel timePanel = new JPanel();
     private JPanel perMovePanel = new JPanel();
     private JPanel settingsPanel = new JPanel();
-    private JButton saveSettingsButton = new JButton("Save and Start Game"); //allows user to save seetings
+    private JButton saveSettingsButton = new JButton("Save"); //allows user to save seetings
     private static int[] Black = {0, 0, 0};
     private static int[] White = {255, 255, 255};
     private static int[] LightGray = {180, 180, 180};
