@@ -55,6 +55,7 @@ public class Settings{
         JLabel boardPrimColorLabel = new JLabel("Choose primary board color:");
         boardPrimColorLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         settingsPanel.add(boardPrimColorLabel);
+        boardColor1.clear();
         boardColor1.add(new JRadioButton("White"));
         boardColor1.add(new JRadioButton("Light Gray"));
         boardColor1.add(new JRadioButton("Dark Gray"));
@@ -71,6 +72,7 @@ public class Settings{
         JLabel boardSecColorLabel = new JLabel("Choose secondary board color:");
         boardSecColorLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         settingsPanel.add(boardSecColorLabel);
+        boardColor2.clear();
         boardColor2.add(new JRadioButton("White"));
         boardColor2.add(new JRadioButton("Light Gray"));
         boardColor2.add(new JRadioButton("Dark Gray"));
