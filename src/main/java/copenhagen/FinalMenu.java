@@ -31,6 +31,8 @@ public class FinalMenu {
      * @param winningSide This parameter represents which side won as a character.
      */
 	private void createMenu(char winningSide) {
+        BottomBar.getTimer().stopCountDown();
+        
 		String winner;
 		if (winningSide == defenders) {
 			winner = "DEFENDERS";
@@ -86,6 +88,7 @@ public class FinalMenu {
 			int n = JOptionPane.showOptionDialog(new JFrame(), "Are you sure you want to begin a new game?", "Hnefatafl", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 			if (n == 0) {
                 Hnefatafl.removeOldGameBoard();
+                Settings.setDefaults();
                 menuFrame.dispose();
 				new MainMenu();
 			}
