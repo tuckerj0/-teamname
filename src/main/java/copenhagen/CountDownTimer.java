@@ -12,6 +12,7 @@ public class CountDownTimer {
     private Timer t;
     private char attackers = 'b';
     private char defenders = 'w';
+    private FinalMenu f;
 
     /**
      * This will create a new thread for a timer.
@@ -39,15 +40,15 @@ public class CountDownTimer {
                     attackersClock.decr();
                     attackersTime.setText("Attackers Time: " + attackersClock.getTime());
                     if (attackersClock.outOfTime()) {
-                        new FinalMenu(defenders);
-                        stopCountDown();
+                        f = new FinalMenu(defenders);
                     }
+                    
                 } else {
                     defendersClock.decr();
                     defendersTime.setText("Defenders Time: " + defendersClock.getTime());
+
                     if (defendersClock.outOfTime()) {
-                        new FinalMenu(attackers);
-                        stopCountDown();
+                        f = new FinalMenu(attackers);
                     }
                 }
             }
