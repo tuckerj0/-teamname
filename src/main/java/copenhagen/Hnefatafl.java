@@ -77,6 +77,28 @@ public class Hnefatafl {
 	    frame.dispose();
     }
 
+	/**
+	 * This function sets up the primary and secondary game board colors according to the settings.
+	 */
+	public static void setBoardColors(int primaryColorR, int primaryColorG, int primaryColorB, int secondaryColorR, int secondaryColorG, int secondaryColorB) {
+		primaryColor[0] = primaryColorR;
+		primaryColor[1] = primaryColorG;
+		primaryColor[2] = primaryColorB;
+		secondaryColor[0] = secondaryColorR;
+		secondaryColor[1] = secondaryColorG;
+		secondaryColor[2] = secondaryColorB;
+	}
+
+	/**
+	 * This function sets the text/lettering colors.
+	 */
+
+	 public static void setLetteringColor(int letteringColorR, int letteringColorG, int letteringColorB) {
+		letteringColor[0] = letteringColorR;
+		letteringColor[1] = letteringColorG;
+		letteringColor[2] = letteringColorB;
+	 }
+
     /**
      * This function sets up and retrieves the different pieces (3 JPanels) that comprise the game board.
      */
