@@ -286,7 +286,6 @@ public class BottomBar {
         
         attackersClock = new Clock(aStartingHours,aStartingMinutes,aStartingSeconds);
         defendersClock = new Clock(dStartingHours,dStartingMinutes,dStartingSeconds);
-		timer = new CountDownTimer();
 		
         attackersTime = attackersClock.formatClock("Attackers");
         defendersTime = defendersClock.formatClock("Defenders");

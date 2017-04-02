@@ -50,7 +50,8 @@ public class Hnefatafl {
 	private static char winner;
 	private static FinalMenu finalMenu;
 	private static BottomBar bBar = new BottomBar(primaryColor, letteringColor, turn, turnCount);
-
+    public static int numTimers = 0;
+    
 	//Piece colors set to black and white by default, can be changed in the settings menu
 	private static String attackColor = "black";
 	private static String defenseColor = "white";
