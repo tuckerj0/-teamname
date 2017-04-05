@@ -50,7 +50,7 @@ public class Hnefatafl {
 	private static char winner;
 	private static FinalMenu finalMenu;
 	private static BottomBar bBar = new BottomBar(primaryColor, letteringColor, turn, turnCount);
-    public static int numTimers = 0;
+    private static int numTimers = 0;
     
 	//Piece colors set to black and white by default, can be changed in the settings menu
 	private static String attackColor = "black";
@@ -316,6 +316,30 @@ public class Hnefatafl {
      */
     public static void restartTimers(String aTime, String dTime) {
         bBar.restartClocks(aTime, dTime);
+    }
+    
+    /**
+     * The function increments the number of timers by one.
+     * @return This function will return the current number of timers
+     */
+    public static int incrementTimers() {
+        return numTimers++;
+    }
+    
+    /**
+     * The function decrements the number of timers by one.
+     * @return This function will return the current number of timers
+     */
+    public static int decrementTimers() {
+        return numTimers--;
+    }
+    
+    /**
+     * The function decrements the number of timers by one.
+     * @return This function will return the current number of timers
+     */
+    public static int getNumTimers() {
+        return numTimers;
     }
 
 	/**

@@ -283,7 +283,7 @@ public class BottomBar {
 		int dminutes = Integer.parseInt(dTime.substring(3,5));
 		int dseconds = Integer.parseInt(dTime.substring(6,8));
 		dSetStartingTime(dseconds, dminutes, dhours);
-        
+		
         attackersClock = new Clock(aStartingHours,aStartingMinutes,aStartingSeconds);
         defendersClock = new Clock(dStartingHours,dStartingMinutes,dStartingSeconds);
 		

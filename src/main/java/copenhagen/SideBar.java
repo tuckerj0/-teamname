@@ -27,7 +27,6 @@ public class SideBar {
     private JButton help;
     private JButton concede;
     private JButton exit;
-    private CountDownTimer timer;
 
     /**
      * This is called when creating the side bar JPanel.
@@ -107,7 +106,7 @@ public class SideBar {
        public void actionPerformed(ActionEvent e) {
            BottomBar.getTimer().stopCountDown();
            Hnefatafl.saveGame(new SaveAndLoad());
-           Hnefatafl.numTimers++;
+           Hnefatafl.incrementTimers();
            Hnefatafl.restartTimers(BottomBar.getAttackersClock().getTime(), BottomBar.getDefendersClock().getTime());
 		}
     }
@@ -127,7 +126,7 @@ public class SideBar {
                new MainMenu();
            }
            if (n == 1) {
-               Hnefatafl.numTimers++;
+               Hnefatafl.incrementTimers();
                Hnefatafl.restartTimers(BottomBar.getAttackersClock().getTime(), BottomBar.getDefendersClock().getTime());
                return;
            }
@@ -146,9 +145,9 @@ public class SideBar {
                Hnefatafl.removeOldGameBoard();
                Hnefatafl.displayGameBoard();
            }
-           Hnefatafl.numTimers++;
-           if (Hnefatafl.numTimers == 2)
-               Hnefatafl.numTimers--;
+           Hnefatafl.incrementTimers();
+           if (Hnefatafl.getNumTimers() == 2)
+               Hnefatafl.decrementTimers();
            Hnefatafl.restartTimers(BottomBar.getAttackersClock().getTime(), BottomBar.getDefendersClock().getTime());
        }
     }
@@ -160,7 +159,7 @@ public class SideBar {
         public void actionPerformed(ActionEvent e) {
             BottomBar.getTimer().stopCountDown();
             new GameRules();
-            Hnefatafl.numTimers++;
+            Hnefatafl.incrementTimers();
             Hnefatafl.restartTimers(BottomBar.getAttackersClock().getTime(), BottomBar.getDefendersClock().getTime());
         }
     }
@@ -182,7 +181,7 @@ public class SideBar {
                     new FinalMenu(defenders);
                 }
             }
-            Hnefatafl.numTimers++;
+            Hnefatafl.incrementTimers();
             Hnefatafl.restartTimers(BottomBar.getAttackersClock().getTime(), BottomBar.getDefendersClock().getTime());
 
         }
@@ -207,7 +206,7 @@ public class SideBar {
            if (n == 1) {
                System.exit(0);
            }
-           Hnefatafl.numTimers++;
+           Hnefatafl.incrementTimers();
            Hnefatafl.restartTimers(BottomBar.getAttackersClock().getTime(), BottomBar.getDefendersClock().getTime());
        }
     }

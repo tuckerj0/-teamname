@@ -30,14 +30,14 @@ public class CountDownTimer {
      * @param defendersTime This parameter is the JLabel for the defender's side time left.
      */
     public void runCountdown(Clock attackersClock, Clock defendersClock, JLabel attackersTime, JLabel defendersTime) {
-        Hnefatafl.numTimers++;
+        Hnefatafl.incrementTimers();
         
         t.scheduleAtFixedRate(
                               new TimerTask()
                               {
             public void run()
             {
-                if (Hnefatafl.numTimers == 1) {
+                if (Hnefatafl.getNumTimers() == 1) {
                     
                     if(Hnefatafl.getTurn() == attackers) {
                         attackersClock.decr();
@@ -67,7 +67,7 @@ public class CountDownTimer {
      * This function stops the countdown timer.
      */
     public void stopCountDown() {
-        Hnefatafl.numTimers--;
+        Hnefatafl.decrementTimers();
         
     }
 }
