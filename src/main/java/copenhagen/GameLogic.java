@@ -106,9 +106,15 @@ public class GameLogic{
             }
             if (gameBoardArray[c][r] == attackers) {
                 numOfAttackersLeft--;
+                if (numOfAttackersLeft == 0) {
+                    new FinalMenu('w');
+                }
             }
             else {
                 numOfDefendersLeft--;
+                if (numOfDefendersLeft == 0) {
+                    new FinalMenu('b');
+                }
             }
             gameBoardArray[c][r] = empty;
             GameBoard.removeCapturedPiecesUI(c,r);
