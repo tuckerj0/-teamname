@@ -30,36 +30,44 @@ public class CountDownTimer {
      * @param defendersTime This parameter is the JLabel for the defender's side time left.
      */
     public void runCountdown(Clock attackersClock, Clock defendersClock, JLabel attackersTime, JLabel defendersTime) {
+        Hnefatafl.incrementTimers();
         
         t.scheduleAtFixedRate(
                               new TimerTask()
                               {
             public void run()
             {
-                if(Hnefatafl.getTurn() == attackers) {
-                    attackersClock.decr();
-                    attackersTime.setText("Attackers Time: " + attackersClock.getTime());
-                    if (attackersClock.outOfTime()) {
-                        f = new FinalMenu(defenders);
-                    }
+                if (Hnefatafl.getNumTimers() == 1) {
                     
-                } else {
-                    defendersClock.decr();
-                    defendersTime.setText("Defenders Time: " + defendersClock.getTime());
-
-                    if (defendersClock.outOfTime()) {
-                        f = new FinalMenu(attackers);
+                    if(Hnefatafl.getTurn() == attackers) {
+                        attackersClock.decr();
+                        attackersTime.setText("Attackers Time: " + attackersClock.getTime());
+                        if (attackersClock.outOfTime()) {
+                            f = new FinalMenu(defenders);
+                        }
+                        
+                    } else {
+                        defendersClock.decr();
+                        defendersTime.setText("Defenders Time: " + defendersClock.getTime());
+                        
+                        if (defendersClock.outOfTime()) {
+                            f = new FinalMenu(attackers);
+                        }
                     }
+                } else {
+                    cancel();
+                    t.purge();
                 }
             }
         },1000, 1000);
+        
     }
 
     /**
      * This function stops the countdown timer.
      */
     public void stopCountDown() {
-        t.cancel();
-        t.purge();
+        Hnefatafl.decrementTimers();
+        
     }
 }
