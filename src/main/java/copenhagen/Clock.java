@@ -26,8 +26,8 @@ public class Clock {
 
     /**
      * This function formats the clock into a JLabel to be displayed on the bottom bar.
-     * @param teamName
-     * @return
+     * @param teamName This parameter is the name of which side the clock belongs to (Attackers or Defenders).
+     * @return This will return the clock represented as a JLabel.
      */
     public JLabel formatClock(String teamName) {
         clockLabel = new JLabel(getTime());

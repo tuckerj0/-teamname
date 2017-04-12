@@ -93,6 +93,20 @@ public class GameLogicTest {
 		assertEquals(expected[0][0], actual[0][0]);
 	}
 
+	// This tests checks if the correct number of attackers gets returned.
+	@Test
+    public void testGetNumOfAttackersLeft() {
+	    GameLogic.setNumOfAttackersLeft(10);
+	    assertEquals(10, GameLogic.getNumOfAttackersLeft());
+    }
+
+    // This tests checks if the correct number of defenders gets returned.
+    @Test
+    public void testGetNumOfDefendersLeft() {
+        GameLogic.setNumOfDefendersLeft(10);
+        assertEquals(10, GameLogic.getNumOfDefendersLeft());
+    }
+
 	// This test checks to make sure the game board array is sent back properly when called.
 	@Test
 	public void testGetGameBoardArray() {

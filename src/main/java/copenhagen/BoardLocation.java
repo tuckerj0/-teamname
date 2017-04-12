@@ -7,11 +7,20 @@ public class BoardLocation{
     public int row = -1;
     public int column = -1;
 
+    /**
+     * This is a constructor for creating a new BoardLocation object.
+     * @param column This parameter is the column for the board location.
+     * @param row This parameter is the row for the board location.
+     */
     public BoardLocation(int column,int row){
         this.row = row;
         this.column = column;
     }
 
+    /**
+     * This is a constructor for creating a new BoardLocation object. This sets the intital values of the row and column
+     * to -1 indicating that it is not a real location on the board.
+     */
     public BoardLocation(){
         this.row = -1;
         this.column = -1;

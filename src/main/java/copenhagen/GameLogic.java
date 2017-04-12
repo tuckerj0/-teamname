@@ -320,7 +320,6 @@ public class GameLogic{
 		}
 	}
 
-
 	/**
 	 * This function simulates the escape of a piece. It is a helper method to checkEncircled.
 	 * @param i This parameter is an integer representing x axis coordinates.
