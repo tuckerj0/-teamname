@@ -76,6 +76,7 @@ public class Hnefatafl {
      */
 	public static void removeOldGameBoard() {
 	    frame.dispose();
+	    pieceIsSelected = false;
     }
 
 	/**
@@ -425,14 +426,6 @@ public class Hnefatafl {
      */
 	public static String getDefendSelAddr(){
 		return defendSelAddr;
-	}
-
-	/**
-     * This function gets the selected king piece image address.
-     * @return This function will return the String for the selected king piece image address.
-     */
-	public static String getKingSelAddr(){
-		return kingSelAddr;
 	}
 
 	/**
