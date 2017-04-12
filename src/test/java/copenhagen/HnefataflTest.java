@@ -8,6 +8,13 @@ import copenhagen.Hnefatafl;
 
 public class HnefataflTest {
 
+    // This test checks to make sure that the getTurn method returns whose turn it currently is.
+    @Test
+    public void testGetTurn() {
+        Hnefatafl.setTurn('w');
+        assertEquals('w', Hnefatafl.getTurn());
+    }
+
     // This test checks if the saveGame function returns true when the save is successful.
     @Test
     public void testSaveGameIfSuccessful() {

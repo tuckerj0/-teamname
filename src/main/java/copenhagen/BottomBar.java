@@ -79,6 +79,9 @@ public class BottomBar {
         turnCount.setForeground(letteringColor);
     }
 
+    /**
+     * This method gets the amount of remaining pieces left for both sides and displays the results in the bottom bar.
+     */
     private void setRemainingPieces() {
         int attackPieces = GameLogic.getNumOfAttackersLeft();
         int defensePieces = GameLogic.getNumOfDefendersLeft();
@@ -197,8 +200,11 @@ public class BottomBar {
     }
 
     /**
-	 * This function sets the game clock.
-	 */
+     * This method sets the starting game clock when a new game begins.
+     * @param s This parameter is the number of seconds currently on timer.
+     * @param m This parameter is the number of minutes currently on timer.
+     * @param h This parameter is the number of hours currently on timer.
+     */
     public static void setStartingTime(int s, int m, int h) {
         aStartingHours = h;
         aStartingMinutes = m;
@@ -207,29 +213,45 @@ public class BottomBar {
         dStartingMinutes = m;
         dStartingSeconds = s;
     }
-	
+
+    /**
+     * This method sets the game clock for the attackers.
+     * @param s This parameter is the number of seconds currently on timer.
+     * @param m This parameter is the number of minutes currently on timer.
+     * @param h This parameter is the number of hours currently on timer.
+     */
 	public static void aSetStartingTime(int s, int m, int h) {
         aStartingHours = h;
         aStartingMinutes = m;
         aStartingSeconds = s;
     }
+    /**
+     * This method sets the game clock for the defenders.
+     * @param s This parameter is the number of seconds currently on timer.
+     * @param m This parameter is the number of minutes currently on timer.
+     * @param h This parameter is the number of hours currently on timer.
+     */
 	public static void dSetStartingTime(int s, int m, int h) {
         dStartingHours = h;
         dStartingMinutes = m;
         dStartingSeconds = s;
     }
+
     /**
-	 * This function sets the per move time.
-	 */
+     * This function sets the per move time.
+     * @param seconds This parameter is how much additional time will be added per move in seconds.
+     */
     public static void setPerMoveTime(int seconds) {
         perMoveTime = seconds;
     }
+
 	/**
 	 * This function returns the attacker's clock
 	 */
 	public static Clock getAttackersClock(){
 		return attackersClock;
 	}
+
 	/**
 	 * This function returns the defender's clock
 	 */
@@ -246,8 +268,8 @@ public class BottomBar {
     
     /**
      * This function restarts the clocks after a button in the side bar is pressed
-     *@param String aTime. Formatted string representing time on attacker's clock
-     *@param String dTime. Formatted string representing time on defender's clock
+     *@param aTime Formatted string representing time on attacker's clock
+     *@param dTime Formatted string representing time on defender's clock
      */
     public void restartClocks(String aTime, String dTime) {
         removeLabels();
@@ -269,8 +291,8 @@ public class BottomBar {
     
 	/**
 	 * This function sets the defender's and attacker's clocks
-     *@param String aTime. Formatted string representing time on attacker's clock
-     *@param String dTime. Formatted string representing time on defender's clock
+     *@param aTime Formatted string representing time on attacker's clock
+     *@param dTime Formatted string representing time on defender's clock
 	 */
 	public void setClocks(String aTime, String dTime){
 		timer.stopCountDown();

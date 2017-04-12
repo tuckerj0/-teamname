@@ -79,9 +79,15 @@ public class Hnefatafl {
 	    pieceIsSelected = false;
     }
 
-	/**
-	 * This function sets up the primary and secondary game board colors according to the settings.
-	 */
+    /**
+     * This function sets up the primary and secondary game board colors according to the settings.
+     * @param primaryColorR This parameter is the red of the primary color.
+     * @param primaryColorG This parameter is the green of the primary color.
+     * @param primaryColorB This parameter is the blue of the primary color.
+     * @param secondaryColorR This parameter is the red of the secondary color.
+     * @param secondaryColorG This parameter is the green of the secondary color.
+     * @param secondaryColorB This parameter is the blue of the secondary color.
+     */
 	public static void setBoardColors(int primaryColorR, int primaryColorG, int primaryColorB, int secondaryColorR, int secondaryColorG, int secondaryColorB) {
 		primaryColor[0] = primaryColorR;
 		primaryColor[1] = primaryColorG;
@@ -91,10 +97,12 @@ public class Hnefatafl {
 		secondaryColor[2] = secondaryColorB;
 	}
 
-	/**
-	 * This function sets the text/lettering colors.
-	 */
-
+    /**
+     * This method sets the text/lettering colors.
+     * @param letteringColorR This parameter is the red of color.
+     * @param letteringColorG This parameter is the green of color.
+     * @param letteringColorB This parameter is the blue of color.
+     */
 	 public static void setLetteringColor(int letteringColorR, int letteringColorG, int letteringColorB) {
 		letteringColor[0] = letteringColorR;
 		letteringColor[1] = letteringColorG;
@@ -277,6 +285,7 @@ public class Hnefatafl {
 
     /**
      * This function saves the present game state to a save file.
+     * @param sl This parameter is a SaveAndLoad object which will be used to actually save the file.
      * @return This function will return true if successful or false in the case of an IOException.
      */
 	public static boolean saveGame(SaveAndLoad sl) {
@@ -287,9 +296,9 @@ public class Hnefatafl {
 	}
 
     /**
-     * This function loads a game state from a file and validates it.
-     * It must have a .hnef extension to be accepted.
-     * @return The return value is a boolean representing success or failure
+     * This function loads a game state from a file and validates it. It must have a .hnef extension to be accepted.
+     * @param sl This parameter is a SaveAndLoad object which will be used to actually load the file.
+     * @return The return value is a boolean representing success or failure.
      */
 	public static boolean loadGame(SaveAndLoad sl) {
 		File loadFile = sl.load();
@@ -298,22 +307,20 @@ public class Hnefatafl {
 		}
 		return true;
 	}
-	
-	/**
-	*The function sets attack and defense clocks to given times
-	*
-	*@param String aTime. Formatted string representing time on attacker's clock
-	*@param String dTime. Formatted string representing time on defender's clock
-	*/
+
+    /**
+     * The function sets attack and defense clocks to given times.
+     * @param aTime Formatted string representing time on attacker's clock.
+     * @param dTime Formatted string representing time on defender's clock.
+     */
 	public static void changeTimes(String aTime, String dTime){
 		bBar.setClocks(aTime, dTime);
 	}
-    
+
     /**
-     *The function restarts attack and defense clocks beginning at given times
-     *
-     *@param String aTime. Formatted string representing time on attacker's clock
-     *@param String dTime. Formatted string representing time on defender's clock
+     * The function restarts attack and defense clocks beginning at given times.
+     * @param aTime Formatted string representing time on attacker's clock.
+     * @param dTime Formatted string representing time on defender's clock.
      */
     public static void restartTimers(String aTime, String dTime) {
         bBar.restartClocks(aTime, dTime);
@@ -429,6 +436,7 @@ public class Hnefatafl {
 	}
 
 	/**
+     * This is a getter that gets the attacker piece color.
      * @return This function will return the String for the attack piece color.
      */
 	public static String getAttackColor(){
@@ -436,6 +444,7 @@ public class Hnefatafl {
 	}
 
 	/**
+     * This is a getter that gets the defender piece color.
      * @return This function will return the String for the attack piece color.
      */
 	public static String getDefenseColor(){

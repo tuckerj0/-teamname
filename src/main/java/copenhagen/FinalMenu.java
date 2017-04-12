@@ -61,12 +61,18 @@ public class FinalMenu {
 		showMenu();
 	}
 
+    /**
+     * This methods displays the final menu to the user.
+     */
 	private void showMenu() {
 		menuFrame.setLocationRelativeTo(null);
 		menuFrame.setVisible(true);
 		menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
+    /**
+     * This method adds the various buttons to the final menu.
+     */
 	private void addButtons() {
 		newGameBtn = new JButton("New Game");
 		newGameBtn.addActionListener(new newListener());
