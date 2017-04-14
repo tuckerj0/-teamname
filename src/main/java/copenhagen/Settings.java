@@ -1,11 +1,14 @@
 package copenhagen;
-
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.*;
-import javax.swing.JRadioButton;
+import java.awt.event.*;
 import java.util.ArrayList;
+import javax.swing.*;
+import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
+import javax.imageio.ImageIO;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  * This class contains everything that happens when the Settings button is clicked in the main menu.
@@ -214,6 +217,10 @@ public class Settings{
         attackButtons.add(new JRadioButton("Blue"));
         attackButtons.add(new JRadioButton("Red"));
         attackButtons.add(new JRadioButton("Orange"));
+        JRadioButton customAttack = new JRadioButton("Custom");
+        ItemListener customAttackListener = new CustomAttackListener();
+        customAttack.addItemListener(customAttackListener);
+        attackButtons.add(customAttack);
 
         defenseButtons.add(new JRadioButton("White", true));
         defenseButtons.add(new JRadioButton("Black"));
@@ -221,6 +228,10 @@ public class Settings{
         defenseButtons.add(new JRadioButton("Blue"));
         defenseButtons.add(new JRadioButton("Red"));
         defenseButtons.add(new JRadioButton("Orange"));
+        JRadioButton customDefense = new JRadioButton("Custom");
+        ItemListener customDefenseListener = new CustomDefenseListener();
+        customDefense.addItemListener(customDefenseListener);
+        defenseButtons.add(customDefense);
     }
 
     /**
@@ -345,6 +356,10 @@ public class Settings{
         for(JRadioButton button:attackButtons){
             if(button.isSelected()){
                 attackColor = button.getText();
+                if(attackColor.equals("Custom")){
+                    attackColor = "customattack";
+                }else{
+                }
                 attackSelected = true;
                 break;
             }
@@ -352,6 +367,9 @@ public class Settings{
         for(JRadioButton button:defenseButtons){
             if(button.isSelected()){
                 defenseColor = button.getText();
+                if(defenseColor.equals("Custom")){
+                    defenseColor = "customdefense";
+                }
                 defenseSelected = true;
                 break;
             }
@@ -392,6 +410,58 @@ public class Settings{
                 settingsFrame.dispose();
                 MainMenu.enableFrame();
             }
+        }
+    }
+
+    /**
+     * This is a listener which checks wether the custom attack color button is selected and if it is, it will show the text field where the user can upload their own image
+     */
+    class CustomAttackListener implements ItemListener {
+        public void itemStateChanged(ItemEvent e) {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                loadImage(true);
+            }
+        }
+    }
+
+    /**
+     * This is a listener which checks wether the custom defense color button is selected and if it is, it will show the text field where the user can upload their own image
+     */
+    class CustomDefenseListener implements ItemListener {
+        public void itemStateChanged(ItemEvent e) {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                loadImage(false);
+            }
+        }
+    }
+
+    public void loadImage(boolean attack){
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(".PNG Images","png");
+        chooser.setFileFilter(filter);
+        chooser.showOpenDialog(null);
+        File file = chooser.getSelectedFile();
+        if(file==null){
+            if(attack){
+                attackButtons.get(0).setSelected(true);
+            }else{
+                defenseButtons.get(0).setSelected(true);
+            }
+            JOptionPane.showMessageDialog(null,"No Image Chosen");
+            return;
+        }
+        try{
+            BufferedImage img = ImageIO.read(file);
+            if(attack){
+                ImageIO.write(img, "png",new File("src/main/resources/copenhagen/images/customattackpiece.png"));
+                ImageIO.write(img, "png",new File("src/main/resources/copenhagen/images/customattackpieceSelected.png"));
+            }else{
+                ImageIO.write(img, "png",new File("src/main/resources/copenhagen/images/customdefensepiece.png"));
+                ImageIO.write(img, "png",new File("src/main/resources/copenhagen/images/customdefensepieceSelected.png"));
+            }
+        }
+        catch(IOException e){
+            JOptionPane.showMessageDialog(null,"Invalid File");
         }
     }
 }
