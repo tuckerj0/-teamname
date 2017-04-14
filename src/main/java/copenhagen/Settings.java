@@ -435,12 +435,17 @@ public class Settings{
         }
     }
 
+    /**
+     * This function will allow the user to choose a png image file to use in place of our preset game pieces
+     * @param attack Indicates wether this pieces is being adding to attack or defense
+     */
     public void loadImage(boolean attack){
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(".PNG Images","png");
         chooser.setFileFilter(filter);
         chooser.showOpenDialog(null);
         File file = chooser.getSelectedFile();
+        //If the user cancels out and doesn't have an image selected
         if(file==null){
             if(attack){
                 attackButtons.get(0).setSelected(true);
@@ -452,6 +457,7 @@ public class Settings{
         }
         try{
             BufferedImage img = ImageIO.read(file);
+            img = resize(img,64,64);//resize to the size of a gameboard square
             if(attack){
                 ImageIO.write(img, "png",new File("src/main/resources/copenhagen/images/customattackpiece.png"));
                 ImageIO.write(img, "png",new File("src/main/resources/copenhagen/images/customattackpieceSelected.png"));
@@ -463,5 +469,23 @@ public class Settings{
         catch(IOException e){
             JOptionPane.showMessageDialog(null,"Invalid File");
         }
+    }
+
+    /**
+     * This function will resize a buffered image
+     * @param img The BufferedImage to be resized
+     * @param newW The new width to be changed to
+     * @param newH The new height to be changed to
+     * @return the scaled BufferedImage
+     */
+    public static BufferedImage resize(BufferedImage img, int newW, int newH) {
+        Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
+        BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
+
+        Graphics2D g2d = dimg.createGraphics();
+        g2d.drawImage(tmp, 0, 0, null);
+        g2d.dispose();
+
+        return dimg;
     }
 }
