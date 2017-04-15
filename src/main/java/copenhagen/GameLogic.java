@@ -18,6 +18,7 @@ public class GameLogic{
     public static char[][] gameBoardArray;
     private static char attackers = 'b';
 	private static char defenders = 'w';
+    private static char draw = 'd';
 	private static char king = 'k';
 	private static char empty = '0';
 	private static char restricted = 'c';
@@ -119,6 +120,7 @@ public class GameLogic{
             gameBoardArray[c][r] = empty;
             GameBoard.removeCapturedPiecesUI(c,r);
         }
+		Hnefatafl.captureResetTurnCount();
         BottomBar.updateNumOfPiecesLeft();
     }
 
@@ -220,6 +222,8 @@ public class GameLogic{
      * winner)
      */
 	public static char checkWinner(char turn) {
+        if (Hnefatafl.getTurnCount() == 49)
+            return draw;
 		if (turn == attackers)
 			return checkAttackWin();
 		else

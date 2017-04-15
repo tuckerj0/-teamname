@@ -53,6 +53,12 @@ public class HnefataflTest {
     public void testNewGameResetTurns() {
         assertEquals(1, Hnefatafl.newGameResetTurns());
     }
+    
+    // This test checks that the turn count is reset when a piece is captured.
+    @Test
+    public void testCaptureResetTurnCount() {
+        assertEquals(0,Hnefatafl.captureResetTurnCount());
+    }
 
     //test that attack color is set correctly and to lowercase
     @Test

@@ -36,6 +36,7 @@ public class Hnefatafl {
 	private static char defenders = 'w';
 	private static char king = 'k';
 	private static char empty = '0';
+    private static char draw = 'd';
 	private static char restricted = 'c';
 	private static char turn = attackers;
 	private static GameBoard hBoard;
@@ -177,6 +178,15 @@ public class Hnefatafl {
     public static void setTurn(char c) {
 	    turn = c;
     }
+    
+    /**
+     * This is a getter that gets the current turn number.
+     * @return This function will return the current turn number'
+     * turn.
+     */
+    public static int getTurnCount() {
+        return turnCount;
+    }
 
     /**
      * This is a setter that sets the current turn number when loading a game save.
@@ -185,6 +195,15 @@ public class Hnefatafl {
     public static void setTurnCount(int i) {
 	    turnCount = i;
     }
+	
+	/**
+	 * This is a setter that resets the current turn number to 0 when one or more pieces are captured.
+	 * @param i This parameter is the turn count for the game.
+	 */
+	public static int captureResetTurnCount() {
+		turnCount = 0;
+        return turnCount;
+	}
 
     /**
      * This is a getter that gets whether the game was saved already before exiting.
