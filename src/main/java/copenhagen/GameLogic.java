@@ -222,13 +222,26 @@ public class GameLogic{
      * winner)
      */
 	public static char checkWinner(char turn) {
-        if (Hnefatafl.getTurnCount() == 49)
+
+        if (checkDraw() == draw)
             return draw;
 		if (turn == attackers)
 			return checkAttackWin();
 		else
 			return checkDefendWin();
 	}
+    
+    /**
+     * This function checks to see if there is a draw at the end of each turn.
+     *
+     * @return This function returns the whether or not a draw has happened. ('d' if there is a draw; otherwise '0' if no draw)
+     */
+    public static char checkDraw() {
+        if (Hnefatafl.getTurnCount() == 49)
+            return draw;
+        else
+            return empty;
+    }
 
     /**
      * This function checks if the attacking team has won.
