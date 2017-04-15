@@ -119,9 +119,16 @@ public class SaveAndLoad {
 			String currentLine;
 			br = new BufferedReader(new FileReader(fileName));
 			i = 0;
+			
 			while ((currentLine = br.readLine()) != null) {
 				if(i == 0){
-					savedTurnCount = Integer.parseInt(currentLine);
+					try{
+						savedTurnCount = Integer.parseInt(currentLine);
+					}
+					catch (NumberFormatException ex) {
+						JOptionPane.showMessageDialog(null, "Invalid save file.");
+						return null;
+					}
 				}
 				else if(i == 1){
 					savedCurrentTurn = currentLine.charAt(0);
