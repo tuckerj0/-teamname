@@ -31,7 +31,7 @@ public class Hnefatafl {
 	private static JPanel bottom;
 	private static boolean saved = true;
 	private static int boardSize = 11;
-	private static int turnCount = 1;
+	private static int turnCount = 2;
 	private static char attackers = 'b';
 	private static char defenders = 'w';
 	private static char king = 'k';
@@ -146,7 +146,7 @@ public class Hnefatafl {
      * w = white = king and his defenders
      */
 	public static int endTurn() {
-		winner = GameLogic.checkWinner(turn);
+		winner = GameLogic.checkWinner(turn, turnCount);
 	    if (turn == attackers) {
 	        turn = defenders;
         }
@@ -179,14 +179,6 @@ public class Hnefatafl {
 	    turn = c;
     }
     
-    /**
-     * This is a getter that gets the current turn number.
-     * @return This function will return the current turn number'
-     * turn.
-     */
-    public static int getTurnCount() {
-        return turnCount;
-    }
 
     /**
      * This is a setter that sets the current turn number when loading a game save.
