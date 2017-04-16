@@ -19,7 +19,7 @@ public class HnefataflTest {
     @Test
     public void testSaveGameIfSuccessful() {
         SaveAndLoad mockedSaveAndLoad = mock(SaveAndLoad.class);
-        when(mockedSaveAndLoad.save(11, 'b', 1,"00:05:00","00:05:00")).thenReturn(true);
+        when(mockedSaveAndLoad.save(11, 'b', 2,"00:05:00","00:05:00")).thenReturn(true);
         assertEquals(true, Hnefatafl.saveGame(mockedSaveAndLoad));
     }
 
@@ -27,7 +27,7 @@ public class HnefataflTest {
     @Test
     public void testSaveGameIfUnsuccessful() {
         SaveAndLoad mockedSaveAndLoad = mock(SaveAndLoad.class);
-        when(mockedSaveAndLoad.save(11, 'b', 1,"00:05:00","00:05:00")).thenReturn(false);
+        when(mockedSaveAndLoad.save(11, 'b', 2,"00:05:00","00:05:00")).thenReturn(false);
         assertEquals(false, Hnefatafl.saveGame(mockedSaveAndLoad));
     }
 
@@ -52,6 +52,12 @@ public class HnefataflTest {
     @Test
     public void testNewGameResetTurns() {
         assertEquals(1, Hnefatafl.newGameResetTurns());
+    }
+    
+    // This test checks that the turn count is reset when a piece is captured.
+    @Test
+    public void testCaptureResetTurnCount() {
+        assertEquals(0,Hnefatafl.captureResetTurnCount());
     }
 
     //test that attack color is set correctly and to lowercase

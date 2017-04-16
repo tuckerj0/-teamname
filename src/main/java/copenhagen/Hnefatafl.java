@@ -31,11 +31,12 @@ public class Hnefatafl {
 	private static JPanel bottom;
 	private static boolean saved = true;
 	private static int boardSize = 11;
-	private static int turnCount = 1;
+	private static int turnCount = 2;
 	private static char attackers = 'b';
 	private static char defenders = 'w';
 	private static char king = 'k';
 	private static char empty = '0';
+    private static char draw = 'd';
 	private static char restricted = 'c';
 	private static char turn = attackers;
 	private static GameBoard hBoard;
@@ -145,7 +146,7 @@ public class Hnefatafl {
      * w = white = king and his defenders
      */
 	public static int endTurn() {
-		winner = GameLogic.checkWinner(turn);
+		winner = GameLogic.checkWinner(turn, turnCount);
 	    if (turn == attackers) {
 	        turn = defenders;
         }
@@ -177,6 +178,7 @@ public class Hnefatafl {
     public static void setTurn(char c) {
 	    turn = c;
     }
+    
 
     /**
      * This is a setter that sets the current turn number when loading a game save.
@@ -185,6 +187,15 @@ public class Hnefatafl {
     public static void setTurnCount(int i) {
 	    turnCount = i;
     }
+	
+	/**
+	 * This is a setter that resets the current turn number to 0 when one or more pieces are captured.
+	 * @param i This parameter is the turn count for the game.
+	 */
+	public static int captureResetTurnCount() {
+		turnCount = 0;
+        return turnCount;
+	}
 
     /**
      * This is a getter that gets whether the game was saved already before exiting.

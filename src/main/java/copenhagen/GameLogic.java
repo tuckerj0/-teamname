@@ -18,6 +18,7 @@ public class GameLogic{
     public static char[][] gameBoardArray;
     private static char attackers = 'b';
 	private static char defenders = 'w';
+    private static char draw = 'd';
 	private static char king = 'k';
 	private static char empty = '0';
 	private static char restricted = 'c';
@@ -119,6 +120,7 @@ public class GameLogic{
             gameBoardArray[c][r] = empty;
             GameBoard.removeCapturedPiecesUI(c,r);
         }
+		Hnefatafl.captureResetTurnCount();
         BottomBar.updateNumOfPiecesLeft();
     }
 
@@ -219,12 +221,28 @@ public class GameLogic{
      * @return This function returns the results of which side won if anyone did. ('b' or 'w'; otherwise '0' if no
      * winner)
      */
-	public static char checkWinner(char turn) {
+	public static char checkWinner(char turn, int i) {
+
+        if (checkDraw(i) == draw)
+            return draw;
 		if (turn == attackers)
 			return checkAttackWin();
 		else
 			return checkDefendWin();
 	}
+    
+    /**
+     * This function checks to see if there is a draw at the end of each turn.
+     *
+     * @return This function returns the whether or not a draw has happened. ('d' if there is a draw; otherwise '0' if no draw)
+     */
+    public static char checkDraw(int i) {
+        i = (int) Math.floor((double) i/2);
+        if (i == 50)
+            return draw;
+        else
+            return empty;
+    }
 
     /**
      * This function checks if the attacking team has won.

@@ -75,6 +75,7 @@ public class BottomBar {
      * @param i This tells what turn the game is currently on.
      */
     private void setTurnCount(int i) {
+        i = (int) Math.ceil((double) i/2);
         turnCount = new JLabel("Turn Number: " + i);
         turnCount.setForeground(letteringColor);
     }
@@ -156,6 +157,7 @@ public class BottomBar {
      * @param i This parameter is the current turn number.
      */
     public static void updateTurnInfo(char c, int i) {
+        i = (int) Math.ceil((double) i/2);
         updateClock(c);
         if (c == attackers) {
             turn.setText("Turn: Attackers");
