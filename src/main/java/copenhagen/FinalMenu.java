@@ -38,9 +38,9 @@ public class FinalMenu {
         JLabel [] winnerText;
         
 		if (winningSide == defenders) {
-            winnerText = createLabel("DEFENDERS WIN",Hnefatafl.getDefendPieceAddr());
+            winnerText = createLabel("DEFENDERS"+"<br>"+"WIN",Hnefatafl.getDefendPieceAddr());
 		} else if (winningSide == attackers){
-			winnerText = createLabel("ATTACKERS WIN",Hnefatafl.getAttackPieceAddr());
+			winnerText = createLabel("ATTACKERS"+"<br>"+"WIN",Hnefatafl.getAttackPieceAddr());
         } else {
             String winMessage = "DRAW!"+"<br>"+"<br>"+"<font size=\"-2\">Fifty(50) moves were made"+"<br>"+"without a capture"+"<br>"+"<br>"+"<br>"+"<font size=\"+3\">Nobody WINS</font>";
             winnerText = createLabel(winMessage,"none");
