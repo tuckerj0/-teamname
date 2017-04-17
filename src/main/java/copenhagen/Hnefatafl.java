@@ -56,12 +56,12 @@ public class Hnefatafl {
 	//Piece colors set to black and white by default, can be changed in the settings menu
 	private static String attackColor = "black";
 	private static String defenseColor = "white";
-	private static String kingPieceAddr = "images/king.png";
-	private static String kingSelAddr = "images/kingSelected.png";
-	private static String attackPieceAddr = "images/blackpiece.png";
-	private static String defendPieceAddr = "images/whitepiece.png";
-	private static String attackSelAddr = "images/blackpieceSelected.png";
-	private static String defendSelAddr = "images/whitepieceSelected.png";
+	private static ImageIcon attackerImage;
+	private static ImageIcon defenderImage;
+	private static ImageIcon kingImage;
+	private static ImageIcon attackerSelectedImage;
+	private static ImageIcon defenderSelectedImage;
+	private static ImageIcon kingSelectedImage;
 
     /**
      * This is the main method which starts the program.
@@ -69,6 +69,13 @@ public class Hnefatafl {
      */
 	public static void main(String[] args) {
 		new MainMenu();
+        if(!attackColor.equals("Custom")){
+            setAttackColor(attackColor);
+        }
+        if(!defenseColor.equals("Custom")){
+            setDefenseColor(defenseColor);
+        }
+        setKingImage();
 	}
 
     /**
@@ -190,7 +197,6 @@ public class Hnefatafl {
 	
 	/**
 	 * This is a setter that resets the current turn number to 0 when one or more pieces are captured.
-	 * @param i This parameter is the turn count for the game.
 	 */
 	public static int captureResetTurnCount() {
 		turnCount = 0;
@@ -265,33 +271,19 @@ public class Hnefatafl {
      */
 	public static void selectNew(JButton clickedOn,int c, int r){
 		char piece = GameLogic.getPiece(c, r);
-
-        try {
-			selectedLoc.setColumn(c);
-			selectedLoc.setRow(r);
-			selected = clickedOn;
-			Image img;
-			ImageIcon icon;
-			pieceIsSelected = true;
-			if(piece == attackers && turn == attackers){
-				img = ImageIO.read(Hnefatafl.class.getResource(attackSelAddr));
-				icon = new ImageIcon(img);
-				clickedOn.setIcon(icon);
-			}else if(piece == defenders && turn == defenders){
-				img = ImageIO.read(Hnefatafl.class.getResource(defendSelAddr));
-				icon = new ImageIcon(img);
-				clickedOn.setIcon(icon);
-			}else if(piece == king && turn == defenders){
-				img = ImageIO.read(Hnefatafl.class.getResource(kingSelAddr));
-				icon = new ImageIcon(img);
-				clickedOn.setIcon(icon);
-			}else{
-				pieceIsSelected = false;
-			}
-		} catch (IOException e) {
-			System.out.println("Image Didn't Load");
-			System.exit(1);
-		}
+        selectedLoc.setColumn(c);
+        selectedLoc.setRow(r);
+        selected = clickedOn;
+        pieceIsSelected = true;
+        if (piece == attackers && turn == attackers) {
+            clickedOn.setIcon(attackerSelectedImage);
+        } else if(piece == defenders && turn == defenders) {
+            clickedOn.setIcon(defenderSelectedImage);
+        } else if(piece == king && turn == defenders) {
+            clickedOn.setIcon(kingSelectedImage);
+        } else {
+            pieceIsSelected = false;
+        }
 	}
 
     /**
@@ -389,61 +381,48 @@ public class Hnefatafl {
 		attackColor = color;
 		String address = "images/";
 		address = address + color;
-		attackPieceAddr = address + "piece.png";
-		attackSelAddr = address + "pieceSelected.png";
+		String selectedAddress = address + "pieceSelected.png";
+		address = address + "piece.png";
+		try{
+			attackerImage = new ImageIcon(ImageIO.read(Hnefatafl.class.getResource(address)));
+			attackerSelectedImage = new ImageIcon(ImageIO.read(Hnefatafl.class.getResource(selectedAddress)));
+		}
+		catch(IOException e) {
+			JOptionPane.showMessageDialog(null,"Can't Find Attacker Image.");
+		}
 	}
+
+    /**
+     * This method sets the images that will be used for the king piece.
+     */
+	public static void setKingImage() {
+	    try {
+            kingImage = new ImageIcon(ImageIO.read(Hnefatafl.class.getResource("images/king.png")));
+            kingSelectedImage = new ImageIcon(ImageIO.read(Hnefatafl.class.getResource("images/kingSelected.png")));
+        }
+        catch (IOException e) {
+            JOptionPane.showMessageDialog(null,"Can't Find King Image.");
+        }
+    }
 
 	/**
 	 * This function set the color of the defending pieces on the board.
      * @param color This parameter is a String representing the color of the piece.
 	 */
-	public static void setDefenseColor(String color){
+	public static void setDefenseColor(String color) {
 		color = color.toLowerCase();
 		defenseColor = color;
 		String address = "images/";
 		address = address + color;
-		defendPieceAddr = address + "piece.png";
-		defendSelAddr = address + "pieceSelected.png";
-	}
-
-	/**
-     * This function gets the attack piece image address.
-     * @return This function will return the String for the attack piece image address.
-     */
-	public static String getAttackPieceAddr(){
-		return attackPieceAddr;
-	}
-
-	/**
-	 * This function gets the defend piece image address.
-	 * @return This function will return the String for the defend piece image address.
-	 */
-	public static String getDefendPieceAddr(){
-		return defendPieceAddr;
-	}
-
-	/**
-     * This function gets the king piece image address.
-     * @return This function will return the String for the king piece image address.
-     */
-	public static String getKingPieceAddr(){
-		return kingPieceAddr;
-	}
-
-	/**
-     * This function gets the selected attack piece image address.
-     * @return This function will return the String for the selected attack piece image address.
-     */
-	public static String getAttackSelAddr(){
-		return attackSelAddr;
-	}
-
-	/**
-     * This function gets the selected defend piece image address.
-     * @return This function will return the String for the selected defend piece image address.
-     */
-	public static String getDefendSelAddr(){
-		return defendSelAddr;
+		String selectedAddress = address + "pieceSelected.png";
+		address = address + "piece.png";
+		try{
+			defenderImage = new ImageIcon(ImageIO.read(Hnefatafl.class.getResource(address)));
+			defenderSelectedImage = new ImageIcon(ImageIO.read(Hnefatafl.class.getResource(selectedAddress)));
+		}
+		catch(IOException e) {
+			JOptionPane.showMessageDialog(null,"Can't Find Defender Image.");
+		}
 	}
 
 	/**
@@ -460,5 +439,49 @@ public class Hnefatafl {
      */
 	public static String getDefenseColor(){
 		return defenseColor;
+	}
+
+    /**
+     * This is a getter that gets the attacker piece image.
+     * @return This method will return the ImageIcon that represents a attack piece.
+     */
+	public static ImageIcon getAttackerImage() {
+		return attackerImage;
+	}
+
+    /**
+     * This is a getter that gets the defender piece image.
+     * @return This method will return the ImageIcon that represents a defender piece.
+     */
+	public static ImageIcon getDefenderImage() {
+		return defenderImage;
+	}
+
+    /**
+     * This is a getter that gets the king piece image.
+     * @return This method will return the ImageIcon that represents the king piece.
+     */
+	public static ImageIcon getKingImage() {
+	    return kingImage;
+    }
+
+    /**
+     * This is a setter that sets the image used for the attacking pieces.
+     * @param img This parameter is the ImageIcon that will represent the attacking pieces.
+     */
+	public static void setAttackerImage(ImageIcon img) {
+        attackerImage = img;
+        attackerSelectedImage = img;
+        attackColor = "Custom";
+	}
+
+    /**
+     * This is a setter that sets the image used for the defending pieces.
+     * @param img This parameter is the ImageIcon that will represent the defending pieces.
+     */
+	public static void setDefenderImage(ImageIcon img) {
+        defenderImage = img;
+        defenderSelectedImage = img;
+        defenseColor = "Custom";
 	}
 }

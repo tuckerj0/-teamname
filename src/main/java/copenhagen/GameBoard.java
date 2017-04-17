@@ -3,8 +3,6 @@ package copenhagen;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
-import javax.imageio.ImageIO;
-import java.io.IOException;
 import java.awt.event.*;
 
 /**
@@ -19,11 +17,11 @@ import java.awt.event.*;
  * 'k' for the king piece
  */
 public class GameBoard {
-	int gridSize;
-	Color highlight = new Color(255,0,0);
-	Color primaryColor;
-	Color secondaryColor;
-	Color specialColor; //color of the center and corners
+	private int gridSize;
+	private Color highlight = new Color(255,0,0);
+	private Color primaryColor;
+	private Color secondaryColor;
+	private Color specialColor; //color of the center and corners
 	private JButton[][] boardSquares;
 	private JPanel board;
 	private static char attackers = 'b';
@@ -96,7 +94,7 @@ public class GameBoard {
 				b.setMinimumSize(new Dimension(64, 64));
 				b.addActionListener(new squareClickedListener());
 
-				addPiece(gameBoardArray[i][j],b);
+                setButtonImage(gameBoardArray[i][j],b);
 
 				if ((i==0 && j==0)|| (i==gridSize-1 && j==gridSize-1)|| (i==0 && j==gridSize-1)
 					|| (i==gridSize-1 && j==0) || (i==(gridSize/2) && j==(gridSize/2))){
@@ -160,35 +158,6 @@ public class GameBoard {
 	}
 
     /**
-     * This function will give a game piece (the JButton) the appropriate image.
-     * @param pieceName This parameter represents what type of game piece it is.
-     * @param button This parameter represents the JButton that will represent the game piece.
-     */
-	private void addPiece(char pieceName, JButton button) {
-	    try {
-	        Image img;
-	        ImageIcon icon;
-            if (pieceName == attackers) {
-                img = ImageIO.read(getClass().getResource(Hnefatafl.getAttackPieceAddr()));
-                icon = new ImageIcon(img);
-                button.setIcon(icon);
-            } else if (pieceName == defenders) {
-                img = ImageIO.read(getClass().getResource(Hnefatafl.getDefendPieceAddr()));
-                icon = new ImageIcon(img);
-                button.setIcon(icon);
-            } else if (pieceName == king) {
-                img = ImageIO.read(getClass().getResource(Hnefatafl.getKingPieceAddr()));
-                icon = new ImageIcon(img);
-                button.setIcon(icon);
-            }
-        }
-        catch (IOException e) {
-	        System.out.println("Unable to load image of piece. Please try running the program again");
-	        System.exit(1);
-        }
-	}
-
-    /**
      * This function gets the grid size of the game board.
      * @return This will return an integer representing the grid size.
      */
@@ -226,25 +195,12 @@ public class GameBoard {
      * @param button The button to add the image to.
      */
     public static void setButtonImage(char pieceType, JButton button){
-        try {
-            Image img;
-            ImageIcon icon;
-            if(pieceType == attackers){
-                img = ImageIO.read(Hnefatafl.class.getResource(Hnefatafl.getAttackPieceAddr()));
-                icon = new ImageIcon(img);
-                button.setIcon(icon);
-            }else if(pieceType == defenders){
-                img = ImageIO.read(Hnefatafl.class.getResource(Hnefatafl.getDefendPieceAddr()));
-                icon = new ImageIcon(img);
-                button.setIcon(icon);
-            }else if(pieceType == king){
-                img = ImageIO.read(Hnefatafl.class.getResource(Hnefatafl.getKingPieceAddr()));
-                icon = new ImageIcon(img);
-                button.setIcon(icon);
-            }
-        } catch (IOException e) {
-            System.out.println("Image Didn't Load");
-            System.exit(1);
+        if (pieceType == attackers) {
+            button.setIcon(Hnefatafl.getAttackerImage());
+        } else if(pieceType == defenders) {
+            button.setIcon(Hnefatafl.getDefenderImage());
+        } else if(pieceType == king) {
+            button.setIcon(Hnefatafl.getKingImage());
         }
     }
 
