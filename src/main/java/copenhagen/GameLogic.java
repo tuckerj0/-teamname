@@ -303,9 +303,163 @@ public class GameLogic{
 			// King has reached one of the corners so defenders win
 			return defenders;
 		}
+		if(exitFort()){
+			return defenders;
+		}
 		return empty;
 	}
+	
+	/*
+	*The following methods are helpers to exitfort
+	*START
+	*/
+	
+	/*
+	*This function checks if the defenders have created an exit fort
+	*@return boolean representing if an exit fort exists
+	*/
+	public static boolean exitFort(){
+		boolean fort = false;
+		int x = 0;
+		int y = 0;
+		for(int i = 0; i < GRID_SIZE; i++){
+			for(int j = 0; j < GRID_SIZE; j++){
+				if (gameBoardArray[i][j] == king){
+					x = i;
+					y = j;
+					if(kingAtEdge(i,j)){
+						if(kingCanMove(i,j)){
+							if(kingSafe(i,j)){
+								fort = true;
+							}
+						}
+					}
+					break;
+				}
+			}
+		}
+		return fort;
+	}
 
+	private static char[][] g = new char[GRID_SIZE][GRID_SIZE];
+	private static boolean kingSafe;  //Flag
+	
+	/**
+	*This function checks if the king can come in contact with an oppenent's piece
+	*@param int x representign x coordinates of the king
+	*@param int y representign y coordinates of the king
+	*@return boolean representing if the king can come in contact with an oppenent's piece
+	*/
+	public static boolean kingSafe(int x, int y){
+		setG();
+		kingSafe = true;
+		lookAround(x,y);
+		return kingSafe;
+	}
+	/*
+	*This function resets the grid
+	*/
+	public static void setG(){
+		for(int i = 0; i < GRID_SIZE; i++){
+			for(int j = 0; j < GRID_SIZE; j++){
+				g[i][j] = '0';
+			}
+		}
+	}
+	/**
+	*This function checks what is surronding the input coordinates
+	*@param int i representign x coordinate
+	*@param int j representign y coordinate
+	*@return null
+	*/
+	public static void lookAround(int i, int j){
+		if(kingSafe == false){
+			return;
+		}
+		else{
+			if((i + 1) < GRID_SIZE){
+				look(i+1, j);
+			}
+			if((i - 1) >= 0){
+				look(i-1, j);
+			}
+			if((j + 1) < GRID_SIZE){
+				look(i, j+1);
+			}
+			if((j - 1) >= 0){
+				look(i, j-1);
+			}
+		}
+	}
+	/**This function checks what is at the given coordinates
+	*@param int x representign x coordinates of the king
+	*@param int y representign y coordinates of the king
+	*@return null
+	*/
+	public static void look(int x, int y){
+		if(gameBoardArray[x][y] == attackers){
+			kingSafe = false;
+		}else if(gameBoardArray[x][y] == empty){
+			if(g[x][y] != 'm'){
+				g[x][y] = 'm';
+				lookAround(x,y);
+			}
+		}
+		else{
+			g[x][y] = 'x';
+		}
+	}
+	
+	/**
+	*This function checks if the king is at the edge of the board
+	*@param int x representign x coordinates of the king
+	*@param int y representign y coordinates of the king
+	*@return boolean representing if the king is at the edge of the board
+	*/
+	public static boolean kingAtEdge(int x, int y){
+		boolean edge = false;
+		if(x == 0 || x == GRID_SIZE-1){
+			edge = true;
+		}
+		if(y == 0 || y == GRID_SIZE-1){
+			edge = true;
+		}
+		return edge;
+		
+	}
+	/**
+	*This function checks if the king can move
+	*@param int x representign x coordinates of the king
+	*@param int y representign y coordinates of the king
+	*@return boolean representing if the king can move
+	*/
+	public static boolean kingCanMove(int x, int y){
+		boolean canMove = false;
+		if(x + 1 < GRID_SIZE){
+			if(gameBoardArray[x+1][y] == empty){
+				canMove = true;
+			}
+		}
+		if(x - 1 >= 0){
+			if(gameBoardArray[x-1][y] == empty){
+				canMove = true;
+			}
+		}
+		if(y + 1 < GRID_SIZE){
+			if(gameBoardArray[x][y+1] == empty){
+				canMove = true;
+			}
+		}
+		if(y - 1 >= 0){
+			if(gameBoardArray[x][y-1] == empty){
+				canMove = true;
+			}
+		}
+		return canMove;
+	}
+	
+	
+	
 	//*The follow variables and methods are helpers to find encirclement
 	//*START
 	

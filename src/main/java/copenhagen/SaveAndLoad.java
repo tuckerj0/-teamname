@@ -271,6 +271,7 @@ public class SaveAndLoad {
 				return false;
 			}
 		}
+<<<<<<< HEAD
 
 		int hours = Integer.parseInt(aTime.substring(0,2));
 		int minutes = Integer.parseInt(aTime.substring(3,5));
@@ -282,6 +283,22 @@ public class SaveAndLoad {
 		minutes = Integer.parseInt(dTime.substring(3,5));
 		seconds = Integer.parseInt(dTime.substring(6,8));
 		if(hours < 0 && minutes < 0 && seconds < 0){
+=======
+		try{
+			int hours = Integer.parseInt(aTime.substring(0,2));
+			int minutes = Integer.parseInt(aTime.substring(3,5));
+			int seconds = Integer.parseInt(aTime.substring(6,8));
+			if(hours < 0 && minutes < 0 && seconds < 0){
+				return false;
+			}
+			hours = Integer.parseInt(dTime.substring(0,2));
+			minutes = Integer.parseInt(dTime.substring(3,5));
+			seconds = Integer.parseInt(dTime.substring(6,8));
+			if(hours < 0 && minutes < 0 && seconds < 0){
+				return false;
+			}
+		}catch(Exception e){
+>>>>>>> refs/remotes/origin/master
 			return false;
 		}
 
