@@ -4,6 +4,7 @@
 *.iml
 build/
 out/
+src/main/resources/copenhagen/images/custom*
 
 # Ignore Gradle GUI config
 gradle-app.setting
