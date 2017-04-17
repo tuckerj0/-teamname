@@ -230,7 +230,7 @@ public class GameLogic{
 		else
 			return checkDefendWin();
 	}
-    
+
     /**
      * This function checks to see if there is a draw at the end of each turn.
      *
@@ -308,12 +308,12 @@ public class GameLogic{
 		}
 		return empty;
 	}
-	
+
 	/*
 	*The following methods are helpers to exitfort
 	*START
 	*/
-	
+
 	/*
 	*This function checks if the defenders have created an exit fort
 	*@return boolean representing if an exit fort exists
@@ -343,7 +343,7 @@ public class GameLogic{
 
 	private static char[][] g = new char[GRID_SIZE][GRID_SIZE];
 	private static boolean kingSafe;  //Flag
-	
+
 	/**
 	*This function checks if the king can come in contact with an oppenent's piece
 	*@param int x representign x coordinates of the king
@@ -409,7 +409,7 @@ public class GameLogic{
 			g[x][y] = 'x';
 		}
 	}
-	
+
 	/**
 	*This function checks if the king is at the edge of the board
 	*@param int x representign x coordinates of the king
@@ -425,7 +425,7 @@ public class GameLogic{
 			edge = true;
 		}
 		return edge;
-		
+
 	}
 	/**
 	*This function checks if the king can move
@@ -457,12 +457,12 @@ public class GameLogic{
 		}
 		return canMove;
 	}
-	
-	
-	
+
+
+
 	//*The follow variables and methods are helpers to find encirclement
 	//*START
-	
+
 	private static char[][] visited = new char[GRID_SIZE][GRID_SIZE];
 	private static int e;  //Flag
 
@@ -608,9 +608,9 @@ public class GameLogic{
 			}
 		}
 	}
-	
+
 	//*END
-	
+
     /**
      * This is the function that does the actual work from moving a game piece from its original starting row and column
      * to its new row and column.
@@ -637,7 +637,6 @@ public class GameLogic{
 
 	/**
      * This function is called to determine if there is a shieldwall during a move by a piece.
-     * TODO: Refactor this code!
      * @param piece This is the piece that has been moved.
      * @param col This is the column of where the piece will be going.
      * @param row This is the row of where the piece will be going.

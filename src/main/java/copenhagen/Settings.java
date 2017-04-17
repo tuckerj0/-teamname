@@ -177,6 +177,7 @@ public class Settings{
         Hnefatafl.setAttackColor(attackColor);
         defenseColor = "White";
         Hnefatafl.setDefenseColor(defenseColor);
+        Hnefatafl.setLetteringColor(Black[0], Black[1], Black[2]);
         Hnefatafl.setKingImage();
         hour = 0;
         minute = 5;
