@@ -73,32 +73,4 @@ public class HnefataflTest {
         Hnefatafl.setDefenseColor("Blue");
         assertEquals("blue",Hnefatafl.getDefenseColor());
     }
-
-    //Test that the image link is formatted correctly
-    @Test
-    public void testSetDefenseColorSetsImage(){
-        Hnefatafl.setDefenseColor("Orange");
-        assertEquals("images/orangepiece.png",Hnefatafl.getDefendPieceAddr());
-    }
-
-    //Test that the selected image link is formatted correcly
-    @Test
-    public void testSetDefenseColorSetsSelectedImage(){
-        Hnefatafl.setDefenseColor("Black");
-        assertEquals("images/blackpieceSelected.png",Hnefatafl.getDefendSelAddr());
-    }
-
-    //Test that the image link is formatted correcly
-    @Test
-    public void testSetAttackColorSetsImage(){
-        Hnefatafl.setAttackColor("Orange");
-        assertEquals("images/orangepiece.png",Hnefatafl.getAttackPieceAddr());
-    }
-
-    //Test that the selected image link is formatted correcly
-    @Test
-    public void testSetAttackColorSetsSelectedImage(){
-        Hnefatafl.setAttackColor("Black");
-        assertEquals("images/blackpieceSelected.png",Hnefatafl.getAttackSelAddr());
-    }
 }

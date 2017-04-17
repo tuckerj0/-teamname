@@ -1,4 +1,5 @@
 package copenhagen;
+
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.awt.*;
@@ -14,10 +15,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * This class contains everything that happens when the Settings button is clicked in the main menu.
  */
 public class Settings{
-    private static ArrayList<JRadioButton> attackButtons = new ArrayList<JRadioButton>();
-    private static ArrayList<JRadioButton> defenseButtons = new ArrayList<JRadioButton>();
-    private static ArrayList<JRadioButton> boardColor1 = new ArrayList<JRadioButton>();
-    private static ArrayList<JRadioButton> boardColor2 = new ArrayList<JRadioButton>();
+    private static ArrayList<JRadioButton> attackButtons = new ArrayList<>();
+    private static ArrayList<JRadioButton> defenseButtons = new ArrayList<>();
+    private static ArrayList<JRadioButton> boardColor1 = new ArrayList<>();
+    private static ArrayList<JRadioButton> boardColor2 = new ArrayList<>();
     private static String attackColor = "Black";
     private static String defenseColor = "White";
     private static int hour = 0;
@@ -90,7 +91,7 @@ public class Settings{
         settingsPanel.add(attackLabel);
 
         ButtonGroup attackGroup = new ButtonGroup();
-        for(JRadioButton button:attackButtons){
+        for (JRadioButton button:attackButtons) {
             attackGroup.add(button);
             attackPanel.add(button);
         }
@@ -107,7 +108,6 @@ public class Settings{
             defensePanel.add(button);
         }
         settingsPanel.add(defensePanel);
-
         JLabel gameLengthLabel = new JLabel("Set Starting Game Time");
         gameLengthLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         settingsPanel.add(gameLengthLabel);
@@ -172,10 +172,12 @@ public class Settings{
      */
     public static void setDefaults() {
         Hnefatafl.setBoardColors(defaultDarkBrown[0], defaultDarkBrown[1], defaultDarkBrown[2], defaultLightBrown[0], defaultLightBrown[1], defaultLightBrown[2]);
+        Hnefatafl.setLetteringColor(Black[0], Black[1], Black[2]);
         attackColor = "Black";
         Hnefatafl.setAttackColor(attackColor);
         defenseColor = "White";
         Hnefatafl.setDefenseColor(defenseColor);
+        Hnefatafl.setKingImage();
         hour = 0;
         minute = 5;
         second = 0;
@@ -238,7 +240,7 @@ public class Settings{
      * This function saves the settings chosen by the user.
      * @return This function returns true if the user's settings are valid.
      */
-    public static boolean saveSettings(){
+    public static boolean saveSettings() {
         String primColor = "";
         String secColor = "";
         boolean primColorSelected = false;
@@ -356,10 +358,6 @@ public class Settings{
         for(JRadioButton button:attackButtons){
             if(button.isSelected()){
                 attackColor = button.getText();
-                if(attackColor.equals("Custom")){
-                    attackColor = "customattack";
-                }else{
-                }
                 attackSelected = true;
                 break;
             }
@@ -367,20 +365,21 @@ public class Settings{
         for(JRadioButton button:defenseButtons){
             if(button.isSelected()){
                 defenseColor = button.getText();
-                if(defenseColor.equals("Custom")){
-                    defenseColor = "customdefense";
-                }
                 defenseSelected = true;
                 break;
             }
         }
         if(attackSelected && defenseSelected){
-            if(attackColor.equals(defenseColor)){
+            if((attackColor.equals(defenseColor)) && !attackColor.equals("Custom")){
                 JOptionPane.showMessageDialog(null, "Attack and defense can't be the same color!");
                 return false;
             }
-            Hnefatafl.setAttackColor(attackColor);
-            Hnefatafl.setDefenseColor(defenseColor);
+            if(!attackColor.equals("Custom")){
+                Hnefatafl.setAttackColor(attackColor);
+            }
+            if(!defenseColor.equals("Custom")){
+                Hnefatafl.setDefenseColor(defenseColor);
+            }
         }
         else {
             JOptionPane.showMessageDialog(null, "Please select both an attack and defense color.");
@@ -414,7 +413,7 @@ public class Settings{
     }
 
     /**
-     * This is a listener which checks wether the custom attack color button is selected and if it is, it will show the text field where the user can upload their own image
+     * This is a listener which checks whether the custom attack color button is selected and if it is, it will show the text field where the user can upload their own image
      */
     class CustomAttackListener implements ItemListener {
         public void itemStateChanged(ItemEvent e) {
@@ -425,7 +424,7 @@ public class Settings{
     }
 
     /**
-     * This is a listener which checks wether the custom defense color button is selected and if it is, it will show the text field where the user can upload their own image
+     * This is a listener which checks whether the custom defense color button is selected and if it is, it will show the text field where the user can upload their own image
      */
     class CustomDefenseListener implements ItemListener {
         public void itemStateChanged(ItemEvent e) {
@@ -437,11 +436,11 @@ public class Settings{
 
     /**
      * This function will allow the user to choose a png image file to use in place of our preset game pieces
-     * @param attack Indicates wether this pieces is being adding to attack or defense
+     * @param attack Indicates whether this pieces is being adding to attack or defense
      */
     public void loadImage(boolean attack){
         JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(".PNG Images","png");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files","jpg", "png", "gif", "jpeg");
         chooser.setFileFilter(filter);
         chooser.showOpenDialog(null);
         File file = chooser.getSelectedFile();
@@ -459,11 +458,9 @@ public class Settings{
             BufferedImage img = ImageIO.read(file);
             img = resize(img,64,64);//resize to the size of a gameboard square
             if(attack){
-                ImageIO.write(img, "png",new File("src/main/resources/copenhagen/images/customattackpiece.png"));
-                ImageIO.write(img, "png",new File("src/main/resources/copenhagen/images/customattackpieceSelected.png"));
+                Hnefatafl.setAttackerImage(new ImageIcon(img));
             }else{
-                ImageIO.write(img, "png",new File("src/main/resources/copenhagen/images/customdefensepiece.png"));
-                ImageIO.write(img, "png",new File("src/main/resources/copenhagen/images/customdefensepieceSelected.png"));
+                Hnefatafl.setDefenderImage(new ImageIcon(img));
             }
         }
         catch(IOException e){

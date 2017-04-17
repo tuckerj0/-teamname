@@ -2,12 +2,6 @@ package copenhagen;
 
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
-import java.io.IOException;
-
 
 /**
  * This class is used for displaying the options a user has after a game of hnefatafl has finished.
@@ -15,7 +9,6 @@ import java.io.IOException;
 public class FinalMenu {
     private static char attackers = 'b';
 	private static char defenders = 'w';
-    private static char draw = 'd';
 
     /**
      * This function calls a function to create the final menu.
@@ -38,12 +31,12 @@ public class FinalMenu {
         JLabel [] winnerText;
         
 		if (winningSide == defenders) {
-            winnerText = createLabel("DEFENDERS"+"<br>"+"WIN",Hnefatafl.getDefendPieceAddr());
+            winnerText = createLabel("DEFENDERS"+"<br>"+"WIN", Hnefatafl.getDefenderImage());
 		} else if (winningSide == attackers){
-			winnerText = createLabel("ATTACKERS"+"<br>"+"WIN",Hnefatafl.getAttackPieceAddr());
+			winnerText = createLabel("ATTACKERS"+"<br>"+"WIN", Hnefatafl.getAttackerImage());
         } else {
             String winMessage = "DRAW!"+"<br>"+"<br>"+"<font size=\"-2\">Fifty(50) moves were made"+"<br>"+"without a capture"+"<br>"+"<br>"+"<br>"+"<font size=\"+3\">Nobody WINS</font>";
-            winnerText = createLabel(winMessage,"none");
+            winnerText = createLabel(winMessage, null);
         }
 		winnerText[0].setFont(new Font("Courier", Font.PLAIN, fontSize));
 
@@ -60,21 +53,20 @@ public class FinalMenu {
             System.exit(0);
         }
 	}
+
     /**
      * This function creates the final message labels that will be displayed at the end of a game. 
      * If the game does not end in a draw, the winning side's piece is displayed.
      * @param text This parameter is the message that will be displayed
-     * @param imageAddress This parameter is the image address of the winning side
+     * @param img This parameter is the image icon of the winning side
      */
-
-    private JLabel[] createLabel(String text, String imageAddress) {
-        if(imageAddress.equals("none")){
+    private JLabel[] createLabel(String text, ImageIcon img) {
+        if(img == null) {
             return(new JLabel[] {new JLabel(("<html><div style='text-align: center;'>" + text + "<br>" +"</div></html>"))});
         } else {
-            return(new JLabel[] {new JLabel(("<html><div style='text-align: center;'>" + text + "<br>" +"</div></html>")),getImage(imageAddress)});
+            return(new JLabel[] {new JLabel(("<html><div style='text-align: center;'>" + text + "<br>" +"</div></html>")), new JLabel(img, SwingConstants.CENTER)});
         }
     }
-
     
     /**
      * This function creates the necessary GridBagConstraints for putting things within a GridBagLayout panel.
@@ -106,21 +98,5 @@ public class FinalMenu {
             panel.add(items[y], createGridBagConstraints(x, y));
         }
         return panel;
-    }
-    
-    /**
-     * This function grabs an image and puts it into a JLabel to later then be put in the JPanel.
-     * @param s This parameter is the path of where the image is located at.
-     * @return This function returns a JLabel representation of the image.
-     */
-    public JLabel getImage(String s) {
-        try {
-            BufferedImage image = ImageIO.read(Hnefatafl.class.getResource(s));
-            JLabel result = new JLabel(new ImageIcon(image), SwingConstants.CENTER);
-            return result;
-        }
-        catch (IOException e) {
-            return  null;
-        }
     }
 }

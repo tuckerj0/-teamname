@@ -1,7 +1,7 @@
 package copenhagen;
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 /**
  * This class is used for anything dealing with the bottom JPanel in the main part of the game, including
@@ -86,8 +86,18 @@ public class BottomBar {
     private void setRemainingPieces() {
         int attackPieces = GameLogic.getNumOfAttackersLeft();
         int defensePieces = GameLogic.getNumOfDefendersLeft();
-        numOfAttackPieces = new JLabel("Attack (" + Hnefatafl.getAttackColor() + ") Pieces Left: " + attackPieces);
-        numOfDefensePieces = new JLabel("Defense (" + Hnefatafl.getDefenseColor() + ") Pieces Left: " + defensePieces);
+        String attackColor = Hnefatafl.getAttackColor();
+        String defenseColor = Hnefatafl.getDefenseColor();
+        if (attackColor != null && defenseColor != null) {
+            if (attackColor.equals("customattack")) {
+                attackColor = "custom";
+            }
+            if(defenseColor.equals("customdefense")){
+                defenseColor = "custom";
+            }
+        }
+        numOfAttackPieces = new JLabel("Attack (" + attackColor + ") Pieces Left: " + attackPieces);
+        numOfDefensePieces = new JLabel("Defense (" + defenseColor + ") Pieces Left: " + defensePieces);
         numOfAttackPieces.setForeground(letteringColor);
         numOfDefensePieces.setForeground(letteringColor);
     }
@@ -110,7 +120,7 @@ public class BottomBar {
         c.gridx = 6;
         bottom.add(numOfDefensePieces, c);
     }
-    
+
     /**
      * This function removes the labels from the bottom panel.
      */
@@ -260,14 +270,14 @@ public class BottomBar {
 	public static Clock getDefendersClock(){
 		return defendersClock;
 	}
-    
+
     /**
      * This function returns the count down timer
      */
     public static CountDownTimer getTimer() {
         return timer;
     }
-    
+
     /**
      * This function restarts the clocks after a button in the side bar is pressed
      *@param aTime Formatted string representing time on attacker's clock
@@ -290,7 +300,7 @@ public class BottomBar {
         bottom.add(numOfDefensePieces, c);
         return;
     }
-    
+
 	/**
 	 * This function sets the defender's and attacker's clocks
      *@param aTime Formatted string representing time on attacker's clock
@@ -302,15 +312,15 @@ public class BottomBar {
 		int minutes = Integer.parseInt(aTime.substring(3,5));
 		int seconds = Integer.parseInt(aTime.substring(6,8));
 		aSetStartingTime(seconds, minutes, hours);
-		
+
 		int dhours = Integer.parseInt(dTime.substring(0,2));
 		int dminutes = Integer.parseInt(dTime.substring(3,5));
 		int dseconds = Integer.parseInt(dTime.substring(6,8));
 		dSetStartingTime(dseconds, dminutes, dhours);
-		
+
         attackersClock = new Clock(aStartingHours,aStartingMinutes,aStartingSeconds);
         defendersClock = new Clock(dStartingHours,dStartingMinutes,dStartingSeconds);
-		
+
         attackersTime = attackersClock.formatClock("Attackers");
         defendersTime = defendersClock.formatClock("Defenders");
         attackersTime.setForeground(letteringColor);

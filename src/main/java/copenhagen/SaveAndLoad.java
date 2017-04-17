@@ -52,8 +52,16 @@ public class SaveAndLoad {
 				writer = new PrintWriter(game, "UTF-8");
 				writer.println(turnCount);
 				writer.println(turn);
-				writer.println(Hnefatafl.getAttackColor());
-				writer.println(Hnefatafl.getDefenseColor());
+				if(Hnefatafl.getAttackColor().contains("custom")){
+					writer.println("black");
+				}else{
+					writer.println(Hnefatafl.getAttackColor());
+				}
+				if(Hnefatafl.getDefenseColor().contains("custom")){
+					writer.println("white");
+				}else{
+					writer.println(Hnefatafl.getDefenseColor());
+				}
 				writer.println(aClock);
 				writer.println(dClock);
 				for(int i = 0; i < size; i++){
@@ -119,7 +127,7 @@ public class SaveAndLoad {
 			String currentLine;
 			br = new BufferedReader(new FileReader(fileName));
 			i = 0;
-			
+
 			while ((currentLine = br.readLine()) != null) {
 				if(i == 0){
 					try{
