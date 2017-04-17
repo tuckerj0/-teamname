@@ -87,12 +87,14 @@ public class BottomBar {
         int attackPieces = GameLogic.getNumOfAttackersLeft();
         int defensePieces = GameLogic.getNumOfDefendersLeft();
         String attackColor = Hnefatafl.getAttackColor();
-        if(attackColor.equals("customattack")){
-            attackColor = "custom";
-        }
         String defenseColor = Hnefatafl.getDefenseColor();
-        if(defenseColor.equals("customdefense")){
-            defenseColor = "custom";
+        if (attackColor != null && defenseColor != null) {
+            if (attackColor.equals("customattack")) {
+                attackColor = "custom";
+            }
+            if(defenseColor.equals("customdefense")){
+                defenseColor = "custom";
+            }
         }
         numOfAttackPieces = new JLabel("Attack (" + attackColor + ") Pieces Left: " + attackPieces);
         numOfDefensePieces = new JLabel("Defense (" + defenseColor + ") Pieces Left: " + defensePieces);
