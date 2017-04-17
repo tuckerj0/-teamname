@@ -168,9 +168,21 @@ public class Settings{
     }
 
     /**
-     * This function resets all the parameters in settings back to the defaults if the save file is invalid.
+     * This function resets the timer.
      */
-    public static void setDefaults() {
+    public static void resetTimerDefaults() {
+        hour = 0;
+        minute = 5;
+        second = 0;
+        additionalTimePerMove = 3;
+        BottomBar.setStartingTime(second, minute, hour);
+        BottomBar.setPerMoveTime(additionalTimePerMove);
+    }
+
+    /**
+     * This function resets the board colors back to the defaults.
+     */
+    public static void setBoardColorDefaults() {
         Hnefatafl.setBoardColors(defaultDarkBrown[0], defaultDarkBrown[1], defaultDarkBrown[2], defaultLightBrown[0], defaultLightBrown[1], defaultLightBrown[2]);
         Hnefatafl.setLetteringColor(Black[0], Black[1], Black[2]);
         attackColor = "Black";
@@ -178,12 +190,6 @@ public class Settings{
         defenseColor = "White";
         Hnefatafl.setDefenseColor(defenseColor);
         Hnefatafl.setKingImage();
-        hour = 0;
-        minute = 5;
-        second = 0;
-        additionalTimePerMove = 3;
-        BottomBar.setStartingTime(second, minute, hour);
-        BottomBar.setPerMoveTime(additionalTimePerMove);
     }
 
     /**

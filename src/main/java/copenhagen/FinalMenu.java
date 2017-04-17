@@ -29,7 +29,7 @@ public class FinalMenu {
         content.setPreferredSize(new Dimension(250, 250));
         int fontSize = 40;
         JLabel [] winnerText;
-        
+
 		if (winningSide == defenders) {
             winnerText = createLabel("DEFENDERS"+"<br>"+"WIN", Hnefatafl.getDefenderImage());
 		} else if (winningSide == attackers){
@@ -46,7 +46,7 @@ public class FinalMenu {
                                       JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
         if (n == 1) {
             Hnefatafl.removeOldGameBoard();
-            Settings.setDefaults();
+            Settings.resetTimerDefaults();
             new MainMenu();
         }
         if (n == 0) {
@@ -55,7 +55,7 @@ public class FinalMenu {
 	}
 
     /**
-     * This function creates the final message labels that will be displayed at the end of a game. 
+     * This function creates the final message labels that will be displayed at the end of a game.
      * If the game does not end in a draw, the winning side's piece is displayed.
      * @param text This parameter is the message that will be displayed
      * @param img This parameter is the image icon of the winning side
@@ -67,7 +67,7 @@ public class FinalMenu {
             return(new JLabel[] {new JLabel(("<html><div style='text-align: center;'>" + text + "<br>" +"</div></html>")), new JLabel(img, SwingConstants.CENTER)});
         }
     }
-    
+
     /**
      * This function creates the necessary GridBagConstraints for putting things within a GridBagLayout panel.
      * @param x This parameter is the value for gridx attribute of the GridBagConstraints variable.
@@ -83,7 +83,7 @@ public class FinalMenu {
         c.weighty = 0;
         return c;
     }
-    
+
     /**
      * This function creates a GridBagLayout JPanel that contains the given picture(s) and captions.
      * @param items This parameter is an array of JLabels which contains the picture(s) and the caption associated with
